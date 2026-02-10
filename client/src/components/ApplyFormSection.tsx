@@ -22,9 +22,10 @@ interface ApplyFormSectionData {
 
 interface ApplyFormSectionProps {
   data: ApplyFormSectionData;
+  landingLocations?: string[];
 }
 
-export function ApplyFormSection({ data }: ApplyFormSectionProps) {
+export function ApplyFormSection({ data, landingLocations }: ApplyFormSectionProps) {
   return (
     <section className="bg-background" data-testid="section-apply-form">
       <div className="max-w-6xl mx-auto px-4">
@@ -32,7 +33,7 @@ export function ApplyFormSection({ data }: ApplyFormSectionProps) {
           <div>
             <Card className="border shadow-sm" data-testid="card-apply-form">
               <CardContent className="p-6">
-                <LeadForm data={data.form} />
+                <LeadForm data={data.form} landingLocations={landingLocations} />
               </CardContent>
             </Card>
           </div>

@@ -18,6 +18,7 @@ export interface StickyCtaData {
 
 interface StickyCallToActionProps {
   data: StickyCtaData;
+  landingLocations?: string[];
 }
 
 function FormSkeleton() {
@@ -33,7 +34,7 @@ function FormSkeleton() {
   );
 }
 
-export function StickyCallToAction({ data }: StickyCallToActionProps) {
+export function StickyCallToAction({ data, landingLocations }: StickyCallToActionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
   const editMode = useEditModeOptional();
@@ -128,7 +129,8 @@ export function StickyCallToAction({ data }: StickyCallToActionProps) {
                     ...data.form,
                     variant: data.form.variant || "inline",
                     className: cn(data.form.className, "max-w-2xl mx-auto"),
-                  }} 
+                  }}
+                  landingLocations={landingLocations}
                 />
               </Suspense>
             )}

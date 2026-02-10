@@ -18,9 +18,10 @@ function parseLogoHeight(value?: string): number | undefined {
 
 interface HeroProductShowcaseProps {
   data: HeroProductShowcaseType | HeroApplyFormProductShowcase;
+  landingLocations?: string[];
 }
 
-export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
+export function HeroProductShowcase({ data, landingLocations }: HeroProductShowcaseProps) {
   // Hide background image on screens smaller than 1280px for better mobile experience
   const [showBackground, setShowBackground] = useState(false);
 
@@ -258,6 +259,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                         className: "w-full max-w-md",
                       } as LeadFormData
                     }
+                    landingLocations={landingLocations}
                   />
                 </div>
               )}
@@ -408,6 +410,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
                     className: "w-full max-w-md",
                   } as LeadFormData
                 }
+                landingLocations={landingLocations}
               />
             </div>
           )}

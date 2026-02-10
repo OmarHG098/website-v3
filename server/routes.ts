@@ -681,7 +681,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
 
-    res.json({ ...landing, locale, _experiment: experimentInfo });
+    const landingLocations = (commonData?.locations as string[] | undefined) || undefined;
+    res.json({ ...landing, locale, landing_locations: landingLocations, _experiment: experimentInfo });
   });
 
   // Locations API

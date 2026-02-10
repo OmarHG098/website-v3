@@ -8,9 +8,10 @@ import { HeroCourse } from "./HeroCourse";
 
 interface HeroProps {
   data: HeroSection;
+  landingLocations?: string[];
 }
 
-export function Hero({ data }: HeroProps) {
+export function Hero({ data, landingLocations }: HeroProps) {
   switch (data.variant) {
     case "singleColumn":
       return <HeroSingleColumn data={data} />;
@@ -18,7 +19,7 @@ export function Hero({ data }: HeroProps) {
       return <HeroShowcase data={data} />;
     case "productShowcase":
     case "ApplyFormProductShowcase":
-      return <HeroProductShowcase data={data} />;
+      return <HeroProductShowcase data={data} landingLocations={landingLocations} />;
     case "simpleTwoColumn":
       return <HeroSimpleTwoColumn data={data} />;
     case "simpleStacked":

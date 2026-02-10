@@ -237,6 +237,7 @@ interface SectionRendererProps {
   slug?: string;
   locale?: string;
   programSlug?: string;
+  landingLocations?: string[];
 }
 
 function EmptyPageState({ 
@@ -325,13 +326,13 @@ function LazySection({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<SectionSkeleton />}>{children}</Suspense>;
 }
 
-export function renderSection(section: Section, index: number): React.ReactNode {
+export function renderSection(section: Section, index: number, landingLocations?: string[]): React.ReactNode {
   const sectionType = (section as { type: string }).type;
   
   switch (sectionType) {
     // EAGER components - no Suspense needed
     case "hero":
-      return <Hero key={index} data={section as Parameters<typeof Hero>[0]["data"]} />;
+      return <Hero key={index} data={section as Parameters<typeof Hero>[0]["data"]} landingLocations={landingLocations} />;
     case "features_grid":
       return <FeaturesGrid key={index} data={section as Parameters<typeof FeaturesGrid>[0]["data"]} />;
     case "stats":
@@ -424,7 +425,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "programs_list":
       return <LazySection key={index}><ProgramsListSection data={section as Parameters<typeof ProgramsListSection>[0]["data"]} /></LazySection>;
     case "cta_banner":
-      return <LazySection key={index}><CTABannerSection data={section as Parameters<typeof CTABannerSection>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><CTABannerSection data={section as Parameters<typeof CTABannerSection>[0]["data"]} landingLocations={landingLocations} /></LazySection>;
     case "project_showcase":
     case "projects_showcase":
       return <LazySection key={index}><ProjectShowcase data={section as Parameters<typeof ProjectShowcase>[0]["data"]} /></LazySection>;
@@ -443,7 +444,7 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "pie_charts":
       return <LazySection key={index}><PieCharts data={section as Parameters<typeof PieCharts>[0]["data"]} /></LazySection>;
     case "lead_form":
-      return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} landingLocations={landingLocations} /></LazySection>;
     case "two_column_accordion_card":
       return <LazySection key={index}><TwoColumnAccordionCard data={section as Parameters<typeof TwoColumnAccordionCard>[0]["data"]} /></LazySection>;
     case "bullet_tabs_showcase":
@@ -451,13 +452,13 @@ export function renderSection(section: Section, index: number): React.ReactNode 
     case "graduates_stats":
       return <LazySection key={index}><GraduatesStats data={section as Parameters<typeof GraduatesStats>[0]["data"]} /></LazySection>;
     case "apply_form":
-      return <LazySection key={index}><ApplyFormSection data={section as Parameters<typeof ApplyFormSection>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><ApplyFormSection data={section as Parameters<typeof ApplyFormSection>[0]["data"]} landingLocations={landingLocations} /></LazySection>;
     case "value_proof_panel":
       return <LazySection key={index}><ValueProofPanel data={section as Parameters<typeof ValueProofPanel>[0]["data"]} /></LazySection>;
     case "split_cards":
       return <LazySection key={index}><SplitCards data={section as Parameters<typeof SplitCards>[0]["data"]} /></LazySection>;
     case "sticky_cta":
-      return <LazySection key={index}><StickyCallToAction data={section as Parameters<typeof StickyCallToAction>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><StickyCallToAction data={section as Parameters<typeof StickyCallToAction>[0]["data"]} landingLocations={landingLocations} /></LazySection>;
     case "bento_cards":
       return <LazySection key={index}><BentoCards data={section as Parameters<typeof BentoCards>[0]["data"]} /></LazySection>;
     case "banner":
@@ -537,7 +538,7 @@ function MobilePreviewFrame({ sections }: { sections: Section[] }) {
   );
 }
 
-export function SectionRenderer({ sections, contentType, slug, locale, programSlug }: SectionRendererProps) {
+export function SectionRenderer({ sections, contentType, slug, locale, programSlug, landingLocations }: SectionRendererProps) {
   const { toast } = useToast();
   const editMode = useEditModeOptional();
   const isEditMode = editMode?.isEditMode ?? false;
@@ -547,15 +548,15 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
     const sectionType = (section as { type: string }).type;
     
     if (sectionType === "cta_banner") {
-      return <LazySection key={index}><CTABannerSection data={section as Parameters<typeof CTABannerSection>[0]["data"]} programContext={programSlug} /></LazySection>;
+      return <LazySection key={index}><CTABannerSection data={section as Parameters<typeof CTABannerSection>[0]["data"]} programContext={programSlug} landingLocations={landingLocations} /></LazySection>;
     }
     
     if (sectionType === "lead_form") {
-      return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} programContext={programSlug} /></LazySection>;
+      return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} programContext={programSlug} landingLocations={landingLocations} /></LazySection>;
     }
     
-    return renderSection(section, index);
-  }, [programSlug]);
+    return renderSection(section, index, landingLocations);
+  }, [programSlug, landingLocations]);
   
   const handleMoveUp = useCallback(async (index: number) => {
     if (!contentType || !slug || !locale || index <= 0) return;
