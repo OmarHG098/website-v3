@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -151,10 +151,33 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
   const { slides, heading, subtitle, autoplay, autoplay_interval } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [maxContentHeight, setMaxContentHeight] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
+  const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    const measureContent = () => {
+      let tallest = 0;
+      contentRefs.current.forEach((el) => {
+        if (el) {
+          tallest = Math.max(tallest, el.scrollHeight);
+        }
+      });
+      if (tallest > 0) setMaxContentHeight(tallest);
+    };
+
+    measureContent();
+
+    const observer = new ResizeObserver(measureContent);
+    contentRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [slides]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -235,40 +258,44 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
           )}
 
           <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-            <div className="relative overflow-hidden">
-              <div className="grid" style={{ gridTemplateColumns: "1fr", gridTemplateRows: "1fr" }}>
-                {slides.map((slide, i) => {
-                  const offset = i - activeIndex;
-                  return (
-                    <div
-                      key={i}
-                      className="grid grid-cols-1 md:grid-cols-12 transition-all duration-500 ease-in-out"
-                      style={{
-                        gridArea: "1 / 1 / 2 / 2",
-                        transform: `translateX(${offset * 100}%)`,
-                        opacity: offset === 0 ? 1 : 0.5,
-                        pointerEvents: offset === 0 ? "auto" : "none",
-                      }}
-                    >
-                      <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
-                        <UniversalImage
-                          id={slide.image_id}
-                          className="w-full h-full"
-                          style={{
-                            objectFit:
-                              (slide.object_fit as React.CSSProperties["objectFit"]) ||
-                              "cover",
-                            objectPosition: slide.object_position || "center",
-                          }}
-                          data-testid={`img-partnership-slide-${i}`}
-                        />
-                      </div>
-                      <div className="flex flex-col justify-start md:col-span-7">
-                        <SlideContent slide={slide} />
-                      </div>
+            <div
+              className="relative overflow-hidden"
+              style={{
+                height: maxContentHeight > 0 ? `${maxContentHeight}px` : "auto",
+              }}
+            >
+              <div
+                className="flex transition-transform duration-500 ease-in-out h-full"
+                style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+              >
+                {slides.map((slide, i) => (
+                  <div
+                    key={i}
+                    className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 h-full"
+                  >
+                    <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
+                      <UniversalImage
+                        id={slide.image_id}
+                        className="w-full h-full"
+                        style={{
+                          objectFit:
+                            (slide.object_fit as React.CSSProperties["objectFit"]) ||
+                            "cover",
+                          objectPosition: slide.object_position || "center",
+                        }}
+                        data-testid={`img-partnership-slide-${i}`}
+                      />
                     </div>
-                  );
-                })}
+                    <div
+                      ref={(el) => {
+                        contentRefs.current[i] = el;
+                      }}
+                      className="flex flex-col justify-start md:col-span-7"
+                    >
+                      <SlideContent slide={slide} />
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
