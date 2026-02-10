@@ -1,16 +1,32 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck } from "@tabler/icons-react";
+import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import type { ImageRegistry } from "@shared/schema";
+import { apiRequest } from "@/lib/queryClient";
+
+interface ScanResult {
+  newImages: Array<{ id: string; src: string; filename: string }>;
+  updatedImages: Array<{ id: string; oldSrc: string; newSrc: string }>;
+  brokenReferences: Array<{ yamlFile: string; field: string; missingSrc: string }>;
+  registeredCount: number;
+  attachedAssetsCount: number;
+  summary: { new: number; updated: number; broken: number };
+}
 
 export default function MediaGallery() {
   const [search, setSearch] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
+  const [scanning, setScanning] = useState(false);
+  const [scanResult, setScanResult] = useState<ScanResult | null>(null);
+  const [applying, setApplying] = useState(false);
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
 
   const { data: registry, isLoading, error } = useQuery<ImageRegistry>({
     queryKey: ["/api/image-registry"],
@@ -24,6 +40,35 @@ export default function MediaGallery() {
 
   const handleImageError = (id: string) => {
     setFailedImages(prev => new Set(prev).add(id));
+  };
+
+  const handleScan = async () => {
+    setScanning(true);
+    setScanResult(null);
+    try {
+      const res = await apiRequest("POST", "/api/image-registry/scan");
+      const data: ScanResult = await res.json();
+      setScanResult(data);
+    } catch {
+      toast({ title: "Scan failed", description: "Could not scan image registry", variant: "destructive" });
+    } finally {
+      setScanning(false);
+    }
+  };
+
+  const handleApply = async () => {
+    setApplying(true);
+    try {
+      const res = await apiRequest("POST", "/api/image-registry/apply");
+      const data = await res.json();
+      toast({ title: "Applied", description: data.message });
+      setScanResult(null);
+      queryClient.invalidateQueries({ queryKey: ["/api/image-registry"] });
+    } catch {
+      toast({ title: "Apply failed", description: "Could not apply changes", variant: "destructive" });
+    } finally {
+      setApplying(false);
+    }
   };
 
   const filteredImages = registry?.images
@@ -57,15 +102,27 @@ export default function MediaGallery() {
               </div>
             </div>
             <div className="flex flex-col items-end gap-2">
-              <div className="relative w-64">
-                <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="pl-10 h-9"
-                  data-testid="input-search"
-                />
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleScan}
+                  disabled={scanning}
+                  data-testid="button-scan-registry"
+                >
+                  <IconRefresh className={`h-4 w-4 mr-1.5 ${scanning ? 'animate-spin' : ''}`} />
+                  {scanning ? "Scanning..." : "Scan Registry"}
+                </Button>
+                <div className="relative w-64">
+                  <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    placeholder="Search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                    className="pl-10 h-9"
+                    data-testid="input-search"
+                  />
+                </div>
               </div>
               {registry && (
                 <div className="flex flex-wrap gap-1.5 justify-end">
@@ -88,6 +145,100 @@ export default function MediaGallery() {
       </header>
 
       <div className="container mx-auto px-4 py-6 max-w-7xl">
+
+        {scanResult && (
+          <div className="mb-6 rounded-lg border p-4 space-y-3" data-testid="scan-results">
+            <div className="flex items-center justify-between">
+              <h3 className="font-semibold text-sm">Scan Results</h3>
+              <div className="flex items-center gap-2">
+                {(scanResult.summary.new > 0 || scanResult.summary.updated > 0) && (
+                  <Button
+                    size="sm"
+                    onClick={handleApply}
+                    disabled={applying}
+                    data-testid="button-apply-changes"
+                  >
+                    {applying ? "Applying..." : `Apply ${scanResult.summary.new + scanResult.summary.updated} changes`}
+                  </Button>
+                )}
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setScanResult(null)}
+                  data-testid="button-dismiss-scan"
+                >
+                  Dismiss
+                </Button>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap gap-4 text-sm">
+              <span className="text-muted-foreground">
+                Registered: <strong className="text-foreground">{scanResult.registeredCount}</strong>
+              </span>
+              <span className="text-muted-foreground">
+                In assets: <strong className="text-foreground">{scanResult.attachedAssetsCount}</strong>
+              </span>
+            </div>
+
+            {scanResult.brokenReferences.length > 0 && (
+              <div className="space-y-1.5">
+                <div className="flex items-center gap-1.5 text-sm font-medium text-destructive">
+                  <IconAlertTriangle className="h-4 w-4" />
+                  {scanResult.brokenReferences.length} broken reference(s)
+                </div>
+                <div className="max-h-32 overflow-y-auto space-y-1 pl-6">
+                  {scanResult.brokenReferences.map((ref, i) => (
+                    <div key={i} className="text-xs text-muted-foreground">
+                      <code className="text-foreground">{ref.yamlFile}</code>
+                      <span className="mx-1">&rarr;</span>
+                      <code className="text-destructive">{ref.missingSrc}</code>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {scanResult.updatedImages.length > 0 && (
+              <div className="space-y-1.5">
+                <div className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                  {scanResult.updatedImages.length} image(s) with changed extensions
+                </div>
+                <div className="max-h-24 overflow-y-auto space-y-1 pl-6">
+                  {scanResult.updatedImages.map((img, i) => (
+                    <div key={i} className="text-xs text-muted-foreground">
+                      <code className="text-foreground">{img.id}</code>: {img.oldSrc.split('/').pop()} &rarr; {img.newSrc.split('/').pop()}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {scanResult.newImages.length > 0 && (
+              <div className="space-y-1.5">
+                <div className="text-sm font-medium text-amber-600 dark:text-amber-400">
+                  {scanResult.newImages.length} unregistered image(s)
+                </div>
+                <div className="max-h-32 overflow-y-auto space-y-1 pl-6">
+                  {scanResult.newImages.map((img, i) => (
+                    <div key={i} className="text-xs text-muted-foreground">
+                      <code className="text-foreground">{img.filename}</code>
+                      <span className="mx-1">&rarr;</span>
+                      id: <code>{img.id}</code>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {scanResult.summary.new === 0 && scanResult.summary.updated === 0 && scanResult.summary.broken === 0 && (
+              <div className="flex items-center gap-2 text-sm text-green-600 dark:text-green-400">
+                <IconCheck className="h-4 w-4" />
+                All image references are valid
+              </div>
+            )}
+          </div>
+        )}
 
         {isLoading && (
           <div className="flex items-center justify-center py-16">
