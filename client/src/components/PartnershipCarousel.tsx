@@ -234,109 +234,115 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
       onMouseEnter={handlePause}
       onMouseLeave={handleResume}
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
-        {(heading || subtitle) && (
-          <div className="text-center mb-10">
-            {heading && (
-              <h2
-                className="text-3xl md:text-4xl font-bold text-foreground mb-3"
-                data-testid="text-carousel-heading"
-              >
-                {heading}
-              </h2>
-            )}
-            {subtitle && (
-              <p
-                className="text-lg text-muted-foreground max-w-2xl mx-auto"
-                data-testid="text-carousel-subtitle"
-              >
-                {subtitle}
-              </p>
-            )}
-          </div>
-        )}
-
-        <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-          <div
-            className="relative overflow-hidden"
-            style={{ height: maxContentHeight > 0 ? `${maxContentHeight}px` : "auto" }}
-          >
-            <div
-              className="flex transition-transform duration-500 ease-in-out h-full"
-              style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-            >
-              {slides.map((slide, i) => (
-                <div
-                  key={i}
-                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 h-full"
+      <div>
+        <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
+          {(heading || subtitle) && (
+            <div className="text-center mb-10">
+              {heading && (
+                <h2
+                  className="text-3xl md:text-4xl font-bold text-foreground mb-3"
+                  data-testid="text-carousel-heading"
                 >
-                  <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
-                    <UniversalImage
-                      id={slide.image_id}
-                      className="w-full h-full"
-                      style={{
-                        objectFit:
-                          (slide.object_fit as React.CSSProperties["objectFit"]) ||
-                          "cover",
-                        objectPosition: slide.object_position || "center",
-                      }}
-                      data-testid={`img-partnership-slide-${i}`}
-                    />
-                  </div>
-                  <div
-                    ref={(el) => { contentRefs.current[i] = el; }}
-                    className="flex flex-col justify-start md:col-span-7"
-                  >
-                    <SlideContent slide={slide} />
-                  </div>
-                </div>
-              ))}
+                  {heading}
+                </h2>
+              )}
+              {subtitle && (
+                <p
+                  className="text-lg text-muted-foreground max-w-2xl mx-auto"
+                  data-testid="text-carousel-subtitle"
+                >
+                  {subtitle}
+                </p>
+              )}
             </div>
-          </div>
-        </div>
+          )}
 
-        {totalSlides > 1 && (
-          <div className="flex items-center justify-between mt-6 px-2">
-            <Button
-              size="icon"
-              variant="outline"
-              onClick={goToPrevious}
-              disabled={isTransitioning}
-              data-testid="button-carousel-prev"
-            >
-              <IconChevronLeft className="w-5 h-5" />
-            </Button>
-
+          <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
             <div
-              className="flex items-center gap-2"
-              data-testid="dots-carousel"
+              className="relative overflow-hidden"
+              style={{
+                height: maxContentHeight > 0 ? `${maxContentHeight}px` : "auto",
+              }}
             >
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "rounded-full transition-all duration-300",
-                    i === activeIndex
-                      ? "w-8 h-2 bg-primary"
-                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
-                  )}
-                  data-testid={`button-carousel-dot-${i}`}
-                />
-              ))}
+              <div
+                className="flex transition-transform duration-500 ease-in-out h-full"
+                style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+              >
+                {slides.map((slide, i) => (
+                  <div
+                    key={i}
+                    className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 h-full"
+                  >
+                    <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
+                      <UniversalImage
+                        id={slide.image_id}
+                        className="w-full h-full"
+                        style={{
+                          objectFit:
+                            (slide.object_fit as React.CSSProperties["objectFit"]) ||
+                            "cover",
+                          objectPosition: slide.object_position || "center",
+                        }}
+                        data-testid={`img-partnership-slide-${i}`}
+                      />
+                    </div>
+                    <div
+                      ref={(el) => {
+                        contentRefs.current[i] = el;
+                      }}
+                      className="flex flex-col justify-start md:col-span-7"
+                    >
+                      <SlideContent slide={slide} />
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-
-            <Button
-              size="icon"
-              variant="outline"
-              onClick={goToNext}
-              disabled={isTransitioning}
-              data-testid="button-carousel-next"
-            >
-              <IconChevronRight className="w-5 h-5" />
-            </Button>
           </div>
-        )}
+
+          {totalSlides > 1 && (
+            <div className="flex items-center justify-between mt-6 px-2">
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={goToPrevious}
+                disabled={isTransitioning}
+                data-testid="button-carousel-prev"
+              >
+                <IconChevronLeft className="w-5 h-5" />
+              </Button>
+
+              <div
+                className="flex items-center gap-2"
+                data-testid="dots-carousel"
+              >
+                {slides.map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => goTo(i)}
+                    className={cn(
+                      "rounded-full transition-all duration-300",
+                      i === activeIndex
+                        ? "w-8 h-2 bg-primary"
+                        : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
+                    )}
+                    data-testid={`button-carousel-dot-${i}`}
+                  />
+                ))}
+              </div>
+
+              <Button
+                size="icon"
+                variant="outline"
+                onClick={goToNext}
+                disabled={isTransitioning}
+                data-testid="button-carousel-next"
+              >
+                <IconChevronRight className="w-5 h-5" />
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

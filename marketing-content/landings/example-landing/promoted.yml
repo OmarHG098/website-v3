@@ -230,7 +230,7 @@ sections:
         cta:
           text: See Impact
           url: /en/united-way
-          variant: primary
+          variant: outline
       - image_id: uruguay_city
         title: Uruguay Tech Initiative
         subtitle: Expanding coding education across Latin America
