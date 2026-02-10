@@ -33,7 +33,7 @@ props:
         - rigobot
         - learnpack
         - certification
-    description: Select up to 3 topics to pull FAQs from centralized data. Sorted by match count and priority. Max 9 FAQs displayed.
+    description: Select up to 3 topics to pull FAQs from centralized data. Sorted by match count and priority. Priority 1 = highest. Max 9 FAQs displayed.
     example: ["career-support", "job-guarantee"]
   items:
     type: array

@@ -46,7 +46,7 @@ props:
         - rigobot
         - learnpack
         - certification
-    description: Select up to 3 topics to pull testimonials from centralized data. Sorted by match count and priority. Max 9 testimonials displayed.
+    description: Select up to 3 topics to pull testimonials from centralized data. Sorted by match count and priority. Priority 1 = highest. Max 9 testimonials displayed.
     example: ["career-support", "job-guarantee"]
   testimonials:
     type: array

@@ -76,6 +76,7 @@ export function filterFaqsByRelatedFeatures(
     });
   }
 
+  // 1 = highest priority
   if (relatedFeatures && relatedFeatures.length > 0) {
     filtered = filtered.sort((a, b) => {
       const aFeatures = a.related_features || [];
@@ -86,10 +87,10 @@ export function filterFaqsByRelatedFeatures(
       if (bMatchCount !== aMatchCount) {
         return bMatchCount - aMatchCount;
       }
-      return (b.priority ?? 0) - (a.priority ?? 0);
+      return (a.priority ?? Infinity) - (b.priority ?? Infinity);
     });
   } else {
-    filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+    filtered = filtered.sort((a, b) => (a.priority ?? Infinity) - (b.priority ?? Infinity));
   }
 
   if (limit !== undefined && limit > 0) {

@@ -184,7 +184,8 @@ function resolveFaqItems(section: FaqSection, locale: string): Array<{ question:
         const aCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
         const bCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
         if (bCount !== aCount) return bCount - aCount;
-        return (b.priority ?? 0) - (a.priority ?? 0);
+        // 1 = highest priority
+        return (a.priority ?? Infinity) - (b.priority ?? Infinity);
       })
       .slice(0, 9);
 
