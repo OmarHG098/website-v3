@@ -262,11 +262,6 @@ export function CourseSelectorDefault({ data }: CourseSelectorDefaultProps) {
                         : "text-muted-foreground hover:text-foreground"
                     }
                   `}
-                  style={{
-                    borderLeft: isActive
-                      ? `2px solid ${hslColor(resolved, 1.5)}`
-                      : "",
-                  }}
                   data-testid={`button-tab-${index}`}
                 >
                   <span className="text-sm md:text-lg">{course.name}</span>
