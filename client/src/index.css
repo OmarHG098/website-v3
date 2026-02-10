@@ -63,6 +63,12 @@
 
 /* LIGHT MODE - 4Geeks Brand Colors */
 :root {
+  /* Temporary colors for courses */
+  --color-green: 152 60% 56%;
+  --color-orange: 18 100% 71%;
+  --color-pink: 330 80% 80%;
+  --color-purple: 270 60% 72%;
+    
   /* Brand Colors (from brandbook):
      Black: #00041A | Blue: #0084FF | Yellow: #FFB718
      Dark: #1D1D1F | Light: #FAFAFA | White: #FFFFFF */

@@ -84,8 +84,9 @@ export function CourseContent({
           <span
             style={{
               backgroundColor: hslColor(resolved, 0.8),
+              border: "1px solid " + hslColor(resolved, 0.5)
             }}
-            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full border border-border bg-background "
+            className="inline-flex items-center gap-1 text-xs font-medium px-2.5 py-1 rounded-full bg-background "
             data-testid="badge-label"
           >
             <IconCheck className="w-3.5 h-3.5" />

@@ -82,8 +82,12 @@
     { "id": "primary", "label": "Primary", "cssVar": "--primary" },
     { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
     { "id": "accent", "label": "Accent", "cssVar": "--accent" },
-    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" },
-    { "id": "secondary-foreground", "label": "Secondary", "cssVar": "--secondary-foreground" }
+    { "id": "destructive", "label": "Destructive", "value": "hsl(var(--destructive) / 0.5)" },
+    { "id": "secondary-foreground", "label": "Secondary", "cssVar": "--secondary-foreground" },
+    { "id": "green", "label": "Green", "cssVar": "--color-green" },
+    { "id": "orange", "label": "Orange", "cssVar": "--color-orange" },
+    { "id": "pink", "label": "Pink", "cssVar": "--color-pink" },
+    { "id": "purple", "label": "Purple", "cssVar": "--color-purple" }
   ],
   "fontSizes": [
     { "id": "xs", "label": "Extra Small", "value": "0.75rem", "tailwind": "text-xs" },
