@@ -3077,14 +3077,22 @@ sections: []
     }
   });
 
-  app.post("/api/image-registry/apply", (_req, res) => {
+  app.post("/api/image-registry/apply", (req, res) => {
     try {
+      const action = req.query.action as string | undefined;
       const scanResult = scanImageRegistry();
-      if (scanResult.newImages.length === 0 && scanResult.updatedImages.length === 0) {
+
+      const filtered = {
+        ...scanResult,
+        newImages: action === "update" ? [] : scanResult.newImages,
+        updatedImages: action === "add" ? [] : scanResult.updatedImages,
+      };
+
+      if (filtered.newImages.length === 0 && filtered.updatedImages.length === 0) {
         res.json({ message: "Nothing to apply", added: 0, updated: 0 });
         return;
       }
-      const applied = applyRegistryChanges(scanResult);
+      const applied = applyRegistryChanges(filtered);
       clearImageRegistryCache();
       res.json({
         message: `Applied ${applied.added} new, ${applied.updated} updated`,

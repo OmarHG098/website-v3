@@ -56,14 +56,20 @@ export default function MediaGallery() {
     }
   };
 
-  const handleApply = async () => {
+  const handleApply = async (action: "add" | "update") => {
     setApplying(true);
     try {
-      const res = await apiRequest("POST", "/api/image-registry/apply");
+      const res = await apiRequest("POST", `/api/image-registry/apply?action=${action}`);
       const data = await res.json();
       toast({ title: "Applied", description: data.message });
-      setScanResult(null);
       queryClient.invalidateQueries({ queryKey: ["/api/image-registry"] });
+      const refreshed = await apiRequest("POST", "/api/image-registry/scan");
+      const freshScan: ScanResult = await refreshed.json();
+      if (freshScan.summary.new === 0 && freshScan.summary.updated === 0 && freshScan.summary.broken === 0) {
+        setScanResult(null);
+      } else {
+        setScanResult(freshScan);
+      }
     } catch {
       toast({ title: "Apply failed", description: "Could not apply changes", variant: "destructive" });
     } finally {
@@ -151,14 +157,25 @@ export default function MediaGallery() {
             <div className="flex items-center justify-between">
               <h3 className="font-semibold text-sm">Scan Results</h3>
               <div className="flex items-center gap-2">
-                {(scanResult.summary.new > 0 || scanResult.summary.updated > 0) && (
+                {scanResult.summary.updated > 0 && (
                   <Button
                     size="sm"
-                    onClick={handleApply}
+                    variant="outline"
+                    onClick={() => handleApply("update")}
                     disabled={applying}
-                    data-testid="button-apply-changes"
+                    data-testid="button-apply-updates"
                   >
-                    {applying ? "Applying..." : `Apply ${scanResult.summary.new + scanResult.summary.updated} changes`}
+                    {applying ? "Applying..." : `Update ${scanResult.summary.updated} extension(s)`}
+                  </Button>
+                )}
+                {scanResult.summary.new > 0 && (
+                  <Button
+                    size="sm"
+                    onClick={() => handleApply("add")}
+                    disabled={applying}
+                    data-testid="button-apply-new"
+                  >
+                    {applying ? "Applying..." : `Add ${scanResult.summary.new} new image(s)`}
                   </Button>
                 )}
                 <Button
