@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle, IconDots, IconTrash } from "@tabler/icons-react";
+import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle, IconDots, IconTrash, IconSquareCheck, IconSquare, IconX, IconChecks } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -9,6 +9,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Link } from "wouter";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -24,6 +32,12 @@ interface ScanResult {
   summary: { new: number; updated: number; broken: number };
 }
 
+interface BulkDeleteResult {
+  id: string;
+  success: boolean;
+  message: string;
+}
+
 export default function MediaGallery() {
   const [search, setSearch] = useState("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
@@ -31,6 +45,9 @@ export default function MediaGallery() {
   const [scanning, setScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
   const [applying, setApplying] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<Set<string>>(new Set());
+  const [bulkDeleting, setBulkDeleting] = useState(false);
+  const [bulkDeleteResults, setBulkDeleteResults] = useState<BulkDeleteResult[] | null>(null);
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
@@ -109,6 +126,18 @@ export default function MediaGallery() {
     }
   };
 
+  const toggleImageSelection = (id: string) => {
+    setSelectedImages(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) {
+        next.delete(id);
+      } else {
+        next.add(id);
+      }
+      return next;
+    });
+  };
+
   const PAGE_SIZE = 50;
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const sentinelRef = useRef<HTMLDivElement>(null);
@@ -123,6 +152,35 @@ export default function MediaGallery() {
         );
       })
     : [];
+
+  const handleSelectAll = () => {
+    const allIds = filteredImages.map(([id]) => id);
+    setSelectedImages(new Set(allIds));
+  };
+
+  const handleClearSelection = () => {
+    setSelectedImages(new Set());
+  };
+
+  const handleBulkDelete = async () => {
+    if (selectedImages.size === 0) return;
+    setBulkDeleting(true);
+    try {
+      const res = await apiRequest("POST", "/api/image-registry/bulk-delete", {
+        ids: Array.from(selectedImages),
+      });
+      const data = await res.json();
+      setBulkDeleteResults(data.results);
+      if (data.deletedCount > 0) {
+        queryClient.invalidateQueries({ queryKey: ["/api/image-registry"] });
+      }
+      setSelectedImages(new Set());
+    } catch {
+      toast({ title: "Bulk delete failed", description: "Could not complete bulk delete operation", variant: "destructive" });
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
 
   useEffect(() => {
     setVisibleCount(PAGE_SIZE);
@@ -344,29 +402,44 @@ export default function MediaGallery() {
               className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
               style={{ columnFill: 'balance' }}
             >
-              {visibleImages.map(([id, img]) => (
+              {visibleImages.map(([id, img]) => {
+                const isSelected = selectedImages.has(id);
+                return (
                 <div 
                   key={id} 
                   className="break-inside-avoid mb-4 group"
                   data-testid={`card-image-${id}`}
                 >
-                  <div className="rounded-lg overflow-hidden bg-muted border hover-elevate transition-shadow">
-                    {failedImages.has(id) ? (
-                      <div className="aspect-video flex items-center justify-center bg-muted">
-                        <div className="text-center p-4">
-                          <IconPhoto className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                          <p className="text-xs text-muted-foreground">Not found</p>
+                  <div className={`rounded-lg overflow-hidden bg-muted border hover-elevate transition-shadow ${isSelected ? 'ring-2 ring-primary border-primary' : ''}`}>
+                    <div
+                      className="relative cursor-pointer"
+                      onClick={() => toggleImageSelection(id)}
+                      data-testid={`select-image-${id}`}
+                    >
+                      {failedImages.has(id) ? (
+                        <div className="aspect-video flex items-center justify-center bg-muted">
+                          <div className="text-center p-4">
+                            <IconPhoto className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
+                            <p className="text-xs text-muted-foreground">Not found</p>
+                          </div>
                         </div>
+                      ) : (
+                        <img
+                          src={img.src}
+                          alt={img.alt}
+                          className="w-full h-auto"
+                          loading="lazy"
+                          onError={() => handleImageError(id)}
+                        />
+                      )}
+                      <div className={`absolute top-2 left-2 transition-opacity ${isSelected ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                        {isSelected ? (
+                          <IconSquareCheck className="h-5 w-5 text-primary drop-shadow-md" />
+                        ) : (
+                          <IconSquare className="h-5 w-5 text-white drop-shadow-md" />
+                        )}
                       </div>
-                    ) : (
-                      <img
-                        src={img.src}
-                        alt={img.alt}
-                        className="w-full h-auto"
-                        loading="lazy"
-                        onError={() => handleImageError(id)}
-                      />
-                    )}
+                    </div>
                     <div className="p-3">
                       <div className="flex items-center justify-between gap-2 mb-1">
                         <code className="text-xs font-mono truncate text-foreground" data-testid={`text-image-id-${id}`}>
@@ -426,7 +499,8 @@ export default function MediaGallery() {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {hasMore && (
@@ -456,6 +530,107 @@ export default function MediaGallery() {
           </>
         )}
       </div>
+
+      {selectedImages.size > 0 && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg" data-testid="bulk-action-toolbar">
+          <div className="container mx-auto px-4 max-w-7xl">
+            <div className="flex items-center justify-between py-3 gap-4">
+              <div className="flex items-center gap-3">
+                <IconChecks className="h-5 w-5 text-primary" />
+                <span className="text-sm font-medium" data-testid="text-selected-count">
+                  {selectedImages.size} image{selectedImages.size !== 1 ? 's' : ''} selected
+                </span>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleSelectAll}
+                  data-testid="button-select-all"
+                >
+                  Select all ({filteredImages.length})
+                </Button>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={handleBulkDelete}
+                  disabled={bulkDeleting}
+                  data-testid="button-bulk-delete"
+                >
+                  <IconTrash className="h-4 w-4 mr-1.5" />
+                  {bulkDeleting ? "Deleting..." : `Delete Selected`}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={handleClearSelection}
+                  data-testid="button-clear-selection"
+                >
+                  <IconX className="h-4 w-4 mr-1.5" />
+                  Clear
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <Dialog open={bulkDeleteResults !== null} onOpenChange={(open) => { if (!open) setBulkDeleteResults(null); }}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle>Bulk Delete Results</DialogTitle>
+          </DialogHeader>
+          {bulkDeleteResults && (
+            <div className="space-y-3">
+              <div className="flex items-center gap-4 text-sm">
+                <span className="text-green-600 dark:text-green-400">
+                  {bulkDeleteResults.filter(r => r.success).length} deleted
+                </span>
+                {bulkDeleteResults.some(r => !r.success) && (
+                  <span className="text-destructive">
+                    {bulkDeleteResults.filter(r => !r.success).length} failed
+                  </span>
+                )}
+              </div>
+              <ScrollArea className="max-h-[400px]">
+                <div className="border rounded-md">
+                  <table className="w-full text-sm">
+                    <thead>
+                      <tr className="border-b bg-muted/50">
+                        <th className="text-left px-3 py-2 font-medium">Image ID</th>
+                        <th className="text-left px-3 py-2 font-medium">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {bulkDeleteResults.map((result) => (
+                        <tr
+                          key={result.id}
+                          className={result.success
+                            ? "bg-green-50 dark:bg-green-950/30"
+                            : "bg-red-50 dark:bg-red-950/30"
+                          }
+                        >
+                          <td className="px-3 py-2 font-mono text-xs truncate max-w-[200px]" data-testid={`text-result-id-${result.id}`}>
+                            {result.id}
+                          </td>
+                          <td className={`px-3 py-2 text-xs ${result.success ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`} data-testid={`text-result-status-${result.id}`}>
+                            {result.message}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </ScrollArea>
+            </div>
+          )}
+          <DialogFooter>
+            <Button onClick={() => setBulkDeleteResults(null)} data-testid="button-close-results">
+              Close
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
