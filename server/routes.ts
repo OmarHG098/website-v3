@@ -1963,6 +1963,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const fullPath = path.join(process.cwd(), normalizedPath);
       if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
+        console.log(`[Folder Files] 404 for: ${folderPath} (full: ${fullPath})`);
         res.status(404).json({ error: "Folder not found" });
         return;
       }
