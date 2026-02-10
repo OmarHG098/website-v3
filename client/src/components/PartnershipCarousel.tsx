@@ -11,6 +11,7 @@ import type {
   PartnershipCarouselSection,
   PartnershipSlide,
 } from "@shared/schema";
+import {Card} from "@/components/ui/card.tsx"
 
 interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
@@ -47,7 +48,7 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
         {slide.stats && slide.stats.length > 0 && (
           <div className="flex gap-3 mt-2" data-testid="stats-partnership">
             {slide.stats.map((stat, i) => (
-              <div key={i} className="flex flex-col justify-center">
+              <Card key={i} className="flex flex-col justify-center p-2">
                 <span
                   className="text-2xl md:text-4xl font-bold text-primary text-center"
                   data-testid={`text-stat-value-${i}`}
@@ -60,7 +61,7 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
                 >
                   {stat.label}
                 </span>
-              </div>
+              </Card>
             ))}
           </div>
         )}
