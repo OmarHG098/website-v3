@@ -58,6 +58,7 @@ import {
   IconMenu2,
   IconDotsVertical,
   IconDownload,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -1690,6 +1691,18 @@ export function DebugBubble() {
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
+                
+                <a
+                  href="/private/media-gallery"
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-media-gallery"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                    <span>Media Gallery</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </a>
                 
                 {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
