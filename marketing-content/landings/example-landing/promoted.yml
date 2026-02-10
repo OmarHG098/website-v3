@@ -333,10 +333,10 @@ sections:
             logo_height: 40px
           - image_id: logo_utec
             alt: CRUSA Foundation
-            logo_height: 40px
+            logo_height: 30px
           - image_id: logo_crusa
             alt: CRUSA Foundation
-            logo_height: 30px
+            logo_height: 10px
           - image_id: logo_crusa
             alt: CRUSA Foundation
             logo_height: 40px
