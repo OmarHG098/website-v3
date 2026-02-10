@@ -192,51 +192,22 @@ sections:
     image_object_fit: cover
     paddingY:
       desktop: md none
-  - type: human_and_ai_duo
-    version: "1.0"
-    heading: Our AI-powered features make all the difference!
-    description: Through years of research and experience, we've perfected the strategies and tools to ensure your constant and efficient progress. To optimize your learning curve and empower you to tackle challenges with confidence, we've now incorporated the power of AI
-    bullet_groups:
-      - title: "Learnpack, our interactive learning software, provides:"
-        image: data:image/png;base64,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
-        bullets:
-          - text: There are hundreds of interactive exercises to help you master and retain skills.
-            icon: CircleCheck
-          - text: Automated tests to help track your progress.
-            icon: Bug
-          - text: Structured practice.
-            icon: Settings
-      - title: "Meet Rigobot, our AI coding assistant:"
-        bullets:
-          - text: Instant tutoring as you code.
-            icon: Message
-          - text: Skill evaluations to track your progress.
-            icon: ChartBar
-          - text: Expert bug fixing assistance.
-            icon: Code
-    footer_description: Experience the difference our AI-powered features make. Our tried-and-tested approach keeps you engaged, motivated, and on the fast track to achieving your coding goals!
-    image: /attached_assets/Group_6685_(1)_1765300162049.png
-    image_alt: Woman working on laptop in cafe
-    background: hsl(210 100% 50% / 0.05)
-    video: https://www.youtube.com/watch?v=6m1Jyya7eCc
-    video_preview_image: https://i.postimg.cc/N0rk7Pk3/ai-mentor.png
-    video_ratio: 1.8:1
   - type: testimonials_slide
-    title: Real Careers Start Here — Just Ask Our Students
-    description: Hear from graduates who turned their aspirations into thriving tech careers through our programs. With unlimited support and real-world projects, their success stories could be yours too.
+    title: Proven Paths to Tech Careers
+    description: These student journeys show how structured learning, AI-powered support, and expert career coaching lead to real outcomes.
     background: bg-sidebar
-    variant: default
   - type: split_cards
     variant: primary-left
     primary:
       heading: The Confidence of a Job Guarantee
-      description: "The strongest proof that we believe in our model? We back it with a Job Guarantee. Most schools promise \"career support.\" At 4Geeks, we promise results: get hired within 9 months, or we refund your tuition in full. Conditions apply."
+      description: |
+        The strongest proof that our approach works? We’re willing to stand behind it. Our optional Job Guarantee is designed to give students extra confidence when transitioning into tech. While many schools talk about career support, we commit to outcomes: get hired into a tech role within 9 months of graduation, or receive a full tuition refund. Conditions apply.
       badge: Results-Backed Promise
     secondary:
       benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
+        - text: 84% hiring rate among graduates
+        - text: 3–6 months average time to get hired
+        - text: 55% average salary increase in tech roles
     background: hsl(var(--secondary))
   - type: why_learn_ai
     variant: laptop-edge
