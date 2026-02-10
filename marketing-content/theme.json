@@ -78,7 +78,12 @@
     { "id": "primary-soft", "label": "Primary Soft", "value": "hsl(var(--primary) / 0.3)" },
     { "id": "primary-light", "label": "Primary Light", "value": "hsl(var(--primary) / 0.2)" },
     { "id": "muted", "label": "Muted", "cssVar": "--muted-foreground" },
-    { "id": "muted-soft", "label": "Muted Soft", "value": "hsl(var(--muted-foreground) / 0.7)" }
+    { "id": "muted-soft", "label": "Muted Soft", "value": "hsl(var(--muted-foreground) / 0.7)" },
+    { "id": "primary", "label": "Primary", "cssVar": "--primary" },
+    { "id": "secondary", "label": "Secondary", "cssVar": "--secondary" },
+    { "id": "accent", "label": "Accent", "cssVar": "--accent" },
+    { "id": "destructive", "label": "Destructive", "cssVar": "--destructive" },
+    { "id": "secondary-foreground", "label": "Secondary", "cssVar": "--secondary-foreground" }
   ],
   "fontSizes": [
     { "id": "xs", "label": "Extra Small", "value": "0.75rem", "tailwind": "text-xs" },
