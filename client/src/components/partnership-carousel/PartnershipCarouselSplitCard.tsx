@@ -254,10 +254,33 @@ export function PartnershipCarouselSplitCard({
   } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [maxHeight, setMaxHeight] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    const measure = () => {
+      let tallest = 0;
+      slideRefs.current.forEach((el) => {
+        if (el) {
+          tallest = Math.max(tallest, el.scrollHeight);
+        }
+      });
+      if (tallest > 0) setMaxHeight(tallest);
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    slideRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [slides]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -332,17 +355,21 @@ export function PartnershipCarouselSplitCard({
           </div>
         )}
 
-        <div className="relative">
-          <div className="grid grid-cols-1 grid-rows-1">
+        <div
+          className="relative overflow-hidden"
+          style={{
+            height: maxHeight > 0 ? `${maxHeight}px` : "auto",
+          }}
+        >
+          <div
+            className="flex transition-transform duration-500 ease-in-out h-full"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          >
             {slides.map((slide, i) => (
               <div
                 key={i}
-                className={cn(
-                  "col-start-1 row-start-1 transition-all duration-500 ease-in-out",
-                  i === activeIndex
-                    ? "opacity-100 translate-y-0 z-10"
-                    : "opacity-0 translate-y-4 z-0 pointer-events-none",
-                )}
+                ref={(el) => { slideRefs.current[i] = el; }}
+                className="w-full flex-shrink-0"
               >
                 <SlideContent
                   slide={slide}
