@@ -1168,7 +1168,7 @@ export function DebugBubble() {
     const parts = urlPath.split('/').filter(Boolean);
     const hasLocale = parts[0] === 'en' || parts[0] === 'es';
     const contentParts = hasLocale ? parts.slice(1) : parts;
-    const slug = contentParts[contentParts.length - 1];
+    const slug = contentParts.length === 0 ? 'home' : contentParts[contentParts.length - 1];
     if (!slug) {
       toast({ title: "Cannot download", description: "Could not determine slug from URL", variant: "destructive" });
       return;
