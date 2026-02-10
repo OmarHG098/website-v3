@@ -85,7 +85,7 @@ export function UniversalImage({
     onError?.();
   };
 
-  if (registryLoading || !registry) {
+  if (registryLoading || !registry || !registry.images) {
     return (
       <div 
         className={`bg-muted animate-pulse ${className}`}

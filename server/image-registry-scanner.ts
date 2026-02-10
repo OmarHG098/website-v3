@@ -1,0 +1,258 @@
+import * as fs from "fs";
+import * as path from "path";
+import * as yaml from "js-yaml";
+
+const ATTACHED_ASSETS_DIR = path.join(process.cwd(), "attached_assets");
+const MARKETING_CONTENT_DIR = path.join(process.cwd(), "marketing-content");
+const REGISTRY_PATH = path.join(MARKETING_CONTENT_DIR, "image-registry.json");
+
+const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".svg", ".avif", ".gif"]);
+
+export interface ScanNewImage {
+  id: string;
+  src: string;
+  filename: string;
+}
+
+export interface ScanUpdatedImage {
+  id: string;
+  oldSrc: string;
+  newSrc: string;
+}
+
+export interface BrokenReference {
+  yamlFile: string;
+  field: string;
+  missingSrc: string;
+}
+
+export interface ScanResult {
+  newImages: ScanNewImage[];
+  updatedImages: ScanUpdatedImage[];
+  brokenReferences: BrokenReference[];
+  registeredCount: number;
+  attachedAssetsCount: number;
+  summary: {
+    new: number;
+    updated: number;
+    broken: number;
+  };
+}
+
+function filenameToId(filename: string): string {
+  const name = path.parse(filename).name;
+  return name
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+}
+
+function getIdBase(filename: string): string {
+  const name = path.parse(filename).name;
+  const withoutTimestamp = name.replace(/_\d{13,}$/, "");
+  return withoutTimestamp
+    .replace(/[_\s]+/g, "-")
+    .replace(/[^a-zA-Z0-9-]/g, "")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "")
+    .toLowerCase();
+}
+
+function scanAttachedAssets(): Map<string, string> {
+  const imageFiles = new Map<string, string>();
+  if (!fs.existsSync(ATTACHED_ASSETS_DIR)) return imageFiles;
+
+  function walkDir(dir: string, prefix: string) {
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        walkDir(path.join(dir, entry.name), `${prefix}${entry.name}/`);
+      } else {
+        const ext = path.extname(entry.name).toLowerCase();
+        if (IMAGE_EXTENSIONS.has(ext)) {
+          const relPath = `${prefix}${entry.name}`;
+          imageFiles.set(relPath, `/attached_assets/${relPath}`);
+        }
+      }
+    }
+  }
+
+  walkDir(ATTACHED_ASSETS_DIR, "");
+  return imageFiles;
+}
+
+function loadRegistry(): { presets: Record<string, any>; images: Record<string, any> } {
+  try {
+    const content = fs.readFileSync(REGISTRY_PATH, "utf8");
+    return JSON.parse(content);
+  } catch {
+    return { presets: {}, images: {} };
+  }
+}
+
+function findImageRefsInValue(
+  value: any,
+  currentPath: string,
+  results: Array<{ field: string; src: string }>
+): void {
+  if (typeof value === "string") {
+    if (value.startsWith("/attached_assets/") || value.startsWith("attached_assets/")) {
+      results.push({ field: currentPath, src: value });
+    }
+  } else if (Array.isArray(value)) {
+    value.forEach((item, index) => {
+      findImageRefsInValue(item, `${currentPath}[${index}]`, results);
+    });
+  } else if (value && typeof value === "object") {
+    for (const [key, val] of Object.entries(value)) {
+      findImageRefsInValue(val, currentPath ? `${currentPath}.${key}` : key, results);
+    }
+  }
+}
+
+function scanYamlFiles(): Array<{ yamlFile: string; field: string; src: string }> {
+  const refs: Array<{ yamlFile: string; field: string; src: string }> = [];
+
+  function walkDir(dir: string) {
+    if (!fs.existsSync(dir)) return;
+    const entries = fs.readdirSync(dir, { withFileTypes: true });
+    for (const entry of entries) {
+      const fullPath = path.join(dir, entry.name);
+      if (entry.isDirectory()) {
+        walkDir(fullPath);
+      } else if (entry.name.endsWith(".yml") || entry.name.endsWith(".yaml")) {
+        try {
+          const content = fs.readFileSync(fullPath, "utf8");
+          const parsed = yaml.load(content);
+          if (parsed && typeof parsed === "object") {
+            const fileRefs: Array<{ field: string; src: string }> = [];
+            findImageRefsInValue(parsed, "", fileRefs);
+            const relPath = path.relative(process.cwd(), fullPath);
+            for (const ref of fileRefs) {
+              refs.push({ yamlFile: relPath, field: ref.field, src: ref.src });
+            }
+          }
+        } catch {
+          // skip unparseable YAML
+        }
+      }
+    }
+  }
+
+  walkDir(MARKETING_CONTENT_DIR);
+  return refs;
+}
+
+export function scanImageRegistry(): ScanResult {
+  const registry = loadRegistry();
+  const attachedAssets = scanAttachedAssets();
+  const yamlRefs = scanYamlFiles();
+
+  const existingSrcSet = new Set<string>();
+  const existingIdByBase = new Map<string, { id: string; src: string } | null>();
+
+  for (const [id, entry] of Object.entries(registry.images)) {
+    existingSrcSet.add(entry.src);
+    const filename = entry.src.split("/").pop() || "";
+    const base = getIdBase(filename);
+    if (base) {
+      if (existingIdByBase.has(base)) {
+        existingIdByBase.set(base, null);
+      } else {
+        existingIdByBase.set(base, { id, src: entry.src });
+      }
+    }
+  }
+
+  const newImages: ScanNewImage[] = [];
+  const updatedImages: ScanUpdatedImage[] = [];
+
+  attachedAssets.forEach((src, filename) => {
+    if (existingSrcSet.has(src)) return;
+
+    const base = getIdBase(filename);
+    const existing = existingIdByBase.get(base) ?? undefined;
+
+    if (existing) {
+      const oldFile = existing.src.split("/").pop() || "";
+      const oldExt = path.extname(oldFile).toLowerCase();
+      const newExt = path.extname(filename).toLowerCase();
+      if (oldExt !== newExt) {
+        updatedImages.push({
+          id: existing.id,
+          oldSrc: existing.src,
+          newSrc: src,
+        });
+      }
+    } else {
+      const basename = path.basename(filename);
+      const id = filenameToId(basename);
+      if (id && !registry.images[id]) {
+        newImages.push({ id, src, filename });
+      }
+    }
+  });
+
+  const brokenReferences: BrokenReference[] = [];
+  const checkedSrcs = new Set<string>();
+
+  for (const ref of yamlRefs) {
+    const normalizedSrc = ref.src.startsWith("/") ? ref.src : `/${ref.src}`;
+    if (checkedSrcs.has(`${ref.yamlFile}:${normalizedSrc}`)) continue;
+    checkedSrcs.add(`${ref.yamlFile}:${normalizedSrc}`);
+
+    const diskPath = path.join(process.cwd(), normalizedSrc);
+    if (!fs.existsSync(diskPath)) {
+      brokenReferences.push({
+        yamlFile: ref.yamlFile,
+        field: ref.field,
+        missingSrc: normalizedSrc,
+      });
+    }
+  }
+
+  return {
+    newImages,
+    updatedImages,
+    brokenReferences,
+    registeredCount: Object.keys(registry.images).length,
+    attachedAssetsCount: attachedAssets.size,
+    summary: {
+      new: newImages.length,
+      updated: updatedImages.length,
+      broken: brokenReferences.length,
+    },
+  };
+}
+
+export function applyRegistryChanges(scanResult: ScanResult): {
+  added: number;
+  updated: number;
+} {
+  const registry = loadRegistry();
+
+  for (const img of scanResult.newImages) {
+    registry.images[img.id] = {
+      src: img.src,
+      alt: `TODO: Add alt text for ${img.filename}`,
+      focal_point: "center",
+      tags: [],
+      usage_count: 0,
+    };
+  }
+
+  for (const img of scanResult.updatedImages) {
+    if (registry.images[img.id]) {
+      registry.images[img.id].src = img.newSrc;
+    }
+  }
+
+  fs.writeFileSync(REGISTRY_PATH, JSON.stringify(registry, null, 2) + "\n", "utf8");
+
+  return {
+    added: scanResult.newImages.length,
+    updated: scanResult.updatedImages.length,
+  };
+}

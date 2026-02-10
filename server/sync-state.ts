@@ -237,7 +237,7 @@ export function detectPendingChanges(): PendingChange[] {
       
       const { contentType, slug } = parseContentPath(filePath);
       
-      if (!storedInfo) {
+      if (!storedInfo || !storedInfo.remoteSha) {
         changesMap.set(filePath, {
           file: filePath,
           status: 'added',
@@ -245,8 +245,10 @@ export function detectPendingChanges(): PendingChange[] {
           contentType,
           slug,
           localSha: currentSha,
+          author: storedInfo?.author,
+          date: storedInfo?.modifiedAt,
         });
-      } else if (storedInfo.remoteSha && storedInfo.remoteSha !== currentSha) {
+      } else if (storedInfo.remoteSha !== currentSha) {
         changesMap.set(filePath, {
           file: filePath,
           status: 'modified',

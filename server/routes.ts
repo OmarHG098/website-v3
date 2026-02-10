@@ -21,6 +21,8 @@ import {
   getSitemapCacheStatus,
   getSitemapUrls,
 } from "./sitemap";
+import { markFileAsModified } from "./sync-state";
+import { contentIndex } from "./content-index";
 import {
   redirectMiddleware,
   getRedirects,
@@ -51,7 +53,8 @@ import {
   setExperimentCookie,
   buildVisitorContext,
 } from "./experiments";
-import { loadImageRegistry } from "./image-registry";
+import { loadImageRegistry, clearImageRegistryCache } from "./image-registry";
+import { scanImageRegistry, applyRegistryChanges } from "./image-registry-scanner";
 import {
   loadContent,
   listContentSlugs,
@@ -61,6 +64,7 @@ import { getFolderFromSlug } from "@shared/slugMappings";
 import { normalizeLocale } from "@shared/locale";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
+import { generateSsrSchemaHtml, clearSsrSchemaCache } from "./ssr-schema";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
@@ -1365,6 +1369,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/debug/clear-schema-cache", (req, res) => {
     clearSchemaCache();
+    clearSsrSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
   });
 
@@ -1947,7 +1952,81 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
-  // Get raw file content for backup download
+  app.get("/api/content/folder-files", (req, res) => {
+    try {
+      const folderPath = req.query.path as string;
+      if (!folderPath) {
+        res.status(400).json({ error: "Folder path is required" });
+        return;
+      }
+      const normalizedPath = path.normalize(folderPath);
+      if (!normalizedPath.startsWith("marketing-content/") || normalizedPath.includes("..")) {
+        res.status(403).json({ error: "Access denied" });
+        return;
+      }
+      const entry = contentIndex.findByPath(normalizedPath);
+      if (!entry) {
+        res.status(404).json({ error: "Folder not found" });
+        return;
+      }
+      res.json({ files: entry.files, folder: entry.folder });
+    } catch (error) {
+      console.error("Error listing folder:", error);
+      res.status(500).json({ error: "Failed to list folder" });
+    }
+  });
+
+  app.get("/api/content/resolve-folder", (req, res) => {
+    try {
+      const slug = req.query.slug as string;
+      const type = req.query.type as string | undefined;
+      if (!slug) {
+        res.status(400).json({ error: "slug is required" });
+        return;
+      }
+      const opts = type ? { contentType: type as any } : undefined;
+      const matches = contentIndex.findBySlug(slug, opts);
+      if (matches.length === 0) {
+        res.status(404).json({ error: "No content folder found for this slug" });
+        return;
+      }
+      if (matches.length === 1) {
+        const entry = matches[0];
+        res.json({ folder: entry.folder, contentType: entry.contentType, files: entry.files, title: entry.title });
+      } else {
+        res.json({
+          multiple: true,
+          matches: matches.map(e => ({ folder: e.folder, contentType: e.contentType, files: e.files, title: e.title })),
+        });
+      }
+    } catch (error) {
+      console.error("Error resolving folder:", error);
+      res.status(500).json({ error: "Failed to resolve folder" });
+    }
+  });
+
+  app.get("/api/content/index", (_req, res) => {
+    try {
+      const entries = contentIndex.listAll();
+      const stats = contentIndex.getStats();
+      res.json({ entries, stats });
+    } catch (error) {
+      console.error("Error listing content index:", error);
+      res.status(500).json({ error: "Failed to list content index" });
+    }
+  });
+
+  app.post("/api/content/index/refresh", (_req, res) => {
+    try {
+      contentIndex.refresh();
+      const stats = contentIndex.getStats();
+      res.json({ refreshed: true, stats });
+    } catch (error) {
+      console.error("Error refreshing content index:", error);
+      res.status(500).json({ error: "Failed to refresh content index" });
+    }
+  });
+
   app.get("/api/content/file", (req, res) => {
     try {
       const filePath = req.query.path as string;
@@ -2103,9 +2182,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       if (result.success) {
-        // Clear relevant caches
         clearSitemapCache();
         clearRedirectCache();
+        contentIndex.refresh();
 
         // Return success with updated sections for immediate UI update
         // Include warning if GitHub sync failed
@@ -2338,10 +2417,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
               
               fs.writeFileSync(path.join(folderPath, file), content);
+              markFileAsModified(`marketing-content/${folderMap[type]}/${enSlug}/${file}`);
             }
             
-            // Clear sitemap cache so the new content appears
             clearSitemapCache();
+            contentIndex.refresh();
             
             res.json({ 
               success: true, 
@@ -2478,22 +2558,27 @@ sections: []
 
       // Write only missing files (preserve existing content from partial creation)
       const createdFiles: string[] = [];
+      const relFolder = `marketing-content/${folderMap[type]}/${enSlug}`;
       if (!fs.existsSync(path.join(folderPath, '_common.yml'))) {
         fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
         createdFiles.push('_common.yml');
+        markFileAsModified(`${relFolder}/_common.yml`);
       }
       if (!fs.existsSync(path.join(folderPath, 'en.yml'))) {
         fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
         createdFiles.push('en.yml');
+        markFileAsModified(`${relFolder}/en.yml`);
       }
       if (!fs.existsSync(path.join(folderPath, 'es.yml'))) {
         fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
         createdFiles.push('es.yml');
+        markFileAsModified(`${relFolder}/es.yml`);
       }
 
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
 
+      contentIndex.refresh();
       res.json({ 
         success: true, 
         slugEn: enSlug,
@@ -2598,6 +2683,7 @@ sections: []
       fs.rmSync(folderPath, { recursive: true, force: true });
 
       console.log(`[Content] Deleted ${type}/${slug}`);
+      contentIndex.refresh();
 
       res.json({ success: true, message: `Successfully deleted ${type}/${slug}` });
     } catch (error) {
@@ -2716,10 +2802,11 @@ sections: []
                 }
                 
                 fs.writeFileSync(path.join(folderPath, file), content);
+                markFileAsModified(`marketing-content/landings/${slug}/${file}`);
               }
               
-              // Clear sitemap cache so the new content appears
               clearSitemapCache();
+              contentIndex.refresh();
               
               res.json({ 
                 success: true, 
@@ -2754,10 +2841,12 @@ sections: []
 
       // Write files
       fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+      markFileAsModified(`marketing-content/landings/${slug}/_common.yml`);
       fs.writeFileSync(path.join(folderPath, 'promoted.yml'), promotedYml);
+      markFileAsModified(`marketing-content/landings/${slug}/promoted.yml`);
 
-      // Clear sitemap cache so the new content appears
       clearSitemapCache();
+      contentIndex.refresh();
 
       res.json({ 
         success: true, 
@@ -2975,6 +3064,45 @@ sections: []
       return;
     }
     res.json(registry);
+  });
+
+  // ============================================
+  // Image Registry Scanner Endpoints
+  // ============================================
+
+  app.post("/api/image-registry/scan", (_req, res) => {
+    try {
+      const result = scanImageRegistry();
+      res.json(result);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Scan failed" });
+    }
+  });
+
+  app.post("/api/image-registry/apply", (req, res) => {
+    try {
+      const action = req.query.action as string | undefined;
+      const scanResult = scanImageRegistry();
+
+      const filtered = {
+        ...scanResult,
+        newImages: action === "update" ? [] : scanResult.newImages,
+        updatedImages: action === "add" ? [] : scanResult.updatedImages,
+      };
+
+      if (filtered.newImages.length === 0 && filtered.updatedImages.length === 0) {
+        res.json({ message: "Nothing to apply", added: 0, updated: 0 });
+        return;
+      }
+      const applied = applyRegistryChanges(filtered);
+      clearImageRegistryCache();
+      res.json({
+        message: `Applied ${applied.added} new, ${applied.updated} updated`,
+        ...applied,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Apply failed" });
+    }
   });
 
   // ============================================
@@ -3294,6 +3422,33 @@ sections: []
       console.error("Error saving FAQs:", error);
       res.status(500).json({ error: "Failed to save FAQs" });
     }
+  });
+
+  app.use((req, res, next) => {
+    const url = req.originalUrl || req.url;
+    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || /\.\w+$/.test(url)) {
+      return next();
+    }
+
+    const schemaHtml = generateSsrSchemaHtml(url);
+    if (!schemaHtml) {
+      return next();
+    }
+
+    const originalEnd = res.end.bind(res);
+    res.end = function (chunk?: any, ...args: any[]) {
+      const contentType = res.getHeader("content-type");
+      if (contentType && typeof contentType === "string" && contentType.includes("text/html") && chunk) {
+        let html = typeof chunk === "string" ? chunk : Buffer.isBuffer(chunk) ? chunk.toString("utf-8") : chunk;
+        if (typeof html === "string" && html.includes("</head>")) {
+          html = html.replace("</head>", `${schemaHtml}\n</head>`);
+          return originalEnd(html, ...args);
+        }
+      }
+      return originalEnd(chunk, ...args);
+    } as typeof res.end;
+
+    next();
   });
 
   const httpServer = createServer(app);

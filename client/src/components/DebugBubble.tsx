@@ -56,6 +56,9 @@ import {
   IconTrash,
   IconDeviceFloppy,
   IconMenu2,
+  IconDotsVertical,
+  IconDownload,
+  IconPhoto,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -81,6 +84,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -1160,6 +1164,62 @@ export function DebugBubble() {
     setDeletePageModalOpen(true);
   };
 
+  const handleDownloadYml = async (url: SitemapUrl) => {
+    const urlPath = new URL(url.loc).pathname;
+    const parts = urlPath.split('/').filter(Boolean);
+    const hasLocale = parts[0] === 'en' || parts[0] === 'es';
+    const contentParts = hasLocale ? parts.slice(1) : parts;
+    const slug = contentParts.length === 0 ? 'home' : contentParts[contentParts.length - 1];
+    if (!slug) {
+      toast({ title: "Cannot download", description: "Could not determine slug from URL", variant: "destructive" });
+      return;
+    }
+    const token = getDebugToken();
+    const headers: Record<string, string> = {};
+    if (token) headers["Authorization"] = `Token ${token}`;
+
+    try {
+      const resolveRes = await fetch(`/api/content/resolve-folder?slug=${encodeURIComponent(slug)}`, { headers });
+      if (!resolveRes.ok) {
+        toast({ title: "No YAML found", description: `This page has no YAML content files (code-only route)` });
+        return;
+      }
+      const resolveData = await resolveRes.json();
+
+      const entries: { folder: string; files: string[]; title?: string; contentType: string }[] = resolveData.multiple
+        ? resolveData.matches
+        : [resolveData];
+
+      let downloadedCount = 0;
+      for (const entry of entries) {
+        for (const filename of entry.files) {
+          try {
+            const res = await fetch(`/api/content/file?path=${encodeURIComponent(`${entry.folder}/${filename}`)}`, { headers });
+            if (!res.ok) continue;
+            const text = await res.text();
+            const blob = new Blob([text], { type: 'text/yaml' });
+            const blobUrl = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = entries.length > 1 ? `${entry.contentType}-${slug}-${filename}` : `${slug}-${filename}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(blobUrl);
+            downloadedCount++;
+          } catch {}
+        }
+      }
+      if (downloadedCount > 0) {
+        toast({ title: "Download complete", description: `Downloaded ${downloadedCount} YAML file(s) for "${slug}"` });
+      } else {
+        toast({ title: "No files found", description: `No YAML files could be downloaded for "${slug}"`, variant: "destructive" });
+      }
+    } catch (error) {
+      toast({ title: "Download failed", description: "An error occurred while downloading", variant: "destructive" });
+    }
+  };
+
   const confirmDeletePage = async () => {
     if (!deletingPage || deleteConfirmInput !== deletingPage.slug) return;
     setIsDeletingPage(true);
@@ -1212,6 +1272,11 @@ export function DebugBubble() {
       if (response.ok) {
         setCacheClearStatus("success");
         setTimeout(() => setCacheClearStatus("idle"), 2000);
+        const freshRes = await fetch("/api/debug/sitemap-urls");
+        if (freshRes.ok) {
+          const freshData = await freshRes.json();
+          setSitemapUrls(freshData);
+        }
       } else {
         console.error("Failed to clear sitemap cache");
         setCacheClearStatus("idle");
@@ -1631,6 +1696,18 @@ export function DebugBubble() {
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
+                
+                <a
+                  href="/private/media-gallery"
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-media-gallery"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                    <span>Media Gallery</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </a>
                 
                 {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
@@ -2087,28 +2164,31 @@ export function DebugBubble() {
                                     >
                                       {path}
                                     </a>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDuplicatePage(url);
-                                      }}
-                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                                      title="Duplicar página"
-                                      data-testid={`button-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                                    >
-                                      <IconCopy className="h-3 w-3 text-muted-foreground" />
-                                    </button>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeletePage(url);
-                                      }}
-                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                                      title="Eliminar página"
-                                      data-testid={`button-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                                    >
-                                      <IconTrash className="h-3 w-3 text-destructive" />
-                                    </button>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <button
+                                          className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                          onClick={(e) => e.stopPropagation()}
+                                          data-testid={`button-url-menu-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                        >
+                                          <IconDotsVertical className="h-3 w-3 text-muted-foreground" />
+                                        </button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end" className="w-40">
+                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconCopy className="h-3.5 w-3.5 mr-2" />
+                                          Duplicate
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconDownload className="h-3.5 w-3.5 mr-2" />
+                                          Download YAML
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconTrash className="h-3.5 w-3.5 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
                                   </div>
                                 );
                               })}
@@ -2130,28 +2210,31 @@ export function DebugBubble() {
                             >
                               {path}
                             </a>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDuplicatePage(url);
-                              }}
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                              title="Duplicar página"
-                              data-testid={`button-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                            >
-                              <IconCopy className="h-3 w-3 text-muted-foreground" />
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeletePage(url);
-                              }}
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                              title="Eliminar página"
-                              data-testid={`button-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                            >
-                              <IconTrash className="h-3 w-3 text-destructive" />
-                            </button>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <button
+                                  className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                  onClick={(e) => e.stopPropagation()}
+                                  data-testid={`button-url-menu-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  <IconDotsVertical className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="w-40">
+                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconCopy className="h-3.5 w-3.5 mr-2" />
+                                  Duplicate
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconDownload className="h-3.5 w-3.5 mr-2" />
+                                  Download YAML
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconTrash className="h-3.5 w-3.5 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
                         );
                       })}

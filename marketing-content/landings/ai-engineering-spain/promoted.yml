@@ -637,6 +637,8 @@ sections:
     paddingY:
       mobile: lg
       desktop: lg
+    form_background: hsl(var(--card))
+    terms_color: hsl(var(--primary))
   - type: footer
     version: "1.0"
     copyright_text: 2024 4Geeks. Todos los derechos reservados.
