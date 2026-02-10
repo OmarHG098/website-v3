@@ -176,7 +176,7 @@ sections:
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
-    title: Everything You Need to Launch a Tech Career
+    title: Everything You Need to Succeed in an AI-Driven Industry
     description: AI-ready training, expert guidance, and long-term support designed for the modern tech landscape.
     bullets:
       - heading: 1:1 Mentorship, Unlimited and for Life
@@ -193,7 +193,7 @@ sections:
     paddingY:
       desktop: md none
   - type: testimonials_slide
-    title: Proven Paths to Tech Careerss
+    title: Proven Paths to Tech Careers
     description: These student journeys show how structured learning, AI-powered support, and expert career coaching lead to real outcomes.
     background: bg-sidebar
   - type: split_cards
