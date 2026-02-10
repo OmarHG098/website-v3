@@ -533,7 +533,7 @@ export default function MediaGallery() {
 
       {selectedImages.size > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-50 border-t bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 shadow-lg" data-testid="bulk-action-toolbar">
-          <div className="container mx-auto px-4 max-w-7xl">
+          <div className="container mx-auto px-4 pl-20 max-w-7xl">
             <div className="flex items-center justify-between py-3 gap-4">
               <div className="flex items-center gap-3">
                 <IconChecks className="h-5 w-5 text-primary" />
