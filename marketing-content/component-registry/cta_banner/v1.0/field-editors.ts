@@ -14,5 +14,5 @@ export type EditorType = "icon-picker" | "color-picker" | "image-picker" | "link
 
 export const fieldEditors: Record<string, EditorType> = {
   "form_background": "color-picker",
-  "terms_color": "color-picker",
+  "terms_color": "color-picker"
 };
