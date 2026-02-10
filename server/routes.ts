@@ -3424,6 +3424,122 @@ sections: []
     }
   });
 
+  // ============================================
+  // Centralized Testimonials API
+  // ============================================
+  
+  // Get centralized testimonials from YAML file
+  app.get("/api/testimonials/:locale", (req, res) => {
+    const { locale } = req.params;
+    const normalizedLocale = normalizeLocale(locale);
+    
+    const testimonialsPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "testimonials",
+      `${normalizedLocale}.yml`
+    );
+    
+    if (!fs.existsSync(testimonialsPath)) {
+      res.status(404).json({ error: "Testimonials not found for locale" });
+      return;
+    }
+    
+    try {
+      const content = fs.readFileSync(testimonialsPath, "utf8");
+      const data = yaml.load(content) as { testimonials: unknown[] };
+      res.json(data);
+    } catch (error) {
+      console.error("Error loading testimonials:", error);
+      res.status(500).json({ error: "Failed to load testimonials" });
+    }
+  });
+  
+  // Save centralized testimonials to YAML file (edit mode only)
+  app.post("/api/testimonials/:locale", async (req, res) => {
+    try {
+      const { locale } = req.params;
+      const normalizedLocale = normalizeLocale(locale);
+      
+      // Auth check (same as content edit)
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+      
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+      
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          }
+        );
+        
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to edit testimonials" });
+          return;
+        }
+      }
+      
+      const { testimonials } = req.body;
+      
+      if (!testimonials || !Array.isArray(testimonials)) {
+        res.status(400).json({ error: "Missing required field: testimonials (array)" });
+        return;
+      }
+      
+      const testimonialsPath = path.join(
+        process.cwd(),
+        "marketing-content",
+        "testimonials",
+        `${normalizedLocale}.yml`
+      );
+      
+      // Generate YAML with comment header
+      const header = `# Centralized Testimonials Data - ${normalizedLocale === 'en' ? 'English' : 'Spanish'}
+# All testimonials should be stored here and referenced by pages via related_features filter
+
+`;
+      const yamlContent = header + yaml.dump({ testimonials }, { 
+        lineWidth: -1, 
+        quotingType: '"',
+        forceQuotes: false,
+        flowLevel: -1
+      });
+      
+      fs.writeFileSync(testimonialsPath, yamlContent, "utf8");
+      
+      // Clear relevant caches
+      clearSitemapCache();
+      clearSsrSchemaCache();
+      
+      res.json({ success: true });
+    } catch (error) {
+      console.error("Error saving testimonials:", error);
+      res.status(500).json({ error: "Failed to save testimonials" });
+    }
+  });
+
   app.use((req, res, next) => {
     const url = req.originalUrl || req.url;
     if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || /\.\w+$/.test(url)) {

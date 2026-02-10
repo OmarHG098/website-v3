@@ -22,6 +22,23 @@ interface FaqSection {
   related_features?: string[];
 }
 
+interface TestimonialItem {
+  student_name: string;
+  priority?: number;
+  linkedin_url?: string;
+  related_features?: string[];
+  excerpt?: string;
+  full_text?: string;
+  content?: string;
+  student_thumb?: string;
+  student_video?: string;
+  rating?: number;
+  locations?: string[];
+  outcome?: string;
+  role?: string;
+  company?: string;
+}
+
 interface SchemaReference {
   include?: string[];
   overrides?: Record<string, Record<string, unknown>>;
@@ -34,6 +51,7 @@ interface ParsedRoute {
 }
 
 let faqCache: Record<string, FaqItem[]> = {};
+let testimonialCache: Record<string, TestimonialItem[]> = {};
 
 function loadCentralizedFaqs(locale: string): FaqItem[] {
   if (faqCache[locale]) return faqCache[locale];
@@ -51,8 +69,25 @@ function loadCentralizedFaqs(locale: string): FaqItem[] {
   }
 }
 
+function loadCentralizedTestimonials(locale: string): TestimonialItem[] {
+  if (testimonialCache[locale]) return testimonialCache[locale];
+
+  const testimonialsPath = path.join(MARKETING_CONTENT_PATH, "testimonials", `${locale}.yml`);
+  if (!fs.existsSync(testimonialsPath)) return [];
+
+  try {
+    const content = fs.readFileSync(testimonialsPath, "utf-8");
+    const data = yaml.load(content) as { testimonials?: TestimonialItem[] };
+    testimonialCache[locale] = data?.testimonials || [];
+    return testimonialCache[locale];
+  } catch {
+    return [];
+  }
+}
+
 export function clearSsrSchemaCache(): void {
   faqCache = {};
+  testimonialCache = {};
 }
 
 function parseRoute(url: string): ParsedRoute | null {
