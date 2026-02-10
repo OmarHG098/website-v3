@@ -1,8 +1,14 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle } from "@tabler/icons-react";
+import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle, IconDots, IconTrash } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { Link } from "wouter";
 import { useState, useEffect, useRef, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
@@ -40,6 +46,32 @@ export default function MediaGallery() {
 
   const handleImageError = (id: string) => {
     setFailedImages(prev => new Set(prev).add(id));
+  };
+
+  const handleDelete = async (id: string) => {
+    try {
+      const res = await fetch(`/api/image-registry/${encodeURIComponent(id)}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        const usedIn = data.usedIn as string[] | undefined;
+        toast({
+          title: "Cannot delete",
+          description: usedIn
+            ? `"${id}" is used in: ${usedIn.join(", ")}`
+            : data.message || data.error,
+          variant: "destructive",
+          duration: 8000,
+        });
+        return;
+      }
+      toast({ title: "Deleted", description: data.message });
+      queryClient.invalidateQueries({ queryKey: ["/api/image-registry"] });
+    } catch {
+      toast({ title: "Delete failed", description: "Could not delete image from registry", variant: "destructive" });
+    }
   };
 
   const handleScan = async () => {
@@ -340,19 +372,39 @@ export default function MediaGallery() {
                         <code className="text-xs font-mono truncate text-foreground" data-testid={`text-image-id-${id}`}>
                           {id}
                         </code>
-                        <Button
-                          size="icon"
-                          variant="ghost"
-                          className="h-6 w-6 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
-                          onClick={() => handleCopyId(id)}
-                          data-testid={`button-copy-${id}`}
-                        >
-                          {copiedId === id ? (
-                            <IconCheck className="h-3 w-3 text-green-600" />
-                          ) : (
-                            <IconCopy className="h-3 w-3" />
-                          )}
-                        </Button>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <Button
+                              size="icon"
+                              variant="ghost"
+                              className="h-6 w-6 flex-shrink-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                              data-testid={`button-menu-${id}`}
+                            >
+                              {copiedId === id ? (
+                                <IconCheck className="h-3 w-3 text-green-600" />
+                              ) : (
+                                <IconDots className="h-3 w-3" />
+                              )}
+                            </Button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent align="end">
+                            <DropdownMenuItem
+                              onClick={() => handleCopyId(id)}
+                              data-testid={`button-copy-${id}`}
+                            >
+                              <IconCopy className="h-4 w-4 mr-2" />
+                              Copy ID
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                              className="text-destructive focus:text-destructive"
+                              onClick={() => handleDelete(id)}
+                              data-testid={`button-delete-${id}`}
+                            >
+                              <IconTrash className="h-4 w-4 mr-2" />
+                              Delete
+                            </DropdownMenuItem>
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                       <p className="text-xs text-muted-foreground line-clamp-2 mb-2" data-testid={`text-image-alt-${id}`}>
                         {img.alt}

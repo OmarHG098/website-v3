@@ -19,6 +19,7 @@ class ContentIndex {
   private entries: ContentEntry[] = [];
   private bySlug: Map<string, ContentEntry[]> = new Map();
   private byPath: Map<string, ContentEntry> = new Map();
+  private imageUsage: Map<string, Set<string>> = new Map();
   private initialized = false;
 
   private static instance: ContentIndex;
@@ -39,6 +40,7 @@ class ContentIndex {
     this.entries = [];
     this.bySlug = new Map();
     this.byPath = new Map();
+    this.imageUsage = new Map();
 
     for (const contentType of contentTypes) {
       const typeDir = path.join(baseDir, contentType);
@@ -76,11 +78,59 @@ class ContentIndex {
         this.bySlug.set(slug, existing);
 
         this.byPath.set(relFolder, entry);
+
+        for (const file of files) {
+          const filePath = path.join(folderPath, file);
+          const relFilePath = `${relFolder}/${file}`;
+          try {
+            const raw = fs.readFileSync(filePath, "utf-8");
+            const parsed = yaml.load(raw);
+            this.extractImageReferences(parsed, relFilePath);
+          } catch {}
+        }
       }
     }
 
     this.initialized = true;
-    console.log(`[ContentIndex] Scanned ${this.entries.length} content entries`);
+    const imageRefCount = this.imageUsage.size;
+    console.log(`[ContentIndex] Scanned ${this.entries.length} content entries, ${imageRefCount} image references tracked`);
+  }
+
+  private addImageRef(ref: string, filePath: string): void {
+    if (!ref || typeof ref !== "string") return;
+    const existing = this.imageUsage.get(ref);
+    if (existing) {
+      existing.add(filePath);
+    } else {
+      this.imageUsage.set(ref, new Set([filePath]));
+    }
+  }
+
+  private extractImageReferences(obj: unknown, filePath: string): void {
+    if (!obj || typeof obj !== "object") return;
+
+    if (Array.isArray(obj)) {
+      for (const item of obj) {
+        this.extractImageReferences(item, filePath);
+      }
+      return;
+    }
+
+    const record = obj as Record<string, unknown>;
+    for (const [key, value] of Object.entries(record)) {
+      if (typeof value === "string" && value.trim()) {
+        if (key === "image_id") {
+          this.addImageRef(value, filePath);
+        } else if (
+          (key === "image" || key === "src" || key === "background_image" || key === "logo" || key === "icon_image") &&
+          (value.startsWith("/attached_assets/") || value.startsWith("http://") || value.startsWith("https://"))
+        ) {
+          this.addImageRef(value, filePath);
+        }
+      } else if (typeof value === "object" && value !== null) {
+        this.extractImageReferences(value, filePath);
+      }
+    }
   }
 
   private extractSlug(folderPath: string, folderName: string, files: string[]): string {
@@ -204,6 +254,22 @@ class ContentIndex {
       }
     }
     return results;
+  }
+
+  getImageUsage(imageId: string, imageSrc?: string): string[] {
+    this.ensureInitialized();
+    const files = new Set<string>();
+    const byId = this.imageUsage.get(imageId);
+    if (byId) {
+      byId.forEach(f => files.add(f));
+    }
+    if (imageSrc) {
+      const bySrc = this.imageUsage.get(imageSrc);
+      if (bySrc) {
+        bySrc.forEach(f => files.add(f));
+      }
+    }
+    return Array.from(files);
   }
 
   refresh(): void {

@@ -3066,6 +3066,42 @@ sections: []
     res.json(registry);
   });
 
+  app.delete("/api/image-registry/:id", (req, res) => {
+    try {
+      const imageId = req.params.id;
+      const registry = loadImageRegistry();
+      if (!registry) {
+        res.status(500).json({ error: "Failed to load image registry" });
+        return;
+      }
+
+      const imageEntry = registry.images[imageId];
+      if (!imageEntry) {
+        res.status(404).json({ error: `Image "${imageId}" not found in registry` });
+        return;
+      }
+
+      const usedIn = contentIndex.getImageUsage(imageId, imageEntry.src);
+      if (usedIn.length > 0) {
+        res.status(409).json({
+          error: "Image is in use",
+          message: `Cannot delete "${imageId}" because it is referenced in ${usedIn.length} file(s)`,
+          usedIn,
+        });
+        return;
+      }
+
+      delete registry.images[imageId];
+      const registryPath = path.join(process.cwd(), "marketing-content", "image-registry.json");
+      fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n", "utf8");
+      clearImageRegistryCache();
+
+      res.json({ success: true, message: `Deleted "${imageId}" from registry` });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Delete failed" });
+    }
+  });
+
   // ============================================
   // Image Registry Scanner Endpoints
   // ============================================
