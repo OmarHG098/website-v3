@@ -10,6 +10,7 @@ const app = express();
 app.use(cookieParser());
 
 app.use('/attached_assets', express.static(path.join(process.cwd(), 'attached_assets')));
+app.use('/marketing-content/images', express.static(path.join(process.cwd(), 'marketing-content', 'images')));
 
 app.use(compression({
   filter: (req, res) => {

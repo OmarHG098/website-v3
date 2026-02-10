@@ -3066,6 +3066,93 @@ sections: []
     res.json(registry);
   });
 
+  app.delete("/api/image-registry/:id", (req, res) => {
+    try {
+      const imageId = req.params.id;
+      const registry = loadImageRegistry();
+      if (!registry) {
+        res.status(500).json({ error: "Failed to load image registry" });
+        return;
+      }
+
+      const imageEntry = registry.images[imageId];
+      if (!imageEntry) {
+        res.status(404).json({ error: `Image "${imageId}" not found in registry` });
+        return;
+      }
+
+      const usedIn = contentIndex.getImageUsage(imageId, imageEntry.src);
+      if (usedIn.length > 0) {
+        res.status(409).json({
+          error: "Image is in use",
+          message: `Cannot delete "${imageId}" because it is referenced in ${usedIn.length} file(s)`,
+          usedIn,
+        });
+        return;
+      }
+
+      delete registry.images[imageId];
+      const registryPath = path.join(process.cwd(), "marketing-content", "image-registry.json");
+      fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n", "utf8");
+      clearImageRegistryCache();
+
+      res.json({ success: true, message: `Deleted "${imageId}" from registry` });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Delete failed" });
+    }
+  });
+
+  app.post("/api/image-registry/bulk-delete", (req, res) => {
+    try {
+      const { ids } = req.body as { ids?: string[] };
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        res.status(400).json({ error: "Missing or empty 'ids' array" });
+        return;
+      }
+
+      const registry = loadImageRegistry();
+      if (!registry) {
+        res.status(500).json({ error: "Failed to load image registry" });
+        return;
+      }
+
+      const results: Array<{ id: string; success: boolean; message: string }> = [];
+      let deletedCount = 0;
+
+      for (const imageId of ids) {
+        const imageEntry = registry.images[imageId];
+        if (!imageEntry) {
+          results.push({ id: imageId, success: false, message: "Not found in registry" });
+          continue;
+        }
+
+        const usedIn = contentIndex.getImageUsage(imageId, imageEntry.src);
+        if (usedIn.length > 0) {
+          results.push({
+            id: imageId,
+            success: false,
+            message: `Referenced in ${usedIn.length} file(s): ${usedIn.join(", ")}`,
+          });
+          continue;
+        }
+
+        delete registry.images[imageId];
+        deletedCount++;
+        results.push({ id: imageId, success: true, message: "Deleted" });
+      }
+
+      if (deletedCount > 0) {
+        const registryPath = path.join(process.cwd(), "marketing-content", "image-registry.json");
+        fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n", "utf8");
+        clearImageRegistryCache();
+      }
+
+      res.json({ results, deletedCount, totalRequested: ids.length });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Bulk delete failed" });
+    }
+  });
+
   // ============================================
   // Image Registry Scanner Endpoints
   // ============================================
@@ -3096,8 +3183,11 @@ sections: []
       }
       const applied = applyRegistryChanges(filtered);
       clearImageRegistryCache();
+      const yamlMsg = applied.yamlFilesUpdated.length > 0
+        ? `. Updated paths in ${applied.yamlFilesUpdated.length} YAML file(s)`
+        : "";
       res.json({
-        message: `Applied ${applied.added} new, ${applied.updated} updated`,
+        message: `Applied ${applied.added} new, ${applied.updated} updated${yamlMsg}`,
         ...applied,
       });
     } catch (error: any) {
