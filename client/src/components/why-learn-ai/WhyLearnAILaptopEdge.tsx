@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import type { WhyLearnAISection as WhyLearnAISectionType } from "@shared/schema";
+import { RichTextContent } from "@/components/ui/rich-text-content";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
 
 const MOBILE_CHAR_LIMIT = 150;
@@ -53,13 +54,17 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
           {data.subtitle}
         </h3>
 
-        <p 
+        <div 
           className="text-sm text-muted-foreground mb-6 leading-relaxed"
           data-testid="text-why-learn-description-mobile"
         >
           {description.length > MOBILE_CHAR_LIMIT && !isExpanded ? (
             <>
-              {truncateAtWordBoundary(description, MOBILE_CHAR_LIMIT)}...{' '}
+              <RichTextContent
+                html={truncateAtWordBoundary(description, MOBILE_CHAR_LIMIT) + "..."}
+                className="text-sm text-muted-foreground inline"
+              />
+              {' '}
               <button
                 onClick={() => setIsExpanded(true)}
                 className="text-sm font-medium text-primary underline"
@@ -70,22 +75,22 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
             </>
           ) : (
             <>
-              {description}
+              <RichTextContent
+                html={description}
+                className="text-sm text-muted-foreground"
+              />
               {description.length > MOBILE_CHAR_LIMIT && (
-                <>
-                  {' '}
-                  <button
-                    onClick={() => setIsExpanded(false)}
-                    className="text-sm font-medium text-primary underline"
-                    data-testid="button-see-less"
-                  >
-                    see less
-                  </button>
-                </>
+                <button
+                  onClick={() => setIsExpanded(false)}
+                  className="text-sm font-medium text-primary underline mt-1"
+                  data-testid="button-see-less"
+                >
+                  see less
+                </button>
               )}
             </>
           )}
-        </p>
+        </div>
 
         {data.cta && (
           <Button
@@ -128,12 +133,11 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
               {data.subtitle}
             </h3>
 
-            <p 
+            <RichTextContent
+              html={data.description || ""}
               className="text-body text-muted-foreground mb-8 lg:me-4 leading-relaxed"
               data-testid="text-why-learn-description"
-            >
-              {data.description}
-            </p>
+            />
 
             {data.cta && (
               <Button

@@ -17,23 +17,23 @@ sections:
         - id: switchup-2025
           alt: SwitchUp - Mejores Bootcamps de Programación 2025
           logo: /attached_assets/switchup_1765590146414.webp
-          logoHeight: 48px
+          logoHeight: h-8 md:h-12
         - id: course-report-2024
           alt: Course Report - Mejor Bootcamp de Programación 2024
           logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
-          logoHeight: 48px
+          logoHeight: h-8 md:h-12
         - id: newsweek
           alt: Newsweek
           logo: /attached_assets/newsweek_1764709608255.webp
-          logoHeight: 48px
+          logoHeight: h-8 md:h-12
         - id: forbes
           alt: Forbes - Top Bootcamp de Programación
           logo: /attached_assets/forbes-logo-award_1764709625651.webp
-          logoHeight: 48px
+          logoHeight: h-8 md:h-12
         - id: fortune
           alt: Fortune - Mejor Empresa Educativa
           logo: /attached_assets/fortune-logo_1764709618095.webp
-          logoHeight: 48px
+          logoHeight: h-8 md:h-12
       speed: 40
       gradient: true
       gradientWidth: 50

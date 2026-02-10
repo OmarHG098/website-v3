@@ -49,21 +49,21 @@ sections:
       - id: coursereport-detailed
         alt: Forbes Award logo
         logo: /attached_assets/forbes-logo-award_1764709625651.webp
-        logoHeight: 64px
+        logoHeight: h-16
         description: 4Geeks is included by Forbes in "5 Coding bootcamps to consider"
         link: https://www.coursereport.com
         linkText: Read reviews
       - id: switchup-detailed
         alt: Clark University Logo
         logo: /attached_assets/clark-university_1769653206336.png
-        logoHeight: 64px
+        logoHeight: h-16
         description: We are certified by the most recognized universities
         link: https://www.switchup.org
         linkText: See rankings
       - id: careerkarma-detailed
         alt: Award badges
         logo: /attached_assets/badges-new.avif
-        logoHeight: 64px
+        logoHeight: h-16
         description: Recognized in 2024 and 2025 by SwitchUp, Course Report, and Forbes. Continuing our legacy as one of the top coding bootcamps in the world.
         link: https://careerkarma.com
         linkText: Learn more
