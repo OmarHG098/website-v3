@@ -455,6 +455,7 @@ export function DebugBubble() {
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
   const [componentSearch, setComponentSearch] = useState("");
+  const [showComponentSearch, setShowComponentSearch] = useState(false);
 
   const { data: componentRegistryData } = useQuery<{ components: Array<{ type: string; name: string; description: string; latestVersion: string; versions: string[] }> }>({
     queryKey: ["/api/component-registry"],
@@ -1939,36 +1940,44 @@ export function DebugBubble() {
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => { setMenuView("main"); setComponentSearch(""); }}
+                      onClick={() => { setMenuView("main"); setComponentSearch(""); setShowComponentSearch(false); }}
                       className="p-1 rounded-md hover-elevate"
                       data-testid="button-back-to-main"
                     >
                       <IconArrowLeft className="h-4 w-4" />
                     </button>
-                    <div>
-                      <h3 className="font-semibold text-sm">Components</h3>
-                      <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
-                    </div>
+                    {showComponentSearch ? (
+                      <div className="relative flex-1">
+                        <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <input
+                          type="text"
+                          placeholder="Search components..."
+                          value={componentSearch}
+                          onChange={(e) => setComponentSearch(e.target.value)}
+                          className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-component-search"
+                          autoFocus
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <h3 className="font-semibold text-sm">Components</h3>
+                        <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
+                      </div>
+                    )}
                   </div>
-                </div>
-              </div>
-
-              <div className="p-2 border-b">
-                <div className="relative">
-                  <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                  <input
-                    type="text"
-                    placeholder="Search components..."
-                    value={componentSearch}
-                    onChange={(e) => setComponentSearch(e.target.value)}
-                    className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                    data-testid="input-component-search"
-                    autoFocus
-                  />
+                  <button
+                    onClick={() => { setShowComponentSearch(!showComponentSearch); if (showComponentSearch) setComponentSearch(""); }}
+                    className={`p-1.5 rounded hover-elevate ${showComponentSearch ? 'bg-muted' : ''}`}
+                    title="Toggle search"
+                    data-testid="button-toggle-component-search"
+                  >
+                    <IconSearch className="h-4 w-4 text-muted-foreground" />
+                  </button>
                 </div>
               </div>
               
-              <ScrollArea className="h-[240px]">
+              <ScrollArea className="h-[280px]">
                 <div className="p-2 space-y-1">
                   {!componentRegistryData ? (
                     <div className="flex items-center justify-center py-8">
