@@ -1189,18 +1189,41 @@ export function DebugBubble() {
       toast({ title: "Cannot download", description: "Could not determine slug", variant: "destructive" });
       return;
     }
-    const folderMap: Record<string, string> = { page: 'pages', program: 'programs', location: 'locations', landing: 'landings' };
-    const folder = folderMap[contentType];
-    const filesToTry = contentType === 'landing'
-      ? ['_common.yml', 'promoted.yml']
-      : ['_common.yml', 'en.yml', 'es.yml'];
     const token = getDebugToken();
     const headers: Record<string, string> = {};
     if (token) headers["Authorization"] = `Token ${token}`;
-    let downloadedCount = 0;
-    for (const filename of filesToTry) {
+
+    const contentFolders = ['pages', 'programs', 'locations', 'landings'];
+    const folderMap: Record<string, string> = { page: 'pages', program: 'programs', location: 'locations', landing: 'landings' };
+    const primaryFolder = folderMap[contentType];
+    const foldersToTry = [primaryFolder, ...contentFolders.filter(f => f !== primaryFolder)];
+
+    let foundFolder = '';
+    let fileList: string[] = [];
+    for (const folder of foldersToTry) {
       try {
-        const res = await fetch(`/api/content/file?path=marketing-content/${folder}/${slug}/${filename}`, { headers });
+        const res = await fetch(`/api/content/folder-files?path=marketing-content/${folder}/${slug}`, { headers });
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (data.files && data.files.length > 0) {
+          foundFolder = `marketing-content/${folder}/${slug}`;
+          fileList = data.files;
+          break;
+        }
+      } catch {
+        // try next folder
+      }
+    }
+
+    if (!foundFolder || fileList.length === 0) {
+      toast({ title: "No files found", description: `No YAML files found for ${slug}`, variant: "destructive" });
+      return;
+    }
+
+    let downloadedCount = 0;
+    for (const filename of fileList) {
+      try {
+        const res = await fetch(`/api/content/file?path=${encodeURIComponent(`${foundFolder}/${filename}`)}`, { headers });
         if (!res.ok) continue;
         const text = await res.text();
         const blob = new Blob([text], { type: 'text/yaml' });
@@ -1214,7 +1237,7 @@ export function DebugBubble() {
         URL.revokeObjectURL(blobUrl);
         downloadedCount++;
       } catch {
-        // skip files that fail
+        // skip
       }
     }
     if (downloadedCount > 0) {

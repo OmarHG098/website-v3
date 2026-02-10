@@ -1949,6 +1949,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
   );
 
   // Get raw file content for backup download
+  app.get("/api/content/folder-files", (req, res) => {
+    try {
+      const folderPath = req.query.path as string;
+      if (!folderPath) {
+        res.status(400).json({ error: "Folder path is required" });
+        return;
+      }
+      const normalizedPath = path.normalize(folderPath);
+      if (!normalizedPath.startsWith("marketing-content/") || normalizedPath.includes("..")) {
+        res.status(403).json({ error: "Access denied" });
+        return;
+      }
+      const fullPath = path.join(process.cwd(), normalizedPath);
+      if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
+        res.status(404).json({ error: "Folder not found" });
+        return;
+      }
+      const files = fs.readdirSync(fullPath).filter(f => f.endsWith('.yml') || f.endsWith('.yaml'));
+      res.json({ files, folder: normalizedPath });
+    } catch (error) {
+      console.error("Error listing folder:", error);
+      res.status(500).json({ error: "Failed to list folder" });
+    }
+  });
+
   app.get("/api/content/file", (req, res) => {
     try {
       const filePath = req.query.path as string;
@@ -1968,7 +1993,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const fullPath = path.join(process.cwd(), normalizedPath);
       
       if (!fs.existsSync(fullPath)) {
-        console.log(`[Content File] 404 for path: ${filePath} (normalized: ${normalizedPath}, full: ${fullPath})`);
         res.status(404).json({ error: "File not found" });
         return;
       }
