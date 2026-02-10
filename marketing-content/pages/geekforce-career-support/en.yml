@@ -24,7 +24,7 @@ sections:
       highlight: FORCE
       suffix: ":"
       color: chart-5
-    description: Get unlimited 1:1 career support tailored to your goals, background, and experience—for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
+    description: Get unlimited 1:1 career support tailored to your goals, background, and experience for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
     marquee:
       items:
         - id: switchup-2025
@@ -52,7 +52,7 @@ sections:
       gradientWidth: 60
     video:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-      ratio: "3:4"
+      ratio: "2:2"
     paddingY:
       desktop: none
   - type: bullet_tabs_showcase
@@ -185,9 +185,11 @@ sections:
     related_features:
       - career-support
     marginY:
-      desktop: none md
+      desktop: none
   - type: footer
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.
     paddingY:
-      desktop: md 10px
+      desktop: md none
+    marginY:
+      desktop: none
