@@ -247,7 +247,7 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               )}
 
               {data.form && (
-                <div className="mt-2 mb-8 flex justify-center md:justify-start">
+                <div className="hidden md:flex mt-2 mb-8 justify-center md:justify-start">
                   <LeadForm
                     data={
                       {
@@ -395,6 +395,22 @@ export function HeroProductShowcase({ data }: HeroProductShowcaseProps) {
               />
             ) : null}
           </div>
+
+          {data.form && (
+            <div className="md:hidden mt-4 flex justify-center w-full">
+              <LeadForm
+                data={
+                  {
+                    ...data.form,
+                    variant: data.form.variant || "inline",
+                    consent: data.form.consent,
+                    show_terms: data.form.show_terms ?? false,
+                    className: "w-full max-w-md",
+                  } as LeadFormData
+                }
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

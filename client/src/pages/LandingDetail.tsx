@@ -1,6 +1,6 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "wouter";
+import { useParams, useLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { LandingPage } from "@shared/schema";
@@ -12,8 +12,19 @@ import { useContentAutoRefresh } from "@/hooks/useContentAutoRefresh";
 export default function LandingDetail() {
   const { i18n } = useTranslation();
   const params = useParams<{ slug: string }>();
+  const [location] = useLocation();
   const slug = params.slug;
-  const locale = i18n.language === "es" ? "es" : "en";
+  
+  // Detect locale from URL path first, fallback to i18n.language
+  const urlLocale = location.startsWith('/es/') ? 'es' : location.startsWith('/en/') ? 'en' : null;
+  const locale = urlLocale || (i18n.language === "es" ? "es" : "en");
+  
+  // Sync i18n language with URL locale
+  useEffect(() => {
+    if (urlLocale && i18n.language !== urlLocale) {
+      i18n.changeLanguage(urlLocale);
+    }
+  }, [urlLocale, i18n]);
 
   const { data: landing, isLoading, error, refetch } = useQuery<LandingPage>({
     queryKey: ["/api/landings", slug, locale],

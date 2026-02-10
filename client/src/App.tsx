@@ -53,6 +53,8 @@ function Router() {
         <Route path="/es/programas-de-carrera/:slug">
           {(params) => <ContentTypeDetail type="program" slug={params.slug} locale="es" />}
         </Route>
+        <Route path="/en/landing/:slug" component={LandingDetail} />
+        <Route path="/es/landing/:slug" component={LandingDetail} />
         <Route path="/landing/:slug" component={LandingDetail} />
         <Route path="/en/location/:slug">
           {(params) => <ContentTypeDetail type="location" slug={params.slug} locale="en" />}

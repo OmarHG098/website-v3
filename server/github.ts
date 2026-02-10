@@ -1011,6 +1011,21 @@ export async function getRemoteFileContent(filePath: string): Promise<{
     const data = await response.json();
     
     if (!data.content) {
+      if (data.download_url) {
+        try {
+          const dlResponse = await fetch(data.download_url, {
+            headers: {
+              'Authorization': `Bearer ${config.token}`,
+            },
+          });
+          if (dlResponse.ok) {
+            const content = await dlResponse.text();
+            return { success: true, content, sha: data.sha };
+          }
+        } catch (dlError) {
+          console.error('Error downloading file via download_url:', dlError);
+        }
+      }
       return { success: false, error: "No content in response" };
     }
     

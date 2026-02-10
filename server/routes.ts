@@ -271,7 +271,23 @@ function listTemplatePages(
   return pages;
 }
 
+function detectLanguageFromRequest(req: Request): "en" | "es" {
+  const acceptLang = req.headers["accept-language"] || "";
+  const primary = acceptLang.split(",")[0]?.trim().toLowerCase() || "";
+  if (primary.startsWith("es")) return "es";
+  return "en";
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
+  app.get("/apply", (req, res) => {
+    const lang = detectLanguageFromRequest(req);
+    const target = lang === "es" ? "/es/aplica" : "/en/apply";
+    const qs = Object.keys(req.query).length
+      ? "?" + new URLSearchParams(req.query as Record<string, string>).toString()
+      : "";
+    res.redirect(302, target + qs);
+  });
+
   // Apply redirect middleware for 301 redirects from YAML content
   app.use(redirectMiddleware);
 
@@ -2141,9 +2157,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
     
-    const exists = fs.existsSync(folderPath);
+    const folderExists = fs.existsSync(folderPath);
     
-    res.json({ available: !exists, slug, type });
+    if (folderExists && type !== 'landing') {
+      const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+      const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+      const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+      const isComplete = hasCommon && hasEn && hasEs;
+      res.json({ available: !isComplete, slug, type });
+    } else {
+      res.json({ available: !folderExists, slug, type });
+    }
   });
 
   // Create new content (location/page/program)
@@ -2229,8 +2253,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if folder already exists
       if (fs.existsSync(folderPath)) {
-        res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
-        return;
+        const hasCommon = fs.existsSync(path.join(folderPath, '_common.yml'));
+        const hasEn = fs.existsSync(path.join(folderPath, 'en.yml'));
+        const hasEs = fs.existsSync(path.join(folderPath, 'es.yml'));
+        
+        if (hasCommon && hasEn && hasEs) {
+          res.status(409).json({ error: `A ${type} with slug "${enSlug}" already exists` });
+          return;
+        }
       }
 
       // Create folder
@@ -2446,10 +2476,20 @@ sections: []
 `;
       }
 
-      // Write files
-      fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
-      fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
-      fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+      // Write only missing files (preserve existing content from partial creation)
+      const createdFiles: string[] = [];
+      if (!fs.existsSync(path.join(folderPath, '_common.yml'))) {
+        fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+        createdFiles.push('_common.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'en.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
+        createdFiles.push('en.yml');
+      }
+      if (!fs.existsSync(path.join(folderPath, 'es.yml'))) {
+        fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
+        createdFiles.push('es.yml');
+      }
 
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
@@ -2460,10 +2500,108 @@ sections: []
         slugEs: esSlug,
         type,
         folder: `marketing-content/${folderMap[type]}/${enSlug}`,
-        files: ['_common.yml', 'en.yml', 'es.yml'],
+        files: createdFiles.length > 0 ? createdFiles : ['_common.yml', 'en.yml', 'es.yml'],
+        recovered: createdFiles.length > 0 && createdFiles.length < 3,
       });
     } catch (error) {
       console.error("Content create error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/content/delete", async (req, res) => {
+    try {
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const authHeader = req.headers.authorization;
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          {
+            method: "GET",
+            headers: {
+              Authorization: `Token ${token}`,
+              Academy: "4",
+            },
+          },
+        );
+
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to delete content" });
+          return;
+        }
+      }
+
+      const { type, slug, confirmSlug } = req.body;
+
+      if (!type || !slug || !confirmSlug) {
+        res.status(400).json({ error: "Missing required fields: type, slug, confirmSlug" });
+        return;
+      }
+
+      if (slug !== confirmSlug) {
+        res.status(400).json({ error: "Confirmation slug does not match. Deletion cancelled." });
+        return;
+      }
+
+      const folderMap: Record<string, string> = {
+        location: 'locations',
+        page: 'pages',
+        program: 'programs',
+        landing: 'landings',
+      };
+
+      if (!folderMap[type]) {
+        res.status(400).json({ error: `Invalid type. Must be one of: ${Object.keys(folderMap).join(', ')}` });
+        return;
+      }
+
+      if (!slug || /[\/\\]|\.\./.test(slug) || slug.startsWith('.')) {
+        res.status(400).json({ error: "Invalid slug format" });
+        return;
+      }
+
+      const resolvedSlug = type === 'page' ? getFolderFromSlug(slug, 'en') : slug;
+
+      const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], resolvedSlug);
+
+      if (!fs.existsSync(folderPath)) {
+        res.status(404).json({ error: `Content "${slug}" of type "${type}" not found` });
+        return;
+      }
+
+      const realPath = fs.realpathSync(path.resolve(folderPath));
+      const allowedBase = fs.realpathSync(path.join(process.cwd(), 'marketing-content', folderMap[type]));
+      if (!realPath.startsWith(allowedBase + path.sep)) {
+        res.status(400).json({ error: "Invalid path" });
+        return;
+      }
+
+      fs.rmSync(folderPath, { recursive: true, force: true });
+
+      console.log(`[Content] Deleted ${type}/${slug}`);
+
+      res.json({ success: true, message: `Successfully deleted ${type}/${slug}` });
+    } catch (error) {
+      console.error("Content delete error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
@@ -2659,8 +2797,8 @@ sections: []
   // Lead Form API endpoints
 
   // Get form options (programs and locations for dropdowns)
-  app.get("/api/form-options", (req, res) => {
-    const locale = normalizeLocale(req.query.locale as string);
+  app.get(["/api/form-options", "/api/form-options/:locale"], (req, res) => {
+    const locale = normalizeLocale((req.params as { locale?: string }).locale || req.query.locale as string);
 
     // Get all programs for dropdown
     const programs = listCareerPrograms(locale).map((p) => ({
@@ -2686,15 +2824,16 @@ sections: []
       if (fs.existsSync(locationsPath)) {
         const dirs = fs.readdirSync(locationsPath);
         for (const dir of dirs) {
-          const campusPath = path.join(locationsPath, dir, "campus.yml");
-          if (fs.existsSync(campusPath)) {
+          const commonPath = path.join(locationsPath, dir, "_common.yml");
+          if (fs.existsSync(commonPath)) {
             const campusData = yaml.load(
-              fs.readFileSync(campusPath, "utf8"),
+              fs.readFileSync(commonPath, "utf8"),
             ) as {
               slug: string;
               name: string;
               city: string;
               country: string;
+              country_code?: string;
               region?: string;
               visibility?: string;
             };

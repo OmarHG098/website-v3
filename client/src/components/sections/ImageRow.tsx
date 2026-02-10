@@ -217,6 +217,9 @@ function HighlightSlideshow({
   );
 }
 
+const PARALLAX_FACTOR = 0.08;
+const PARALLAX_MAX_PX = 40;
+
 export default function ImageRow({ data }: ImageRowProps) {
   const {
     images,
@@ -232,6 +235,9 @@ export default function ImageRow({ data }: ImageRowProps) {
   const isEditMode = editModeContext?.isEditMode ?? false;
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const isInViewportRef = useRef(false);
+  const imageRefsRef = useRef<(HTMLImageElement | null)[]>([]);
+  const rafRef = useRef<number>(0);
 
   useEffect(() => {
     if (isEditMode) {
@@ -241,12 +247,12 @@ export default function ImageRow({ data }: ImageRowProps) {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        isInViewportRef.current = entry.isIntersecting;
+        if (entry.isIntersecting && !isVisible) {
           setIsVisible(true);
-          observer.disconnect();
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0, rootMargin: "100px 0px" }
     );
 
     if (sectionRef.current) {
@@ -254,6 +260,38 @@ export default function ImageRow({ data }: ImageRowProps) {
     }
 
     return () => observer.disconnect();
+  }, [isEditMode, isVisible]);
+
+  useEffect(() => {
+    if (isEditMode) return;
+
+    const handleScroll = () => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(() => {
+        if (!isInViewportRef.current) return;
+        const section = sectionRef.current;
+        if (!section) return;
+        const rect = section.getBoundingClientRect();
+        const viewportH = window.innerHeight;
+        const center = rect.top + rect.height / 2;
+        const raw = (viewportH / 2 - center) * PARALLAX_FACTOR;
+        const clamped = Math.max(-PARALLAX_MAX_PX, Math.min(PARALLAX_MAX_PX, raw));
+
+        imageRefsRef.current.forEach((img, i) => {
+          if (!img) return;
+          const dir = i % 2 === 0 ? -1 : 1;
+          img.style.transform = `translateY(${dir * clamped}px) scale(1.15)`;
+        });
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
   }, [isEditMode]);
 
   const gapClass = GAP_CLASSES[gap] || GAP_CLASSES.md;
@@ -319,7 +357,7 @@ export default function ImageRow({ data }: ImageRowProps) {
                 return (
                   <div
                     key={image.src || `image-${index}`}
-                    className="flex-1 min-w-0"
+                    className={`flex-1 min-w-0 overflow-hidden ${roundedClass}`}
                     style={{
                       height: imageHeight || `var(--image-row-height-mobile)`,
                       ...getAnimationStyle(index),
@@ -334,12 +372,15 @@ export default function ImageRow({ data }: ImageRowProps) {
                       }
                     `}</style>
                     <img
+                      ref={(el) => { imageRefsRef.current[index] = el; }}
                       src={image.src}
                       alt={image.alt}
-                      className={`w-full h-full ${roundedClass}`}
+                      className="w-full h-full"
                       style={{
                         objectFit: image.object_fit || "cover",
                         objectPosition: image.object_position || "center center",
+                        transform: "translateY(0px) scale(1.15)",
+                        willChange: "transform",
                       }}
                       loading="lazy"
                       data-testid={`img-image-row-${index}`}

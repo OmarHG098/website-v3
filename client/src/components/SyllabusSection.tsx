@@ -15,6 +15,7 @@ import { RiNextjsFill, RiSupabaseFill, RiClaudeFill } from "react-icons/ri";
 import { FaGitAlt } from "react-icons/fa";
 import { IoLogoVercel } from "react-icons/io5";
 import { Matplotlib } from "@/components/custom-icons";
+import { RichTextContent } from "@/components/ui/rich-text-content";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -612,15 +613,74 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 
 export function SyllabusSection({ data }: SyllabusSectionProps) {
   // Check for program-modules variant
-  if ('variant' in data && data.variant === 'program-modules') {
-    return <SyllabusProgramModulesVariant data={data as SyllabusProgramModules} />;
+  if ("variant" in data && data.variant === "program-modules") {
+    const pmData = data as SyllabusProgramModules;
+    const hasHeader =
+      pmData.header ||
+      pmData.subheader ||
+      pmData.description ||
+      pmData.cta_button;
+
+    return (
+      <section data-testid="section-syllabus-program-modules">
+        {hasHeader && (
+          <div className="max-w-6xl mx-auto px-4 pt-12 pb-6 text-center">
+            {pmData.header && (
+              <h2
+                className="text-3xl md:text-4xl font-bold mb-3 text-foreground"
+                data-testid="text-syllabus-pm-header"
+              >
+                {pmData.header}
+              </h2>
+            )}
+            {pmData.subheader && (
+              <p
+                className="text-lg font-semibold text-primary mb-3"
+                data-testid="text-syllabus-pm-subheader"
+              >
+                {pmData.subheader}
+              </p>
+            )}
+            {pmData.description && (
+              <div className="mb-5">
+                <RichTextContent
+                  html={pmData.description}
+                  className="text-base text-muted-foreground leading-relaxed max-w-3xl mx-auto"
+                  data-testid="text-syllabus-pm-description"
+                />
+              </div>
+            )}
+            {pmData.cta_button && (
+              <div className="flex justify-center">
+                <Button
+                  variant={
+                    pmData.cta_button.variant === "primary"
+                      ? "default"
+                      : pmData.cta_button.variant
+                  }
+                  size="lg"
+                  asChild
+                  data-testid="button-syllabus-pm-cta"
+                >
+                  <a href={pmData.cta_button.url} className="flex items-center gap-2">
+                    {pmData.cta_button.icon && getIcon(pmData.cta_button.icon, "w-5 h-5")}
+                    {pmData.cta_button.text}
+                  </a>
+                </Button>
+              </div>
+            )}
+          </div>
+        )}
+        <SyllabusProgramModulesVariant data={pmData} />
+      </section>
+    );
   }
-  
+
   // Check for landing-syllabus variant
-  if ('variant' in data && data.variant === 'landing-syllabus') {
+  if ("variant" in data && data.variant === "landing-syllabus") {
     return <SyllabusLandingVariant data={data as SyllabusLanding} />;
   }
-  
+
   // Default accordion variant
   return <SyllabusDefault data={data as SyllabusDefault} />;
 }

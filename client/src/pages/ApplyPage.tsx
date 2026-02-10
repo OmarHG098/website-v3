@@ -1,8 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
-import { useLocation } from "wouter";
 import Header from "@/components/Header";
-import { SectionRenderer, renderSection } from "@/components/SectionRenderer";
+import { renderSection } from "@/components/SectionRenderer";
 import { ApplyFormSection } from "@/components/ApplyFormSection";
 import { FooterSection } from "@/components/FooterSection";
 
@@ -15,33 +14,12 @@ interface ApplyPageData {
     priority?: number;
     change_frequency?: string;
   };
-  sections: Array<{
-    type: string;
-    version: string;
-    hero?: {
-      title: string;
-      subtitle: string;
-      note?: string;
-    };
-    form?: Record<string, string>;
-    next_steps?: {
-      title: string;
-      items: Array<{ title: string; description: string }>;
-      closing: string;
-    };
-    copyright_text?: string;
-  }>;
-  programs: Array<{ id: string; name_en: string; name_es: string }>;
-  locations: Array<{ id: string; name_en: string; name_es: string }>;
+  sections: Array<Record<string, unknown>>;
 }
 
 export default function ApplyPage() {
   const { i18n } = useTranslation();
   const locale = i18n.language === "es" ? "es" : "en";
-  const [location] = useLocation();
-  
-  const searchParams = new URLSearchParams(window.location.search);
-  const preselectedProgram = searchParams.get("program") || undefined;
 
   const { data: page, isLoading, error, refetch } = useQuery<ApplyPageData>({
     queryKey: ["/api/pages/apply", locale],
@@ -88,10 +66,6 @@ export default function ApplyPage() {
             <ApplyFormSection
               key={index}
               data={section as Parameters<typeof ApplyFormSection>[0]["data"]}
-              programs={page.programs}
-              locations={page.locations}
-              locale={locale}
-              preselectedProgram={preselectedProgram}
             />
           );
         }

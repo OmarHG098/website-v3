@@ -3,7 +3,7 @@ import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
 import { useLocation, Link } from "wouter";
 import { useSession } from "@/contexts/SessionContext";
-import { buildContentUrl, type ContentType } from "@shared/slugMappings";
+import { buildContentUrl, getFolderFromSlug, type ContentType } from "@shared/slugMappings";
 import {
   IconBug,
   IconMap,
@@ -405,9 +405,11 @@ function EditModeToggle() {
 }
 
 export function DebugBubble() {
-  // Check if we should hide the debug bubble (via URL param for embedded previews)
-  const shouldHide = typeof window !== "undefined" && 
-    new URLSearchParams(window.location.search).get("hide_debug") === "true";
+  // Check if we should hide the debug bubble (via URL param or in preview-frame route)
+  const shouldHide = typeof window !== "undefined" && (
+    new URLSearchParams(window.location.search).get("hide_debug") === "true" ||
+    window.location.pathname === "/preview-frame"
+  );
   
   const { isValidated, hasToken, isLoading, isDebugMode, retryValidation, validateManualToken, clearToken, checkSession } = useDebugAuth();
   const { session } = useSession();
@@ -483,6 +485,12 @@ export function DebugBubble() {
   
   // Duplicate page state
   const [duplicatingPage, setDuplicatingPage] = useState<{ loc: string; label: string; contentType: 'location' | 'page' | 'program' | 'landing' } | null>(null);
+  
+  // Delete page state
+  const [deletePageModalOpen, setDeletePageModalOpen] = useState(false);
+  const [deletingPage, setDeletingPage] = useState<{ slug: string; contentType: 'location' | 'page' | 'program' | 'landing' } | null>(null);
+  const [deleteConfirmInput, setDeleteConfirmInput] = useState("");
+  const [isDeletingPage, setIsDeletingPage] = useState(false);
   
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
@@ -1087,8 +1095,7 @@ export function DebugBubble() {
   const getContentTypeFromPath = (path: string): 'page' | 'program' | 'landing' | 'location' | null => {
     const parts = path.split('/').filter(Boolean);
     
-    // Check if first part is a locale
-    const hasLocale = parts[0] === 'us' || parts[0] === 'es';
+    const hasLocale = parts[0] === 'en' || parts[0] === 'es' || parts[0] === 'us';
     const contentParts = hasLocale ? parts.slice(1) : parts;
     
     if (contentParts.length === 0) return null;
@@ -1119,6 +1126,70 @@ export function DebugBubble() {
       setCreateContentModalOpen(true);
     } else {
       toast({ title: "No se puede duplicar", description: "Tipo de contenido no reconocido", variant: "destructive" });
+    }
+  };
+
+  const handleDeletePage = (url: SitemapUrl) => {
+    const urlPath = new URL(url.loc).pathname;
+    const contentType = getContentTypeFromPath(urlPath);
+    if (!contentType) {
+      toast({ title: "No se puede eliminar", description: "Tipo de contenido no reconocido", variant: "destructive" });
+      return;
+    }
+    const parts = urlPath.split('/').filter(Boolean);
+    const hasLocale = parts[0] === 'en' || parts[0] === 'es' || parts[0] === 'us';
+    const locale = hasLocale ? parts[0] : 'en';
+    const contentParts = hasLocale ? parts.slice(1) : parts;
+    let slug = '';
+    if (contentType === 'landing') {
+      slug = contentParts.slice(1).join('-') || contentParts[contentParts.length - 1];
+    } else if (contentType === 'program') {
+      slug = contentParts[contentParts.length - 1];
+    } else if (contentType === 'location') {
+      slug = contentParts[contentParts.length - 1];
+    } else {
+      const rawSlug = contentParts.join('-') || contentParts[contentParts.length - 1];
+      slug = getFolderFromSlug(rawSlug, locale === 'us' ? 'en' : locale);
+    }
+    if (!slug) {
+      toast({ title: "No se puede eliminar", description: "No se pudo determinar el slug", variant: "destructive" });
+      return;
+    }
+    setDeletingPage({ slug, contentType });
+    setDeleteConfirmInput("");
+    setDeletePageModalOpen(true);
+  };
+
+  const confirmDeletePage = async () => {
+    if (!deletingPage || deleteConfirmInput !== deletingPage.slug) return;
+    setIsDeletingPage(true);
+    try {
+      const token = getDebugToken();
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) headers["Authorization"] = `Token ${token}`;
+      const response = await fetch("/api/content/delete", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({ type: deletingPage.contentType, slug: deletingPage.slug, confirmSlug: deleteConfirmInput }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        toast({ title: "Página eliminada", description: data.message });
+        setDeletePageModalOpen(false);
+        setDeletingPage(null);
+        setDeleteConfirmInput("");
+        const sitemapRes = await fetch("/api/debug/sitemap-urls");
+        if (sitemapRes.ok) {
+          const sitemapData = await sitemapRes.json();
+          setSitemapUrls(sitemapData);
+        }
+      } else {
+        toast({ title: "Error", description: data.error || "Error al eliminar", variant: "destructive" });
+      }
+    } catch (error) {
+      toast({ title: "Error", description: "Error de conexión", variant: "destructive" });
+    } finally {
+      setIsDeletingPage(false);
     }
   };
 
@@ -2027,6 +2098,17 @@ export function DebugBubble() {
                                     >
                                       <IconCopy className="h-3 w-3 text-muted-foreground" />
                                     </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeletePage(url);
+                                      }}
+                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                      title="Eliminar página"
+                                      data-testid={`button-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                    >
+                                      <IconTrash className="h-3 w-3 text-destructive" />
+                                    </button>
                                   </div>
                                 );
                               })}
@@ -2058,6 +2140,17 @@ export function DebugBubble() {
                               data-testid={`button-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
                             >
                               <IconCopy className="h-3 w-3 text-muted-foreground" />
+                            </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                handleDeletePage(url);
+                              }}
+                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                              title="Eliminar página"
+                              data-testid={`button-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                            >
+                              <IconTrash className="h-3 w-3 text-destructive" />
                             </button>
                           </div>
                         );
@@ -2778,6 +2871,57 @@ export function DebugBubble() {
         </DialogContent>
       </Dialog>
       
+      {/* Delete Page Confirmation Modal */}
+      <Dialog open={deletePageModalOpen} onOpenChange={(open) => {
+        setDeletePageModalOpen(open);
+        if (!open) {
+          setDeleteConfirmInput("");
+          setDeletingPage(null);
+        }
+      }}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-destructive">Eliminar página</DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground pt-2">
+              Esta acción es irreversible y permanente. Si estás seguro de eliminar <span className="font-bold text-foreground">{deletingPage?.slug}</span> entonces escribe el nombre de la página acá abajo y dale click a confirmar.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-3 py-2">
+            <label className="text-sm text-muted-foreground">
+              Escribe <span className="font-mono font-bold text-foreground">{deletingPage?.slug}</span> para completar esta acción:
+            </label>
+            <input
+              value={deleteConfirmInput}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setDeleteConfirmInput(e.target.value)}
+              placeholder={deletingPage?.slug || ""}
+              className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors font-mono placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+              data-testid="input-delete-confirm-slug"
+            />
+          </div>
+          <DialogFooter className="gap-2">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setDeletePageModalOpen(false);
+                setDeleteConfirmInput("");
+                setDeletingPage(null);
+              }}
+              data-testid="button-delete-cancel"
+            >
+              Cancelar
+            </Button>
+            <Button
+              variant="destructive"
+              disabled={deleteConfirmInput !== deletingPage?.slug || isDeletingPage}
+              onClick={confirmDeletePage}
+              data-testid="button-delete-confirm"
+            >
+              {isDeletingPage ? "Eliminando..." : "Confirmar eliminación"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       {/* Create Content Modal */}
       <Dialog open={createContentModalOpen} onOpenChange={(open) => {
         setCreateContentModalOpen(open);

@@ -208,14 +208,19 @@ export function Article({ data }: ArticleProps) {
       data-testid="article-section"
     >
       {showSideToc ? (
-        <div className="flex gap-10">
-          <article className="min-w-0 flex-1" data-testid="article-content">
-            <MarkdownRenderer content={content} getHeadingId={getHeadingId} />
-          </article>
-          <aside className="hidden w-56 shrink-0 lg:block xl:w-64">
-            <TocSide items={tocItems} />
-          </aside>
-        </div>
+        <>
+          <div className="lg:hidden">
+            <TocTop items={tocItems} />
+          </div>
+          <div className="flex gap-10">
+            <article className="min-w-0 flex-1" data-testid="article-content">
+              <MarkdownRenderer content={content} getHeadingId={getHeadingId} />
+            </article>
+            <aside className="hidden w-56 shrink-0 lg:block xl:w-64">
+              <TocSide items={tocItems} />
+            </aside>
+          </div>
+        </>
       ) : (
         <>
           {showTopToc && <TocTop items={tocItems} />}

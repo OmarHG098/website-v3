@@ -16,20 +16,22 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: singleColumn
-    badge: Bootcamps that launch careers
-    title: Empowering Talent for the AI Era
-    subtitle: 4Geeks Academy is a global tech academy with 8 campuses across the U.S., Latin America, and Europe, training the next generation of tech professionals in AI-powered Full-Stack Development, Data Science & ML, and Cybersecurity.
-    image_id: academy_header_coding
-    image_full_width: true
-  - type: hero
-    version: "1.0"
-    variant: singleColumn
-    title: Empowering Talent for the AI Era
-    subtitle: 4Geeks Academy is a global tech academy with 8 campuses across the U.S., Latin America, and Europe, training the next generation of tech professionals in AI-powered Full-Stack Development, Data Science & ML, and Cybersecurity.
-    badge: Bootcamps that launch careers
-    image_id: caracas_graduates
-    image_full_width: false
+    variant: simpleTwoColumn
+    title: Get into tech with our Job Guarantee test
+    subtitle: Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.
+    image:
+      src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
+      alt: Students collaborating in a tech workspace
+    cta_buttons:
+      - text: Apply now
+        url: "#apply"
+        variant: primary
+        icon: Rocket
+      - text: Download Details
+        url: "#syllabus"
+        variant: outline
+        icon: Download
+    background: bg-gradient-to-b from-primary/5 to-background
   - type: split_cards
     variant: primary-left
     primary_width: narrow

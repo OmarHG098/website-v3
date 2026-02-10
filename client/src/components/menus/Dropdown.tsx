@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useLayoutEffect, useCallback } from "react";
 import { ChevronDown, ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -293,9 +293,20 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
   );
 }
 
+const DROPDOWN_WIDTH_PX: Record<string, number> = {
+  cards: 900,
+  columns: 800,
+  "simple-list": 288,
+  "grouped-list": 550,
+};
+
+const VIEWPORT_PADDING = 16;
+
 export function Dropdown({ label, href, dropdown }: DropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const triggerRef = useRef<HTMLDivElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
   
   const isWideDropdown = dropdown.type === "cards" || dropdown.type === "columns";
   
@@ -327,6 +338,39 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
         return "";
     }
   };
+
+  const positionPanel = useCallback(() => {
+    const trigger = triggerRef.current;
+    const panel = panelRef.current;
+    if (!trigger || !panel) return;
+
+    const triggerRect = trigger.getBoundingClientRect();
+    const viewportW = window.innerWidth;
+    const maxAvailable = viewportW - VIEWPORT_PADDING * 2;
+    const nominalW = DROPDOWN_WIDTH_PX[dropdown.type] || panel.offsetWidth;
+    const dropdownW = Math.min(nominalW, maxAvailable);
+
+    if (dropdownW < nominalW) {
+      panel.style.maxWidth = `${maxAvailable}px`;
+    } else {
+      panel.style.maxWidth = "";
+    }
+
+    const triggerCenter = triggerRect.left + triggerRect.width / 2;
+    let idealLeft = triggerCenter - dropdownW / 2;
+    idealLeft = Math.max(VIEWPORT_PADDING, Math.min(idealLeft, viewportW - dropdownW - VIEWPORT_PADDING));
+
+    const relativeLeft = idealLeft - triggerRect.left;
+    panel.style.left = `${relativeLeft}px`;
+  }, [dropdown.type]);
+
+  useLayoutEffect(() => {
+    if (!isOpen || isWideDropdown) return;
+    positionPanel();
+
+    window.addEventListener("resize", positionPanel);
+    return () => window.removeEventListener("resize", positionPanel);
+  }, [isOpen, isWideDropdown, positionPanel]);
   
   const renderDropdownContent = () => {
     switch (dropdown.type) {
@@ -345,18 +389,19 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
   
   return (
     <div
+      ref={triggerRef}
       className="relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <a
-        href={href}
-        className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover-elevate rounded-md transition-colors"
+      <button
+        type="button"
+        className="flex items-center gap-1 px-4 py-2 text-sm font-medium text-foreground hover-elevate rounded-md transition-colors no-default-hover-elevate no-default-active-elevate"
         data-testid={`nav-dropdown-${label.toLowerCase().replace(/\s+/g, "-")}`}
       >
         {label}
         <ChevronDown className={`w-4 h-4 transition-transform ${isOpen ? "rotate-180" : ""}`} />
-      </a>
+      </button>
       
       {isOpen && (
         isWideDropdown ? (
@@ -372,8 +417,10 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
             </div>
           </div>
         ) : (
-          <div 
-            className={`absolute top-full left-0 z-50 mt-1 bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+          <div
+            ref={panelRef}
+            className={`absolute top-full z-50 mt-1 bg-white dark:bg-zinc-900 border border-border rounded-lg shadow-lg ${getDropdownWidth()}`}
+            style={{ left: 0 }}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >

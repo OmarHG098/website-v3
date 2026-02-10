@@ -1,6 +1,7 @@
-import { useCallback } from "react";
+import { useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useLocation } from "wouter";
+import { useTranslation } from "react-i18next";
 import { SectionRenderer } from "@/components/SectionRenderer";
 import type { TemplatePage } from "@shared/schema";
 import { IconLoader2 } from "@tabler/icons-react";
@@ -11,8 +12,19 @@ import Header from "@/components/Header";
 
 export default function HomePage() {
   const [location] = useLocation();
-  const locale = location.startsWith("/es") ? "es" : "en";
+  const { i18n } = useTranslation();
+  
+  // Detect locale from URL path
+  const urlLocale = location.startsWith("/es") ? "es" : "en";
+  const locale = urlLocale;
   const slug = "home";
+  
+  // Sync i18n language with URL locale
+  useEffect(() => {
+    if (i18n.language !== urlLocale) {
+      i18n.changeLanguage(urlLocale);
+    }
+  }, [urlLocale, i18n]);
 
   const { data: page, isLoading, error, refetch } = useQuery<TemplatePage>({
     queryKey: ["/api/pages", slug, locale],

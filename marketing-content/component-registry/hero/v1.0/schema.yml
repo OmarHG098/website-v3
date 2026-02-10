@@ -645,6 +645,11 @@ variant_props:
       type: string
       required: false
   course:
+    layout_reversed:
+      type: boolean
+      required: false
+      description: When true, media and signup card are on the left, text content on the right
+      example: false
     students_enrolled:
       type: object
       required: false
