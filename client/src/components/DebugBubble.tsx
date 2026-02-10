@@ -56,6 +56,8 @@ import {
   IconTrash,
   IconDeviceFloppy,
   IconMenu2,
+  IconDotsVertical,
+  IconDownload,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -81,6 +83,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { Card } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
@@ -1160,6 +1163,67 @@ export function DebugBubble() {
     setDeletePageModalOpen(true);
   };
 
+  const handleDownloadYml = async (url: SitemapUrl) => {
+    const urlPath = new URL(url.loc).pathname;
+    const contentType = getContentTypeFromPath(urlPath);
+    if (!contentType) {
+      toast({ title: "Cannot download", description: "Unrecognized content type", variant: "destructive" });
+      return;
+    }
+    const parts = urlPath.split('/').filter(Boolean);
+    const hasLocale = parts[0] === 'en' || parts[0] === 'es' || parts[0] === 'us';
+    const locale = hasLocale ? parts[0] : 'en';
+    const contentParts = hasLocale ? parts.slice(1) : parts;
+    let slug = '';
+    if (contentType === 'landing') {
+      slug = contentParts.slice(1).join('-') || contentParts[contentParts.length - 1];
+    } else if (contentType === 'program') {
+      slug = contentParts[contentParts.length - 1];
+    } else if (contentType === 'location') {
+      slug = contentParts[contentParts.length - 1];
+    } else {
+      const rawSlug = contentParts.join('-') || contentParts[contentParts.length - 1];
+      slug = getFolderFromSlug(rawSlug, locale === 'us' ? 'en' : locale);
+    }
+    if (!slug) {
+      toast({ title: "Cannot download", description: "Could not determine slug", variant: "destructive" });
+      return;
+    }
+    const folderMap: Record<string, string> = { page: 'pages', program: 'programs', location: 'locations', landing: 'landings' };
+    const folder = folderMap[contentType];
+    const filesToTry = contentType === 'landing'
+      ? ['_common.yml', 'promoted.yml']
+      : ['_common.yml', 'en.yml', 'es.yml'];
+    const token = getDebugToken();
+    const headers: Record<string, string> = {};
+    if (token) headers["Authorization"] = `Token ${token}`;
+    let downloadedCount = 0;
+    for (const filename of filesToTry) {
+      try {
+        const res = await fetch(`/api/content/file?path=marketing-content/${folder}/${slug}/${filename}`, { headers });
+        if (!res.ok) continue;
+        const text = await res.text();
+        const blob = new Blob([text], { type: 'text/yaml' });
+        const blobUrl = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = `${slug}-${filename}`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(blobUrl);
+        downloadedCount++;
+      } catch {
+        // skip files that fail
+      }
+    }
+    if (downloadedCount > 0) {
+      toast({ title: "Download complete", description: `Downloaded ${downloadedCount} YAML file(s) for ${slug}` });
+    } else {
+      toast({ title: "No files found", description: `No YAML files found for ${slug}`, variant: "destructive" });
+    }
+  };
+
   const confirmDeletePage = async () => {
     if (!deletingPage || deleteConfirmInput !== deletingPage.slug) return;
     setIsDeletingPage(true);
@@ -2087,28 +2151,31 @@ export function DebugBubble() {
                                     >
                                       {path}
                                     </a>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDuplicatePage(url);
-                                      }}
-                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                                      title="Duplicar página"
-                                      data-testid={`button-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                                    >
-                                      <IconCopy className="h-3 w-3 text-muted-foreground" />
-                                    </button>
-                                    <button
-                                      onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeletePage(url);
-                                      }}
-                                      className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                                      title="Eliminar página"
-                                      data-testid={`button-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                                    >
-                                      <IconTrash className="h-3 w-3 text-destructive" />
-                                    </button>
+                                    <DropdownMenu>
+                                      <DropdownMenuTrigger asChild>
+                                        <button
+                                          className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                          onClick={(e) => e.stopPropagation()}
+                                          data-testid={`button-url-menu-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                        >
+                                          <IconDotsVertical className="h-3 w-3 text-muted-foreground" />
+                                        </button>
+                                      </DropdownMenuTrigger>
+                                      <DropdownMenuContent align="end" className="w-40">
+                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconCopy className="h-3.5 w-3.5 mr-2" />
+                                          Duplicate
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconDownload className="h-3.5 w-3.5 mr-2" />
+                                          Download YAML
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                          <IconTrash className="h-3.5 w-3.5 mr-2" />
+                                          Delete
+                                        </DropdownMenuItem>
+                                      </DropdownMenuContent>
+                                    </DropdownMenu>
                                   </div>
                                 );
                               })}
@@ -2130,28 +2197,31 @@ export function DebugBubble() {
                             >
                               {path}
                             </a>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDuplicatePage(url);
-                              }}
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                              title="Duplicar página"
-                              data-testid={`button-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                            >
-                              <IconCopy className="h-3 w-3 text-muted-foreground" />
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleDeletePage(url);
-                              }}
-                              className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
-                              title="Eliminar página"
-                              data-testid={`button-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
-                            >
-                              <IconTrash className="h-3 w-3 text-destructive" />
-                            </button>
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <button
+                                  className="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-muted transition-opacity"
+                                  onClick={(e) => e.stopPropagation()}
+                                  data-testid={`button-url-menu-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}
+                                >
+                                  <IconDotsVertical className="h-3 w-3 text-muted-foreground" />
+                                </button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end" className="w-40">
+                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconCopy className="h-3.5 w-3.5 mr-2" />
+                                  Duplicate
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconDownload className="h-3.5 w-3.5 mr-2" />
+                                  Download YAML
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                  <IconTrash className="h-3.5 w-3.5 mr-2" />
+                                  Delete
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
                           </div>
                         );
                       })}
