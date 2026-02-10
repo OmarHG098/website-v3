@@ -60,6 +60,12 @@ function getIdBase(filename: string): string {
     .toLowerCase();
 }
 
+function extractTimestamp(filename: string): number {
+  const name = path.parse(filename).name;
+  const match = name.match(/_(\d{13,})$/);
+  return match ? parseInt(match[1], 10) : 0;
+}
+
 function scanAttachedAssets(): Map<string, string> {
   const imageFiles = new Map<string, string>();
   if (!fs.existsSync(ATTACHED_ASSETS_DIR)) return imageFiles;
@@ -180,11 +186,15 @@ export function scanImageRegistry(): ScanResult {
       const oldExt = path.extname(oldFile).toLowerCase();
       const newExt = path.extname(filename).toLowerCase();
       if (oldExt !== newExt) {
-        updatedImages.push({
-          id: existing.id,
-          oldSrc: existing.src,
-          newSrc: src,
-        });
+        const oldTs = extractTimestamp(oldFile);
+        const newTs = extractTimestamp(filename);
+        if (newTs >= oldTs) {
+          updatedImages.push({
+            id: existing.id,
+            oldSrc: existing.src,
+            newSrc: src,
+          });
+        }
       }
     } else {
       const basename = path.basename(filename);
