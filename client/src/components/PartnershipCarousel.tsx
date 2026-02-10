@@ -7,7 +7,6 @@ import {
 import { UniversalImage } from "@/components/UniversalImage";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { useEditModeOptional } from "@/contexts/EditModeContext";
 import type {
   PartnershipCarouselSection,
   PartnershipSlide,
@@ -156,27 +155,18 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
   const contentRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const editMode = useEditModeOptional();
-  const isEditMode = editMode?.isEditMode ?? false;
 
   const totalSlides = slides.length;
 
   useEffect(() => {
     const measureContent = () => {
-      if (containerRef.current) {
-        containerRef.current.style.height = "auto";
-      }
-
-      requestAnimationFrame(() => {
-        let tallest = 0;
-        contentRefs.current.forEach((el) => {
-          if (el) {
-            tallest = Math.max(tallest, el.scrollHeight);
-          }
-        });
-        if (tallest > 0) setMaxContentHeight(tallest);
+      let tallest = 0;
+      contentRefs.current.forEach((el) => {
+        if (el) {
+          tallest = Math.max(tallest, el.scrollHeight);
+        }
       });
+      if (tallest > 0) setMaxContentHeight(tallest);
     };
 
     measureContent();
@@ -187,7 +177,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
     });
 
     return () => observer.disconnect();
-  }, [slides, isEditMode]);
+  }, [slides]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -268,7 +258,6 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
           <div
-            ref={containerRef}
             className="relative overflow-hidden"
             style={{ height: maxContentHeight > 0 ? `${maxContentHeight}px` : "auto" }}
           >
