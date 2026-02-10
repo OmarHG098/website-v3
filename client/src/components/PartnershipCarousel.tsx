@@ -151,10 +151,33 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
   const { slides, heading, subtitle, autoplay, autoplay_interval } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [maxSlideHeight, setMaxSlideHeight] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    const measureSlides = () => {
+      let tallest = 0;
+      slideRefs.current.forEach((el) => {
+        if (el) {
+          tallest = Math.max(tallest, el.scrollHeight);
+        }
+      });
+      if (tallest > 0) setMaxSlideHeight(tallest);
+    };
+
+    measureSlides();
+
+    const observer = new ResizeObserver(measureSlides);
+    slideRefs.current.forEach((el) => {
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [slides]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -234,15 +257,19 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
         )}
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-          <div className="relative min-h-[400px] md:h-[500px] overflow-hidden">
+          <div
+            className="relative overflow-hidden transition-[height] duration-500 ease-in-out"
+            style={{ height: maxSlideHeight > 0 ? `${maxSlideHeight}px` : "auto" }}
+          >
             <div
-              className="flex transition-transform duration-500 ease-in-out h-full"
+              className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${activeIndex * 100}%)` }}
             >
               {slides.map((slide, i) => (
                 <div
                   key={i}
-                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[500px]"
+                  ref={(el) => { slideRefs.current[i] = el; }}
+                  className="w-full flex-shrink-0 grid grid-cols-1 md:grid-cols-12"
                 >
                   <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
                     <UniversalImage
