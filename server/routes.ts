@@ -21,6 +21,7 @@ import {
   getSitemapCacheStatus,
   getSitemapUrls,
 } from "./sitemap";
+import { markFileAsModified } from "./sync-state";
 import {
   redirectMiddleware,
   getRedirects,
@@ -2338,6 +2339,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               }
               
               fs.writeFileSync(path.join(folderPath, file), content);
+              markFileAsModified(`marketing-content/${folderMap[type]}/${enSlug}/${file}`);
             }
             
             // Clear sitemap cache so the new content appears
@@ -2478,17 +2480,21 @@ sections: []
 
       // Write only missing files (preserve existing content from partial creation)
       const createdFiles: string[] = [];
+      const relFolder = `marketing-content/${folderMap[type]}/${enSlug}`;
       if (!fs.existsSync(path.join(folderPath, '_common.yml'))) {
         fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
         createdFiles.push('_common.yml');
+        markFileAsModified(`${relFolder}/_common.yml`);
       }
       if (!fs.existsSync(path.join(folderPath, 'en.yml'))) {
         fs.writeFileSync(path.join(folderPath, 'en.yml'), enYml);
         createdFiles.push('en.yml');
+        markFileAsModified(`${relFolder}/en.yml`);
       }
       if (!fs.existsSync(path.join(folderPath, 'es.yml'))) {
         fs.writeFileSync(path.join(folderPath, 'es.yml'), esYml);
         createdFiles.push('es.yml');
+        markFileAsModified(`${relFolder}/es.yml`);
       }
 
       // Clear sitemap cache so the new content appears
@@ -2716,6 +2722,7 @@ sections: []
                 }
                 
                 fs.writeFileSync(path.join(folderPath, file), content);
+                markFileAsModified(`marketing-content/landings/${slug}/${file}`);
               }
               
               // Clear sitemap cache so the new content appears
@@ -2754,7 +2761,9 @@ sections: []
 
       // Write files
       fs.writeFileSync(path.join(folderPath, '_common.yml'), commonYml);
+      markFileAsModified(`marketing-content/landings/${slug}/_common.yml`);
       fs.writeFileSync(path.join(folderPath, 'promoted.yml'), promotedYml);
+      markFileAsModified(`marketing-content/landings/${slug}/promoted.yml`);
 
       // Clear sitemap cache so the new content appears
       clearSitemapCache();
