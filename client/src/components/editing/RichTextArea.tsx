@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import {
   IconBold,
   IconItalic,
+  IconList,
   IconLink,
   IconLinkOff,
   IconPalette,
@@ -339,6 +340,14 @@ export function RichTextArea({
     [applyCommand],
   );
 
+  const handleBulletList = useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      applyCommand("insertUnorderedList");
+    },
+    [applyCommand],
+  );
+
   const handleLinkPopoverOpen = useCallback((open: boolean) => {
     if (open) {
       const sel = window.getSelection();
@@ -466,6 +475,17 @@ export function RichTextArea({
           data-testid={testId ? `${testId}-italic` : undefined}
         >
           <IconItalic className="h-4 w-4" />
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8"
+          onMouseDown={handleBulletList}
+          title="Bullet list"
+          data-testid={testId ? `${testId}-bullet-list` : undefined}
+        >
+          <IconList className="h-4 w-4" />
         </Button>
         <Popover open={linkOpen} onOpenChange={handleLinkPopoverOpen}>
           <PopoverTrigger asChild>
