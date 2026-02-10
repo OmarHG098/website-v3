@@ -57,56 +57,57 @@ function SlideLeftCard({
             {slide.description}
           </p>
         )}
-
-        {slide.stats && slide.stats.length > 0 && (
-          <div className="flex justify-center">
-            <div
-              className={`grid ${slide.stats.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2"} grid-cols-2 gap-3 mt-auto`}
-              data-testid="stats-partnership"
-            >
-              {slide.stats.map((stat, i) => (
-                <Card
-                  key={i}
-                  className="flex flex-col items-center justify-center p-3"
-                >
-                  <span
-                    className="text-2xl md:text-3xl font-bold text-primary"
-                    data-testid={`text-stat-value-${i}`}
+        <div className="flex flex-col justify-end h-full">
+          {slide.stats && slide.stats.length > 0 && (
+            <div className="flex justify-center">
+              <div
+                className={`grid ${slide.stats.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2"} grid-cols-2 gap-3 mt-auto`}
+                data-testid="stats-partnership"
+              >
+                {slide.stats.map((stat, i) => (
+                  <Card
+                    key={i}
+                    className="flex flex-col items-center justify-center p-3"
                   >
-                    {stat.value}
-                  </span>
-                  <span
-                    className="text-xs text-muted-foreground text-center"
-                    data-testid={`text-stat-label-${i}`}
-                  >
-                    {stat.label}
-                  </span>
-                </Card>
-              ))}
+                    <span
+                      className="text-2xl md:text-3xl font-bold text-primary"
+                      data-testid={`text-stat-value-${i}`}
+                    >
+                      {stat.value}
+                    </span>
+                    <span
+                      className="text-xs text-muted-foreground text-center"
+                      data-testid={`text-stat-label-${i}`}
+                    >
+                      {stat.label}
+                    </span>
+                  </Card>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
 
-        {slide.cta && (
-          <a
-            href={slide.cta.url}
-            className="mt-2 w-full"
-            data-testid="link-partnership-cta"
-          >
-            <Button
-              className="w-full"
-              variant={
-                slide.cta.variant === "outline"
-                  ? "outline"
-                  : slide.cta.variant === "secondary"
-                    ? "secondary"
-                    : "default"
-              }
+          {slide.cta && (
+            <a
+              href={slide.cta.url}
+              className="mt-2 w-full"
+              data-testid="link-partnership-cta"
             >
-              {slide.cta.text}
-            </Button>
-          </a>
-        )}
+              <Button
+                className="w-full"
+                variant={
+                  slide.cta.variant === "outline"
+                    ? "outline"
+                    : slide.cta.variant === "secondary"
+                      ? "secondary"
+                      : "default"
+                }
+              >
+                {slide.cta.text}
+              </Button>
+            </a>
+          )}
+        </div>
       </div>
     </Card>
   );
@@ -131,13 +132,13 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
             Institutions that contributed to this project
           </h4>
           <div
-            className="grid grid-cols-4 gap-3"
+            className="flex flex-wrap gap-3"
             data-testid="logos-partnership"
           >
             {slide.institution_logos!.map((logo, i) => (
               <Card
                 key={i}
-                className="flex items-center justify-center p-1"
+                className="flex items-center justify-center p-2"
                 data-testid={`card-institution-logo-${i}`}
               >
                 <div
@@ -231,9 +232,7 @@ function SlideContent({
       </div>
 
       {hasRightCard && (
-        <div
-          className={`${verticalCards ? "md:col-span-3" : "md:col-span-4"}`}
-        >
+        <div className={`${verticalCards ? "md:col-span-3" : "md:col-span-4"}`}>
           <SlideRightCard slide={slide} />
         </div>
       )}
@@ -368,13 +367,12 @@ export function PartnershipCarouselSplitCard({
             {slides.map((slide, i) => (
               <div
                 key={i}
-                ref={(el) => { slideRefs.current[i] = el; }}
+                ref={(el) => {
+                  slideRefs.current[i] = el;
+                }}
                 className="w-full flex-shrink-0"
               >
-                <SlideContent
-                  slide={slide}
-                  verticalCards={vertical_cards}
-                />
+                <SlideContent slide={slide} verticalCards={vertical_cards} />
               </div>
             ))}
           </div>
