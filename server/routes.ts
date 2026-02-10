@@ -1948,7 +1948,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
-  // Get raw file content for backup download
   app.get("/api/content/folder-files", (req, res) => {
     try {
       const folderPath = req.query.path as string;
@@ -1963,7 +1962,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       const fullPath = path.join(process.cwd(), normalizedPath);
       if (!fs.existsSync(fullPath) || !fs.statSync(fullPath).isDirectory()) {
-        console.log(`[Folder Files] 404 for: ${folderPath} (full: ${fullPath})`);
         res.status(404).json({ error: "Folder not found" });
         return;
       }
@@ -1972,6 +1970,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error("Error listing folder:", error);
       res.status(500).json({ error: "Failed to list folder" });
+    }
+  });
+
+  app.get("/api/content/resolve-folder", (req, res) => {
+    try {
+      const slug = req.query.slug as string;
+      if (!slug) {
+        res.status(400).json({ error: "slug is required" });
+        return;
+      }
+      const contentDirs = ['pages', 'programs', 'locations', 'landings'];
+      const baseDir = path.join(process.cwd(), 'marketing-content');
+      for (const dir of contentDirs) {
+        const folderPath = path.join(baseDir, dir, slug);
+        if (fs.existsSync(folderPath) && fs.statSync(folderPath).isDirectory()) {
+          const files = fs.readdirSync(folderPath).filter(f => f.endsWith('.yml') || f.endsWith('.yaml'));
+          if (files.length > 0) {
+            res.json({ folder: `marketing-content/${dir}/${slug}`, contentType: dir, files });
+            return;
+          }
+        }
+      }
+      res.status(404).json({ error: "No content folder found for this slug" });
+    } catch (error) {
+      console.error("Error resolving folder:", error);
+      res.status(500).json({ error: "Failed to resolve folder" });
     }
   });
 
