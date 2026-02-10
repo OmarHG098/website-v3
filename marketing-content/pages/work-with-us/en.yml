@@ -54,7 +54,7 @@ sections:
       url: https://www.youtube.com/watch?v=-2ZvlgDnltc
       ratio: "2:2"
     paddingY:
-      desktop: none lg
+      desktop: none md
   - type: two_column
     proportions:
       - 5
@@ -148,21 +148,35 @@ sections:
         cta_text: Discover program
         cta_url: /en/full-stack
         course_background: muted
+    marginY:
+      desktop: none lg
   - type: value_proof_panel
     title: Recognized Globally for Excellence
-    subtitle: Trusted sources validate our commitment to delivering exceptional results.
+    subtitle: Trusted sources validate the impact of our programs and community.
     evidence_items:
-      - title: Ranked Among Top 5 Coding Bootcamps Worldwide
-        source: Newsweek, Forbes, SwitchUp, Course Report
-      - title: Awarded Best Student Support & Best Value
+      - title: Top 5 Coding Bootcamps Worldwide
+        source: Newsweek, Forbes, SwitchUp, Course Reportk
+      - title: Best Student Support & Best Value
         source: Course Report, SwitchUp
       - title: 35,000+ Graduates Across 20+ Countries
-        description: Join a thriving global community of tech professionals
+        description: Join a global network of tech professionals achieving success.
     media:
       type: image
       src: /images/students-learning.jpg
-      alt: Students collaborating in classroom
+      alt: Students collaborating in a classroom
       aspect_ratio: "4:3"
       style: rounded
     background: muted
     variant: default
+    marginY:
+      desktop: none md
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - outcomes
+    marginY:
+      desktop: none md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
