@@ -18,18 +18,18 @@ interface PartnershipCarouselProps {
 
 function SlideContent({ slide }: { slide: PartnershipSlide }) {
   return (
-    <div className="flex flex-col justify-center gap-4 p-6 md:p-10 lg:p-12">
-      {slide.subtitle && (
+    <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
+      {/* {slide.subtitle && (
         <p
           className="text-sm font-medium uppercase tracking-wider text-muted-foreground"
           data-testid="text-partnership-subtitle"
         >
           {slide.subtitle}
         </p>
-      )}
+      )} */}
 
       <h3
-        className="text-2xl md:text-3xl font-bold text-foreground"
+        className="text-2xl md:text-4xl font-bold text-foreground"
         data-testid="text-partnership-title"
       >
         {slide.title}
@@ -43,19 +43,19 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
           {slide.description}
         </p>
       )}
-      <div className="flex justify-between">
+      <div className="flex justify-between px-2 items-center">
         {slide.stats && slide.stats.length > 0 && (
-          <div className=" gap-6 mt-2" data-testid="stats-partnership">
+          <div className="flex gap-3 mt-2" data-testid="stats-partnership">
             {slide.stats.map((stat, i) => (
               <div key={i} className="flex flex-col justify-center">
                 <span
-                  className="text-2xl md:text-3xl font-bold text-primary"
+                  className="text-2xl md:text-4xl font-bold text-primary text-center"
                   data-testid={`text-stat-value-${i}`}
                 >
                   {stat.value}
                 </span>
                 <span
-                  className="text-sm text-muted-foreground"
+                  className="text-sm text-muted-foreground text-center"
                   data-testid={`text-stat-label-${i}`}
                 >
                   {stat.label}
@@ -66,26 +66,26 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
         )}
 
         {slide.institution_logos && slide.institution_logos.length > 0 && (
-          <div
-            className="flex flex-wrap items-center gap-4 mt-2"
-            data-testid="logos-partnership"
-          >
-            {slide.institution_logos.map((logo, i) => (
-              <div
-                key={i}
-                className="flex items-center gap-2"
-                style={{ height: logo.logo_height || "40px" }}
-                data-testid={`img-institution-logo-${i}`}
-              >
-                <span>{logo.text}</span>
-                <div className="bg-primary w-[1px] h-full rounded" />
-                <UniversalImage
-                  id={logo.image_id}
-                  alt={logo.alt}
-                  className="h-full w-auto object-contain h-4"
-                />
-              </div>
-            ))}
+          <div className="gap-4 mt-2" data-testid="logos-partnership">
+            <div className="text-center mb-1">
+              <h3>Institutions that contributed</h3>
+            </div>
+            <div className="flex">
+              {slide.institution_logos.map((logo, i) => (
+                <div
+                  key={i}
+                  className="flex items-center justify-end gap-2 text-sm text-muted-foreground mb-1"
+                  style={{ height: logo.logo_height || "50px" }}
+                  data-testid={`img-institution-logo-${i}`}
+                >
+                  <UniversalImage
+                    id={logo.image_id}
+                    alt={logo.alt}
+                    className="h-full w-auto object-contain h-4"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         )}
       </div>
@@ -234,8 +234,8 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
         )}
 
         <div className="rounded-[0.8rem] overflow-hidden border border-border bg-card">
-          <div className="grid grid-cols-1 md:grid-cols-2 min-h-[400px] md:min-h-[480px]">
-            <div className="relative overflow-hidden aspect-[4/3] md:aspect-auto">
+          <div className="grid grid-cols-1 md:grid-cols-12 min-h-[400px] md:min-h-[550px]">
+            <div className="relative overflow-hidden md:col-span-5 aspect-[4/3] md:aspect-auto">
               {slides.map((slide, i) => (
                 <div
                   key={i}
@@ -261,7 +261,7 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
               ))}
             </div>
 
-            <div className="flex flex-col justify-center">
+            <div className="flex flex-col justify-center md:col-span-7">
               {slides.map((slide, i) => (
                 <div
                   key={i}

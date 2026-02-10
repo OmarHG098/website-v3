@@ -181,23 +181,26 @@ sections:
     subtitle: Collaborating with leading institutions to bring coding education worldwide
     background: hsl(var(--secondary))
     slides:
-      - image_id: hombre_joven_laptop
+      - image_id: costa_rica_city
         object_position: 100% 80%
         title: CRUSA Forte Scholarship
         subtitle: Empowering Costa Rican talent through tech education
-        description: In partnership with Fundación CRUSA, we launched the Forte Scholarship program to train the next generation of software developers in Costa Rica, providing full scholarships to underrepresented communities.
+        description: In collaboration with Forte and Crusa, 4Geeks Academy has partnered with the FORTE model to boost talent development in Costa Rica. This program has trained over 35 students in high-demand digital technologies, focusing on women from areas with high unemployment. Through the program, participants receive free training, enabling them to access better jobs in the 4.0 industry and contribute to the country's economic growth.
         stats:
           - value: 200+
-            label: Scholarships awarded
+            label: Total cost
           - value: 85%
-            label: Employment rate
-          - value: "12"
-            label: Months program
+            label: Geeks benefited
         institution_logos:
-          - image_id: costa_rica_city
+          - image_id: logo_utec
             alt: CRUSA Foundation
-            text: prubeeaa
-            logo_height: 40px
+            text: Interamerican Development Bank
+          - image_id: logo_utec
+            alt: CRUSA Foundation
+            text: UTEC
+          - image_id: logo_utec
+            alt: CRUSA Foundation
+            text: 4Geeks Academy
         press_references:
           - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
             url: https://example.com/article-1
@@ -218,8 +221,8 @@ sections:
         institution_logos:
           - image_id: united_way_event
             alt: United Way Miami
-            logo_height: 40px
             text: prubeeaa
+            logo_height: 40px
         press_references:
           - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
             url: https://example.com/article-2
