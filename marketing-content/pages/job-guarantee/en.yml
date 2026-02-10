@@ -32,7 +32,7 @@ sections:
       alt: Students collaborating in a tech workspace
     cta_buttons:
       - text: Apply now
-        url: "#apply"
+        url: /apply
         variant: primary
       - text: Download Details
         url: "#syllabus"

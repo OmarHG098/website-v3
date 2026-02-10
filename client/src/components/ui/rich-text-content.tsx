@@ -8,7 +8,7 @@ export interface RichTextContentProps {
 
 const defaultProseClasses =
   "prose max-w-none prose-p:mb-1 [&>div]:mt-1 prose-p:leading-relaxed " +
-  "prose-a:text-primary prose-a:no-underline prose-a:[&:hover]:underline";
+  "prose-a:text-primary prose-a:no-underline prose-a:[&:hover]:underline rich-text-bullets";
 
 export function RichTextContent({
   html,
