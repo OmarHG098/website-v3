@@ -94,31 +94,51 @@ import { normalizeLocale } from "@shared/locale";
 import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
 import { useQuery } from "@tanstack/react-query";
 
-const componentsList = [
-  { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
-  { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
-  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
-  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight (stats) or detailed variants" },
-  { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
-  { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
-  { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
-  { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
-  { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
-  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
-  { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
-  { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
-  { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
-  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo display - grid or carousel variants" },
-  { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
-  { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
-  { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
-  { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
-  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
-  { type: "horizontal_bars", label: "Horizontal Bars", icon: IconChartBar, description: "Animated horizontal bar chart" },
-  { type: "vertical_bars_cards", label: "Vertical Bars Cards", icon: IconChartBar, description: "Cards with vertical bars comparing years" },
-  { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
-];
+const componentIconMap: Record<string, typeof IconComponents> = {
+  hero: IconRocket,
+  two_column: IconLayoutColumns,
+  two_column_accordion_card: IconLayoutColumns,
+  comparison_table: IconTable,
+  features_grid: IconLayoutColumns,
+  features_quad: IconLayoutColumns,
+  numbered_steps: IconArrowRight,
+  ai_learning: IconBrain,
+  mentorship: IconUsers,
+  community_support: IconUsers,
+  pricing: IconCreditCard,
+  projects: IconFolderCode,
+  project_showcase: IconChartBar,
+  syllabus: IconBook,
+  why_learn_ai: IconSparkles,
+  certificate: IconCertificate,
+  whos_hiring: IconBuildingSkyscraper,
+  testimonials: IconMessage,
+  testimonials_slide: IconMessage,
+  testimonials_grid: IconMessage,
+  faq: IconQuestionMark,
+  cta_banner: IconArrowRight,
+  footer: IconLayoutBottombar,
+  award_badges: IconCertificate,
+  awards_marquee: IconCertificate,
+  horizontal_bars: IconChartBar,
+  vertical_bars_cards: IconChartBar,
+  graduates_stats: IconUsersGroup,
+  image_row: IconPhoto,
+  lead_form: IconFile,
+  apply_form: IconFile,
+  banner: IconRocket,
+  article: IconBook,
+  press_mentions: IconMessage,
+  split_cards: IconLayoutColumns,
+  course_selector: IconBook,
+  sticky_cta: IconArrowRight,
+  bento_cards: IconLayoutColumns,
+  value_proof_panel: IconChartBar,
+  partnership_carousel: IconBuildingSkyscraper,
+  human_and_ai_duo: IconBrain,
+  bullet_tabs_showcase: IconSparkles,
+  geeks_vs_others_comparison: IconTable,
+};
 
 type MenuView = "main" | "components" | "sitemap" | "experiments" | "menus";
 
@@ -434,6 +454,23 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
+  const [componentSearch, setComponentSearch] = useState("");
+
+  const { data: componentRegistryData } = useQuery<{ components: Array<{ type: string; name: string; description: string; latestVersion: string; versions: string[] }> }>({
+    queryKey: ["/api/component-registry"],
+    staleTime: 60000,
+  });
+
+  const filteredComponents = useMemo(() => {
+    const components = componentRegistryData?.components?.filter(c => c.type !== "_common") || [];
+    if (!componentSearch) return components;
+    const q = componentSearch.toLowerCase();
+    return components.filter(c =>
+      c.type.toLowerCase().includes(q) ||
+      c.name.toLowerCase().includes(q) ||
+      c.description.toLowerCase().includes(q)
+    );
+  }, [componentRegistryData, componentSearch]);
   const [tokenInput, setTokenInput] = useState("");
   const [pendingAutoEditMode, setPendingAutoEditMode] = useState(false);
   const prevIsValidatedRef = useRef<boolean | null>(null);
@@ -1899,40 +1936,67 @@ export function DebugBubble() {
               ) : menuView === "components" ? (
               <>
               <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Components</h3>
-                    <p className="text-xs text-muted-foreground">Select a component to view</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => { setMenuView("main"); setComponentSearch(""); }}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                    <div>
+                      <h3 className="font-semibold text-sm">Components</h3>
+                      <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div className="p-2 border-b">
+                <div className="relative">
+                  <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                  <input
+                    type="text"
+                    placeholder="Search components..."
+                    value={componentSearch}
+                    onChange={(e) => setComponentSearch(e.target.value)}
+                    className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                    data-testid="input-component-search"
+                    autoFocus
+                  />
+                </div>
+              </div>
               
-              <ScrollArea className="h-[280px]">
+              <ScrollArea className="h-[240px]">
                 <div className="p-2 space-y-1">
-                  {componentsList.map((component) => {
-                    const Icon = component.icon;
-                    return (
-                      <a
-                        key={component.type}
-                        href={`/private/component-showcase/${component.type}`}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                        data-testid={`link-component-${component.type}`}
-                      >
-                        <Icon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium">{component.label}</div>
-                          <div className="text-xs text-muted-foreground truncate">{component.description}</div>
-                        </div>
-                      </a>
-                    );
-                  })}
+                  {!componentRegistryData ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : filteredComponents.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No components found
+                    </div>
+                  ) : (
+                    filteredComponents.map((component) => {
+                      const Icon = componentIconMap[component.type] || IconComponents;
+                      return (
+                        <a
+                          key={component.type}
+                          href={`/private/component-showcase/${component.type}`}
+                          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                          data-testid={`link-component-${component.type}`}
+                        >
+                          <Icon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium">{component.name}</div>
+                            <div className="text-xs text-muted-foreground truncate">{component.description}</div>
+                          </div>
+                        </a>
+                      );
+                    })
+                  )}
                 </div>
               </ScrollArea>
             </>
