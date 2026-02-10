@@ -1966,14 +1966,25 @@ export function DebugBubble() {
                       </div>
                     )}
                   </div>
-                  <button
-                    onClick={() => { setShowComponentSearch(!showComponentSearch); if (showComponentSearch) setComponentSearch(""); }}
-                    className={`p-1.5 rounded hover-elevate ${showComponentSearch ? 'bg-muted' : ''}`}
-                    title="Toggle search"
-                    data-testid="button-toggle-component-search"
-                  >
-                    <IconSearch className="h-4 w-4 text-muted-foreground" />
-                  </button>
+                  {showComponentSearch ? (
+                    <button
+                      onClick={() => { setShowComponentSearch(false); setComponentSearch(""); }}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Cancel search"
+                      data-testid="button-cancel-component-search"
+                    >
+                      <IconX className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setShowComponentSearch(true)}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Search components"
+                      data-testid="button-toggle-component-search"
+                    >
+                      <IconSearch className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  )}
                 </div>
               </div>
               
