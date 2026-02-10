@@ -347,7 +347,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
 
     if (fieldName === "region" && hasLandingLocations) {
       if (singleLandingRegion) {
-        return { ...baseConfig, visible: false, default: singleLandingRegion };
+        return { ...baseConfig, visible: true, required: false, default: singleLandingRegion };
       }
       if (multipleLandingRegions) {
         return { ...baseConfig, visible: true, required: true, default: "" };
@@ -919,16 +919,18 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
                     rules={{ required: getFieldConfig("region").required ? (locale === "es" ? "Región requerida" : "Region is required") : false }}
                     render={({ field }) => (
                       <FormItem>
-                        <Select onValueChange={field.onChange} value={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value} disabled={!!singleLandingRegion}>
                           <FormControl>
                             <SelectTrigger data-testid="select-region">
                               <SelectValue placeholder={locale === "es" ? "Selecciona una región" : "Select a region"} />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {(multipleLandingRegions
-                              ? formOptions?.regions.filter(r => multipleLandingRegions.includes(r.slug))
-                              : formOptions?.regions
+                            {(singleLandingRegion
+                              ? formOptions?.regions.filter(r => r.slug === singleLandingRegion)
+                              : multipleLandingRegions
+                                ? formOptions?.regions.filter(r => multipleLandingRegions.includes(r.slug))
+                                : formOptions?.regions
                             )?.map((region) => (
                               <SelectItem key={region.slug} value={region.slug}>
                                 {region.label}

@@ -7,7 +7,6 @@ locations:
   - "barcelona-spain"
   - "malaga-spain"
   - "valencia-spain"
-  - "bogota-colombia"
 
 meta:
   robots: "index, follow"
