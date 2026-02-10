@@ -24,3 +24,59 @@ props:
     required: false
     description: "Background color class (default: bg-sidebar)"
     example: bg-muted
+  related_features:
+    type: array
+    required: false
+    items:
+      type: string
+      enum:
+        - online-platform
+        - mentors-and-teachers
+        - price
+        - career-support
+        - content-and-syllabus
+        - job-guarantee
+        - full-stack
+        - cybersecurity
+        - data-science
+        - applied-ai
+        - ai-engineering
+        - outcomes
+        - scholarships
+        - rigobot
+        - learnpack
+        - certification
+    description: Select up to 3 topics to pull testimonials from centralized data. Sorted by match count and priority. Max 9 testimonials displayed.
+    example: ["career-support", "job-guarantee"]
+  testimonials:
+    type: array
+    required: false
+    deprecated: true
+    items:
+      name:
+        type: string
+        required: true
+      img:
+        type: string
+        required: true
+      country:
+        type: object
+        required: true
+        properties:
+          name:
+            type: string
+          iso:
+            type: string
+      contributor:
+        type: string
+        required: true
+      description:
+        type: string
+        required: true
+      status:
+        type: string
+        required: false
+      achievement:
+        type: string
+        required: false
+    description: "Deprecated: Use related_features instead. Inline testimonials as fallback only."

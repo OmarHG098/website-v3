@@ -33,9 +33,34 @@ props:
         description: Total number of reviews
         example: 2,847
     description: Overall rating display shown above testimonials
+  related_features:
+    type: array
+    required: false
+    items:
+      type: string
+      enum:
+        - online-platform
+        - mentors-and-teachers
+        - price
+        - career-support
+        - content-and-syllabus
+        - job-guarantee
+        - full-stack
+        - cybersecurity
+        - data-science
+        - applied-ai
+        - ai-engineering
+        - outcomes
+        - scholarships
+        - rigobot
+        - learnpack
+        - certification
+    description: Select up to 3 topics to pull testimonials from centralized data. Sorted by match count and priority. Max 30 testimonials displayed.
+    example: ["career-support", "job-guarantee"]
   items:
     type: array
     required: false
+    deprecated: true
     items:
       name:
         type: string
@@ -71,7 +96,7 @@ props:
         type: string
         required: false
         description: URL to profile photo (uses colorful illustration if not provided)
-    description: "List of testimonials (recommended: 3-6 for best layout)"
+    description: "Deprecated: Use related_features instead. Inline testimonials as fallback only."
   filter_by_location:
     type: string
     required: false

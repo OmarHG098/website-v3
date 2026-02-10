@@ -2,6 +2,7 @@
  * Testimonials Component Schemas - v1.0
  */
 import { z } from "zod";
+import { relatedFeaturesEnum } from "../../faq/v1.0/schema";
 
 export const testimonialItemSchema = z.object({
   name: z.string(),
@@ -23,6 +24,7 @@ export const testimonialsSectionSchema = z.object({
     count: z.string(),
   }).optional(),
   items: z.array(testimonialItemSchema).optional(),
+  related_features: z.array(relatedFeaturesEnum).max(3).optional(),
   filter_by_location: z.string().optional(),
 });
 

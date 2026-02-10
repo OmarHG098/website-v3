@@ -2,6 +2,7 @@
  * Testimonials Slide Component Schemas - v1.0
  */
 import { z } from "zod";
+import { relatedFeaturesEnum } from "../../faq/v1.0/schema";
 
 export const testimonialsSlideTestimonialSchema = z.object({
   name: z.string(),
@@ -22,6 +23,7 @@ export const testimonialsSlideSectionSchema = z.object({
   description: z.string(),
   background: z.string().optional(),
   testimonials: z.array(testimonialsSlideTestimonialSchema).optional(),
+  related_features: z.array(relatedFeaturesEnum).max(3).optional(),
 });
 
 export type TestimonialsSlideTestimonial = z.infer<typeof testimonialsSlideTestimonialSchema>;

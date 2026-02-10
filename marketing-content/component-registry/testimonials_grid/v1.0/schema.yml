@@ -31,9 +31,34 @@ props:
     type: string
     required: false
     description: Section background color
+  related_features:
+    type: array
+    required: false
+    items:
+      type: string
+      enum:
+        - online-platform
+        - mentors-and-teachers
+        - price
+        - career-support
+        - content-and-syllabus
+        - job-guarantee
+        - full-stack
+        - cybersecurity
+        - data-science
+        - applied-ai
+        - ai-engineering
+        - outcomes
+        - scholarships
+        - rigobot
+        - learnpack
+        - certification
+    description: Select up to 3 topics to pull testimonials from centralized data. Sorted by match count and priority. Max 6 testimonials displayed.
+    example: ["career-support", "job-guarantee"]
   items:
     type: array
     required: false
+    deprecated: true
     items:
       name:
         type: string
@@ -89,4 +114,4 @@ props:
             required: false
             description: Aspect ratio for the media
             example: "16:9"
-    description: "List of testimonials for the grid"
+    description: "Deprecated: Use related_features instead. Inline testimonials as fallback only."

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { relatedFeaturesEnum } from "../../faq/v1.0/schema";
 
 export const testimonialsGridItemSchema = z.object({
   name: z.string(),
@@ -36,6 +37,7 @@ export const testimonialsGridSectionSchema = z.object({
   default_linkedin_color: z.string().optional(),
   columns: z.number().optional(),
   items: z.array(testimonialsGridItemSchema).optional(),
+  related_features: z.array(relatedFeaturesEnum).max(3).optional(),
   background: z.string().optional(),
 });
 
