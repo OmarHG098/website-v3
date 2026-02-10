@@ -132,13 +132,13 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
             Institutions that contributed to this project
           </h4>
           <div
-            className="flex flex-wrap gap-3"
+            className="grid grid-cols-4 gap-3"
             data-testid="logos-partnership"
           >
             {slide.institution_logos!.map((logo, i) => (
               <Card
                 key={i}
-                className="flex items-center justify-center p-2"
+                className="flex items-center justify-center p-[2px]"
                 data-testid={`card-institution-logo-${i}`}
               >
                 <div
@@ -148,7 +148,7 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
                   <UniversalImage
                     id={logo.image_id}
                     alt={logo.alt}
-                    className="h-full w-auto object-contain"
+                    className="h-full w-full object-fill"
                     data-testid={`img-institution-logo-${i}`}
                   />
                 </div>
