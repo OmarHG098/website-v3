@@ -32,12 +32,12 @@ sections:
       - text: Scholarships.
     video:
       url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
-      ratio: "5:10"
+      ratio: "3:4"
       muted: true
       loop: true
     form: {}
     trust_bar:
-      rating: "4.5"
+      rating: 4.5"
       review_count: Based on 5149+ reviews
       review_logos:
         - name: Google

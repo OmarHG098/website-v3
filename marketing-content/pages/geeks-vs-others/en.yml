@@ -106,7 +106,7 @@ sections:
       - value: 55%
         title: Salary increase after graduation
     marginY:
-      desktop: lg none
+      desktop: lg
   - type: value_proof_panel
     title: Recognized Globally for Excellence
     subtitle: We don't just say we deliver — recognition from trusted sources proves our worth.
@@ -131,6 +131,8 @@ sections:
       style: rounded
     background: bg-muted/30
     stacked_header: true
+    marginY:
+      desktop: none lg
   - type: features_quad
     version: "1.0"
     variant: default
@@ -149,6 +151,9 @@ sections:
       - icon: School
         title: Scholarships Available
         description: Partial scholarships are available for eligible students.
+    background: hsl(var(--secondary))
+    marginY:
+      desktop: none lg
   - type: split_cards
     variant: primary-left
     primary:
