@@ -64,6 +64,7 @@ import { getFolderFromSlug } from "@shared/slugMappings";
 import { normalizeLocale } from "@shared/locale";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
+import { generateSsrSchemaHtml, clearSsrSchemaCache } from "./ssr-schema";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
@@ -1368,6 +1369,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/debug/clear-schema-cache", (req, res) => {
     clearSchemaCache();
+    clearSsrSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
   });
 
@@ -3420,6 +3422,33 @@ sections: []
       console.error("Error saving FAQs:", error);
       res.status(500).json({ error: "Failed to save FAQs" });
     }
+  });
+
+  app.use((req, res, next) => {
+    const url = req.originalUrl || req.url;
+    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || /\.\w+$/.test(url)) {
+      return next();
+    }
+
+    const schemaHtml = generateSsrSchemaHtml(url);
+    if (!schemaHtml) {
+      return next();
+    }
+
+    const originalEnd = res.end.bind(res);
+    res.end = function (chunk?: any, ...args: any[]) {
+      const contentType = res.getHeader("content-type");
+      if (contentType && typeof contentType === "string" && contentType.includes("text/html") && chunk) {
+        let html = typeof chunk === "string" ? chunk : Buffer.isBuffer(chunk) ? chunk.toString("utf-8") : chunk;
+        if (typeof html === "string" && html.includes("</head>")) {
+          html = html.replace("</head>", `${schemaHtml}\n</head>`);
+          return originalEnd(html, ...args);
+        }
+      }
+      return originalEnd(chunk, ...args);
+    } as typeof res.end;
+
+    next();
   });
 
   const httpServer = createServer(app);
