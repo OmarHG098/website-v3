@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { IconPhoto, IconSearch, IconArrowLeft, IconCopy, IconCheck, IconRefresh, IconAlertTriangle } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "wouter";
-import { useState } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useToast } from "@/hooks/use-toast";
 import type { ImageRegistry } from "@shared/schema";
 import { apiRequest } from "@/lib/queryClient";
@@ -77,6 +77,10 @@ export default function MediaGallery() {
     }
   };
 
+  const PAGE_SIZE = 50;
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const sentinelRef = useRef<HTMLDivElement>(null);
+
   const filteredImages = registry?.images
     ? Object.entries(registry.images).filter(([id, img]) => {
         const searchLower = search.toLowerCase();
@@ -87,6 +91,34 @@ export default function MediaGallery() {
         );
       })
     : [];
+
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [search]);
+
+  const visibleImages = filteredImages.slice(0, visibleCount);
+  const hasMore = visibleCount < filteredImages.length;
+
+  const loadMore = useCallback(() => {
+    setVisibleCount(prev => Math.min(prev + PAGE_SIZE, filteredImages.length));
+  }, [filteredImages.length]);
+
+  useEffect(() => {
+    const sentinel = sentinelRef.current;
+    if (!sentinel) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          loadMore();
+        }
+      },
+      { rootMargin: "400px" }
+    );
+
+    observer.observe(sentinel);
+    return () => observer.disconnect();
+  }, [hasMore, loadMore]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -103,7 +135,7 @@ export default function MediaGallery() {
                 <IconPhoto className="h-5 w-5 text-primary" />
                 <h1 className="text-lg font-semibold" data-testid="text-page-title">Media Gallery</h1>
                 <span className="text-sm text-muted-foreground hidden sm:inline">
-                  ({filteredImages.length})
+                  ({filteredImages.length}{search ? " found" : ""})
                 </span>
               </div>
             </div>
@@ -280,7 +312,7 @@ export default function MediaGallery() {
               className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4"
               style={{ columnFill: 'balance' }}
             >
-              {filteredImages.map(([id, img]) => (
+              {visibleImages.map(([id, img]) => (
                 <div 
                   key={id} 
                   className="break-inside-avoid mb-4 group"
@@ -344,6 +376,22 @@ export default function MediaGallery() {
                 </div>
               ))}
             </div>
+
+            {hasMore && (
+              <div ref={sentinelRef} className="flex justify-center py-8" data-testid="scroll-sentinel">
+                <p className="text-sm text-muted-foreground">
+                  Showing {visibleCount} of {filteredImages.length} images
+                </p>
+              </div>
+            )}
+
+            {!hasMore && filteredImages.length > PAGE_SIZE && (
+              <div className="flex justify-center py-6">
+                <p className="text-sm text-muted-foreground">
+                  All {filteredImages.length} images loaded
+                </p>
+              </div>
+            )}
 
             {filteredImages.length === 0 && !isLoading && (
               <div className="text-center py-16">
