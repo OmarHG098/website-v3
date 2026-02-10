@@ -77,7 +77,7 @@ sections:
       - label: Spain
         value: 30
     marginY:
-      desktop: none lg
+      desktop: none md
   - type: features_grid
     version: "1.0"
     variant: stats-text
