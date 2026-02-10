@@ -53,7 +53,8 @@ import {
   setExperimentCookie,
   buildVisitorContext,
 } from "./experiments";
-import { loadImageRegistry } from "./image-registry";
+import { loadImageRegistry, clearImageRegistryCache } from "./image-registry";
+import { scanImageRegistry, applyRegistryChanges } from "./image-registry-scanner";
 import {
   loadContent,
   listContentSlugs,
@@ -3061,6 +3062,37 @@ sections: []
       return;
     }
     res.json(registry);
+  });
+
+  // ============================================
+  // Image Registry Scanner Endpoints
+  // ============================================
+
+  app.post("/api/image-registry/scan", (_req, res) => {
+    try {
+      const result = scanImageRegistry();
+      res.json(result);
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Scan failed" });
+    }
+  });
+
+  app.post("/api/image-registry/apply", (_req, res) => {
+    try {
+      const scanResult = scanImageRegistry();
+      if (scanResult.newImages.length === 0 && scanResult.updatedImages.length === 0) {
+        res.json({ message: "Nothing to apply", added: 0, updated: 0 });
+        return;
+      }
+      const applied = applyRegistryChanges(scanResult);
+      clearImageRegistryCache();
+      res.json({
+        message: `Applied ${applied.added} new, ${applied.updated} updated`,
+        ...applied,
+      });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Apply failed" });
+    }
   });
 
   // ============================================
