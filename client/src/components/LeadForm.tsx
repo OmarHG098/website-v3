@@ -565,7 +565,12 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
 
   const filteredLocations = formOptions?.locations.filter(loc => {
     if (multipleLandingLocations) {
-      return multipleLandingLocations.includes(loc.slug);
+      if (!multipleLandingLocations.includes(loc.slug)) return false;
+      const selectedRegion = form.watch("region");
+      if (selectedRegion && getFieldConfig("region").visible) {
+        return loc.region === selectedRegion;
+      }
+      return true;
     }
     const selectedRegion = form.watch("region");
     if (!selectedRegion || !getFieldConfig("region").visible) return true;
