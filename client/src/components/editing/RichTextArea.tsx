@@ -702,6 +702,7 @@ export function RichTextArea({
             "focus:ring-2 focus:ring-ring focus:ring-offset-0",
             "empty:before:content-[attr(data-placeholder)] empty:before:text-muted-foreground",
             "[&_a]:underline [&_a]:text-primary [&_a]:cursor-pointer",
+            "[&_ul]:list-disc [&_ul]:pl-5 [&_ul]:my-1 [&_li]:my-0.5",
           )}
           style={{ minHeight }}
           onInput={handleInput}
