@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef, useMemo } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -11,7 +11,7 @@ import type {
   PartnershipCarouselSection,
   PartnershipSlide,
 } from "@shared/schema";
-import {Card} from "@/components/ui/card.tsx"
+import { Card } from "@/components/ui/card";
 
 interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
@@ -20,15 +20,6 @@ interface PartnershipCarouselProps {
 function SlideContent({ slide }: { slide: PartnershipSlide }) {
   return (
     <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
-      {/* {slide.subtitle && (
-        <p
-          className="text-sm font-medium uppercase tracking-wider text-muted-foreground"
-          data-testid="text-partnership-subtitle"
-        >
-          {slide.subtitle}
-        </p>
-      )} */}
-
       <h3
         className="text-2xl md:text-4xl font-bold text-foreground"
         data-testid="text-partnership-title"
@@ -148,7 +139,7 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
   );
 }
 
-export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
+export function PartnershipCarouselDefault({ data }: PartnershipCarouselProps) {
   const { slides, heading, subtitle, autoplay, autoplay_interval } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -348,5 +339,3 @@ export function PartnershipCarousel({ data }: PartnershipCarouselProps) {
     </section>
   );
 }
-
-export default PartnershipCarousel;

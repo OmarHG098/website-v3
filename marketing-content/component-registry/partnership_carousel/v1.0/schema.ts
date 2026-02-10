@@ -38,6 +38,7 @@ export const partnershipSlideSchema = z.object({
 
 export const partnershipCarouselSectionSchema = z.object({
   type: z.literal("partnership_carousel"),
+  variant: z.enum(["default", "split-card"]).optional(),
   version: z.string().optional(),
   heading: z.string().optional(),
   subtitle: z.string().optional(),

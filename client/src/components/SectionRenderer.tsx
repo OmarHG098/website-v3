@@ -197,7 +197,7 @@ const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ defau
 const ImageRow = lazy(() => import("@/components/sections/ImageRow"));
 const CourseSelector = lazy(() => import("@/components/course-selector/CourseSelector").then(m => ({ default: m.CourseSelector })));
 const ArticleSection = lazy(() => import("@/components/Article").then(m => ({ default: m.Article })));
-const PartnershipCarousel = lazy(() => import("@/components/PartnershipCarousel").then(m => ({ default: m.PartnershipCarousel })));
+const PartnershipCarousel = lazy(() => import("@/components/partnership-carousel/PartnershipCarousel").then(m => ({ default: m.PartnershipCarousel })));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
