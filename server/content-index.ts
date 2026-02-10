@@ -123,7 +123,7 @@ class ContentIndex {
           this.addImageRef(value, filePath);
         } else if (
           (key === "image" || key === "src" || key === "background_image" || key === "logo" || key === "icon_image") &&
-          (value.startsWith("/attached_assets/") || value.startsWith("http://") || value.startsWith("https://"))
+          (value.startsWith("/attached_assets/") || value.startsWith("/marketing-content/images/") || value.startsWith("http://") || value.startsWith("https://"))
         ) {
           this.addImageRef(value, filePath);
         }

@@ -28,7 +28,7 @@ interface ScanResult {
   updatedImages: Array<{ id: string; oldSrc: string; newSrc: string }>;
   brokenReferences: Array<{ yamlFile: string; field: string; missingSrc: string }>;
   registeredCount: number;
-  attachedAssetsCount: number;
+  scannedImagesCount: number;
   summary: { new: number; updated: number; broken: number };
 }
 
@@ -316,7 +316,7 @@ export default function MediaGallery() {
                 Registered: <strong className="text-foreground">{scanResult.registeredCount}</strong>
               </span>
               <span className="text-muted-foreground">
-                In assets: <strong className="text-foreground">{scanResult.attachedAssetsCount}</strong>
+                Scanned files: <strong className="text-foreground">{scanResult.scannedImagesCount}</strong>
               </span>
             </div>
 

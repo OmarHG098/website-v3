@@ -4,9 +4,12 @@ import * as yaml from "js-yaml";
 
 const ATTACHED_ASSETS_DIR = path.join(process.cwd(), "attached_assets");
 const MARKETING_CONTENT_DIR = path.join(process.cwd(), "marketing-content");
+const MARKETING_IMAGES_DIR = path.join(MARKETING_CONTENT_DIR, "images");
 const REGISTRY_PATH = path.join(MARKETING_CONTENT_DIR, "image-registry.json");
 
 const IMAGE_EXTENSIONS = new Set([".png", ".jpg", ".jpeg", ".webp", ".svg", ".avif", ".gif"]);
+
+const SCREENSHOT_PATTERNS = [/^Screenshot_/i, /^Captura_/i, /^Capture_/i, /^Screen[\s_]?Shot/i];
 
 export interface ScanNewImage {
   id: string;
@@ -31,7 +34,7 @@ export interface ScanResult {
   updatedImages: ScanUpdatedImage[];
   brokenReferences: BrokenReference[];
   registeredCount: number;
-  attachedAssetsCount: number;
+  scannedImagesCount: number;
   summary: {
     new: number;
     updated: number;
@@ -66,9 +69,13 @@ function extractTimestamp(filename: string): number {
   return match ? parseInt(match[1], 10) : 0;
 }
 
-function scanAttachedAssets(): Map<string, string> {
+function isScreenshot(filename: string): boolean {
+  return SCREENSHOT_PATTERNS.some(pattern => pattern.test(filename));
+}
+
+function scanImageDirectory(baseDir: string, urlPrefix: string, skipScreenshots: boolean): Map<string, string> {
   const imageFiles = new Map<string, string>();
-  if (!fs.existsSync(ATTACHED_ASSETS_DIR)) return imageFiles;
+  if (!fs.existsSync(baseDir)) return imageFiles;
 
   function walkDir(dir: string, prefix: string) {
     const entries = fs.readdirSync(dir, { withFileTypes: true });
@@ -76,17 +83,27 @@ function scanAttachedAssets(): Map<string, string> {
       if (entry.isDirectory()) {
         walkDir(path.join(dir, entry.name), `${prefix}${entry.name}/`);
       } else {
+        if (skipScreenshots && isScreenshot(entry.name)) continue;
         const ext = path.extname(entry.name).toLowerCase();
         if (IMAGE_EXTENSIONS.has(ext)) {
           const relPath = `${prefix}${entry.name}`;
-          imageFiles.set(relPath, `/attached_assets/${relPath}`);
+          imageFiles.set(relPath, `${urlPrefix}${relPath}`);
         }
       }
     }
   }
 
-  walkDir(ATTACHED_ASSETS_DIR, "");
+  walkDir(baseDir, "");
   return imageFiles;
+}
+
+function scanAllImageDirectories(): Map<string, string> {
+  const attachedAssets = scanImageDirectory(ATTACHED_ASSETS_DIR, "/attached_assets/", true);
+  const marketingImages = scanImageDirectory(MARKETING_IMAGES_DIR, "/marketing-content/images/", false);
+  const combined = new Map<string, string>();
+  attachedAssets.forEach((src, key) => combined.set(key, src));
+  marketingImages.forEach((src, key) => combined.set(key, src));
+  return combined;
 }
 
 function loadRegistry(): { presets: Record<string, any>; images: Record<string, any> } {
@@ -104,7 +121,8 @@ function findImageRefsInValue(
   results: Array<{ field: string; src: string }>
 ): void {
   if (typeof value === "string") {
-    if (value.startsWith("/attached_assets/") || value.startsWith("attached_assets/")) {
+    if (value.startsWith("/attached_assets/") || value.startsWith("attached_assets/") ||
+        value.startsWith("/marketing-content/images/") || value.startsWith("marketing-content/images/")) {
       results.push({ field: currentPath, src: value });
     }
   } else if (Array.isArray(value)) {
@@ -153,7 +171,7 @@ function scanYamlFiles(): Array<{ yamlFile: string; field: string; src: string }
 
 export function scanImageRegistry(): ScanResult {
   const registry = loadRegistry();
-  const attachedAssets = scanAttachedAssets();
+  const attachedAssets = scanAllImageDirectories();
   const yamlRefs = scanYamlFiles();
 
   const existingSrcSet = new Set<string>();
@@ -228,7 +246,7 @@ export function scanImageRegistry(): ScanResult {
     updatedImages,
     brokenReferences,
     registeredCount: Object.keys(registry.images).length,
-    attachedAssetsCount: attachedAssets.size,
+    scannedImagesCount: attachedAssets.size,
     summary: {
       new: newImages.length,
       updated: updatedImages.length,
