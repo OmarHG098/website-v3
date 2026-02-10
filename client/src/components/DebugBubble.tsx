@@ -2175,15 +2175,15 @@ export function DebugBubble() {
                                         </button>
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end" className="w-40">
-                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} className="text-[13px]" data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconCopy className="h-3.5 w-3.5 mr-2" />
                                           Duplicate
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} className="text-[13px]" data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconDownload className="h-3.5 w-3.5 mr-2" />
                                           Download YAML
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-[13px] text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconTrash className="h-3.5 w-3.5 mr-2" />
                                           Delete
                                         </DropdownMenuItem>
@@ -2221,15 +2221,15 @@ export function DebugBubble() {
                                 </button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="w-40">
-                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} className="text-[13px]" data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconCopy className="h-3.5 w-3.5 mr-2" />
                                   Duplicate
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} className="text-[13px]" data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconDownload className="h-3.5 w-3.5 mr-2" />
                                   Download YAML
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-[13px] text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconTrash className="h-3.5 w-3.5 mr-2" />
                                   Delete
                                 </DropdownMenuItem>
