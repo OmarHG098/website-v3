@@ -20,7 +20,10 @@ sections:
       src: /attached_assets/outcomes_1765562850573.png
       alt: Student outcomes growth chart
     marginY:
-      desktop: md none
+      desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    paddingY:
+      desktop: lg none
   - type: vertical_bars_cards
     version: "1.0"
     title: Hiring Results, Year After Year
@@ -188,7 +191,7 @@ sections:
         alt: Excelencia Educativa - Institutional Quality
         logoHeight: h-12 md:h-14
     paddingY:
-      desktop: md
+      desktop: md lg
     marginY:
       desktop: none sm
   - type: two_column_accordion_card
@@ -209,6 +212,8 @@ sections:
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
     reverse: true
+    marginY:
+      desktop: none lg
   - type: testimonials
     version: v1.0
     title: Real Career Results
@@ -254,7 +259,7 @@ sections:
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
     paddingY:
-      desktop: none lg
+      desktop: none
     background: hsl(210 100% 50% / 0.05)
   - type: faq
     version: v1.0
