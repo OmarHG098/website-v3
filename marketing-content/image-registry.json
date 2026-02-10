@@ -1190,6 +1190,44 @@
         "photo"
       ],
       "usage_count": 0
+    },
+    "costa_rica_city": {
+      "src": "/attached_assets/costa-rica_1770694091715.png",
+      "alt": "Learn coding related skills in Costa Rica - aerial city view",
+      "focal_point": "center",
+      "tags": [
+        "costa-rica",
+        "city",
+        "location",
+        "partnership",
+        "photo"
+      ],
+      "usage_count": 0
+    },
+    "united_way_event": {
+      "src": "/attached_assets/united-way_1770694150571.png",
+      "alt": "United Way Miami and 4Geeks Academy partnership event",
+      "focal_point": "center bottom",
+      "tags": [
+        "united-way",
+        "partnership",
+        "event",
+        "photo"
+      ],
+      "usage_count": 0
+    },
+    "uruguay_city": {
+      "src": "/attached_assets/uruguay_1770694189072.png",
+      "alt": "Learn coding in Uruguay - Montevideo city skyline",
+      "focal_point": "center",
+      "tags": [
+        "uruguay",
+        "city",
+        "location",
+        "partnership",
+        "photo"
+      ],
+      "usage_count": 0
     }
   }
 }
