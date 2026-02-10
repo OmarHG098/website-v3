@@ -2813,7 +2813,10 @@ export function SectionEditorPanel({
               variant="destructive"
               onClick={() => {
                 if (imagePickerTarget) {
-                  if (imagePickerTarget.fieldPath) {
+                  if (nestedUpdateFn) {
+                    nestedUpdateFn("");
+                    setNestedUpdateFn(null);
+                  } else if (imagePickerTarget.fieldPath) {
                     // Simple field - clear the value
                     updateProperty(imagePickerTarget.fieldPath, "");
                   } else if (imagePickerTarget.arrayPath && imagePickerTarget.index !== undefined) {
@@ -2854,7 +2857,10 @@ export function SectionEditorPanel({
                 type="button"
                 onClick={() => {
                   if (imagePickerTarget) {
-                    if (imagePickerTarget.fieldPath) {
+                    if (nestedUpdateFn) {
+                      nestedUpdateFn(imagePickerTarget.currentSrc);
+                      setNestedUpdateFn(null);
+                    } else if (imagePickerTarget.fieldPath) {
                       // Simple field - update directly
                       updateProperty(imagePickerTarget.fieldPath, imagePickerTarget.currentSrc);
                     } else if (imagePickerTarget.arrayPath !== undefined && imagePickerTarget.index !== undefined && imagePickerTarget.srcField) {
