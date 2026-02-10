@@ -2,8 +2,6 @@
 slug: "ai-engineering-en"
 title: "AI Engineering Program"
 locale: "en"
-location: ["madrid-spain"]
-programs: ["full-stack","data-science","cybersecurity"]
 
 meta:
   robots: "index, follow"

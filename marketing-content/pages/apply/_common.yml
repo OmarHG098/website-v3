@@ -12,8 +12,6 @@ schema:
     - "organization"
     - "website"
 
-  
-
 programs:
   - id: "full-stack"
     name_en: "Full Stack Developer"
