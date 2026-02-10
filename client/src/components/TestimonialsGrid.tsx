@@ -2,6 +2,14 @@ import { IconStarFilled, IconStar, IconBrandLinkedin } from "@tabler/icons-react
 import type { TestimonialsGridSection as TestimonialsGridSectionType } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "@/contexts/SessionContext";
+import {
+  filterTestimonialsByRelatedFeatures,
+  type TestimonialItem as YAMLTestimonialItem,
+} from "@/lib/testimonialConstants";
 
 interface TestimonialsGridProps {
   data: TestimonialsGridSectionType;
@@ -25,7 +33,46 @@ function isVideoUrl(url: string): boolean {
 }
 
 export function TestimonialsGrid({ data }: TestimonialsGridProps) {
-  const items = data.items || [];
+  const location = useLocation();
+  const { i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("es") ? "es" : "en";
+  
+  const hasInlineItems = data.items && data.items.length > 0;
+  const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
+  
+  const { data: testimonialsData, isLoading } = useQuery<{ testimonials: YAMLTestimonialItem[] }>({
+    queryKey: ["/api/testimonials", locale],
+    enabled: hasRelatedFeatures,
+    staleTime: 5 * 60 * 1000,
+  });
+  
+  const items = useMemo(() => {
+    if (hasRelatedFeatures && testimonialsData?.testimonials) {
+      const filtered = filterTestimonialsByRelatedFeatures(testimonialsData.testimonials, {
+        relatedFeatures: data.related_features!,
+        location: location?.country_code,
+        componentType: "testimonials_grid",
+      });
+      
+      // Map YAML structure to component props
+      return filtered.map((testimonial) => ({
+        name: testimonial.student_name,
+        role: testimonial.role || "",
+        comment: testimonial.content || "",
+        rating: testimonial.rating,
+        avatar: testimonial.student_thumb,
+        linkedin_url: testimonial.linkedin_url,
+        company: testimonial.company,
+      }));
+    }
+    
+    if (hasInlineItems) {
+      return data.items!;
+    }
+    
+    return [];
+  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, testimonialsData, location?.country_code]);
+
   const title = data.title;
   const subtitle = data.subtitle;
   const defaultBoxColor = data.default_box_color || "hsl(var(--muted))";
@@ -36,6 +83,26 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const defaultLinkedinColor = data.default_linkedin_color;
   const columns = data.columns || 3;
   const background = data.background;
+
+  if (isLoading && hasRelatedFeatures) {
+    return (
+      <section
+        className="py-12 md:py-16"
+        data-testid="section-testimonials-grid"
+      >
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="animate-pulse">
+            <div className="h-10 w-64 bg-muted rounded mx-auto mb-10" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-64 bg-muted rounded" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (items.length === 0) return null;
 

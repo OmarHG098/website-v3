@@ -1,9 +1,16 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, useMemo } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { TestimonialsSection as TestimonialsSectionType } from "@shared/schema";
 import { DotsIndicator } from "@/components/DotsIndicator";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "@/contexts/SessionContext";
+import {
+  filterTestimonialsByRelatedFeatures,
+  type TestimonialItem as YAMLTestimonialItem,
+} from "@/lib/testimonialConstants";
 
 interface LegacyTestimonial {
   id: string;
@@ -50,13 +57,55 @@ const SIDE_SCALE = 0.85; // Smaller side cards
 const SIDE_OPACITY = 0.5;
 
 export function TestimonialsSection({ data, testimonials }: TestimonialsSectionProps) {
-  const items = data?.items || testimonials?.map(t => ({
-    name: t.name,
-    role: t.role,
-    rating: t.rating,
-    comment: t.comment,
-    company: t.course,
-  })) || [];
+  const location = useLocation();
+  const { i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("es") ? "es" : "en";
+  
+  const hasInlineItems = data?.items && data.items.length > 0;
+  const hasRelatedFeatures = data?.related_features && data.related_features.length > 0;
+  
+  const { data: testimonialsData, isLoading } = useQuery<{ testimonials: YAMLTestimonialItem[] }>({
+    queryKey: ["/api/testimonials", locale],
+    enabled: hasRelatedFeatures,
+    staleTime: 5 * 60 * 1000,
+  });
+  
+  const items: TestimonialItem[] = useMemo(() => {
+    if (hasRelatedFeatures && testimonialsData?.testimonials) {
+      const filtered = filterTestimonialsByRelatedFeatures(testimonialsData.testimonials, {
+        relatedFeatures: data.related_features!,
+        location: location?.country_code,
+        componentType: "testimonials",
+      });
+      
+      // Map YAML structure to component props
+      return filtered.map((testimonial) => ({
+        name: testimonial.student_name,
+        role: testimonial.role || "",
+        rating: testimonial.rating || 5,
+        comment: testimonial.content || "",
+        company: testimonial.company,
+        outcome: testimonial.outcome,
+        avatar: testimonial.student_thumb,
+      }));
+    }
+    
+    if (hasInlineItems) {
+      return data.items!;
+    }
+    
+    if (testimonials) {
+      return testimonials.map(t => ({
+        name: t.name,
+        role: t.role,
+        rating: t.rating,
+        comment: t.comment,
+        company: t.course,
+      }));
+    }
+    
+    return [];
+  }, [hasRelatedFeatures, hasInlineItems, data?.related_features, data?.items, testimonialsData, location?.country_code, testimonials]);
 
   const title = data?.title || "What Our Students Say";
   const subtitle = data?.subtitle;
@@ -424,6 +473,24 @@ export function TestimonialsSection({ data, testimonials }: TestimonialsSectionP
     };
   }, [handleScroll, updateCardTransforms, handleMouseMove, handleMouseUp, handleDragEnd, nativeTouchStart, nativeTouchMove, nativeTouchEnd, isDesktopOrTablet]);
 
+  if (isLoading && hasRelatedFeatures) {
+    return (
+      <section 
+        className="bg-background overflow-hidden"
+        data-testid="section-testimonials"
+      >
+        <div className="max-w-6xl mx-auto px-0 md:px-4">
+          <div className="text-center">
+            <div className="animate-pulse">
+              <div className="h-10 w-64 bg-muted rounded mx-auto mb-8" />
+              <div className="h-[380px] lg:h-[420px] bg-muted rounded" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   if (items.length === 0) return null;
 
   const totalWidth = extendedItems.length * cardSpacing;
@@ -546,16 +613,39 @@ interface TestimonialCardProps {
 }
 
 function TestimonialCard({ testimonial }: TestimonialCardProps) {
+  // Handle missing/broken images gracefully - fallback to initials
+  const hasValidAvatar = testimonial.avatar && testimonial.avatar.trim() !== "";
+  
   return (
     <Card className="min-h-[320px] md:min-h-[270px] border border-border bg-card">
       <CardContent className="p-6 h-full flex flex-col min-h-[320px] md:min-h-[270px]">
         {/* Header with Avatar and Info */}
         <div className="flex items-center gap-3 mb-4">
-          <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
-            <span className="font-semibold text-muted-foreground text-base">
-              {getInitials(testimonial.name)}
-            </span>
-          </div>
+          {hasValidAvatar ? (
+            <img
+              src={testimonial.avatar}
+              alt={testimonial.name}
+              className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+              onError={(e) => {
+                // Fallback to initials if image fails to load
+                const target = e.target as HTMLImageElement;
+                target.style.display = "none";
+                const parent = target.parentElement;
+                if (parent) {
+                  const initialsDiv = document.createElement("div");
+                  initialsDiv.className = "w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0";
+                  initialsDiv.innerHTML = `<span class="font-semibold text-muted-foreground text-base">${getInitials(testimonial.name)}</span>`;
+                  parent.appendChild(initialsDiv);
+                }
+              }}
+            />
+          ) : (
+            <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+              <span className="font-semibold text-muted-foreground text-base">
+                {getInitials(testimonial.name)}
+              </span>
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <p className="font-semibold text-foreground truncate text-base">
               {testimonial.name}

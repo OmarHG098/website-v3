@@ -1,7 +1,14 @@
 import { IconFlag } from "@tabler/icons-react";
 import Marquee from "react-fast-marquee";
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, useMemo } from "react";
 import { cn } from "@/lib/utils";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+import { useLocation } from "@/contexts/SessionContext";
+import {
+  filterTestimonialsByRelatedFeatures,
+  type TestimonialItem as YAMLTestimonialItem,
+} from "@/lib/testimonialConstants";
 
 export interface TestimonialsSlideTestimonial {
   name: string;
@@ -21,6 +28,7 @@ export interface TestimonialsSlideData {
   description: string;
   background?: string;
   testimonials?: TestimonialsSlideTestimonial[];
+  related_features?: string[];
 }
 
 interface TestimonialsSlideProps {
@@ -153,6 +161,7 @@ function MasonryCard({
   size?: CardSize;
 }) {
   const config = sizeConfig[size];
+  const hasValidImg = testimonial.img && testimonial.img.trim() !== "";
   
   return (
     <div 
@@ -163,11 +172,31 @@ function MasonryCard({
       data-testid={`card-testimonial-${testimonial.name.replace(/\s+/g, '-').toLowerCase()}`}
     >
       <div className="flex items-center gap-3 mb-3">
-        <img 
-          src={testimonial.img} 
-          alt={testimonial.name}
-          className="w-10 h-10 rounded-full object-cover flex-shrink-0"
-        />
+        {hasValidImg ? (
+          <img 
+            src={testimonial.img} 
+            alt={testimonial.name}
+            className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+            onError={(e) => {
+              // Fallback to placeholder if image fails to load
+              const target = e.target as HTMLImageElement;
+              target.style.display = "none";
+              const parent = target.parentElement;
+              if (parent) {
+                const placeholder = document.createElement("div");
+                placeholder.className = "w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0";
+                placeholder.innerHTML = `<span class="text-xs font-semibold text-muted-foreground">${testimonial.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}</span>`;
+                parent.appendChild(placeholder);
+              }
+            }}
+          />
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-muted flex items-center justify-center flex-shrink-0">
+            <span className="text-xs font-semibold text-muted-foreground">
+              {testimonial.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)}
+            </span>
+          </div>
+        )}
         <div className="min-w-0 flex-1">
           <h4 className="font-semibold text-foreground text-sm leading-tight truncate">
             {testimonial.name}
@@ -295,10 +324,76 @@ export default function TestimonialsSlide({ data }: TestimonialsSlideProps) {
     }, 500);
   }, [prefersReducedMotion]);
 
-  const testimonials = data.testimonials && data.testimonials.length > 0 
-    ? data.testimonials 
-    : DEFAULT_TESTIMONIALS;
+  const location = useLocation();
+  const { i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("es") ? "es" : "en";
+  
+  const hasInlineTestimonials = data.testimonials && data.testimonials.length > 0;
+  const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
+  
+  const { data: testimonialsData, isLoading } = useQuery<{ testimonials: YAMLTestimonialItem[] }>({
+    queryKey: ["/api/testimonials", locale],
+    enabled: hasRelatedFeatures,
+    staleTime: 5 * 60 * 1000,
+  });
+  
+  const testimonials: TestimonialsSlideTestimonial[] = useMemo(() => {
+    if (hasRelatedFeatures && testimonialsData?.testimonials) {
+      const filtered = filterTestimonialsByRelatedFeatures(testimonialsData.testimonials, {
+        relatedFeatures: data.related_features!,
+        location: location?.country_code,
+        componentType: "testimonials_slide",
+      });
+      
+      // Map YAML structure to TestimonialsSlideTestimonial format
+      return filtered.map((testimonial) => {
+        // Try to extract country from location or use defaults
+        // Since YAML doesn't have country/contributor, we'll use defaults or extract from available data
+        const countryIso = location?.country_code?.toLowerCase() || "us";
+        const countryName = location?.country || "United States";
+        
+        return {
+          name: testimonial.student_name,
+          img: testimonial.student_thumb || "",
+          description: testimonial.content || "",
+          achievement: testimonial.outcome,
+          country: {
+            iso: countryIso,
+            name: countryName,
+          },
+          contributor: testimonial.company || "4Geeks Academy",
+          status: testimonial.role ? `Graduated - ${testimonial.role}` : "Graduated",
+        };
+      });
+    }
+    
+    if (hasInlineTestimonials) {
+      return data.testimonials!;
+    }
+    
+    return DEFAULT_TESTIMONIALS;
+  }, [hasRelatedFeatures, hasInlineTestimonials, data.related_features, data.testimonials, testimonialsData, location?.country_code, location?.country]);
+
   const masonryColumns = createMasonryColumns(testimonials);
+
+  if (isLoading && hasRelatedFeatures) {
+    return (
+      <section 
+        className={`py-12 md:py-16 ${data.background || ""}`}
+        data-testid="section-testimonials-slide"
+      >
+        <div className="max-w-6xl mx-auto px-4 mb-8">
+          <div className="animate-pulse">
+            <div className="h-10 w-64 bg-muted rounded mx-auto mb-4" />
+            <div className="h-6 w-96 bg-muted rounded mx-auto" />
+          </div>
+        </div>
+        <div className="h-[550px] md:h-[400px] bg-muted rounded" />
+      </section>
+    );
+  }
+
+  if (testimonials.length === 0) return null;
 
   return (
     <section 
