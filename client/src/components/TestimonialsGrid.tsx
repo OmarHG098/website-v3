@@ -70,10 +70,21 @@ function isVideoUrl(url: string): boolean {
     videoHosts.some(host => lowerUrl.includes(host));
 }
 
-function mapBankToGridItem(t: BankTestimonial): GridItem {
+function isValidTestimonial(t: BankTestimonial): boolean {
+  const hasRating = t.rating != null && t.rating > 0;
+  const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
+  return hasRating || hasText;
+}
+
+function mapBankToGridItem(
+  t: BankTestimonial,
+  itemStyles?: Record<string, { box_color?: string; name_color?: string; comment_color?: string }>
+): GridItem {
   const media = t.student_video
     ? { url: t.student_video, type: "video" as const, ratio: "16:9" }
     : t.media;
+
+  const style = itemStyles?.[t.student_name];
 
   return {
     name: t.student_name,
@@ -84,6 +95,9 @@ function mapBankToGridItem(t: BankTestimonial): GridItem {
     avatar: t.student_thumb,
     linkedin_url: t.linkedin_url,
     media,
+    box_color: style?.box_color,
+    name_color: style?.name_color,
+    comment_color: style?.comment_color,
   };
 }
 
@@ -116,7 +130,8 @@ function sortTestimonials(testimonials: BankTestimonial[], relatedFeatures?: str
 function filterByRelatedFeatures(
   testimonials: BankTestimonial[],
   relatedFeatures: string[],
-  limit: number
+  limit: number,
+  itemStyles?: Record<string, { box_color?: string; name_color?: string; comment_color?: string }>
 ): GridItem[] {
   const filtered = testimonials.filter((t) => {
     const features = t.related_features || [];
@@ -124,7 +139,7 @@ function filterByRelatedFeatures(
   });
 
   const sorted = sortTestimonials(filtered, relatedFeatures);
-  return sorted.slice(0, limit).map(mapBankToGridItem);
+  return sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
 }
 
 export function TestimonialsGrid({ data }: TestimonialsGridProps) {
@@ -133,20 +148,25 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
 
   const relatedFeatures = data.related_features || [];
   const limit = Math.min(data.limit || 30, 30);
+  const itemStyles = data.item_styles;
 
   const { data: bankData, isLoading } = useQuery<{ testimonials: BankTestimonial[] }>({
     queryKey: ["/api/testimonials", locale],
     staleTime: 5 * 60 * 1000,
   });
 
+  const validTestimonials = useMemo(() => {
+    return (bankData?.testimonials ?? []).filter(isValidTestimonial);
+  }, [bankData]);
+
   const items: GridItem[] = useMemo(() => {
-    if (!bankData?.testimonials) return [];
+    if (validTestimonials.length === 0) return [];
     if (relatedFeatures.length > 0) {
-      return filterByRelatedFeatures(bankData.testimonials, relatedFeatures, limit);
+      return filterByRelatedFeatures(validTestimonials, relatedFeatures, limit, itemStyles);
     }
-    const sorted = sortTestimonials(bankData.testimonials);
-    return sorted.slice(0, limit).map(mapBankToGridItem);
-  }, [relatedFeatures, bankData, limit]);
+    const sorted = sortTestimonials(validTestimonials);
+    return sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
+  }, [relatedFeatures, validTestimonials, limit, itemStyles]);
 
   const title = data.title;
   const subtitle = data.subtitle;

@@ -46,6 +46,7 @@ import {
 } from "@/lib/field-editor-registry";
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
+import { TestimonialItemsPreview } from "./TestimonialItemsPreview";
 import { RichTextArea } from "./RichTextArea";
 import { MarkdownEditorField } from "./MarkdownEditorField";
 import type { Section, ImageRegistry } from "@shared/schema";
@@ -1115,6 +1116,15 @@ export function SectionEditorPanel({
                   value={(parsedSection?.related_features as string[]) || []}
                   onChange={(value) => updateArrayProperty("related_features", value)}
                   locale={locale}
+                  context="testimonials"
+                />
+                <TestimonialItemsPreview
+                  relatedFeatures={(parsedSection?.related_features as string[]) || []}
+                  itemStyles={(parsedSection?.item_styles as Record<string, { box_color?: string; name_color?: string; comment_color?: string }>) || {}}
+                  locale={locale || "en"}
+                  onUpdateItemStyle={(studentName, prop, value) => {
+                    updateProperty(`item_styles.${studentName}.${prop}`, value);
+                  }}
                 />
               </>
             )}
