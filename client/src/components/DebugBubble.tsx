@@ -1662,16 +1662,12 @@ export function DebugBubble() {
               {menuView === "main" ? (
               <>
               <div className="p-2 space-y-1">
-                <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
-                  <button
-                    onClick={() => setMenuView("sitemap")}
-                    className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
-                    data-testid="button-sitemap-menu"
-                  >
-                    <IconMap className="h-4 w-4 text-muted-foreground" />
-                    <span>Sitemap</span>
-                  </button>
-                  <div className="flex items-center gap-2">
+                <div className="space-y-0.5">
+                  <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                    <div className="flex items-center gap-3">
+                      <IconMap className="h-4 w-4 text-muted-foreground" />
+                      <span>Sitemap</span>
+                    </div>
                     <button
                       onClick={clearSitemapCache}
                       disabled={cacheClearStatus === "loading"}
@@ -1682,18 +1678,38 @@ export function DebugBubble() {
                       {cacheClearStatus === "loading" ? (
                         <IconRefresh className="h-3.5 w-3.5 animate-spin" />
                       ) : cacheClearStatus === "success" ? (
-                        <IconCheck className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
+                        <IconCheck className="h-3.5 w-3.5 text-chart-3" />
                       ) : (
                         <IconRefresh className="h-3.5 w-3.5" />
                       )}
                     </button>
+                  </div>
+                  <div className="pl-2 space-y-0.5">
                     <button
                       onClick={() => setMenuView("sitemap")}
-                      className="p-0.5 rounded hover-elevate"
-                      data-testid="button-sitemap-chevron"
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="button-sitemap-all-urls"
                     >
+                      <div className="flex items-center gap-3">
+                        <IconMap className="h-4 w-4 text-muted-foreground" />
+                        <span>All URLs</span>
+                      </div>
                       <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                     </button>
+                    <a
+                      href="/private/redirects"
+                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                      data-testid="link-redirects-page"
+                    >
+                      <div className="flex items-center gap-3">
+                        <IconRoute className="h-4 w-4 text-muted-foreground" />
+                        <span>Redirects</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                        <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </div>
+                    </a>
                   </div>
                 </div>
                 
@@ -1708,21 +1724,6 @@ export function DebugBubble() {
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
-                
-                <a
-                  href="/private/redirects"
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="link-redirects-page"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconRoute className="h-4 w-4 text-muted-foreground" />
-                    <span>Redirects</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                </a>
                 
                 <button
                   onClick={() => setMenuView("menus")}
