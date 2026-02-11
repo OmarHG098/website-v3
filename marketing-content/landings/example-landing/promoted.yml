@@ -493,8 +493,6 @@ sections:
         col3_image_id: 4geeks_member
         col3_object_fit: cover
         col3_object_position: center
-        alt: 4Geeks Member
-        id: 4geeks-member
       - tab_label: Get noticed
       - tab_label: Build a portfolio
       - tab_label: Find your edge

@@ -63,9 +63,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
-      "lastModified": 1770847185115.6682,
-      "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3"
+      "sha": "c605d4022cee1d09b6007f5545929fa2c7f1834aa62989a6710ea8a449ac329c",
+      "lastModified": 1770849307108.017,
+      "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-11T22:35:07.110Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
@@ -828,9 +830,11 @@
       "remoteSha": "5677fc83cf087a10ec0eb37590806ea58e28acc63f09f86dfc8fe8d43ca9f7e0"
     },
     "marketing-content/pages/scholarships/en.yml": {
-      "sha": "ea788276f0b4c6291c9f25f04f3591a84e597f72d197050a7eaa6e2700cead04",
-      "lastModified": 1770846049644.7153,
-      "remoteSha": "ea788276f0b4c6291c9f25f04f3591a84e597f72d197050a7eaa6e2700cead04"
+      "sha": "30f568b220981b3f7e45a30d115110b474c409508892ceaa8d0868206488c076",
+      "lastModified": 1770848944326.2998,
+      "remoteSha": "ea788276f0b4c6291c9f25f04f3591a84e597f72d197050a7eaa6e2700cead04",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-11T22:29:04.328Z"
     },
     "marketing-content/pages/scholarships/es.yml": {
       "sha": "05df3a720f6864efb4e8e8498bb09a87a34039c643f6152b299118c7d2a20741",
