@@ -104,6 +104,21 @@ sections:
     subtitle: Real stories from graduates who transformed their careers
     default_box_color: hsl(var(--muted))
     columns: 3
+    related_features:
+      - content-and-syllabus
+    item_styles:
+      Mariana Chaiban:
+        box_color: hsl(var(--accent))
+        name_color: hsl(var(--foreground))
+        comment_color: hsl(var(--foreground))
+      James Dugard:
+        box_color: hsl(var(--accent))
+        name_color: hsl(var(--foreground))
+        comment_color: hsl(var(--foreground))
+      Jonathan Ferragut:
+        box_color: hsl(var(--accent))
+        name_color: hsl(var(--foreground))
+        comment_color: hsl(var(--foreground))
   - type: press_mentions
     version: v1.0
     title: Destacados en Prensa
