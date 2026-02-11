@@ -6,6 +6,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import { IconStarFilled, IconStar } from "@tabler/icons-react";
 import type { HeroSingleColumn } from "@shared/schema";
 import type { ComponentType } from "react";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import avatar1 from "@assets/generated_images/Woman_profile_headshot_1_608aff01.webp";
 import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.webp";
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
@@ -23,6 +24,7 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
   };
 
   const avatars = [avatar1, avatar2, avatar3, avatar4];
+  const handleLinkClick = useInternalNav();
 
   return (
     <section 
@@ -106,7 +108,7 @@ export function HeroSingleColumn({ data }: HeroSingleColumnProps) {
                 asChild
                 data-testid={`button-hero-cta-${index}`}
               >
-                <a href={button.url} className="flex items-center gap-2">
+                <a href={button.url} onClick={handleLinkClick} className="flex items-center gap-2">
                   {button.icon && getIcon(button.icon)}
                   {button.text}
                 </a>

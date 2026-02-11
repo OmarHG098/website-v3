@@ -11,6 +11,7 @@ import type { FAQSection as FAQSectionType } from "@shared/schema";
 import { useLocation } from "@/contexts/SessionContext";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface FaqItem {
   question: string;
@@ -81,6 +82,7 @@ function filterFaqsByRelatedFeatures(
 }
 
 export function FAQSection({ data }: FAQSectionProps) {
+  const handleLinkClick = useInternalNav();
   const location = useLocation();
   const { i18n } = useTranslation();
   const locale = i18n.language?.startsWith("es") ? "es" : "en";
@@ -183,7 +185,7 @@ export function FAQSection({ data }: FAQSectionProps) {
             </div>
             <p className="text-lg text-foreground mb-4">{data.cta.text}</p>
             <Button asChild data-testid="button-faq-cta">
-              <a href={CALENDLY_URL} target="_blank" rel="noopener noreferrer">
+              <a href={CALENDLY_URL} onClick={handleLinkClick} target="_blank" rel="noopener noreferrer">
                 {data.cta.button_text}
               </a>
             </Button>

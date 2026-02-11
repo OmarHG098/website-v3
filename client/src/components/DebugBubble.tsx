@@ -1,7 +1,8 @@
 import { useState, useEffect, lazy, Suspense, useMemo, useCallback, useRef } from "react";
 import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link } from "wouter";
+import { useLocation } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { useSession } from "@/contexts/SessionContext";
 import { buildContentUrl, getFolderFromSlug, type ContentType } from "@shared/slugMappings";
 import {
@@ -523,6 +524,7 @@ function ExpandableMenuItem({ icon: Icon, label, expanded, onToggle, testId, act
 }
 
 export function DebugBubble() {
+  const handleLinkClick = useInternalNav();
   // Check if we should hide the debug bubble (via URL param or in preview-frame route)
   const shouldHide = typeof window !== "undefined" && (
     new URLSearchParams(window.location.search).get("hide_debug") === "true" ||
@@ -2364,9 +2366,10 @@ export function DebugBubble() {
                       const totalExposures = Object.values(experiment.stats || {}).reduce((a, b) => a + b, 0);
                       
                       return (
-                        <Link
+                        <a
                           key={experiment.slug}
                           href={`/private/${contentInfo.type}/${contentInfo.slug}/experiment/${experiment.slug}`}
+                          onClick={handleLinkClick}
                           className="flex flex-col w-full px-3 py-2.5 rounded-md text-sm hover-elevate cursor-pointer text-left"
                           data-testid={`button-experiment-${experiment.slug}`}
                         >
@@ -2390,7 +2393,7 @@ export function DebugBubble() {
                               <span>max {experiment.max_visitors}</span>
                             )}
                           </div>
-                        </Link>
+                        </a>
                       );
                     })
                   )}

@@ -16,6 +16,7 @@ import { FaGitAlt } from "react-icons/fa";
 import { IoLogoVercel } from "react-icons/io5";
 import { Matplotlib } from "@/components/custom-icons";
 import { RichTextContent } from "@/components/ui/rich-text-content";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -612,6 +613,7 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
 }
 
 export function SyllabusSection({ data }: SyllabusSectionProps) {
+  const handleLinkClick = useInternalNav();
   // Check for program-modules variant
   if ("variant" in data && data.variant === "program-modules") {
     const pmData = data as SyllabusProgramModules;
@@ -662,7 +664,7 @@ export function SyllabusSection({ data }: SyllabusSectionProps) {
                   asChild
                   data-testid="button-syllabus-pm-cta"
                 >
-                  <a href={pmData.cta_button.url} className="flex items-center gap-2">
+                  <a href={pmData.cta_button.url} onClick={handleLinkClick} className="flex items-center gap-2">
                     {pmData.cta_button.icon && getIcon(pmData.cta_button.icon, "w-5 h-5")}
                     {pmData.cta_button.text}
                   </a>

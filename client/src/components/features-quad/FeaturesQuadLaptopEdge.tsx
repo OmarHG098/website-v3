@@ -4,6 +4,7 @@ import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import { getIcon } from "@/lib/icons";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 function getButtonVariant(
   variant?: string,
@@ -144,6 +145,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
   );
   const hasVideo = !!videoConfig?.url;
   const hasMedia = hasVideo || images.length > 0;
+  const handleLinkClick = useInternalNav();
 
   const renderMedia = (widthClass: string, testId: string) => {
     if (!hasVideo || !videoConfig) return null;
@@ -234,7 +236,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                 className="mt-4"
                 data-testid="button-features-quad-cta-mobile"
               >
-                <a href={data.cta.url}>{data.cta.text}</a>
+                <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
               </Button>
             )}
           </div>
@@ -274,7 +276,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                   className="mt-4"
                   data-testid="button-features-quad-cta-tablet"
                 >
-                  <a href={data.cta.url}>{data.cta.text}</a>
+                  <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                 </Button>
               )}
             </div>
@@ -346,7 +348,7 @@ export function FeaturesQuadLaptopEdge({ data }: FeaturesQuadLaptopEdgeProps) {
                       className="mt-4"
                       data-testid="button-features-quad-cta-desktop"
                     >
-                      <a href={data.cta.url}>{data.cta.text}</a>
+                      <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                     </Button>
                   )}
                 </div>

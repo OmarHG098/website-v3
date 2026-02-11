@@ -1,7 +1,7 @@
 import type { CTABannerSection as CTABannerSectionType, CtaBannerDefault, CtaBannerForm, CtaButton } from "@shared/schema";
 import { Button } from "@/components/ui/button";
 import { IconArrowRight } from "@tabler/icons-react";
-import { Link } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { useSession } from "@/contexts/SessionContext";
 import { LeadForm } from "@/components/LeadForm";
 
@@ -24,6 +24,7 @@ export function CTABannerSection({ data, programContext, landingLocations }: CTA
   const session = sessionContext?.session;
   
   const isUS = session?.geo?.country_code === 'US' || session?.location?.country_code === 'US';
+  const handleLinkClick = useInternalNav();
 
   // Form variant: show form on both mobile and desktop
   if (isFormVariant(data)) {
@@ -125,13 +126,13 @@ export function CTABannerSection({ data, programContext, landingLocations }: CTA
                     className={outlineStyles}
                     data-testid={`button-cta-banner-${index}`}
                   >
-                    <a href={button.url}>{button.text}</a>
+                    <a href={button.url} onClick={handleLinkClick}>{button.text}</a>
                   </Button>
                 );
               })}
             </div>
           ) : data.cta_text && data.cta_url ? (
-            <Link href={data.cta_url}>
+            <a href={data.cta_url} onClick={handleLinkClick}>
               <Button 
                 size="lg" 
                 variant="secondary"
@@ -141,7 +142,7 @@ export function CTABannerSection({ data, programContext, landingLocations }: CTA
                 {data.cta_text}
                 <IconArrowRight className="w-5 h-5 ml-2" />
               </Button>
-            </Link>
+            </a>
           ) : null}
         </div>
       </section>

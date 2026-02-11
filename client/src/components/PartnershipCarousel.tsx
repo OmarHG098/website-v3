@@ -7,6 +7,7 @@ import {
 import { UniversalImage } from "@/components/UniversalImage";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import type {
   PartnershipCarouselSection,
   PartnershipSlide,
@@ -17,6 +18,7 @@ interface PartnershipCarouselProps {
 }
 
 function SlideContent({ slide }: { slide: PartnershipSlide }) {
+  const handleLinkClick = useInternalNav();
   return (
     <div className="flex flex-col justify-center gap-4 p-6 md:p-10">
       {/* {slide.subtitle && (
@@ -128,7 +130,7 @@ function SlideContent({ slide }: { slide: PartnershipSlide }) {
 
       {slide.cta && (
         <div className="mt-4">
-          <a href={slide.cta.url} data-testid="link-partnership-cta">
+          <a href={slide.cta.url} onClick={handleLinkClick} data-testid="link-partnership-cta">
             <Button
               variant={
                 slide.cta.variant === "outline"

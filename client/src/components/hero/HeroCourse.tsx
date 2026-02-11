@@ -6,12 +6,14 @@ import { IconCheck, IconBook, IconStarFilled } from "@tabler/icons-react";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { getIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface HeroCourseProps {
   data: HeroCourseType;
 }
 
 export function HeroCourse({ data }: HeroCourseProps) {
+  const handleLinkClick = useInternalNav();
   return (
     <section 
       className="bg-background"
@@ -118,6 +120,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
                 {data.rating.reviews_anchor ? (
                   <a 
                     href={data.rating.reviews_anchor}
+                    onClick={handleLinkClick}
                     className="text-primary hover:underline text-sm"
                     data-testid="link-hero-rating"
                   >
@@ -193,7 +196,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
                 data-testid="button-hero-cta"
                 asChild
               >
-                <a href={data.signup_card.cta_button.url}>
+                <a href={data.signup_card.cta_button.url} onClick={handleLinkClick}>
                   {data.signup_card.cta_button.text}
                 </a>
               </Button>
@@ -203,6 +206,7 @@ export function HeroCourse({ data }: HeroCourseProps) {
                   Already have an account?{" "}
                   <a 
                     href={data.signup_card.login_link.url}
+                    onClick={handleLinkClick}
                     className="text-primary hover:underline"
                   >
                     {data.signup_card.login_link.text}

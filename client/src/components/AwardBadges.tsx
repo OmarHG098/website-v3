@@ -1,4 +1,3 @@
-import { Link } from "wouter";
 import {
   Carousel,
   CarouselContent,
@@ -6,6 +5,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 function parseLogoHeight(value?: string): number | undefined {
   if (!value) return undefined;
@@ -39,6 +39,7 @@ export function AwardBadges({
   className = "",
   showBorder = false,
 }: AwardBadgesProps) {
+  const handleLinkClick = useInternalNav();
   if (!items || items.length === 0) return null;
 
   const SimpleCard = ({ item, index }: { item: AwardBadgeItem; index: number }) => (
@@ -94,23 +95,14 @@ export function AwardBadges({
         </p>
       )}
       {item.link && (
-        item.link.startsWith("/") && !item.link.startsWith("//") ? (
-          <Link
-            href={item.link}
-            className="text-sm text-primary font-medium hover:underline"
-            data-testid={`link-${item.id}`}
-          >
-            {item.linkText || "Learn more"}
-          </Link>
-        ) : (
-          <a
-            href={item.link}
-            className="text-sm text-primary font-medium hover:underline"
-            data-testid={`link-${item.id}`}
-          >
-            {item.linkText || "Learn more"}
-          </a>
-        )
+        <a
+          href={item.link}
+          className="text-sm text-primary font-medium hover:underline"
+          onClick={handleLinkClick}
+          data-testid={`link-${item.id}`}
+        >
+          {item.linkText || "Learn more"}
+        </a>
       )}
     </div>
   );

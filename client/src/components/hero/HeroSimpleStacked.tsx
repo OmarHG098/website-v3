@@ -2,6 +2,7 @@ import type { HeroSimpleStacked as HeroSimpleStackedType } from "@shared/schema"
 import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface HeroSimpleStackedProps {
   data: HeroSimpleStackedType;
@@ -14,6 +15,7 @@ const getIcon = (iconName: string) => {
 };
 
 export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
+  const handleLinkClick = useInternalNav();
   return (
     <section 
       className={`${data.background || "bg-gradient-to-b from-primary/5 to-background"}`}
@@ -57,7 +59,7 @@ export function HeroSimpleStacked({ data }: HeroSimpleStackedProps) {
                     asChild
                     data-testid={`button-hero-cta-${index}`}
                   >
-                    <a href={button.url} className="flex items-center gap-2">
+                    <a href={button.url} onClick={handleLinkClick} className="flex items-center gap-2">
                       {button.icon && getIcon(button.icon)}
                       {button.text}
                     </a>

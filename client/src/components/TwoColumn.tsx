@@ -4,7 +4,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import type { TwoColumnSection as TwoColumnSectionType, TwoColumnColumn, BenefitItem } from "@shared/schema";
 import type { ComponentType, CSSProperties } from "react";
 import { UniversalVideo } from "./UniversalVideo";
-import { Link } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 export type { TwoColumnSectionType };
 
@@ -197,6 +197,7 @@ function BulletGroups({
 }
 
 function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { column: TwoColumnColumn; defaultBulletIcon?: string; hideHeadingOnTablet?: boolean }) {
+  const handleLinkClick = useInternalNav();
   const [bulletsExpanded, setBulletsExpanded] = useState(false);
   const [expandedBullets, setExpandedBullets] = useState<Record<number, boolean>>({});
   
@@ -355,7 +356,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
                 asChild
                 data-testid="button-two-column-cta"
               >
-                <a href={column.button.url} className="flex items-center gap-2">
+                <a href={column.button.url} onClick={handleLinkClick} className="flex items-center gap-2">
                   {column.button.icon && getIcon(column.button.icon)}
                   {column.button.text}
                 </a>
@@ -417,6 +418,7 @@ function ColumnContent({ column, defaultBulletIcon, hideHeadingOnTablet }: { col
 }
 
 function BenefitCardsVariant({ data }: TwoColumnProps) {
+  const handleLinkClick = useInternalNav();
   const backgroundClass = data.background || "bg-muted/30";
   const stackedHeader = data.stacked_header === true;
   
@@ -481,7 +483,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
             
             {data.cta_button && (
               <div className="mt-auto">
-                <Link href={data.cta_button.url || "#"}>
+                <a href={data.cta_button.url || "#"} onClick={handleLinkClick}>
                   <Button 
                     variant={data.cta_button.variant === "outline" ? "outline" : "default"}
                     size="lg"
@@ -489,7 +491,7 @@ function BenefitCardsVariant({ data }: TwoColumnProps) {
                   >
                     {data.cta_button.text}
                   </Button>
-                </Link>
+                </a>
               </div>
             )}
           </div>

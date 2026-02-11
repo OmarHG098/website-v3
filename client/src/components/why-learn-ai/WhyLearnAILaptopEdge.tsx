@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import type { WhyLearnAISection as WhyLearnAISectionType } from "@shared/schema";
 import { RichTextContent } from "@/components/ui/rich-text-content";
 import laptopCodeEditor from "@assets/243f0f155c3d1683ecfaa1020801b365ad23092d_1769656566581.png";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 const MOBILE_CHAR_LIMIT = 150;
 
@@ -19,6 +20,7 @@ interface WhyLearnAILaptopEdgeProps {
 }
 
 export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
+  const handleLinkClick = useInternalNav();
   const [isExpanded, setIsExpanded] = useState(false);
   const description = data.description || "";
 
@@ -99,7 +101,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
             className="mb-6"
             data-testid="button-why-learn-cta-mobile"
           >
-            <a href={data.cta.url}>{data.cta.text}</a>
+            <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
           </Button>
         )}
 
@@ -145,7 +147,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
                 asChild
                 data-testid="button-why-learn-cta"
               >
-                <a href={data.cta.url}>{data.cta.text}</a>
+                <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
               </Button>
             )}
           </div>

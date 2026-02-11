@@ -1,12 +1,13 @@
-import { Link } from "wouter";
 import { useTranslation } from 'react-i18next';
 import { useState, useEffect } from 'react';
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { useQuery } from "@tanstack/react-query";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { Navbar, MobileNav, type NavbarConfig } from "@/components/menus";
 import logo from "@assets/4geeks-devs-logo_1763162063433.png";
 
 export default function Header() {
+  const handleLinkClick = useInternalNav();
   const { t, i18n } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const locale = i18n.language || 'en';
@@ -39,13 +40,14 @@ export default function Header() {
   return (
     <header className={`sticky top-0 z-50 w-full bg-background transition-colors ${isScrolled ? 'border-b' : 'border-b border-background'}`}>
       <div className="flex h-16 items-center justify-between gap-4 px-6">
-        <Link 
+        <a 
           href="/" 
+          onClick={handleLinkClick}
           className="flex items-center hover-elevate rounded-md px-3 py-2" 
           data-testid="link-home"
         >
           <img src={logo} alt={t('nav.brand')} className="h-8" />
-        </Link>
+        </a>
 
         <div className="hidden md:flex flex-1 justify-center">
           {isLoading ? (

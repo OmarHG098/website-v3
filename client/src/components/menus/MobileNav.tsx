@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { IconMenu2, IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import {
   Sheet,
@@ -28,6 +28,7 @@ interface MobileNavItemProps {
 }
 
 function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProps) {
+  const handleNav = useInternalNav({ onNavigate });
   if (item.component === "Dropdown" && item.dropdown) {
     const dropdown = item.dropdown;
 
@@ -46,7 +47,7 @@ function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProp
                 <a
                   key={index}
                   href={card.href}
-                  onClick={onNavigate}
+                  onClick={handleNav}
                   className="flex items-center gap-2 py-2 px-2 text-sm text-muted-foreground hover-elevate rounded-md"
                   data-testid={`mobile-nav-card-${(card.title || "item").toLowerCase().replace(/\s+/g, "-")}`}
                 >
@@ -72,7 +73,7 @@ function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProp
                       <a
                         key={linkIndex}
                         href={link.href}
-                        onClick={onNavigate}
+                        onClick={handleNav}
                         className="flex items-center gap-2 py-2 px-2 text-sm text-muted-foreground hover-elevate rounded-md"
                         data-testid={`mobile-nav-column-item-${(link.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                       >
@@ -92,7 +93,7 @@ function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProp
                 <a
                   key={index}
                   href={link.href}
-                  onClick={onNavigate}
+                  onClick={handleNav}
                   className="flex items-center gap-2 py-2 px-2 text-sm text-muted-foreground hover-elevate rounded-md"
                   data-testid={`mobile-nav-list-item-${(link.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                 >
@@ -115,7 +116,7 @@ function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProp
                       <a
                         key={linkIndex}
                         href={link.href}
-                        onClick={onNavigate}
+                        onClick={handleNav}
                         className="flex items-center gap-2 py-2 px-2 text-sm text-muted-foreground hover-elevate rounded-md"
                         data-testid={`mobile-nav-group-item-${(link.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                       >
@@ -134,14 +135,14 @@ function MobileNavItem({ item, onNavigate, isOpen, onToggle }: MobileNavItemProp
   }
 
   return (
-    <Link
+    <a
       href={item.href}
-      onClick={onNavigate}
+      onClick={handleNav}
       className="flex items-center py-3 px-2 text-base font-medium text-foreground hover-elevate rounded-md"
       data-testid={`mobile-nav-link-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
     >
       {item.label}
-    </Link>
+    </a>
   );
 }
 
