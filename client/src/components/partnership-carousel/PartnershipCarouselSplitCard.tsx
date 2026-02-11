@@ -50,6 +50,15 @@ function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () 
           See more
         </button>
       )}
+      {needsTruncation && expanded && (
+        <button
+          onClick={() => { setExpanded(false); onExpand?.(); }}
+          className="text-primary text-sm font-medium mt-1 lg:hidden"
+          data-testid="button-see-less"
+        >
+          See less
+        </button>
+      )}
     </div>
   );
 }
