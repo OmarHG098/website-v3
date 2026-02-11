@@ -69,35 +69,35 @@ sections:
     background: hsl(210 100% 50% / 0.05)
   - type: comparison_table
     version: "1.0"
-    title: Financing benefits and requirements at a glance
-    subtitle: See how our approach stacks up against typical alternatives
+    title: Compare Your Financing Options at a Glance
+    subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
       - name: Pay in Full
         highlight: true
-      - name: Monthly Plans (TFC)
-      - name: Loans (Ascent/ Climb)
-      - name: Income-Based (Edly)
+      - name: Monthly Plans
+      - name: Loans
+      - name: Income-Based Plan
     rows:
-      - feature: Discount
+      - feature: Tuition Discount
         values:
           - 10% off
           - "No"
           - "No"
           - "No"
-      - feature: Credit Check
+      - feature: Credit Check Required
         values:
           - "No"
-          - Low Barrier
-          - Required
-          - Required
-      - feature: Defer Payments
+          - Low barrier
+          - "Yes"
+          - "Yes"
+      - feature: Payment Deferral After Graduation
         values:
           - "No"
           - "No"
           - "Yes"
           - "Yes"
-      - feature: Pay Once Hired
+      - feature: Pay Only After You’re Hired
         values:
           - "No"
           - "No"
