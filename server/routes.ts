@@ -912,7 +912,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/debug/redirects", (req, res) => {
     try {
       const { from, to, allLanguages, status: redirectStatus } = req.body;
-      const statusCode = redirectStatus && [301, 302, 307, 308].includes(redirectStatus) ? redirectStatus : 301;
+      const statusCode = redirectStatus && [301, 302].includes(redirectStatus) ? redirectStatus : 301;
 
       if (!from || !to) {
         res.status(400).json({ error: "Both 'from' and 'to' fields are required" });

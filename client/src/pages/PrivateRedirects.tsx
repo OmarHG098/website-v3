@@ -513,20 +513,20 @@ export default function PrivateRedirects() {
 
             <div className="space-y-2">
               <Label>Status Code</Label>
-              <div className="grid grid-cols-2 gap-2">
+              <div className="flex border rounded-md overflow-hidden">
                 {[
                   { code: 301, label: "301 — Permanent", desc: "The page has moved forever. Search engines transfer ranking to the new URL." },
                   { code: 302, label: "302 — Temporary", desc: "The page is temporarily at a different URL. Search engines keep the original URL indexed." },
-                  { code: 307, label: "307 — Temporary (strict)", desc: "Like 302, but the browser must use the same request method (e.g. POST stays POST)." },
-                  { code: 308, label: "308 — Permanent (strict)", desc: "Like 301, but the browser must use the same request method (e.g. POST stays POST)." },
-                ].map((option) => (
+                ].map((option, i) => (
                   <button
                     key={option.code}
                     type="button"
                     onClick={() => setRedirectStatus(option.code)}
-                    className={`text-left rounded-md border p-3 transition-colors ${
+                    className={`flex-1 text-left p-3 transition-colors ${
+                      i > 0 ? "border-l" : ""
+                    } ${
                       redirectStatus === option.code
-                        ? "border-primary bg-primary/5"
+                        ? "bg-primary/5"
                         : "hover-elevate"
                     }`}
                     data-testid={`button-status-${option.code}`}

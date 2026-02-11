@@ -184,7 +184,7 @@ class ContentIndex {
       } else if (typeof redirect === "object" && redirect !== null && "path" in redirect) {
         const obj = redirect as { path: string; status?: number };
         rawPath = obj.path;
-        if (obj.status && [301, 302, 307, 308].includes(obj.status)) {
+        if (obj.status && [301, 302].includes(obj.status)) {
           status = obj.status;
         }
       } else {
