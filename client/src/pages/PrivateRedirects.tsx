@@ -501,9 +501,9 @@ export default function PrivateRedirects() {
                         <>
                           <div className="space-y-1">
                             {Object.entries(localeUrls).map(([locale, url]) => (
-                              <div key={locale} className="flex items-center gap-2">
+                              <div key={locale} className="flex items-center gap-2 min-w-0">
                                 <Badge variant="secondary" className="text-xs font-mono shrink-0">{locale.toUpperCase()}</Badge>
-                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{url}</code>
+                                <code className="text-xs bg-muted px-2 py-1 rounded truncate min-w-0">{url}</code>
                               </div>
                             ))}
                           </div>
