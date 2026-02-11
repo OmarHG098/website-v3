@@ -534,6 +534,13 @@ export default function PrivateRedirects() {
                               Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.
                             </p>
                           </>
+                        ) : isCustomDestination ? (
+                          <>
+                            <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
+                            <p className="text-xs text-muted-foreground">
+                              Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected to this exact URL.
+                            </p>
+                          </>
                         ) : allLanguages ? (
                           <>
                             <div className="space-y-1">

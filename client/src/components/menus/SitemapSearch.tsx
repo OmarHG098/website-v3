@@ -39,6 +39,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
   const [searchQuery, setSearchQuery] = useState("");
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customUrl, setCustomUrl] = useState(value);
+  const [customError, setCustomError] = useState("");
 
   useEffect(() => {
     setCustomUrl(value);
@@ -74,8 +75,16 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
     setIsCustomMode(false);
   };
 
+  const hasLocalePrefix = (url: string) => /^\/(en|es)(\/|$)/i.test(url.trim());
+
   const handleCustomSubmit = () => {
-    onChange(customUrl, true);
+    const trimmed = customUrl.trim();
+    if (!trimmed.startsWith("http") && hasLocalePrefix(trimmed)) {
+      setCustomError("Custom URLs cannot start with a locale prefix like /en/ or /es/. Use the page search above instead.");
+      return;
+    }
+    setCustomError("");
+    onChange(trimmed, true);
     setOpen(false);
     setIsCustomMode(false);
   };
@@ -127,7 +136,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
             <div className="flex gap-2">
               <Input
                 value={customUrl}
-                onChange={(e) => setCustomUrl(e.target.value)}
+                onChange={(e) => { setCustomUrl(e.target.value); setCustomError(""); }}
                 placeholder="/custom-url or https://..."
                 className="h-8 text-sm flex-1"
                 autoFocus
@@ -145,8 +154,11 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                 Save
               </Button>
             </div>
+            {customError && (
+              <p className="text-xs text-destructive">{customError}</p>
+            )}
             <button
-              onClick={() => setIsCustomMode(false)}
+              onClick={() => { setIsCustomMode(false); setCustomError(""); }}
               className="text-xs text-muted-foreground hover-elevate px-1 py-0.5 rounded"
             >
               Back to search
