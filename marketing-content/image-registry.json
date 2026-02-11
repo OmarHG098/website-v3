@@ -787,6 +787,20 @@
       "focal_point": "center",
       "tags": ["uruguay", "city", "location", "partnership", "photo"],
       "usage_count": 0
+    },
+    "bid_logo": {
+      "src": "/attached_assets/bid-logo.webp",
+      "alt": "BID logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner", "finance"],
+      "usage_count": 0
+    },
+    "4geeks_academy_logo": {
+      "src": "/attached_assets/4geeks_academy_logo_black.webp",
+      "alt": "4Geeks Academy logo",
+      "focal_point": "center",
+      "tags": ["logo", "brand", "academy"],
+      "usage_count": 0
     }
   }
 }

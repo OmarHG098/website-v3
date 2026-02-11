@@ -140,7 +140,7 @@ function SlideRightCard({
             {institutionsHeading || "Institutions that contributed to this project"}
           </h4>
           <div
-            className="flex justify-center gap-3"
+            className="flex gap-3"
             data-testid="logos-partnership"
           >
             {slide.institution_logos!.map((logo, i) => (
@@ -205,7 +205,7 @@ function SlideRightCard({
                       </span>
                     )}
                     {ref.text && (
-                      <span className="text-sm text-muted-foreground">
+                      <span className="text-xs text-muted-foreground">
                         {ref.text}
                       </span>
                     )}

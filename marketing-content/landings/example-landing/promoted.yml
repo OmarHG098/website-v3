@@ -313,13 +313,13 @@ sections:
     version: v1.0
     heading: Our Global Partnerships
     subtitle: Collaborating with leading institutions to bring coding education worldwide
-    background: hsl(210 100% 50% / 0.05)
+    background: bg-primary/5
     slides:
       - image_id: costa_rica_city
         object_position: 100% 80%
         title: CRUSA Forte Scholarship
         subtitle: Empowering Costa Rican talent through tech education
-        description: In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with high unemployment. Through the program, participants receive free training, enabling them to access better jobs in the 4.0 industry and contribute to the country's economic growth.
+        description: In collaboration with Forte and Crusa, 4Geeks As, focusing  In collaboration with Forte and Crusa, 4Geeks As, focusing on women In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with hi In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with hi In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with hi from areas with hi on women from areas with high unemployment. Through the program, participants receive free training, enabling them to access better jobs in the 4.0 industry and contribute to the country's economic growth.
         stats:
           - value: 200+
             label: Scholarships awarded
@@ -332,10 +332,10 @@ sections:
           - image_id: logo_utec
             alt: CRUSA Foundation
             logo_height: 50px
+          - image_id: bid_logo
+            alt: BID logo
+            logo_height: 50px
         press_references:
-          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
-            url: https://example.com/article-1
-            source: La Nación
           - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
             url: https://example.com/article-1
             source: La Nación
