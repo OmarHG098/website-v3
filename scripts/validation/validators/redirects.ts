@@ -177,22 +177,34 @@ export const redirectValidator: Validator = {
       });
     }
 
-    for (const [redirectUrl, { to: target }] of redirectMap) {
-      const visited = new Set<string>([redirectUrl]);
-      let current = target;
+    const getTargetUrls = (to: string | Record<string, string>): string[] => {
+      if (typeof to === "string") return [to];
+      return Object.values(to);
+    };
 
-      while (redirectMap.has(current)) {
-        if (visited.has(current)) {
+    for (const [redirectUrl, { to: target }] of redirectMap) {
+      const targetUrls = getTargetUrls(target);
+
+      const queue = targetUrls.map((url) => ({ url, path: [redirectUrl] }));
+      while (queue.length > 0) {
+        const item = queue.shift()!;
+        if (!redirectMap.has(item.url)) continue;
+
+        if (item.path.includes(item.url)) {
           errors.push({
             type: "error",
             code: "REDIRECT_LOOP",
-            message: `Redirect loop detected: ${Array.from(visited).join(" -> ")} -> ${current}`,
+            message: `Redirect loop detected: ${item.path.join(" -> ")} -> ${item.url}`,
             suggestion: "Break the redirect chain by removing one of the redirects",
           });
-          break;
+          continue;
         }
-        visited.add(current);
-        current = redirectMap.get(current)!.to;
+
+        const nextPath = [...item.path, item.url];
+        const nextTargets = getTargetUrls(redirectMap.get(item.url)!.to);
+        for (const next of nextTargets) {
+          queue.push({ url: next, path: nextPath });
+        }
       }
     }
 

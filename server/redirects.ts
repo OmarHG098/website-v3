@@ -32,6 +32,28 @@ function normalizePath(urlPath: string): string {
   return normalized;
 }
 
+function detectLocale(req: Request): string {
+  const acceptLang = req.headers["accept-language"];
+  if (acceptLang && typeof acceptLang === "string") {
+    const primary = acceptLang.split(",")[0]?.trim().toLowerCase() || "";
+    if (primary.startsWith("es")) return "es";
+  }
+  return "en";
+}
+
+function resolveRedirectTarget(entry: RedirectEntry, req: Request): string {
+  if (typeof entry.to === "string") {
+    return entry.to;
+  }
+
+  const locale = detectLocale(req);
+  if (entry.to[locale]) {
+    return entry.to[locale];
+  }
+
+  return entry.to["en"] || Object.values(entry.to)[0] || "/";
+}
+
 export function redirectMiddleware(req: Request, res: Response, next: NextFunction): void {
   const map = getRedirectMap();
   const normalizedPath = normalizePath(req.path);
@@ -39,17 +61,18 @@ export function redirectMiddleware(req: Request, res: Response, next: NextFuncti
   const entry = map.get(normalizedPath);
   if (entry) {
     const status = entry.status || 301;
-    console.log(`[Redirects] ${status}: ${req.path} -> ${entry.to}`);
-    res.redirect(status, entry.to);
+    const target = resolveRedirectTarget(entry, req);
+    console.log(`[Redirects] ${status}: ${req.path} -> ${target}`);
+    res.redirect(status, target);
     return;
   }
 
   next();
 }
 
-export function getRedirects(): Array<{ from: string; to: string; type: string; status: number; source: string }> {
+export function getRedirects(): Array<{ from: string; to: string | Record<string, string>; type: string; status: number; source: string }> {
   const map = getRedirectMap();
-  const result: Array<{ from: string; to: string; type: string; status: number; source: string }> = [];
+  const result: Array<{ from: string; to: string | Record<string, string>; type: string; status: number; source: string }> = [];
 
   for (const [from, entry] of map) {
     result.push({

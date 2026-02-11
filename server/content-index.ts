@@ -17,7 +17,7 @@ export interface FindOptions {
 
 export interface RedirectEntry {
   from: string;
-  to: string;
+  to: string | Record<string, string>;
   type: string;
   source: string;
   status: number;
@@ -157,6 +157,51 @@ class ContentIndex {
     }
   }
 
+  private buildLocaleUrlsInternal(slug: string, contentType: ContentEntry["contentType"]): Record<string, string> {
+    const matches = this.bySlug.get(slug) || [];
+    const entry = matches.find(e => e.contentType === contentType);
+    if (!entry) return {};
+
+    const basePath = path.join(process.cwd(), entry.folder);
+    const urls: Record<string, string> = {};
+
+    for (const locale of entry.locales) {
+      if (locale.startsWith("_") || locale.includes(".")) continue;
+
+      let localeSlug = slug;
+      const candidates = [`${locale}.yml`, `${locale}.yaml`];
+      for (const candidate of candidates) {
+        const filePath = path.join(basePath, candidate);
+        if (fs.existsSync(filePath)) {
+          try {
+            const raw = fs.readFileSync(filePath, "utf-8");
+            const parsed = yaml.load(raw) as Record<string, unknown>;
+            if (parsed?.slug && typeof parsed.slug === "string") {
+              localeSlug = parsed.slug;
+            }
+          } catch {}
+          break;
+        }
+      }
+
+      if (contentType === "programs") {
+        urls[locale] = locale === "es"
+          ? `/es/programas-de-carrera/${localeSlug}`
+          : `/${locale}/career-programs/${localeSlug}`;
+      } else if (contentType === "locations") {
+        urls[locale] = locale === "es"
+          ? `/es/ubicaciones/${localeSlug}`
+          : `/${locale}/locations/${localeSlug}`;
+      } else if (contentType === "landings") {
+        urls[locale] = `/landing/${localeSlug}`;
+      } else {
+        urls[locale] = `/${locale}/${localeSlug}`;
+      }
+    }
+
+    return urls;
+  }
+
   private getCanonicalUrl(type: "programs" | "landings", slug: string, locale: string): string {
     if (type === "programs") {
       return locale === "es"
@@ -178,12 +223,19 @@ class ContentIndex {
     if (!Array.isArray(redirects)) return;
 
     const isCommon = locale === "_common";
-    const targetUrl = isCommon
-      ? this.getCanonicalUrl(contentType, slug, "en")
-      : this.getCanonicalUrl(contentType, slug, locale);
     const typeLabel = isCommon
       ? `${contentType === "programs" ? "program" : "landing"}-common`
       : (contentType === "programs" ? "program" : "landing");
+
+    let targetTo: string | Record<string, string>;
+    if (isCommon) {
+      targetTo = this.buildLocaleUrlsInternal(slug, contentType);
+      if (Object.keys(targetTo).length === 0) {
+        targetTo = this.getCanonicalUrl(contentType, slug, "en");
+      }
+    } else {
+      targetTo = this.getCanonicalUrl(contentType, slug, locale);
+    }
 
     for (const redirect of redirects) {
       let rawPath: string;
@@ -208,7 +260,7 @@ class ContentIndex {
       }
       this.redirectEntries.push({
         from: normalized,
-        to: targetUrl,
+        to: targetTo,
         type: typeLabel,
         source: filePath,
         status,

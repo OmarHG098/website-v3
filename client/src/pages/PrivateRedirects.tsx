@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash, IconWorld } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -23,10 +23,19 @@ import { useToast } from "@/hooks/use-toast";
 
 interface Redirect {
   from: string;
-  to: string;
+  to: string | Record<string, string>;
   type: string;
   status: number;
   source: string;
+}
+
+function formatRedirectTo(to: string | Record<string, string>): string {
+  if (typeof to === "string") return to;
+  return Object.values(to).join(", ");
+}
+
+function isLocaleMap(to: string | Record<string, string>): to is Record<string, string> {
+  return typeof to === "object";
 }
 
 interface ValidationIssue {
@@ -109,17 +118,19 @@ export default function PrivateRedirects() {
 
   const filteredRedirects = redirects.filter((r) => {
     const q = search.toLowerCase();
+    const toStr = formatRedirectTo(r.to).toLowerCase();
     return r.from.toLowerCase().includes(q) ||
-      r.to.toLowerCase().includes(q) ||
+      toStr.includes(q) ||
       r.type.toLowerCase().includes(q) ||
       String(r.status).includes(q);
   });
 
   const groupedByType = filteredRedirects.reduce((acc, redirect) => {
-    if (!acc[redirect.type]) {
-      acc[redirect.type] = [];
+    const normalizedType = redirect.type.replace(/-common$/, "");
+    if (!acc[normalizedType]) {
+      acc[normalizedType] = [];
     }
-    acc[redirect.type].push(redirect);
+    acc[normalizedType].push(redirect);
     return acc;
   }, {} as Record<string, Redirect[]>);
 
@@ -475,19 +486,38 @@ export default function PrivateRedirects() {
                           </Badge>
                           <IconArrowRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                           <div className="flex-1 min-w-0 flex items-center gap-2">
-                            <code className="text-xs bg-muted px-2 py-1 rounded block truncate flex-1">
-                              {redirect.to}
-                            </code>
-                            <a
-                              href={redirect.to}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="p-1 rounded hover:bg-muted flex-shrink-0"
-                              title="Open target URL"
-                              data-testid={`link-redirect-target-${type}-${index}`}
-                            >
-                              <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
-                            </a>
+                            {isLocaleMap(redirect.to) ? (
+                              <div className="flex-1 min-w-0 space-y-1">
+                                {Object.entries(redirect.to).map(([locale, url]) => (
+                                  <div key={locale} className="flex items-center gap-1.5">
+                                    <Badge variant="outline" className="text-[10px] px-1 py-0 font-mono flex-shrink-0">{locale}</Badge>
+                                    <code className="text-xs bg-muted px-2 py-0.5 rounded truncate flex-1">{url}</code>
+                                    <a href={url} target="_blank" rel="noopener noreferrer" className="p-0.5 rounded hover:bg-muted flex-shrink-0" data-testid={`link-redirect-target-${type}-${index}-${locale}`}>
+                                      <IconExternalLink className="h-3 w-3 text-muted-foreground" />
+                                    </a>
+                                  </div>
+                                ))}
+                              </div>
+                            ) : (
+                              <>
+                                <code className="text-xs bg-muted px-2 py-1 rounded block truncate flex-1">
+                                  {redirect.to}
+                                </code>
+                                <a
+                                  href={redirect.to}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="p-1 rounded hover:bg-muted flex-shrink-0"
+                                  title="Open target URL"
+                                  data-testid={`link-redirect-target-${type}-${index}`}
+                                >
+                                  <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
+                                </a>
+                              </>
+                            )}
+                            {isLocaleMap(redirect.to) && (
+                              <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" title="Multi-language redirect" />
+                            )}
                           </div>
                           <Button
                             variant="ghost"
@@ -685,7 +715,18 @@ export default function PrivateRedirects() {
                 </div>
                 <div className="min-w-0">
                   <p className="text-xs text-muted-foreground mb-1">To</p>
-                  <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{deletingRedirect.to}</code>
+                  {isLocaleMap(deletingRedirect.to) ? (
+                    <div className="space-y-1">
+                      {Object.entries(deletingRedirect.to).map(([locale, url]) => (
+                        <div key={locale} className="flex items-center gap-1.5">
+                          <Badge variant="outline" className="text-[10px] px-1 py-0 font-mono flex-shrink-0">{locale}</Badge>
+                          <code className="text-xs bg-muted px-2 py-0.5 rounded truncate">{url}</code>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{deletingRedirect.to}</code>
+                  )}
                 </div>
               </div>
             </div>
