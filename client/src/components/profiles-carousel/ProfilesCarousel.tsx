@@ -31,7 +31,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
   if (isRound) {
     return (
       <div
-        className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg min-h-[340px]"
+        className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg h-full"
         data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
       >
         <div
@@ -70,7 +70,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
 
   return (
     <div
-      className="flex flex-col items-center text-center flex-1 min-w-0 rounded-lg"
+      className="flex flex-col items-center text-center flex-1 min-w-0 rounded-lg h-full"
       data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div
