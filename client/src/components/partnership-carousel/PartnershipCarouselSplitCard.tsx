@@ -27,16 +27,15 @@ function SlideLeftCard({
   return (
     <Card
       className={cn(
-        "flex h-full",
-        verticalCards ? "flex-row" : "flex-row lg:flex-col",
+        "flex flex-col h-full",
+        verticalCards && "lg:flex-row",
       )}
     >
       <div
         className={cn(
-          "relative overflow-hidden",
-          verticalCards
-            ? "w-[53%] min-h-[250px] md:min-h-[415px] rounded-l-[0.8rem]"
-            : "w-[53%] min-h-[250px] rounded-l-[0.8rem] lg:w-full lg:min-h-[415px] lg:rounded-l-none lg:rounded-t-[0.8rem] lg:aspect-[16/6]",
+          "relative overflow-hidden rounded-t-[0.8rem]",
+          "min-h-[200px] md:min-h-[300px] aspect-[16/9] md:aspect-[16/6]",
+          verticalCards && "lg:min-h-[415px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
         )}
       >
         <UniversalImage
@@ -51,9 +50,9 @@ function SlideLeftCard({
         />
       </div>
 
-      <div className="flex flex-col gap-4 p-4 lg:p-6 flex-1">
+      <div className="flex flex-col gap-4 p-6 flex-1">
         <h3
-          className="text-lg md:text-2xl lg:text-3xl font-bold text-foreground"
+          className="text-2xl md:text-3xl font-bold text-foreground"
           data-testid="text-partnership-title"
         >
           {slide.title}
@@ -71,7 +70,7 @@ function SlideLeftCard({
           {slide.stats && slide.stats.length > 0 && (
             <div className="flex justify-center">
               <div
-                className={`grid ${slide.stats.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"} grid-cols-2 gap-2 lg:gap-3 mt-auto`}
+                className={`grid ${slide.stats.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2"} grid-cols-2 gap-3 mt-auto`}
                 data-testid="stats-partnership"
               >
                 {slide.stats.map((stat, i) => (
@@ -80,7 +79,7 @@ function SlideLeftCard({
                     className="flex flex-col items-center justify-center p-3"
                   >
                     <span
-                      className="text-xl lg:text-3xl font-bold text-primary"
+                      className="text-2xl md:text-3xl font-bold text-primary"
                       data-testid={`text-stat-value-${i}`}
                     >
                       {stat.value}
