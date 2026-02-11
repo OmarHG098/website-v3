@@ -754,6 +754,8 @@ import { articleSectionSchema, type ArticleSection } from "../marketing-content/
 export { articleSectionSchema, type ArticleSection };
 import { partnershipCarouselSectionSchema, type PartnershipCarouselSection, type PartnershipSlide } from "../marketing-content/component-registry/partnership_carousel/v1.0/schema";
 export { partnershipCarouselSectionSchema, type PartnershipCarouselSection, type PartnershipSlide };
+import { careerSupportExplainSectionSchema, type CareerSupportExplainSection, type CareerSupportTab, type CareerSupportBox, type CareerSupportBullet } from "../marketing-content/component-registry/career_support_explain/v1.0/schema";
+export { careerSupportExplainSectionSchema, type CareerSupportExplainSection, type CareerSupportTab, type CareerSupportBox, type CareerSupportBullet };
 
 // Responsive spacing schema - separate values for mobile and desktop
 // When only one breakpoint is specified, the other inherits its value
@@ -910,6 +912,7 @@ const baseSectionSchema = z.union([
   courseSelectorSectionSchema,
   articleSectionSchema,
   partnershipCarouselSectionSchema,
+  careerSupportExplainSectionSchema,
 ]);
 
 // Combined section schema with layout fields
