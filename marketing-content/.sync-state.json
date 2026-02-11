@@ -38,15 +38,18 @@
       "remoteSha": "2fb6157612ecb83a0ed735dc0f916d1c18324f12091247959464f19465d34f9e"
     },
     "marketing-content/landings/ai-engineering-spain/_common.yml": {
-      "sha": "a79f348f3128537b391ed3b436521c4e381fa75a61d16b6c966b8113fce84347",
-      "lastModified": 1770836835539.0015,
+      "sha": "435ad7956118c7ab9e089a0e84648c610dcc567d389ed025128f19d81ac04e68",
+      "lastModified": 1770840241015.199,
       "remoteSha": "d6d96282be4b98f2ed5d8a1adc383d9906f6c2e5b1266c7b0dcefc43084d1eed",
-      "modifiedAt": "2026-02-11T19:07:15.540Z"
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-11T20:04:01.016Z"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
-      "sha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83",
-      "lastModified": 1770822235733.8962,
-      "remoteSha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83"
+      "sha": "7a051c49c646831589c8d8094d8f2a32ad8f1a6fdb55fe7fa7c180ea36821efd",
+      "lastModified": 1770840240711.1995,
+      "remoteSha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83",
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-11T20:04:00.714Z"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "4ada0ec95c23f9ca4ad2688441e8b0eb1df461d349bcd9213fdd5c2a981a073f",

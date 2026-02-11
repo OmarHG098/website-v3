@@ -2,10 +2,7 @@ slug: ai-engineering-spain
 title: Programa de Ingeniería de IA (España)
 locale: es
 locations:
-  - madrid-spain
   - barcelona-spain
-  - malaga-spain
-  - valencia-spain
 meta:
   robots: index, follow
   og_image: /images/programs/ai-engineering-og.jpg

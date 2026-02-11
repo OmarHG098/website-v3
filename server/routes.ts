@@ -1511,9 +1511,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
       fs.writeFileSync(commonPath, updatedYaml, "utf-8");
 
       markFileAsModified(commonPath, author && typeof author === "string" ? author : undefined);
+
+      const landingDir = path.dirname(commonPath);
+      const variantFiles = fs.readdirSync(landingDir).filter(
+        (f) => f.endsWith(".yml") && f !== "_common.yml"
+      );
+      const strippedVariants: string[] = [];
+      for (const variantFile of variantFiles) {
+        const variantPath = path.join(landingDir, variantFile);
+        try {
+          const variantContent = fs.readFileSync(variantPath, "utf-8");
+          const variantData = yaml.load(variantContent) as Record<string, unknown>;
+          if (variantData && "locations" in variantData) {
+            delete variantData.locations;
+            const variantYaml = yaml.dump(variantData, {
+              lineWidth: -1,
+              noRefs: true,
+              quotingType: '"',
+              forceQuotes: false,
+            });
+            fs.writeFileSync(variantPath, variantYaml, "utf-8");
+            markFileAsModified(variantPath, author && typeof author === "string" ? author : undefined);
+            strippedVariants.push(variantFile);
+          }
+        } catch (e) {
+          console.warn(`[Update Locations] Could not process variant ${variantFile}:`, e);
+        }
+      }
+      if (strippedVariants.length > 0) {
+        console.log(`[Update Locations] Removed locations from variants: ${strippedVariants.join(", ")}`);
+      }
+
       contentIndex.refresh();
 
-      res.json({ success: true, locations: commonData.locations || [] });
+      res.json({ success: true, locations: commonData.locations || [], strippedVariants });
     } catch (error) {
       console.error("[Update Locations] Error:", error);
       res.status(500).json({ error: "Internal server error" });
