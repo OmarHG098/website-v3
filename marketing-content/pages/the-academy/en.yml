@@ -61,6 +61,7 @@ sections:
       - icon: Users
         title: Future-Ready Skills
         description: Continuously updated currict tools and technologies driving the tech industry.
+    background: hsl(var(--muted))
     description_with_background: false
     marginY:
       desktop: lg none
