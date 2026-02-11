@@ -180,6 +180,7 @@ export default function PrivateRedirects() {
         to: newTo.trim(),
         allLanguages,
         status: redirectStatus,
+        isCustomDestination,
       });
       const data = await res.json();
 

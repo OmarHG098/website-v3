@@ -952,7 +952,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add a new redirect (for debug tools)
   app.post("/api/debug/redirects", (req, res) => {
     try {
-      const { from, to, allLanguages, status: redirectStatus } = req.body;
+      const { from, to, allLanguages, status: redirectStatus, isCustomDestination } = req.body;
       const statusCode = redirectStatus && [301, 302].includes(redirectStatus) ? redirectStatus : 301;
 
       if (!from || !to) {
@@ -968,22 +968,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const destUrl = to as string;
 
+      if (isCustomDestination) {
+        const customFilePath = path.join(process.cwd(), "marketing-content", "custom-redirects.yml");
+
+        let parsed: { redirects: Array<{ from: string; to: string; status?: number }> } = { redirects: [] };
+        if (fs.existsSync(customFilePath)) {
+          const raw = fs.readFileSync(customFilePath, "utf-8");
+          const loaded = yaml.load(raw) as { redirects?: unknown[] } | null;
+          if (loaded && Array.isArray(loaded.redirects)) {
+            parsed.redirects = loaded.redirects as Array<{ from: string; to: string; status?: number }>;
+          }
+        }
+
+        if (parsed.redirects.some(r => r.from?.toLowerCase() === normalizedFrom)) {
+          res.status(409).json({ error: `Redirect "${normalizedFrom}" already exists in custom-redirects.yml` });
+          return;
+        }
+
+        const newEntry: { from: string; to: string; status?: number } = { from: normalizedFrom, to: destUrl };
+        if (statusCode !== 301) {
+          newEntry.status = statusCode;
+        }
+        parsed.redirects.push(newEntry);
+
+        const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+        fs.writeFileSync(customFilePath, yamlContent, "utf-8");
+
+        contentIndex.scan();
+        clearRedirectCache();
+
+        res.json({
+          success: true,
+          message: `Custom redirect added: ${normalizedFrom} -> ${destUrl}`,
+          file: "marketing-content/custom-redirects.yml",
+        });
+        return;
+      }
+
       // Parse destination URL to find the content entry
       let contentType: "programs" | "landings" | "pages" | "locations" | null = null;
       let slug: string | null = null;
       let locale: string = "en";
 
-      // Match program URLs: /en/career-programs/:slug, /es/programas-de-carrera/:slug, or locale-stripped /career-programs/:slug
       const programEnMatch = destUrl.match(/^\/en\/career-programs\/([^/]+)/);
       const programEsMatch = destUrl.match(/^\/es\/programas-de-carrera\/([^/]+)/);
       const programStrippedMatch = destUrl.match(/^\/career-programs\/([^/]+)/);
       const programStrippedEsMatch = destUrl.match(/^\/programas-de-carrera\/([^/]+)/);
-      // Match landing URLs: /landing/:slug
       const landingMatch = destUrl.match(/^\/landing\/([^/]+)/);
-      // Match page URLs: /en/:slug, /es/:slug, or locale-stripped /:slug
       const pageEnMatch = destUrl.match(/^\/en\/([^/]+)/);
       const pageEsMatch = destUrl.match(/^\/es\/([^/]+)/);
-      // Match location URLs: /en/locations/:slug, /es/ubicaciones/:slug, or locale-stripped
       const locationEnMatch = destUrl.match(/^\/en\/locations\/([^/]+)/);
       const locationEsMatch = destUrl.match(/^\/es\/ubicaciones\/([^/]+)/);
       const locationStrippedMatch = destUrl.match(/^\/locations\/([^/]+)/);
@@ -1047,7 +1080,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return;
       }
 
-      // Find the content entry
       const entries = contentIndex.findBySlug(slug, { contentType });
       if (entries.length === 0) {
         res.status(404).json({ error: `No content found for slug "${slug}" in ${contentType}` });
@@ -1057,8 +1089,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const entry = entries[0];
       const basePath = path.join(process.cwd(), entry.folder);
 
-      // Determine which file to write to
-      // Landings always use _common.yml; programs/pages/locations use locale file or _common.yml
       let targetFile: string;
       if (contentType === "landings" || allLanguages) {
         targetFile = "_common.yml";
@@ -1068,14 +1098,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       const filePath = path.join(basePath, targetFile);
 
-      // Read existing file or create minimal structure
       let parsed: Record<string, unknown> = {};
       if (fs.existsSync(filePath)) {
         const raw = fs.readFileSync(filePath, "utf-8");
         parsed = (yaml.load(raw) as Record<string, unknown>) || {};
       }
 
-      // Ensure meta.redirects array exists and append the new redirect
       if (!parsed.meta || typeof parsed.meta !== "object") {
         parsed.meta = {};
       }
@@ -1102,11 +1130,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         redirects.push(normalizedFrom);
       }
 
-      // Write back to file
       const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
       fs.writeFileSync(filePath, yamlContent, "utf-8");
 
-      // Refresh content index and clear redirect cache
       contentIndex.scan();
       clearRedirectCache();
 

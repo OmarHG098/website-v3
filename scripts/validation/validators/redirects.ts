@@ -6,10 +6,38 @@
  * - Checks for self-redirects
  * - Detects redirect loops
  * - Validates redirects don't conflict with existing content URLs
+ * - Validates custom redirects from custom-redirects.yml
  */
 
+import * as fs from "fs";
+import * as path from "path";
+import * as yaml from "js-yaml";
 import type { Validator, ValidatorResult, ValidationContext, ValidationIssue, RedirectEntry } from "../shared/types";
 import { normalizeUrl, getCanonicalUrl } from "../shared/canonicalUrls";
+
+interface CustomRedirectEntry {
+  from: string;
+  to: string;
+  status?: number;
+}
+
+function loadCustomRedirects(): CustomRedirectEntry[] {
+  const filePath = path.join(process.cwd(), "marketing-content", "custom-redirects.yml");
+  if (!fs.existsSync(filePath)) return [];
+
+  try {
+    const raw = fs.readFileSync(filePath, "utf-8");
+    const parsed = yaml.load(raw) as { redirects?: unknown[] } | null;
+    if (!parsed || !Array.isArray(parsed.redirects)) return [];
+
+    return parsed.redirects.filter(
+      (r): r is CustomRedirectEntry =>
+        typeof r === "object" && r !== null && "from" in r && "to" in r
+    );
+  } catch {
+    return [];
+  }
+}
 
 export const redirectValidator: Validator = {
   name: "redirects",
@@ -94,6 +122,61 @@ export const redirectValidator: Validator = {
       }
     }
 
+    const customRedirects = loadCustomRedirects();
+    const customFile = "marketing-content/custom-redirects.yml";
+
+    const customSource = {
+      slug: "_custom",
+      title: "Custom Redirects",
+      type: "page" as const,
+      locale: "_common",
+      filePath: customFile,
+    };
+
+    for (const entry of customRedirects) {
+      const normalizedFrom = normalizeUrl(entry.from);
+
+      if (redirectMap.has(normalizedFrom)) {
+        const existing = redirectMap.get(normalizedFrom)!;
+        errors.push({
+          type: "error",
+          code: "REDIRECT_CONFLICT",
+          message: `Redirect conflict: "${normalizedFrom}" in custom-redirects.yml conflicts with "${existing.source.filePath}"`,
+          file: customFile,
+          suggestion: "Remove one of the conflicting redirects",
+        });
+        continue;
+      }
+
+      if (context.validUrls.has(normalizedFrom)) {
+        errors.push({
+          type: "error",
+          code: "REDIRECT_OVERWRITES_CONTENT",
+          message: `Custom redirect "${normalizedFrom}" conflicts with an existing content URL`,
+          file: customFile,
+          suggestion: "Choose a different redirect source URL",
+        });
+        continue;
+      }
+
+      if (!entry.to || entry.to.trim() === "") {
+        errors.push({
+          type: "error",
+          code: "CUSTOM_REDIRECT_MISSING_DEST",
+          message: `Custom redirect "${normalizedFrom}" has no destination URL`,
+          file: customFile,
+          suggestion: "Add a valid destination URL",
+        });
+        continue;
+      }
+
+      redirectMap.set(normalizedFrom, {
+        from: normalizedFrom,
+        to: entry.to,
+        source: customSource,
+      });
+    }
+
     for (const [redirectUrl, { to: target }] of redirectMap) {
       const visited = new Set<string>([redirectUrl]);
       let current = target;
@@ -125,6 +208,7 @@ export const redirectValidator: Validator = {
       duration,
       artifacts: {
         totalRedirects: redirectMap.size,
+        customRedirects: customRedirects.length,
         redirectMap: Object.fromEntries(
           Array.from(redirectMap.entries()).map(([k, v]) => [k, v.to])
         ),

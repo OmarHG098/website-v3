@@ -113,6 +113,8 @@ class ContentIndex {
       }
     }
 
+    this.scanCustomRedirects(baseDir);
+
     this.initialized = true;
     const imageRefCount = this.imageUsage.size;
     console.log(`[ContentIndex] Scanned ${this.entries.length} content entries, ${imageRefCount} image references tracked, ${this.redirectEntries.length} redirects`);
@@ -211,6 +213,40 @@ class ContentIndex {
         source: filePath,
         status,
       });
+    }
+  }
+
+  private scanCustomRedirects(baseDir: string): void {
+    const customFile = path.join(baseDir, "custom-redirects.yml");
+    if (!fs.existsSync(customFile)) return;
+
+    try {
+      const raw = fs.readFileSync(customFile, "utf-8");
+      const parsed = yaml.load(raw) as { redirects?: unknown[] } | null;
+      if (!parsed || !Array.isArray(parsed.redirects)) return;
+
+      for (const entry of parsed.redirects) {
+        if (typeof entry !== "object" || entry === null || !("from" in entry) || !("to" in entry)) continue;
+        const obj = entry as { from: string; to: string; status?: number };
+
+        let normalizedFrom = obj.from.startsWith("/") ? obj.from : `/${obj.from}`;
+        normalizedFrom = normalizedFrom.toLowerCase();
+        if (normalizedFrom.length > 1 && normalizedFrom.endsWith("/")) {
+          normalizedFrom = normalizedFrom.slice(0, -1);
+        }
+
+        const status = obj.status && [301, 302].includes(obj.status) ? obj.status : 301;
+
+        this.redirectEntries.push({
+          from: normalizedFrom,
+          to: obj.to,
+          type: "custom",
+          source: "marketing-content/custom-redirects.yml",
+          status,
+        });
+      }
+    } catch (err) {
+      console.error("[ContentIndex] Failed to read custom-redirects.yml:", err);
     }
   }
 
