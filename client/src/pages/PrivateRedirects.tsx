@@ -126,6 +126,25 @@ export default function PrivateRedirects() {
 
   const stripLocalePrefix = (url: string) => url.replace(/^\/(en|es)(\/|$)/, "/");
 
+  const getLocaleUrls = (url: string): { en: string; es: string } => {
+    const programEn = url.match(/^\/(?:en\/)?career-programs\/(.+)/);
+    const programEs = url.match(/^\/(?:es\/)?programas-de-carrera\/(.+)/);
+    const locationEn = url.match(/^\/(?:en\/)?locations\/(.+)/);
+    const locationEs = url.match(/^\/(?:es\/)?ubicaciones\/(.+)/);
+    const pageEn = url.match(/^\/en\/(.+)/);
+    const pageEs = url.match(/^\/es\/(.+)/);
+
+    if (programEn) return { en: `/en/career-programs/${programEn[1]}`, es: `/es/programas-de-carrera/${programEn[1]}` };
+    if (programEs) return { en: `/en/career-programs/${programEs[1]}`, es: `/es/programas-de-carrera/${programEs[1]}` };
+    if (locationEn) return { en: `/en/locations/${locationEn[1]}`, es: `/es/ubicaciones/${locationEn[1]}` };
+    if (locationEs) return { en: `/en/locations/${locationEs[1]}`, es: `/es/ubicaciones/${locationEs[1]}` };
+    if (pageEn) return { en: `/en/${pageEn[1]}`, es: `/es/${pageEn[1]}` };
+    if (pageEs) return { en: `/en/${pageEs[1]}`, es: `/es/${pageEs[1]}` };
+
+    const stripped = url.replace(/^\//, "");
+    return { en: `/en/${stripped}`, es: `/es/${stripped}` };
+  };
+
   const handleOpenAddDialog = () => {
     setNewFrom("");
     setNewTo("");
@@ -473,15 +492,39 @@ export default function PrivateRedirects() {
                 <div className="rounded-md border p-3 space-y-3">
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0 flex-1 space-y-1.5">
-                      <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
-                      <p className="text-xs text-muted-foreground">
-                        {isLandingDestination
-                          ? <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.</>
-                          : allLanguages
-                            ? <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to this page. Because "all languages" is on, the redirect applies to every language version of this content.</>
-                            : <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to the <strong>{originalTo.match(/^\/(en|es)/)?.[1] || "en"}</strong> version of this page only.</>
-                        }
-                      </p>
+                      {isLandingDestination ? (
+                        <>
+                          <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
+                          <p className="text-xs text-muted-foreground">
+                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.
+                          </p>
+                        </>
+                      ) : allLanguages ? (
+                        <>
+                          {(() => { const urls = getLocaleUrls(originalTo || newTo); return (
+                            <div className="space-y-1">
+                              <div className="flex items-center gap-2">
+                                <Badge variant="secondary" className="text-xs font-mono shrink-0">EN</Badge>
+                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{urls.en}</code>
+                              </div>
+                              <div className="flex items-center gap-2">
+                                <Badge variant="secondary" className="text-xs font-mono shrink-0">ES</Badge>
+                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{urls.es}</code>
+                              </div>
+                            </div>
+                          ); })()}
+                          <p className="text-xs text-muted-foreground">
+                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected to the matching language version of this content.
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{originalTo || newTo}</code>
+                          <p className="text-xs text-muted-foreground">
+                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to the <strong>{(originalTo || newTo).match(/^\/(en|es)/)?.[1] || "en"}</strong> version of this page only.
+                          </p>
+                        </>
+                      )}
                     </div>
                     <Button
                       variant="ghost"
