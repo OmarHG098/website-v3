@@ -128,50 +128,61 @@ sections:
   - type: course_selector
     version: "1.0"
     variant: solid
-    heading: Choose Your Path
-    subheading: Pick the program that fits your goals
+    heading: Program Tuition
+    subheading: Tuition, payment plans, and financing options for every program
     courses:
-      - name: AI Automation
-        icon: Bolt
-        duration: 4 months part-time
-        label: Updated in 2025
-        title: AI Automation
-        badges:
-          - icon: Bolt
-            text: AI tools for business operations
-        description: Connect AI tools to enterprise platforms and business data. Optimize existing solutions or build new ones. Eliminate resource bottlenecks.
-        price: $328
-        original_price: $442
-        price_info: with 4Geeks Installments
-        cta_text: Discover program
-        cta_url: /en/ai-automation
-        course_background: accent
-      - name: Machine Learning
+      - name: AI Engineering
         icon: Brain
-        duration: 9 months part-time
-        title: AI and Machine Learning
+        duration: 24 weeks
+        label: Updated in 2026
+        title: AI Engineering
         badges:
-          - icon: Brain
-            text: LLMs & Generative AI training
-        description: Build systems that learn from data and improve over time without being explicitly programmed.
-        price: $439
-        original_price: $588
+          - icon: DollarSign
+            text: $14,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Build and scale a fully AI-native business while learning production-ready AI systems and workflows.
+        price: $349
+        price_info: or less depending on your plan
         cta_text: Discover program
-        cta_url: /en/ai-machine-learning
+        cta_url: /en/ai-engineering
+        course_background: accent
+      - name: Data Science & ML
+        icon: ChartLine
+        duration: 9 months
+        label: Updated in 2026
+        title: Data Science & Machine Learning with AI
+        badges:
+          - icon: DollarSign
+            text: $10,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Build AI systems that learn from data and improve over time, and gain hands-on experience with agents and workflows.
+        price: $299
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/data-science-ml
         course_background: primary
-      - name: Full Stack Dev
-        icon: Code
-        duration: 9 months part-time
-        title: Full Stack Software Development
+      - name: Cybersecurity
+        icon: Shield
+        duration: 9 months
+        label: Updated in 2026
+        title: Cybersecurity
         badges:
-          - icon: Code
-            text: React, Node.js & Python
-        description: Master modern web development from frontend to backend. Build production-ready applications.
-        price: $439
-        original_price: $588
+          - icon: DollarSign
+            text: $9,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Learn to protect systems and data with modern cybersecurity tools, hands-on labs, and practical exercises.
+        price: $299
+        price_info: or less depending on your plan
         cta_text: Discover program
-        cta_url: /en/full-stack
+        cta_url: /en/cybersecurity
         course_background: secondary
+    marginY:
+      desktop: lg
+    paddingY:
+      desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
     title: Add a Job Guarantee for Extra Peace of Mind
