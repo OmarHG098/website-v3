@@ -14,6 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconTestPipe, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
@@ -319,10 +320,20 @@ export default function PrivateRedirects() {
                   data-testid="button-toggle-validation"
                 >
                   {validationResult.status === "passed" ? (
-                    <Badge variant="secondary" className="gap-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                      <IconCircleCheck className="h-3.5 w-3.5" />
-                      Passed
-                    </Badge>
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Badge variant="secondary" className="gap-1 cursor-pointer bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                          <IconCircleCheck className="h-3.5 w-3.5" />
+                          Passed
+                        </Badge>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-64 text-sm" side="bottom" align="start">
+                        <div className="space-y-2">
+                          <p className="font-medium">All tests passed</p>
+                          <p className="text-muted-foreground text-xs">No redirect conflicts, loops, or self-redirects were found. All redirects are properly configured and pointing to valid destinations.</p>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   ) : validationResult.status === "warning" ? (
                     <Badge variant="outline" className="gap-1">
                       <IconAlertTriangle className="h-3.5 w-3.5" />
