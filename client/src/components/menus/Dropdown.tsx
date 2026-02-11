@@ -315,13 +315,6 @@ export function Dropdown({ label, href, dropdown, controlledOpen, onOpenChange }
   const isWideDropdown = dropdown.type === "cards" || dropdown.type === "columns";
 
   useEffect(() => {
-    if (isControlled && !controlledOpen && closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  }, [isControlled, controlledOpen]);
-
-  useEffect(() => {
     return () => {
       if (closeTimeoutRef.current) {
         clearTimeout(closeTimeoutRef.current);
