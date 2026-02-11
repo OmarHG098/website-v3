@@ -136,7 +136,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
             <div className="flex gap-2">
               <Input
                 value={customUrl}
-                onChange={(e) => { setCustomUrl(e.target.value); setCustomError(""); }}
+                onChange={(e) => { setCustomUrl(e.target.value.replace(/\s+/g, "-")); setCustomError(""); }}
                 placeholder="/custom-url or https://..."
                 className="h-8 text-sm flex-1"
                 autoFocus

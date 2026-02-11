@@ -501,7 +501,7 @@ export default function PrivateRedirects() {
                 id="redirect-from"
                 placeholder="/old-page-url"
                 value={newFrom}
-                onChange={(e) => setNewFrom(e.target.value)}
+                onChange={(e) => setNewFrom(e.target.value.replace(/\s+/g, "-"))}
                 data-testid="input-redirect-from"
               />
               {newFrom && (
