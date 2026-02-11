@@ -283,44 +283,41 @@ export function PartnershipCarouselSplitCard({
   const isPausedRef = useRef(false);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const isMeasuringRef = useRef(false);
 
   const totalSlides = slides.length;
 
   useEffect(() => {
-    const measure = () => {
-      if (isMeasuringRef.current) return;
-      isMeasuringRef.current = true;
-
+    const measureNatural = () => {
       if (containerRef.current) {
         containerRef.current.style.height = "auto";
       }
-
-      requestAnimationFrame(() => {
-        let tallest = 0;
-        slideRefs.current.forEach((el) => {
-          if (el) {
-            tallest = Math.max(tallest, el.scrollHeight);
-          }
-        });
-        if (tallest > 0) {
-          setMaxHeight(tallest);
-          if (containerRef.current) {
-            containerRef.current.style.height = `${tallest}px`;
-          }
+      let tallest = 0;
+      slideRefs.current.forEach((el) => {
+        if (el) {
+          tallest = Math.max(tallest, el.scrollHeight);
         }
-        isMeasuringRef.current = false;
       });
+      if (tallest > 0) {
+        setMaxHeight(tallest);
+        if (containerRef.current) {
+          containerRef.current.style.height = `${tallest}px`;
+        }
+      }
     };
 
-    measure();
+    measureNatural();
 
-    const observer = new ResizeObserver(measure);
-    slideRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+    const onResize = () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(measureNatural, 150);
+    };
 
-    return () => observer.disconnect();
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (debounceTimer) clearTimeout(debounceTimer);
+    };
   }, [slides]);
 
   const goTo = useCallback(
