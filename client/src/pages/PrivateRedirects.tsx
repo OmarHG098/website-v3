@@ -468,98 +468,6 @@ export default function PrivateRedirects() {
 
           <div className="space-y-4 py-2">
             <div className="space-y-2">
-              <Label htmlFor="redirect-from">Origin URL</Label>
-              <Input
-                id="redirect-from"
-                placeholder="/old-page-url"
-                value={newFrom}
-                onChange={(e) => setNewFrom(e.target.value)}
-                data-testid="input-redirect-from"
-              />
-              {newFrom && (
-                <p className="text-xs text-muted-foreground">
-                  Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected
-                </p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <Label>Destination</Label>
-              {!newTo ? (
-                <div className="flex items-center">
-                  <SitemapSearch
-                    value={newTo}
-                    onChange={handleDestinationChange}
-                    placeholder="Search for a page..."
-                    testId="input-redirect-to"
-                    portalContainer={dialogRef.current}
-                  />
-                </div>
-              ) : (
-                <div className="rounded-md border p-3 space-y-3">
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="min-w-0 flex-1 space-y-1.5">
-                      {isLandingDestination ? (
-                        <>
-                          <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
-                          <p className="text-xs text-muted-foreground">
-                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.
-                          </p>
-                        </>
-                      ) : allLanguages ? (
-                        <>
-                          <div className="space-y-1">
-                            {Object.entries(localeUrls).map(([locale, url]) => (
-                              <div key={locale} className="flex items-center gap-2 min-w-0">
-                                <Badge variant="secondary" className="text-xs font-mono shrink-0">{locale.toUpperCase()}</Badge>
-                                <code className="text-xs bg-muted px-2 py-1 rounded truncate min-w-0">{url}</code>
-                              </div>
-                            ))}
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected to the matching language version of this content.
-                          </p>
-                        </>
-                      ) : (
-                        <>
-                          <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{originalTo || newTo}</code>
-                          <p className="text-xs text-muted-foreground">
-                            Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to the <strong>{(originalTo || newTo).match(/^\/(en|es)/)?.[1] || "en"}</strong> version of this page only.
-                          </p>
-                        </>
-                      )}
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => { setNewTo(""); setOriginalTo(""); setLocaleUrls({}); setIsCustomDestination(false); setAllLanguages(true); }}
-                      data-testid="button-clear-destination"
-                    >
-                      <IconX className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  {!isLandingDestination && !isCustomDestination && (
-                    <div className="flex items-center justify-between gap-4 border-t pt-3">
-                      <Label htmlFor="all-languages" className="text-sm font-medium">All languages</Label>
-                      <Switch
-                        id="all-languages"
-                        checked={allLanguages}
-                        onCheckedChange={(checked) => {
-                          setAllLanguages(checked);
-                          if (originalTo && !originalTo.startsWith("/landing")) {
-                            setNewTo(checked ? stripLocalePrefix(originalTo) : originalTo);
-                          }
-                        }}
-                        data-testid="switch-all-languages"
-                      />
-                    </div>
-                  )}
-                </div>
-              )}
-            </div>
-
-            <div className="space-y-2">
               <Label>Status Code</Label>
               <div className="flex border rounded-md overflow-hidden">
                 {[
@@ -585,6 +493,100 @@ export default function PrivateRedirects() {
                 ))}
               </div>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="redirect-from">Origin URL</Label>
+              <Input
+                id="redirect-from"
+                placeholder="/old-page-url"
+                value={newFrom}
+                onChange={(e) => setNewFrom(e.target.value)}
+                data-testid="input-redirect-from"
+              />
+              {newFrom && (
+                <p className="text-xs text-muted-foreground">
+                  Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected
+                </p>
+              )}
+            </div>
+
+            {newFrom.trim() && (
+              <div className="space-y-2">
+                <Label>Destination</Label>
+                {!newTo ? (
+                  <div className="flex items-center">
+                    <SitemapSearch
+                      value={newTo}
+                      onChange={handleDestinationChange}
+                      placeholder="Search for a page..."
+                      testId="input-redirect-to"
+                      portalContainer={dialogRef.current}
+                    />
+                  </div>
+                ) : (
+                  <div className="rounded-md border p-3 space-y-3">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="min-w-0 flex-1 space-y-1.5">
+                        {isLandingDestination ? (
+                          <>
+                            <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
+                            <p className="text-xs text-muted-foreground">
+                              Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.
+                            </p>
+                          </>
+                        ) : allLanguages ? (
+                          <>
+                            <div className="space-y-1">
+                              {Object.entries(localeUrls).map(([locale, url]) => (
+                                <div key={locale} className="flex items-center gap-2 min-w-0">
+                                  <Badge variant="secondary" className="text-xs font-mono shrink-0">{locale.toUpperCase()}</Badge>
+                                  <code className="text-xs bg-muted px-2 py-1 rounded truncate min-w-0">{url}</code>
+                                </div>
+                              ))}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected to the matching language version of this content.
+                            </p>
+                          </>
+                        ) : (
+                          <>
+                            <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{originalTo || newTo}</code>
+                            <p className="text-xs text-muted-foreground">
+                              Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to the <strong>{(originalTo || newTo).match(/^\/(en|es)/)?.[1] || "en"}</strong> version of this page only.
+                            </p>
+                          </>
+                        )}
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => { setNewTo(""); setOriginalTo(""); setLocaleUrls({}); setIsCustomDestination(false); setAllLanguages(true); }}
+                        data-testid="button-clear-destination"
+                      >
+                        <IconX className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    {!isLandingDestination && !isCustomDestination && (
+                      <div className="flex items-center justify-between gap-4 border-t pt-3">
+                        <Label htmlFor="all-languages" className="text-sm font-medium">All languages</Label>
+                        <Switch
+                          id="all-languages"
+                          checked={allLanguages}
+                          onCheckedChange={(checked) => {
+                            setAllLanguages(checked);
+                            if (originalTo && !originalTo.startsWith("/landing")) {
+                              setNewTo(checked ? stripLocalePrefix(originalTo) : originalTo);
+                            }
+                          }}
+                          data-testid="switch-all-languages"
+                        />
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
           </div>
 
           <DialogFooter>
