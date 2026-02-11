@@ -91,11 +91,15 @@ sections:
     subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
+        highlight: true
       - name: Pay in Full
         highlight: true
       - name: Monthly Plans
+        highlight: true
       - name: Loans
+        highlight: true
       - name: Income-Based Plan
+        highlight: true
     rows:
       - feature: Tuition Discount
         values:
@@ -158,7 +162,7 @@ sections:
             text: $10,999 full tuition
           - icon: CheckCircle
             text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
-        description: Build AI systems that learn from data and improve over time, and gain hands-on experience with agents and workflows.
+        description: Master AI-powered data analysis and build intelligent models to solve real-world problems.
         price: $299
         price_info: or less depending on your plan
         cta_text: Discover program
