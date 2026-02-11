@@ -109,12 +109,12 @@ sections:
       desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
-    title: Need extra confidence? Add a Job Guarantee
-    subtitle: You will never be alone!
-    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a  full tuition refund. The job guarantee can also be financed.
+    title: Add a Job Guarantee for Extra Peace of Mind
+    subtitle: A stronger commitment to your career outcome.
+    description: For an additional investment, you can enroll with our optional Job Guarantee. If you don’t secure a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
     cta:
-      text: More info here
-      url: /signup
+      text: Get More Info
+      url: /job-guarantee
       variant: primary
     marginY:
       desktop: md
