@@ -140,45 +140,47 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
             {tab.title}
           </h3>
         )}
-        {/* Adjust this value to move the content area closer to (smaller) or further from (larger) the title */}
-        <div className="relative flex-1" style={{ marginTop: "0px" }}>
-          {tab.left_image_id && (
-            <div
-              className="absolute inset-0 overflow-hidden rounded-lg"
-              data-testid="img-left-container"
-            >
-              <UniversalImage
-                id={tab.left_image_id}
-                className="w-full h-full"
-                style={{
-                  objectFit:
-                    (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
-                    "cover",
-                  objectPosition: tab.left_image_object_position || "center",
-                }}
-                data-testid="img-left-content"
-              />
-            </div>
-          )}
-
-          <div className="relative z-10 flex flex-col justify-between h-full p-4">
-            {tab.left_text && (
-              <p
-                className="text-sm text-muted-foreground whitespace-pre-line"
-                data-testid="text-left-content"
-              >
-                {tab.left_text}
-              </p>
-            )}
-
-            {tab.left_stat && (
-              <div className="mt-auto pt-4" data-testid="stat-left">
-                <span className="text-4xl font-bold text-foreground">
-                  {tab.left_stat.value}
-                </span>
-                <p className="text-sm text-muted-foreground mt-1">
-                  {tab.left_stat.label}
+        {/* Adjust marginTop to control distance between title and content below */}
+        <div className="flex items-end flex-1" style={{ marginTop: "0px" }}>
+          <div className="flex gap-4 flex-1 items-end">
+            <div className="flex flex-col flex-1 mb-3">
+              {tab.left_text && (
+                <p
+                  className="text-sm text-muted-foreground whitespace-pre-line"
+                  data-testid="text-left-content"
+                >
+                  {tab.left_text}
                 </p>
+              )}
+
+              {tab.left_stat && (
+                <div className="mt-auto pt-4" data-testid="stat-left">
+                  <span className="text-4xl font-bold text-foreground">
+                    {tab.left_stat.value}
+                  </span>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {tab.left_stat.label}
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {tab.left_image_id && (
+              <div
+                className="relative rounded-lg flex-[1.5]"
+                data-testid="img-left-container"
+              >
+                <UniversalImage
+                  id={tab.left_image_id}
+                  className="w-full h-auto rounded-lg"
+                  style={{
+                    objectFit:
+                      (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
+                      "cover",
+                    objectPosition: tab.left_image_object_position || "center",
+                  }}
+                  data-testid="img-left-content"
+                />
               </div>
             )}
           </div>
