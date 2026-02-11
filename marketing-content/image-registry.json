@@ -815,6 +815,13 @@
       "focal_point": "center",
       "tags": ["brand", "academy"],
       "usage_count": 0
+    },
+    "alejandro_sanchez": {
+      "src": "/attached_assets/alejandrosanchez.webp",
+      "alt": "Alejandro Sanchez",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "avatar"],
+      "usage_count": 0
     }
   }
 }
