@@ -801,6 +801,12 @@
       "focal_point": "center",
       "tags": ["logo", "brand", "academy"],
       "usage_count": 0
+    },
+    "micitt-logo": {
+      "src": "/attached_assets/micitt-logo.webp",
+      "alt": "MICITT logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"],
     }
   }
 }

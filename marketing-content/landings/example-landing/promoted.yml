@@ -272,8 +272,7 @@ sections:
             alt: BID logo
             logo_height: 50px
         press_references:
-          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
-            url: https://example.com/article-1
+          - url: https://example.com/article-1
             source: La Nación
           - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
             url: https://example.com/article-1
