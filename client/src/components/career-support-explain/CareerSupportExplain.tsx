@@ -129,12 +129,12 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
     <div className="flex gap-4 h-full items-center" data-testid="grid-two-column-cards">
       <Card
-        className="flex flex-col flex-[2.5] p-6 overflow-hidden"
+        className="flex flex-col flex-[2.5] p-6 overflow-hidden h-full"
         data-testid="card-left"
       >
         {tab.title && (
           <h3
-            className="text-4xl me-[200px] font-bold text-foreground mb-[50px]"
+            className="text-4xl me-[200px] font-bold text-foreground "
             data-testid="text-tab-title"
           >
             {tab.title}
@@ -188,7 +188,7 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
       </Card>
 
       <Card
-        className="flex flex-col flex-1 p-6 bg-primary/5"
+        className="flex flex-col flex-1 p-6 bg-primary/5 h-full"
         data-testid="card-right"
       >
         {tab.right_bullets && tab.right_bullets.length > 0 && (
@@ -319,7 +319,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
           </div>
         )}
 
-        <div className="h-[500px] mx-12">
+        <div className="h-[480px] mx-12">
           <TabContent tab={tabs[activeTab]} />
         </div>
       </div>
