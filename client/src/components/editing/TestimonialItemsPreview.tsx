@@ -28,7 +28,14 @@ interface TestimonialItemsPreviewProps {
   onUpdateItemStyle: (studentName: string, prop: string, value: string) => void;
 }
 
+const ANONYMOUS_NAMES = ["anonymous", "anonimous", "anónimo", "anonimo", "anon"];
+
+function isAnonymous(name: string): boolean {
+  return ANONYMOUS_NAMES.includes(name.trim().toLowerCase());
+}
+
 function isValidTestimonial(t: BankTestimonial): boolean {
+  if (isAnonymous(t.student_name)) return false;
   const hasRating = t.rating != null && t.rating > 0;
   const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
   return hasRating || hasText;

@@ -70,7 +70,14 @@ function isVideoUrl(url: string): boolean {
     videoHosts.some(host => lowerUrl.includes(host));
 }
 
+const ANONYMOUS_NAMES = ["anonymous", "anonimous", "anónimo", "anonimo", "anon"];
+
+function isAnonymous(name: string): boolean {
+  return ANONYMOUS_NAMES.includes(name.trim().toLowerCase());
+}
+
 function isValidTestimonial(t: BankTestimonial): boolean {
+  if (isAnonymous(t.student_name)) return false;
   const hasRating = t.rating != null && t.rating > 0;
   const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
   return hasRating || hasText;
@@ -127,6 +134,57 @@ function sortTestimonials(testimonials: BankTestimonial[], relatedFeatures?: str
   });
 }
 
+function distributeVideosAcrossColumns(items: GridItem[], columns: number): GridItem[] {
+  if (columns <= 1 || items.length === 0) return items;
+
+  const videoItems: GridItem[] = [];
+  const nonVideoItems: GridItem[] = [];
+
+  for (const item of items) {
+    if (item.media?.type === "video" || (item.media?.url && isVideoUrl(item.media.url))) {
+      videoItems.push(item);
+    } else {
+      nonVideoItems.push(item);
+    }
+  }
+
+  if (videoItems.length === 0 || videoItems.length >= items.length) return items;
+
+  const totalItems = items.length;
+  const itemsPerColumn = Math.ceil(totalItems / columns);
+
+  const columnBuckets: GridItem[][] = Array.from({ length: columns }, () => []);
+
+  let videoIdx = 0;
+  for (let col = 0; col < columns && videoIdx < videoItems.length; col++) {
+    columnBuckets[col].push(videoItems[videoIdx]);
+    videoIdx++;
+  }
+  for (let col = 0; col < columns && videoIdx < videoItems.length; col++) {
+    columnBuckets[col].push(videoItems[videoIdx]);
+    videoIdx++;
+  }
+
+  let nonVideoIdx = 0;
+  for (let col = 0; col < columns; col++) {
+    const targetSize = col < columns - 1 ? itemsPerColumn : totalItems - itemsPerColumn * (columns - 1);
+    const remaining = Math.max(0, targetSize - columnBuckets[col].length);
+    for (let i = 0; i < remaining && nonVideoIdx < nonVideoItems.length; i++) {
+      columnBuckets[col].push(nonVideoItems[nonVideoIdx]);
+      nonVideoIdx++;
+    }
+  }
+
+  while (nonVideoIdx < nonVideoItems.length) {
+    const minBucket = columnBuckets.reduce((minIdx, bucket, idx) =>
+      bucket.length < columnBuckets[minIdx].length ? idx : minIdx, 0);
+    columnBuckets[minBucket].push(nonVideoItems[nonVideoIdx]);
+    nonVideoIdx++;
+  }
+
+  return columnBuckets.flat();
+}
+
 function filterByRelatedFeatures(
   testimonials: BankTestimonial[],
   relatedFeatures: string[],
@@ -149,6 +207,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const relatedFeatures = data.related_features || [];
   const limit = Math.min(data.limit || 30, 30);
   const itemStyles = data.item_styles;
+  const columns = data.columns || 3;
 
   const { data: bankData, isLoading } = useQuery<{ testimonials: BankTestimonial[] }>({
     queryKey: ["/api/testimonials", locale],
@@ -161,12 +220,15 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
 
   const items: GridItem[] = useMemo(() => {
     if (validTestimonials.length === 0) return [];
+    let gridItems: GridItem[];
     if (relatedFeatures.length > 0) {
-      return filterByRelatedFeatures(validTestimonials, relatedFeatures, limit, itemStyles);
+      gridItems = filterByRelatedFeatures(validTestimonials, relatedFeatures, limit, itemStyles);
+    } else {
+      const sorted = sortTestimonials(validTestimonials);
+      gridItems = sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
     }
-    const sorted = sortTestimonials(validTestimonials);
-    return sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
-  }, [relatedFeatures, validTestimonials, limit, itemStyles]);
+    return distributeVideosAcrossColumns(gridItems, columns);
+  }, [relatedFeatures, validTestimonials, limit, itemStyles, columns]);
 
   const title = data.title;
   const subtitle = data.subtitle;
@@ -176,7 +238,6 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const defaultCommentColor = data.default_comment_color;
   const defaultStarColor = data.default_star_color;
   const defaultLinkedinColor = data.default_linkedin_color;
-  const columns = data.columns || 3;
   const background = data.background;
 
   if (isLoading) {
