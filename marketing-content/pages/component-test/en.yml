@@ -115,3 +115,34 @@ sections:
           text: "Explore Uruguay"
           url: "/en/uruguay"
           variant: outline
+
+  - type: career_support_explain
+    heading: "GeekForce Career Support"
+    description: "Our career support program is designed to help you land your first job in tech"
+    tabs:
+      - tab_label: "Job-Ready, Faster"
+        col1_subtitle: "Build a recruiter-ready profile, smarter."
+        col1_description: "Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.\n\nRigoBot reviews your resume and LinkedIn in real-time. Career mentors help you refine your story, portfolio, and interview performance for optimal impact."
+        col1_boxes:
+          - icon: "IconBrandLinkedin"
+            text: "LinkedIn"
+          - icon: "IconFileText"
+            text: "Resume"
+          - icon: "IconBriefcase"
+            text: "Portfolio"
+          - icon: "IconMail"
+            text: "Cover letter"
+        col2_heading: "Get unlimited career coaching and AI job search tools throughout your program, plus alumni support."
+        col2_bullets:
+          - icon: "IconRobot"
+            text: "24/7 feedback from RigoBot to audit your LinkedIn and resume"
+          - icon: "IconUsers"
+            text: "1-on-1 career coaching and strategy sessions"
+          - icon: "IconMicrophone"
+            text: "Mock interviews and technical interview prep"
+        col3_image_id: "student_asian"
+        col3_object_fit: "cover"
+        col3_object_position: "center"
+      - tab_label: "Get noticed"
+      - tab_label: "Build a portfolio"
+      - tab_label: "Find your edge"
