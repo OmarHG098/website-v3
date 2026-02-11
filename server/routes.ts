@@ -1414,10 +1414,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         schemaOrg = getMergedSchemas(schema, locale);
       }
 
+      const schemaInclude = (schema?.include as string[]) || [];
+      const schemaOverrides = (schema?.overrides as Record<string, Record<string, unknown>>) || {};
+
       res.json({
         meta,
         faqSchema,
         schemaOrg,
+        schemaInclude,
+        schemaOverrides,
         title: pageData.title || "",
       });
     } catch (error) {

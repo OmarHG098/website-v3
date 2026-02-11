@@ -565,6 +565,12 @@ export function DebugBubble() {
   const [seoSaving, setSeoSaving] = useState(false);
   const [seoFaqExpanded, setSeoFaqExpanded] = useState(true);
   const [seoSchemaExpanded, setSeoSchemaExpanded] = useState(false);
+  const [seoSchemaInclude, setSeoSchemaInclude] = useState<string[]>([]);
+  const [seoSchemaOverrides, setSeoSchemaOverrides] = useState<Record<string, string>>({});
+  const [seoSchemaOverridesErrors, setSeoSchemaOverridesErrors] = useState<Record<string, string>>({});
+  const [availableSchemaKeys, setAvailableSchemaKeys] = useState<string[]>([]);
+  const [seoSchemaIncludeExpanded, setSeoSchemaIncludeExpanded] = useState(false);
+  const [seoSchemaOverridesExpanded, setSeoSchemaOverridesExpanded] = useState(false);
   
   // Breathecode host state
   const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
@@ -821,13 +827,26 @@ export function DebugBubble() {
       const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
       const res = await fetch(`/api/seo-preview/${apiContentType}/${contentInfo.slug}?locale=${locale}`);
       if (!res.ok) throw new Error("Failed to fetch SEO data");
-      const data = await res.json();
+      const [data, schemaKeysRes] = await Promise.all([
+        res.json(),
+        fetch("/api/schema").then(r => r.ok ? r.json() : { available: [] }),
+      ]);
       setSeoData(data);
       setSeoMeta({
         page_title: (data.meta?.page_title as string) || "",
         description: (data.meta?.description as string) || "",
         canonical_url: (data.meta?.canonical_url as string) || "",
       });
+      setAvailableSchemaKeys(schemaKeysRes.available || []);
+      setSeoSchemaInclude(data.schemaInclude || []);
+      const overridesObj: Record<string, string> = {};
+      if (data.schemaOverrides) {
+        for (const [key, val] of Object.entries(data.schemaOverrides)) {
+          overridesObj[key] = JSON.stringify(val, null, 2);
+        }
+      }
+      setSeoSchemaOverrides(overridesObj);
+      setSeoSchemaOverridesErrors({});
     } catch (error) {
       console.error("Error fetching SEO preview:", error);
       toast({
@@ -865,10 +884,45 @@ export function DebugBubble() {
         }
       }
       
+      const hasOverrideErrors = Object.keys(seoSchemaOverridesErrors).length > 0;
+      if (hasOverrideErrors) {
+        toast({
+          title: "Invalid JSON in schema overrides",
+          description: "Please fix the JSON errors before saving.",
+          variant: "destructive",
+        });
+        setSeoSaving(false);
+        return;
+      }
+
+      const parsedOverrides: Record<string, Record<string, unknown>> = {};
+      for (const [key, val] of Object.entries(seoSchemaOverrides)) {
+        if (val.trim() && seoSchemaInclude.includes(key)) {
+          try {
+            parsedOverrides[key] = JSON.parse(val);
+          } catch {
+            // skip invalid
+          }
+        }
+      }
+
+      const schemaValue: Record<string, unknown> = {};
+      if (seoSchemaInclude.length > 0) {
+        schemaValue.include = seoSchemaInclude;
+      }
+      if (Object.keys(parsedOverrides).length > 0) {
+        schemaValue.overrides = parsedOverrides;
+      }
+
       const headers: Record<string, string> = { "Content-Type": "application/json" };
       const token = getDebugToken();
       if (token) headers["X-Debug-Token"] = token;
       const author = getDebugUserName();
+
+      const operations: Array<{ action: string; path: string; value: unknown }> = [
+        { action: "update_field", path: "meta", value: existingMeta },
+        { action: "update_field", path: "schema", value: Object.keys(schemaValue).length > 0 ? schemaValue : null },
+      ];
 
       const res = await fetch("/api/content/edit", {
         method: "POST",
@@ -878,9 +932,7 @@ export function DebugBubble() {
           slug: contentInfo.slug,
           locale,
           author: author || undefined,
-          operations: [
-            { action: "update_field", path: "meta", value: existingMeta },
-          ],
+          operations,
         }),
       });
       
@@ -3850,7 +3902,135 @@ export function DebugBubble() {
                 </div>
               )}
 
-              {/* Schema.org Includes - Read Only */}
+              {/* Schema Includes - Editable */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setSeoSchemaIncludeExpanded(!seoSchemaIncludeExpanded)}
+                  className="flex items-center gap-2 w-full text-left"
+                  data-testid="button-toggle-schema-includes"
+                >
+                  {seoSchemaIncludeExpanded ? (
+                    <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  )}
+                  <h4 className="text-sm font-semibold">Schema Includes</h4>
+                  <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                    {seoSchemaInclude.length} selected
+                  </span>
+                </button>
+                {seoSchemaIncludeExpanded && (
+                  <div className="space-y-2">
+                    <p className="text-xs text-muted-foreground">
+                      Select which Schema.org schemas to include on this page. These are defined in schema-org.yml.
+                    </p>
+                    <div className="grid grid-cols-1 gap-1.5 max-h-[200px] overflow-y-auto">
+                      {availableSchemaKeys.map((key) => (
+                        <label
+                          key={key}
+                          className="flex items-center gap-2 px-2 py-1.5 rounded-md hover-elevate cursor-pointer text-sm"
+                          data-testid={`checkbox-schema-${key}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={seoSchemaInclude.includes(key)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSeoSchemaInclude(prev => [...prev, key]);
+                              } else {
+                                setSeoSchemaInclude(prev => prev.filter(k => k !== key));
+                                setSeoSchemaOverrides(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            className="rounded"
+                          />
+                          <span className="font-mono text-xs">{key}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Schema Overrides - JSON Editor */}
+              {seoSchemaInclude.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaOverridesExpanded(!seoSchemaOverridesExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-overrides"
+                  >
+                    {seoSchemaOverridesExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema Overrides</h4>
+                    {Object.keys(seoSchemaOverrides).length > 0 && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                        {Object.keys(seoSchemaOverrides).length} override{Object.keys(seoSchemaOverrides).length !== 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </button>
+                  {seoSchemaOverridesExpanded && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-muted-foreground">
+                        Add JSON overrides to customize properties of included schemas. Leave empty for no overrides.
+                      </p>
+                      {seoSchemaInclude.map((key) => (
+                        <div key={key} className="space-y-1.5">
+                          <label className="text-xs font-medium font-mono text-foreground">
+                            {key}
+                          </label>
+                          <textarea
+                            value={seoSchemaOverrides[key] || ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setSeoSchemaOverrides(prev => ({ ...prev, [key]: val }));
+                              if (val.trim()) {
+                                try {
+                                  JSON.parse(val);
+                                  setSeoSchemaOverridesErrors(prev => {
+                                    const next = { ...prev };
+                                    delete next[key];
+                                    return next;
+                                  });
+                                } catch {
+                                  setSeoSchemaOverridesErrors(prev => ({ ...prev, [key]: "Invalid JSON" }));
+                                }
+                              } else {
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            placeholder={`{\n  "name": "Custom Name",\n  "description": "Custom description"\n}`}
+                            rows={4}
+                            className={`w-full px-3 py-2 text-xs font-mono rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-y ${seoSchemaOverridesErrors[key] ? "border-destructive" : ""}`}
+                            data-testid={`input-schema-override-${key}`}
+                          />
+                          {seoSchemaOverridesErrors[key] && (
+                            <p className="text-xs text-destructive">{seoSchemaOverridesErrors[key]}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema.org Preview - Read Only */}
               {seoData.schemaOrg && seoData.schemaOrg.length > 0 && (
                 <div className="space-y-2">
                   <button
@@ -3863,15 +4043,15 @@ export function DebugBubble() {
                     ) : (
                       <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                     )}
-                    <h4 className="text-sm font-semibold">Schema.org</h4>
+                    <h4 className="text-sm font-semibold">Schema.org Preview</h4>
                     <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
-                      {seoData.schemaOrg.length} schema{seoData.schemaOrg.length !== 1 ? "s" : ""}
+                      Current output
                     </span>
                   </button>
                   {seoSchemaExpanded && (
                     <div className="space-y-2">
                       <p className="text-xs text-muted-foreground">
-                        These schemas are included from schema-org.yml and injected via SSR.
+                        This is the current Schema.org output injected via SSR. Save changes above to update it.
                       </p>
                       <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-schema-org-preview">
                         {JSON.stringify(seoData.schemaOrg, null, 2)}

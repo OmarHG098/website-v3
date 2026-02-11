@@ -17,6 +17,7 @@ interface SchemaOrgConfig {
   website?: BaseSchema;
   courses?: Record<string, BaseSchema>;
   item_lists?: Record<string, BaseSchema>;
+  local_business?: Record<string, BaseSchema>;
 }
 
 interface SchemaReference {
@@ -181,6 +182,22 @@ function resolveSchemaRef(ref: string, config: SchemaOrgConfig, locale: string):
       return transformed;
     }
   }
+
+  if (ref.startsWith("local_business:")) {
+    const bizSlug = ref.replace("local_business:", "");
+    const biz = config.local_business?.[bizSlug];
+    if (biz) {
+      const transformed = transformToJsonLd(biz, locale);
+      if (transformed.parentOrganization === "@organization" && config.organization) {
+        transformed.parentOrganization = {
+          "@type": config.organization.type,
+          name: config.organization.name,
+          url: config.organization.url,
+        };
+      }
+      return transformed;
+    }
+  }
   
   return null;
 }
@@ -213,6 +230,16 @@ export function getSchema(schemaKey: string, locale: string = "en"): Record<stri
   }
   
   if (schemaKey.startsWith("item_lists:")) {
+    const resolved = resolveSchemaRef(schemaKey, config, locale);
+    if (resolved) {
+      return {
+        "@context": "https://schema.org",
+        ...resolved,
+      };
+    }
+  }
+
+  if (schemaKey.startsWith("local_business:")) {
     const resolved = resolveSchemaRef(schemaKey, config, locale);
     if (resolved) {
       return {
@@ -273,6 +300,12 @@ export function getAvailableSchemaKeys(): string[] {
   if (config.item_lists) {
     for (const slug of Object.keys(config.item_lists)) {
       keys.push(`item_lists:${slug}`);
+    }
+  }
+  
+  if (config.local_business) {
+    for (const slug of Object.keys(config.local_business)) {
+      keys.push(`local_business:${slug}`);
     }
   }
   
