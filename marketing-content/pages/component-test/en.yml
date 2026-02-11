@@ -121,6 +121,7 @@ sections:
     description: "Our career support program is designed to help you land your first job in tech"
     tabs:
       - tab_label: "Job-Ready, Faster"
+        layout: three_columns
         col1_subtitle: "Build a recruiter-ready profile, smarter."
         col1_description: "Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.\n\nRigoBot reviews your resume and LinkedIn in real-time. Career mentors help you refine your story, portfolio, and interview performance for optimal impact."
         col1_boxes:

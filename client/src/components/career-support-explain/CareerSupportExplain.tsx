@@ -14,19 +14,9 @@ function getTablerIcon(name: string) {
   return icons[name] || TablerIcons.IconCircle;
 }
 
-function TabContent({ tab }: { tab: CareerSupportTab }) {
-  const hasContent = tab.col1_subtitle || tab.col1_description || tab.col1_boxes?.length || tab.col2_heading || tab.col2_bullets?.length || tab.col3_image_id;
-
-  if (!hasContent) {
-    return (
-      <div className="flex items-center justify-center min-h-[300px] rounded-[0.8rem] border border-dashed border-border" data-testid="tab-empty">
-        <p className="text-muted-foreground text-sm">Content coming soon</p>
-      </div>
-    );
-  }
-
+function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[400px] gap-4 mx-12" data-testid="grid-tab-content">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full" data-testid="grid-tab-content">
       <div className="lg:col-span-4 bg-card p-6 flex flex-col rounded-lg" data-testid="col-1-info">
         {tab.col1_subtitle && (
           <h3 className="text-xl font-bold text-foreground mb-3" data-testid="text-col1-subtitle">
@@ -83,7 +73,7 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="lg:col-span-4 relative overflow-hidden rounded-r-[0.8rem] min-h-[300px]" data-testid="col-3-image">
+      <div className="lg:col-span-4 relative overflow-hidden rounded-lg min-h-[300px]" data-testid="col-3-image">
         {tab.col3_image_id && (
           <UniversalImage
             id={tab.col3_image_id}
@@ -98,6 +88,23 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
       </div>
     </div>
   );
+}
+
+function EmptyLayout() {
+  return (
+    <div className="flex items-center justify-center h-full rounded-[0.8rem] border border-dashed border-border" data-testid="tab-empty">
+      <p className="text-muted-foreground text-sm">Content coming soon</p>
+    </div>
+  );
+}
+
+function TabContent({ tab }: { tab: CareerSupportTab }) {
+  switch (tab.layout) {
+    case "three_columns":
+      return <ThreeColumnsLayout tab={tab} />;
+    default:
+      return <EmptyLayout />;
+  }
 }
 
 export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
@@ -148,7 +155,9 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
           </div>
         )}
 
-        <TabContent tab={tabs[activeTab]} />
+        <div className="min-h-[450px]">
+          <TabContent tab={tabs[activeTab]} />
+        </div>
       </div>
     </section>
   );

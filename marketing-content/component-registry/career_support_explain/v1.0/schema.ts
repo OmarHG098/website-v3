@@ -16,6 +16,7 @@ export const careerSupportBulletSchema = z.object({
 
 export const careerSupportTabSchema = z.object({
   tab_label: z.string(),
+  layout: z.string().optional(),
   col1_subtitle: z.string().optional(),
   col1_description: z.string().optional(),
   col1_boxes: z.array(careerSupportBoxSchema).optional(),
