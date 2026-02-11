@@ -2795,7 +2795,7 @@ export function SectionEditorPanel({
                                     <div className="space-y-1">
                                       <Label className="text-xs text-muted-foreground">Object Position</Label>
                                       <Input
-                                        value={(item[objectPositionField] as string) || "center top"}
+                                        value={(item[objectPositionField] as string) ?? ""}
                                         onChange={(e) => updateArrayItemField(arrayPath, index, objectPositionField, e.target.value)}
                                         placeholder="center top"
                                         className="h-8 text-sm"
@@ -2808,7 +2808,7 @@ export function SectionEditorPanel({
                                         <div className="space-y-1">
                                           <Label className="text-xs text-muted-foreground">Border Radius</Label>
                                           <Input
-                                            value={(item.border_radius as string) || "0.5rem"}
+                                            value={(item.border_radius as string) ?? ""}
                                             onChange={(e) => updateArrayItemField(arrayPath, index, "border_radius", e.target.value)}
                                             placeholder="0.5rem"
                                             className="h-8 text-sm"
