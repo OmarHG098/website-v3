@@ -302,8 +302,12 @@ const DROPDOWN_WIDTH_PX: Record<string, number> = {
 
 const VIEWPORT_PADDING = 16;
 
-export function Dropdown({ label, href, dropdown }: DropdownProps) {
-  const [isOpen, setIsOpen] = useState(false);
+export function Dropdown({ label, href, dropdown, controlledOpen, onOpenChange }: DropdownProps & { controlledOpen?: boolean; onOpenChange?: (open: boolean) => void }) {
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const isOpen = isControlled ? controlledOpen : internalOpen;
+  const setIsOpen = isControlled ? (v: boolean) => onOpenChange?.(v) : setInternalOpen;
+
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const triggerRef = useRef<HTMLDivElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
@@ -321,7 +325,7 @@ export function Dropdown({ label, href, dropdown }: DropdownProps) {
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-    }, 100);
+    }, 75);
   };
   
   const getDropdownWidth = () => {
