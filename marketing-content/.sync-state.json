@@ -69,11 +69,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "ac17bbf995cdecb0f207e80b91e7ba51e166909470d74e3de1473b3b0d66bacf",
-      "lastModified": 1770846569755.1921,
+      "sha": "9a33489896e76c0e2a3b844617c577e54c417c32f4a0393688c4b33964c7dfa2",
+      "lastModified": 1770847436666.2249,
       "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
       "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-02-11T21:49:29.756Z"
+      "modifiedAt": "2026-02-11T22:03:56.669Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",

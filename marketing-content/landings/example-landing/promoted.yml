@@ -101,11 +101,13 @@ sections:
   - type: testimonials_grid
     version: v1.0
     title: What Our Students Say
+    related_features:
+      - content-and-syllabus
+      - job-guarantee
+      - applied-ai
     subtitle: Real stories from graduates who transformed their careers
     default_box_color: hsl(var(--muted))
     columns: 3
-    related_features:
-      - content-and-syllabus
     item_styles:
       Mariana Chaiban:
         box_color: hsl(var(--accent))
