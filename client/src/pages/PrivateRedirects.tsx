@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconTestPipe, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -346,7 +346,7 @@ export default function PrivateRedirects() {
                 {isValidating ? (
                   <div className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent mr-2" />
                 ) : (
-                  <IconRefresh className="h-3.5 w-3.5 mr-2" />
+                  <IconTestPipe className="h-3.5 w-3.5 mr-2" />
                 )}
                 {isValidating ? "Validating..." : "Re-validate"}
               </Button>
