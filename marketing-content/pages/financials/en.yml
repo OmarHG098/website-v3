@@ -125,6 +125,53 @@ sections:
       desktop: lg md
     paddingY:
       desktop: md lg
+  - type: course_selector
+    version: "1.0"
+    variant: solid
+    heading: Choose Your Path
+    subheading: Pick the program that fits your goals
+    courses:
+      - name: AI Automation
+        icon: Bolt
+        duration: 4 months part-time
+        label: Updated in 2025
+        title: AI Automation
+        badges:
+          - icon: Bolt
+            text: AI tools for business operations
+        description: Connect AI tools to enterprise platforms and business data. Optimize existing solutions or build new ones. Eliminate resource bottlenecks.
+        price: $328
+        original_price: $442
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/ai-automation
+        course_background: accent
+      - name: Machine Learning
+        icon: Brain
+        duration: 9 months part-time
+        title: AI and Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs & Generative AI training
+        description: Build systems that learn from data and improve over time without being explicitly programmed.
+        price: $439
+        original_price: $588
+        cta_text: Discover program
+        cta_url: /en/ai-machine-learning
+        course_background: primary
+      - name: Full Stack Dev
+        icon: Code
+        duration: 9 months part-time
+        title: Full Stack Software Development
+        badges:
+          - icon: Code
+            text: React, Node.js & Python
+        description: Master modern web development from frontend to backend. Build production-ready applications.
+        price: $439
+        original_price: $588
+        cta_text: Discover program
+        cta_url: /en/full-stack
+        course_background: secondary
   - type: why_learn_ai
     variant: laptop-edge
     title: Add a Job Guarantee for Extra Peace of Mind
@@ -182,43 +229,6 @@ sections:
         rating: 5
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
-  - type: pricing
-    version: "1.0"
-    variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
-    tech_icons:
-      - html
-      - css
-      - javascript
-      - react
-      - python
-      - nodejs
-      - git
-      - bootstrap
-      - api
-      - settings
-    features_title: Access hundreds of exercises, projects tutorials and courses
-    features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of cloud-based coding challenges (no setup needed).
-      - text: AI-powered feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school.
-    cta:
-      text: Apply Now
-      url: /apply
-      variant: primary
-    marginY:
-      desktop: lg none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
