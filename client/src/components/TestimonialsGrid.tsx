@@ -1,7 +1,53 @@
+import { useMemo } from "react";
 import { IconStarFilled, IconStar, IconBrandLinkedin } from "@tabler/icons-react";
 import type { TestimonialsGridSection as TestimonialsGridSectionType } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+
+interface BankTestimonial {
+  student_name: string;
+  student_thumb?: string;
+  student_video?: string;
+  linkedin_url?: string;
+  excerpt?: string;
+  full_text?: string;
+  content?: string;
+  short_content?: string;
+  related_features?: string[];
+  locations?: string[];
+  priority?: number;
+  rating?: number;
+  role?: string;
+  company?: string;
+  media?: {
+    url: string;
+    type?: "image" | "video";
+    ratio?: string;
+  };
+}
+
+interface GridItem {
+  name: string;
+  role: string;
+  company?: string;
+  comment: string;
+  rating?: number;
+  avatar?: string;
+  linkedin_url?: string;
+  box_color?: string;
+  name_color?: string;
+  role_color?: string;
+  comment_color?: string;
+  star_color?: string;
+  linkedin_color?: string;
+  media?: {
+    url: string;
+    type?: "image" | "video";
+    ratio?: string;
+  };
+}
 
 interface TestimonialsGridProps {
   data: TestimonialsGridSectionType;
@@ -24,8 +70,165 @@ function isVideoUrl(url: string): boolean {
     videoHosts.some(host => lowerUrl.includes(host));
 }
 
+const ANONYMOUS_NAMES = ["anonymous", "anonimous", "anónimo", "anonimo", "anon"];
+
+function isAnonymous(name: string): boolean {
+  return ANONYMOUS_NAMES.includes(name.trim().toLowerCase());
+}
+
+function isValidTestimonial(t: BankTestimonial): boolean {
+  if (isAnonymous(t.student_name)) return false;
+  const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
+  return hasText;
+}
+
+function mapBankToGridItem(
+  t: BankTestimonial,
+  itemStyles?: Record<string, { box_color?: string; name_color?: string; comment_color?: string }>
+): GridItem {
+  const media = t.student_video
+    ? { url: t.student_video, type: "video" as const, ratio: "16:9" }
+    : t.media;
+
+  const style = itemStyles?.[t.student_name];
+
+  return {
+    name: t.student_name,
+    role: t.role || "",
+    company: t.company,
+    comment: t.excerpt || t.short_content || t.content || t.full_text || "",
+    rating: t.rating,
+    avatar: t.student_thumb,
+    linkedin_url: t.linkedin_url,
+    media,
+    box_color: style?.box_color,
+    name_color: style?.name_color,
+    comment_color: style?.comment_color,
+  };
+}
+
+function sortTestimonials(testimonials: BankTestimonial[], relatedFeatures?: string[]): BankTestimonial[] {
+  return [...testimonials].sort((a, b) => {
+    const aPriority5 = (a.priority ?? 0) >= 5 ? 1 : 0;
+    const bPriority5 = (b.priority ?? 0) >= 5 ? 1 : 0;
+    if (bPriority5 !== aPriority5) return bPriority5 - aPriority5;
+
+    const aHasVideo = a.student_video ? 1 : 0;
+    const bHasVideo = b.student_video ? 1 : 0;
+    if (bHasVideo !== aHasVideo) return bHasVideo - aHasVideo;
+
+    const aHasThumb = a.student_thumb ? 1 : 0;
+    const bHasThumb = b.student_thumb ? 1 : 0;
+    if (bHasThumb !== aHasThumb) return bHasThumb - aHasThumb;
+
+    if (relatedFeatures && relatedFeatures.length > 0) {
+      const aFeatures = a.related_features || [];
+      const bFeatures = b.related_features || [];
+      const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
+      const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
+      if (bMatchCount !== aMatchCount) return bMatchCount - aMatchCount;
+    }
+
+    return (b.priority ?? 0) - (a.priority ?? 0);
+  });
+}
+
+function distributeVideosAcrossColumns(items: GridItem[], columns: number): GridItem[] {
+  if (columns <= 1 || items.length === 0) return items;
+
+  const videoItems: GridItem[] = [];
+  const nonVideoItems: GridItem[] = [];
+
+  for (const item of items) {
+    if (item.media?.type === "video" || (item.media?.url && isVideoUrl(item.media.url))) {
+      videoItems.push(item);
+    } else {
+      nonVideoItems.push(item);
+    }
+  }
+
+  if (videoItems.length === 0 || videoItems.length >= items.length) return items;
+
+  const totalItems = items.length;
+  const itemsPerColumn = Math.ceil(totalItems / columns);
+
+  const columnBuckets: GridItem[][] = Array.from({ length: columns }, () => []);
+
+  let videoIdx = 0;
+  for (let col = 0; col < columns && videoIdx < videoItems.length; col++) {
+    columnBuckets[col].push(videoItems[videoIdx]);
+    videoIdx++;
+  }
+  for (let col = 0; col < columns && videoIdx < videoItems.length; col++) {
+    columnBuckets[col].push(videoItems[videoIdx]);
+    videoIdx++;
+  }
+
+  let nonVideoIdx = 0;
+  for (let col = 0; col < columns; col++) {
+    const targetSize = col < columns - 1 ? itemsPerColumn : totalItems - itemsPerColumn * (columns - 1);
+    const remaining = Math.max(0, targetSize - columnBuckets[col].length);
+    for (let i = 0; i < remaining && nonVideoIdx < nonVideoItems.length; i++) {
+      columnBuckets[col].push(nonVideoItems[nonVideoIdx]);
+      nonVideoIdx++;
+    }
+  }
+
+  while (nonVideoIdx < nonVideoItems.length) {
+    const minBucket = columnBuckets.reduce((minIdx, bucket, idx) =>
+      bucket.length < columnBuckets[minIdx].length ? idx : minIdx, 0);
+    columnBuckets[minBucket].push(nonVideoItems[nonVideoIdx]);
+    nonVideoIdx++;
+  }
+
+  return columnBuckets.flat();
+}
+
+function filterByRelatedFeatures(
+  testimonials: BankTestimonial[],
+  relatedFeatures: string[],
+  limit: number,
+  itemStyles?: Record<string, { box_color?: string; name_color?: string; comment_color?: string }>
+): GridItem[] {
+  const filtered = testimonials.filter((t) => {
+    const features = t.related_features || [];
+    return relatedFeatures.some((f) => features.includes(f));
+  });
+
+  const sorted = sortTestimonials(filtered, relatedFeatures);
+  return sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
+}
+
 export function TestimonialsGrid({ data }: TestimonialsGridProps) {
-  const items = data.items || [];
+  const { i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("es") ? "es" : "en";
+
+  const relatedFeatures = data.related_features || [];
+  const limit = Math.min(data.limit || 30, 30);
+  const itemStyles = data.item_styles;
+  const columns = data.columns || 3;
+
+  const { data: bankData, isLoading } = useQuery<{ testimonials: BankTestimonial[] }>({
+    queryKey: ["/api/testimonials", locale],
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const validTestimonials = useMemo(() => {
+    return (bankData?.testimonials ?? []).filter(isValidTestimonial);
+  }, [bankData]);
+
+  const items: GridItem[] = useMemo(() => {
+    if (validTestimonials.length === 0) return [];
+    let gridItems: GridItem[];
+    if (relatedFeatures.length > 0) {
+      gridItems = filterByRelatedFeatures(validTestimonials, relatedFeatures, limit, itemStyles);
+    } else {
+      const sorted = sortTestimonials(validTestimonials);
+      gridItems = sorted.slice(0, limit).map((t) => mapBankToGridItem(t, itemStyles));
+    }
+    return distributeVideosAcrossColumns(gridItems, columns);
+  }, [relatedFeatures, validTestimonials, limit, itemStyles, columns]);
+
   const title = data.title;
   const subtitle = data.subtitle;
   const defaultBoxColor = data.default_box_color || "hsl(var(--muted))";
@@ -34,8 +237,24 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const defaultCommentColor = data.default_comment_color;
   const defaultStarColor = data.default_star_color;
   const defaultLinkedinColor = data.default_linkedin_color;
-  const columns = data.columns || 3;
   const background = data.background;
+
+  if (isLoading) {
+    return (
+      <section data-testid="section-testimonials-grid">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="animate-pulse">
+            <div className="h-10 w-64 bg-muted rounded mx-auto mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-40 bg-muted rounded-[0.8rem]" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (items.length === 0) return null;
 
@@ -118,7 +337,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
 }
 
 interface TestimonialGridCardProps {
-  item: NonNullable<TestimonialsGridSectionType["items"]>[number];
+  item: GridItem;
   defaultBoxColor: string;
   defaultNameColor?: string;
   defaultRoleColor?: string;

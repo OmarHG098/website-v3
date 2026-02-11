@@ -60,7 +60,7 @@ sections:
         url: /login
       features:
         - icon: calendar
-          text: 24-Week Intensive Program
+          text: 24-Week or 15-Week Intensive Program
         - icon: IconBriefcase
           text: Employment-First Curriculum
         - icon: IconRobot
@@ -137,7 +137,7 @@ sections:
   - type: syllabus
     variant: program-modules
     program_title: AI Engineering Program Overview
-    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate in 24 weeks with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams.
+    program_description: Learn by building and scaling a single AI-native business across 10 milestones. Graduate with a fully operational, AI-powered company that reflects the skills and workflows used by modern engineering teams. Choose between a 24-week evening schedule and a 15-week accelerated morning track.
     tech_logos:
       - name: React
         icon: react

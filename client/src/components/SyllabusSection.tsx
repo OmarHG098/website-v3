@@ -27,6 +27,8 @@ interface ModuleAccordionProps {
   isOpen: boolean;
   onToggle: () => void;
   testId: string;
+  expandLabel?: string;
+  collapseLabel?: string;
 }
 
 function getIcon(iconName: string, className?: string) {
@@ -37,7 +39,7 @@ function getIcon(iconName: string, className?: string) {
   return <TablerIcons.IconBox className={className || "w-5 h-5 text-primary"} />;
 }
 
-function ModuleAccordion({ title, description, isOpen, onToggle, testId }: ModuleAccordionProps) {
+function ModuleAccordion({ title, description, isOpen, onToggle, testId, expandLabel, collapseLabel }: ModuleAccordionProps) {
   return (
     <div 
       className="bg-background rounded-md overflow-hidden"
@@ -55,7 +57,7 @@ function ModuleAccordion({ title, description, isOpen, onToggle, testId }: Modul
           {title}
         </span>
         <span className="text-sm text-primary flex items-center gap-1">
-          <span className="hidden md:inline">{isOpen ? "Hide course details" : "Course details"}</span>
+          <span className="hidden md:inline">{isOpen ? (collapseLabel || "Hide course details") : (expandLabel || "Course details")}</span>
           <ChevronDown 
             className={cn(
               "h-5 w-5 shrink-0 transition-transform duration-brand ease-brand",
@@ -158,6 +160,8 @@ function SyllabusDefault({ data }: { data: SyllabusDefault }) {
               isOpen={openIndex === index}
               onToggle={() => handleToggle(index)}
               testId={`syllabus-module-${index}`}
+              expandLabel={data.expand_label}
+              collapseLabel={data.collapse_label}
             />
           ))}
         </div>

@@ -128,7 +128,8 @@ function PressMentionCard({
             <UniversalImage
               id={item.logo}
               alt={item.title}
-              className="h-full w-auto object-contain max-w-[140px]"
+              className="!overflow-visible h-full w-auto max-w-[140px]"
+              style={{ objectFit: "contain", objectPosition: "left center" }}
               loading="lazy"
             />
           </div>

@@ -51,10 +51,12 @@ export function EditableSection({ children, section, index, sectionType, content
   const { toast } = useToast();
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState<Section>(section);
+  const [wasLocallyUpdated, setWasLocallyUpdated] = useState(false);
   
   // Sync currentSection when the prop changes (e.g., after refetch)
   useEffect(() => {
     setCurrentSection(section);
+    setWasLocallyUpdated(false);
   }, [section]);
   
   const canMoveUp = index > 0;
@@ -417,6 +419,7 @@ export function EditableSection({ children, section, index, sectionType, content
       }
       
       setCurrentSection(sectionToSave);
+      setWasLocallyUpdated(true);
       setShowReviewCodeModal(false);
       setSwapPopoverOpen(false);
       setAdaptedSection(null);
@@ -442,11 +445,14 @@ export function EditableSection({ children, section, index, sectionType, content
   
   const handleUpdate = useCallback((updatedSection: Section) => {
     setCurrentSection(updatedSection);
+    setWasLocallyUpdated(true);
   }, []);
   
+  const renderedContent = wasLocallyUpdated ? renderSection(currentSection, index) : children;
+
   // If not in edit mode context or edit mode is not active, render children directly
   if (!editMode || !editMode.isEditMode) {
-    return <>{children}</>;
+    return <>{renderedContent}</>;
   }
   
   return (
@@ -736,7 +742,7 @@ export function EditableSection({ children, section, index, sectionType, content
                 renderSection(previewSection, index)
               ) : (
                 <>
-                  {children}
+                  {renderedContent}
                   {(isLoadingSwap || isAdapting) && (
                     <div className="absolute inset-0 bg-background/50 flex items-center justify-center">
                       <div className="flex flex-col items-center gap-2">
@@ -750,7 +756,7 @@ export function EditableSection({ children, section, index, sectionType, content
             </div>
           </>
         ) : (
-          children
+          renderedContent
         )}
       </div>
       

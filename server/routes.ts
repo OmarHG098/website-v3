@@ -1418,16 +1418,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const schemaInclude = (schema?.include as string[]) || [];
       const schemaOverrides = (schema?.overrides as Record<string, Record<string, unknown>>) || {};
 
-      res.json({
+      const responseData: Record<string, unknown> = {
         meta,
         faqSchema,
         schemaOrg,
         schemaInclude,
         schemaOverrides,
         title: pageData.title || "",
-      });
+      };
+
+      if (contentType === "landings") {
+        const commonData = loadCommonData("landings", slug);
+        responseData.locations = (commonData?.locations as string[]) || [];
+        responseData.availableLocations = listLocationPages(locale).map(loc => ({
+          slug: loc.slug,
+          name: loc.name,
+          city: loc.city,
+          country: loc.country,
+        }));
+      }
+
+      res.json(responseData);
     } catch (error) {
       console.error("[SEO Preview] Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+
+  app.post("/api/content/update-locations", async (req, res) => {
+    try {
+      const isDevelopment = process.env.NODE_ENV !== "production";
+      const debugToken = req.headers["x-debug-token"] as string | undefined;
+      const authHeader = req.headers.authorization;
+
+      let token: string | null = null;
+      if (authHeader?.startsWith("Token ")) {
+        token = authHeader.slice(6);
+      } else if (debugToken) {
+        token = debugToken;
+      }
+
+      if (!isDevelopment) {
+        if (!token) {
+          res.status(401).json({ error: "Authorization required" });
+          return;
+        }
+        const capResponse = await fetch(
+          `${BREATHECODE_HOST}/v1/auth/user/me/capability/webmaster`,
+          { method: "GET", headers: { Authorization: `Token ${token}`, Academy: "4" } },
+        );
+        if (capResponse.status === 401) {
+          res.status(401).json({ error: "Your session has expired. Please log in again." });
+          return;
+        }
+        if (capResponse.status !== 200) {
+          res.status(403).json({ error: "You need webmaster capability to edit content" });
+          return;
+        }
+      }
+
+      const { contentType, slug, locations, author } = req.body;
+      if (!contentType || !slug || !Array.isArray(locations)) {
+        res.status(400).json({ error: "Missing required fields: contentType, slug, locations (array)" });
+        return;
+      }
+      if (contentType !== "landings") {
+        res.status(400).json({ error: "Locations can only be updated for landings" });
+        return;
+      }
+
+      const commonPath = path.join(process.cwd(), "marketing-content", contentType, slug, "_common.yml");
+      if (!fs.existsSync(commonPath)) {
+        res.status(404).json({ error: "_common.yml not found for this landing" });
+        return;
+      }
+
+      const commonContent = fs.readFileSync(commonPath, "utf-8");
+      const commonData = yaml.load(commonContent) as Record<string, unknown>;
+
+      if (locations.length === 0) {
+        delete commonData.locations;
+      } else {
+        commonData.locations = locations;
+      }
+
+      const updatedYaml = yaml.dump(commonData, {
+        lineWidth: -1,
+        noRefs: true,
+        quotingType: '"',
+        forceQuotes: false,
+      });
+      fs.writeFileSync(commonPath, updatedYaml, "utf-8");
+
+      markFileAsModified(commonPath, author && typeof author === "string" ? author : undefined);
+
+      const landingDir = path.dirname(commonPath);
+      const variantFiles = fs.readdirSync(landingDir).filter(
+        (f) => f.endsWith(".yml") && f !== "_common.yml"
+      );
+      const strippedVariants: string[] = [];
+      for (const variantFile of variantFiles) {
+        const variantPath = path.join(landingDir, variantFile);
+        try {
+          const variantContent = fs.readFileSync(variantPath, "utf-8");
+          const variantData = yaml.load(variantContent) as Record<string, unknown>;
+          if (variantData && "locations" in variantData) {
+            delete variantData.locations;
+            const variantYaml = yaml.dump(variantData, {
+              lineWidth: -1,
+              noRefs: true,
+              quotingType: '"',
+              forceQuotes: false,
+            });
+            fs.writeFileSync(variantPath, variantYaml, "utf-8");
+            markFileAsModified(variantPath, author && typeof author === "string" ? author : undefined);
+            strippedVariants.push(variantFile);
+          }
+        } catch (e) {
+          console.warn(`[Update Locations] Could not process variant ${variantFile}:`, e);
+        }
+      }
+      if (strippedVariants.length > 0) {
+        console.log(`[Update Locations] Removed locations from variants: ${strippedVariants.join(", ")}`);
+      }
+
+      contentIndex.refresh();
+
+      res.json({ success: true, locations: commonData.locations || [], strippedVariants });
+    } catch (error) {
+      console.error("[Update Locations] Error:", error);
       res.status(500).json({ error: "Internal server error" });
     }
   });
@@ -3847,6 +3966,32 @@ sections: []
   // ============================================
   
   // Get centralized FAQs from YAML file
+  app.get("/api/testimonials/:locale", (req, res) => {
+    const { locale } = req.params;
+    const normalizedLocale = normalizeLocale(locale);
+
+    const testimonialsPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "testimonials",
+      `${normalizedLocale}.yml`
+    );
+
+    if (!fs.existsSync(testimonialsPath)) {
+      res.status(404).json({ error: "Testimonials not found for locale" });
+      return;
+    }
+
+    try {
+      const content = fs.readFileSync(testimonialsPath, "utf8");
+      const data = yaml.load(content) as unknown[];
+      res.json({ testimonials: data || [] });
+    } catch (error) {
+      console.error("Error loading testimonials:", error);
+      res.status(500).json({ error: "Failed to load testimonials" });
+    }
+  });
+
   app.get("/api/faqs/:locale", (req, res) => {
     const { locale } = req.params;
     const normalizedLocale = normalizeLocale(locale);
