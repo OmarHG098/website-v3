@@ -17,19 +17,17 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: in Tech, Your Way
-    subtitle: for the AI Era
-    welcome_text: Welcome to
+    title: In Tech, Your Way
+    subtitle: Flexible payment options designed for real career growth.
     brand_mark:
       prefix: Finance Your
       highlight: Future
-      suffix: ":"
       color: chart-1
-    description: We offer several ways to fund your education, so you can focus on building your career without worrying about the cost. There’s an option to fit every need.
+    description: We offer flexible payment plans, financing options, and scholarships so you can focus on launching your tech career without worrying about finances.
     bullets:
-      - text: Flexible payment plans.
-      - text: Affordable loans.
-      - text: Scholarships.
+      - text: Structured monthly payment plans
+      - text: Competitive financing options
+      - text: Scholarship opportunities for qualified candidates
     video:
       url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
       ratio: "3:4"
@@ -50,73 +48,154 @@ sections:
       desktop: none lg
     marginY:
       desktop: none md
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Proven Career Outcomes
+    subtitle: Strong hiring results. Real salary growth.
+    description: Recognized by Forbes as a Best Online Bootcamp, including recognition for students on a budget, 4Geeks combines accessible tuition with proven career outcomes that help you launch your tech career with confidence.
+    background: hsl(var(--secondary))
+    items:
+      - value: 84%
+        title: Job placement rate
+      - value: 55%
+        title: Salary increase after graduation
+      - value: 3-6 Months
+        title: Average time to get hired
+    marginY:
+      desktop: lg
+    paddingY:
+      desktop: none lg
   - type: syllabus
-    title: Launch your tech career, with payment plans that fit your budget
-    subtitle: Explore our financing paths — from low monthly payments to income-based plans — and choose the option that works for you.
+    title: Fund Your Tech Career
+    subtitle: Explore flexible financing paths, from upfront savings to income-based plans, and choose the option that works for you.
     modules:
-      - title: Pay Upfront. Save 10%
-        description: Pay tuition upfront and save 10%.
-      - title: Pay in Installments. Interest-Free over 6 months
-        description: Pay the regular tuition cost in interest-free installments. Spread tuition across 6 months.
+      - title: Pay Upfront and Save 10%
+        description: Pay your tuition in full before the program starts and receive a 10% discount.
+      - title: Interest-Free Installments over 6 Months
+        description: Spread your tuition across 6 months with no interest. Pay the standard tuition cost in structured monthly installments.
       - title: Income-Based Payments
-        description: If you prefer to pay only after you land a job, we offer an income-based loan option through Edly that lets you start paying once you’re earning at least $35K per year, adjusts your monthly payments to your income, pauses payments during unemployment or underemployment, and is cosigner-friendly.
-      - title: Payment Plans & Loans
-        description: We partner with trusted providers to offer simple, accessible financing options tailored to your needs, including Ascent Funding with 3 to 5-year loan terms, interest rates based on your credit profile, the option to defer payments up to 9 months after graduation, possible inclusion of living expenses, and benefits like cosigner release and a 1% auto-pay discount; Climb Credit, which offers 3 to 5-year loans with fixed monthly payments that may start as low as $160+ depending on the loan and credit score, with no prepayment penalties; and TFC Tuition, which provides custom payment plans from 1 to 3 years and is a great option for students with limited or low credit thanks to a low entry barrier, easy approval, and competitive interest rates.
+        description: Prefer to pay after you land a job? Through our partner Edly, you can start repayment once you earn at least $35,000 per year. Monthly payments adjust to your income and pause during periods of unemployment or underemployment. Cosigners are supported.
+      - title: Loans and Extended Payment Plans
+        description: We offer financing plans ranging from 1 to 5 years, depending on your credit profile, with monthly payments starting below $349. Terms and approval are based on eligibility.
       - title: Scholarships
-        description: Partial and full scholarships are available through mission-aligned organizations and location-based programs, with amounts covered varying by eligibility and availability, including merit-based opportunities, need-based financial assistance, special programs through 4Geeks Scholarships, and application support to help you through the process.
+        description: Partial scholarships are available for qualified applicants through select programs and partner organizations. Availability and award amounts vary.
+    marginY:
+      desktop: none lg
     paddingY:
       desktop: md lg
     background: hsl(210 100% 50% / 0.05)
-    marginY:
-      desktop: none lg
   - type: comparison_table
     version: "1.0"
-    title: Financing benefits and requirements at a glance
-    subtitle: See how our approach stacks up against typical alternatives
+    title: Compare Your Financing Options at a Glance
+    subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
+        highlight: true
       - name: Pay in Full
         highlight: true
-      - name: Monthly Plans (TFC)
-      - name: Loans (Ascent/ Climb)
-      - name: Income-Based (Edly)
+      - name: Monthly Plans
+        highlight: true
+      - name: Loans
+        highlight: true
+      - name: Income-Based Plan
+        highlight: true
     rows:
-      - feature: Discount
+      - feature: Tuition Discount
         values:
           - 10% off
           - "No"
           - "No"
           - "No"
-      - feature: Credit Check
+      - feature: Credit Check Required
         values:
           - "No"
-          - Low Barrier
-          - Required
-          - Required
-      - feature: Defer Payments
+          - Low barrier
+          - "Yes"
+          - "Yes"
+      - feature: Payment Deferral After Graduation
         values:
           - "No"
           - "No"
           - "Yes"
           - "Yes"
-      - feature: Pay Once Hired
+      - feature: Pay Only After You’re Hired
         values:
           - "No"
           - "No"
           - "No"
           - "Yes"
+    background: hsl(var(--background))
     marginY:
       desktop: lg md
     paddingY:
       desktop: md lg
+  - type: course_selector
+    version: "1.0"
+    variant: solid
+    heading: Program Tuition
+    subheading: Tuition, payment plans, and financing options for every program
+    courses:
+      - name: AI Engineering
+        icon: Brain
+        duration: 24 weeks
+        label: Updated in 2026
+        title: AI Engineering
+        badges:
+          - icon: DollarSign
+            text: $14,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Build and scale a fully AI-native business while learning production-ready AI systems and workflows.
+        price: $349
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/ai-engineering
+        course_background: accent
+      - name: Data Science & ML
+        icon: ChartLine
+        duration: 16 weeks
+        label: Updated in 2026
+        title: Data Science & Machine Learning with AI
+        badges:
+          - icon: DollarSign
+            text: $10,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Master AI-powered data analysis and build intelligent models to solve real-world problems.
+        price: $299
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/data-science-ml
+        course_background: primary
+      - name: Cybersecurity
+        icon: Shield
+        duration: 16 weeks
+        label: Updated in 2026
+        title: Cybersecurity
+        badges:
+          - icon: DollarSign
+            text: $9,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Learn to protect systems and data with modern cybersecurity tools, hands-on labs, and practical exercises.
+        price: $299
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/cybersecurity
+        course_background: hsl(var(--destructive))
+    marginY:
+      desktop: lg
+    paddingY:
+      desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
-    title: Need extra confidence? Add a Job Guarantee
-    subtitle: You will never be alone!
-    description: For additional peace of mind, enroll with a Job Guarantee. If you don’t get hired after 9 months of graduation you’ll receive a  full tuition refund. The job guarantee can also be financed.
+    title: Optional Job Guarantee for Extra Confidence
+    subtitle: Back your career outcome with a stronger commitment
+    description: For an additional $2,000, you can add our Job Guarantee. If you don’t land a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
     cta:
-      text: More info here
-      url: /signup
+      text: Get More Info
+      url: /job-guarantee
       variant: primary
     marginY:
       desktop: md
@@ -166,61 +245,6 @@ sections:
         rating: 5
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
-  - type: features_grid
-    version: "1.0"
-    variant: stats-text
-    title: Affordable tech education with proven results
-    subtitle: The talent shortage is your opportunity
-    description: Our programs offer the highest value at the lowest investment in tech education. That's why Forbes recognized us in 2024 as the Best Online Full-Stack Bootcamp and Best Online Data Science Bootcamp for Students on a Budget.
-    items:
-      - value: 84%
-        title: Job placement rate
-      - value: 55%
-        title: Salary increase after graduation
-      - value: 3-6 Months
-        title: Average time to get hired
-    marginY:
-      desktop: lg
-    paddingY:
-      desktop: none lg
-    background: hsl(var(--secondary))
-  - type: pricing
-    version: "1.0"
-    variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
-    tech_icons:
-      - html
-      - css
-      - javascript
-      - react
-      - python
-      - nodejs
-      - git
-      - bootstrap
-      - api
-      - settings
-    features_title: Access hundreds of exercises, projects tutorials and courses
-    features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of cloud-based coding challenges (no setup needed).
-      - text: AI-powered feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school.
-    cta:
-      text: Apply Now
-      url: /apply
-      variant: primary
-    marginY:
-      desktop: lg none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions

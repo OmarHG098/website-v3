@@ -12,7 +12,7 @@ function main() {
   const result = scanImageRegistry();
 
   console.log(`  Registered images: ${result.registeredCount}`);
-  console.log(`  Images in attached_assets/: ${result.attachedAssetsCount}\n`);
+  console.log(`  Scanned image files: ${result.scannedImagesCount}\n`);
 
   if (result.brokenReferences.length > 0) {
     console.log(`${RED}${BOLD}✗ ${result.brokenReferences.length} broken reference(s) found:${RESET}`);

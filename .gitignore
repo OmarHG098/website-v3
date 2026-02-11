@@ -1,6 +1,11 @@
 node_modules
 dist
 .DS_Store
+
+# Conversation screenshots (not marketing content)
+attached_assets/Screenshot_*
+attached_assets/Captura_*
+attached_assets/Capture_*
 server/public
 vite.config.ts.*
 *.tar.gz

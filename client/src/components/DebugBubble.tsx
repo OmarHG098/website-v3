@@ -42,6 +42,7 @@ import {
   IconChartBar,
   IconTable,
   IconFlask,
+  IconStethoscope,
   IconPlus,
   IconUsersGroup,
   IconBrandGithub,
@@ -94,31 +95,51 @@ import { normalizeLocale } from "@shared/locale";
 import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
 import { useQuery } from "@tanstack/react-query";
 
-const componentsList = [
-  { type: "hero", label: "Hero", icon: IconRocket, description: "Main banner section" },
-  { type: "two_column", label: "Two Column", icon: IconLayoutColumns, description: "Flexible two-column layout" },
-  { type: "comparison_table", label: "Comparison Table", icon: IconTable, description: "Feature comparison with competitors" },
-  { type: "features_grid", label: "Features Grid", icon: IconLayoutColumns, description: "Grid of cards - highlight (stats) or detailed variants" },
-  { type: "numbered_steps", label: "Numbered Steps", icon: IconArrowRight, description: "Vertical timeline with numbered steps" },
-  { type: "ai_learning", label: "AI Learning", icon: IconBrain, description: "AI tools showcase" },
-  { type: "mentorship", label: "Mentorship", icon: IconUsers, description: "Support options" },
-  { type: "pricing", label: "Pricing", icon: IconCreditCard, description: "Subscription pricing card" },
-  { type: "projects", label: "Projects", icon: IconFolderCode, description: "Real-world project carousel" },
-  { type: "project_showcase", label: "Project Showcase", icon: IconChartBar, description: "Graduate project with creators" },
-  { type: "syllabus", label: "Syllabus", icon: IconBook, description: "Expandable curriculum modules" },
-  { type: "why_learn_ai", label: "Why Learn AI", icon: IconSparkles, description: "AI motivation section" },
-  { type: "certificate", label: "Certificate", icon: IconCertificate, description: "Certificate preview" },
-  { type: "whos_hiring", label: "Who's Hiring", icon: IconBuildingSkyscraper, description: "Logo display - grid or carousel variants" },
-  { type: "testimonials", label: "Testimonials", icon: IconMessage, description: "Student reviews and success stories" },
-  { type: "testimonials_slide", label: "Testimonials Slide", icon: IconMessage, description: "Sliding marquee testimonials with photos" },
-  { type: "faq", label: "FAQ", icon: IconQuestionMark, description: "Accordion questions" },
-  { type: "cta_banner", label: "CTA Banner", icon: IconArrowRight, description: "Call-to-action section" },
-  { type: "footer", label: "Footer", icon: IconLayoutBottombar, description: "Copyright notice" },
-  { type: "award_badges", label: "Award Badges", icon: IconCertificate, description: "Award logos with mobile carousel" },
-  { type: "horizontal_bars", label: "Horizontal Bars", icon: IconChartBar, description: "Animated horizontal bar chart" },
-  { type: "vertical_bars_cards", label: "Vertical Bars Cards", icon: IconChartBar, description: "Cards with vertical bars comparing years" },
-  { type: "graduates_stats", label: "Graduates Stats", icon: IconUsersGroup, description: "Image collage with statistics grid" },
-];
+const componentIconMap: Record<string, typeof IconComponents> = {
+  hero: IconRocket,
+  two_column: IconLayoutColumns,
+  two_column_accordion_card: IconLayoutColumns,
+  comparison_table: IconTable,
+  features_grid: IconLayoutColumns,
+  features_quad: IconLayoutColumns,
+  numbered_steps: IconArrowRight,
+  ai_learning: IconBrain,
+  mentorship: IconUsers,
+  community_support: IconUsers,
+  pricing: IconCreditCard,
+  projects: IconFolderCode,
+  project_showcase: IconChartBar,
+  syllabus: IconBook,
+  why_learn_ai: IconSparkles,
+  certificate: IconCertificate,
+  whos_hiring: IconBuildingSkyscraper,
+  testimonials: IconMessage,
+  testimonials_slide: IconMessage,
+  testimonials_grid: IconMessage,
+  faq: IconQuestionMark,
+  cta_banner: IconArrowRight,
+  footer: IconLayoutBottombar,
+  award_badges: IconCertificate,
+  awards_marquee: IconCertificate,
+  horizontal_bars: IconChartBar,
+  vertical_bars_cards: IconChartBar,
+  graduates_stats: IconUsersGroup,
+  image_row: IconPhoto,
+  lead_form: IconFile,
+  apply_form: IconFile,
+  banner: IconRocket,
+  article: IconBook,
+  press_mentions: IconMessage,
+  split_cards: IconLayoutColumns,
+  course_selector: IconBook,
+  sticky_cta: IconArrowRight,
+  bento_cards: IconLayoutColumns,
+  value_proof_panel: IconChartBar,
+  partnership_carousel: IconBuildingSkyscraper,
+  human_and_ai_duo: IconBrain,
+  bullet_tabs_showcase: IconSparkles,
+  geeks_vs_others_comparison: IconTable,
+};
 
 type MenuView = "main" | "components" | "sitemap" | "experiments" | "menus";
 
@@ -196,15 +217,26 @@ function deslugify(slug: string): string {
 
 // Detect content type and slug from URL path
 function detectContentInfo(pathname: string): ContentInfo {
+  const typeLabels: Record<string, string> = {
+    programs: "Program",
+    pages: "Page",
+    landings: "Landing",
+    locations: "Location",
+  };
+
+  // Private preview route: /private/preview/:contentType/:slug
+  const previewMatch = pathname.match(/^\/private\/preview\/(programs|pages|landings|locations)\/([^/]+)\/?$/);
+  if (previewMatch) {
+    return { 
+      type: previewMatch[1] as ContentInfo["type"], 
+      slug: previewMatch[2], 
+      label: typeLabels[previewMatch[1]] || "Content" 
+    };
+  }
+
   // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
   const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
   if (experimentMatch) {
-    const typeLabels: Record<string, string> = {
-      programs: "Program",
-      pages: "Page",
-      landings: "Landing",
-      locations: "Location",
-    };
     return { 
       type: experimentMatch[1] as ContentInfo["type"], 
       slug: experimentMatch[2], 
@@ -434,6 +466,24 @@ export function DebugBubble() {
   const [sitemapSearch, setSitemapSearch] = useState("");
   const [sitemapLoading, setSitemapLoading] = useState(false);
   const [showSitemapSearch, setShowSitemapSearch] = useState(false);
+  const [componentSearch, setComponentSearch] = useState("");
+  const [showComponentSearch, setShowComponentSearch] = useState(false);
+
+  const { data: componentRegistryData } = useQuery<{ components: Array<{ type: string; name: string; description: string; latestVersion: string; versions: string[] }> }>({
+    queryKey: ["/api/component-registry"],
+    staleTime: 60000,
+  });
+
+  const filteredComponents = useMemo(() => {
+    const components = componentRegistryData?.components?.filter(c => c.type !== "_common") || [];
+    if (!componentSearch) return components;
+    const q = componentSearch.toLowerCase();
+    return components.filter(c =>
+      c.type.toLowerCase().includes(q) ||
+      c.name.toLowerCase().includes(q) ||
+      c.description.toLowerCase().includes(q)
+    );
+  }, [componentRegistryData, componentSearch]);
   const [tokenInput, setTokenInput] = useState("");
   const [pendingAutoEditMode, setPendingAutoEditMode] = useState(false);
   const prevIsValidatedRef = useRef<boolean | null>(null);
@@ -499,6 +549,30 @@ export function DebugBubble() {
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
   
+  // SEO modal state
+  const [seoModalOpen, setSeoModalOpen] = useState(false);
+  const [seoLoading, setSeoLoading] = useState(false);
+  const [seoData, setSeoData] = useState<{
+    meta: Record<string, unknown>;
+    faqSchema: Record<string, unknown> | null;
+    schemaOrg: Record<string, unknown>[];
+    title: string;
+  } | null>(null);
+  const [seoMeta, setSeoMeta] = useState<{
+    page_title: string;
+    description: string;
+    canonical_url: string;
+  }>({ page_title: "", description: "", canonical_url: "" });
+  const [seoSaving, setSeoSaving] = useState(false);
+  const [seoFaqExpanded, setSeoFaqExpanded] = useState(true);
+  const [seoSchemaExpanded, setSeoSchemaExpanded] = useState(false);
+  const [seoSchemaInclude, setSeoSchemaInclude] = useState<string[]>([]);
+  const [seoSchemaOverrides, setSeoSchemaOverrides] = useState<Record<string, string>>({});
+  const [seoSchemaOverridesErrors, setSeoSchemaOverridesErrors] = useState<Record<string, string>>({});
+  const [availableSchemaKeys, setAvailableSchemaKeys] = useState<string[]>([]);
+  const [seoSchemaIncludeExpanded, setSeoSchemaIncludeExpanded] = useState(false);
+  const [seoSchemaOverridesExpanded, setSeoSchemaOverridesExpanded] = useState(false);
+  
   // Breathecode host state
   const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
   
@@ -515,6 +589,7 @@ export function DebugBubble() {
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
+  const [sitemapExpanded, setSitemapExpanded] = useState(false);
 
   // Wrapper to persist menu view changes to sessionStorage
   const setMenuView = (view: MenuView) => {
@@ -737,6 +812,154 @@ export function DebugBubble() {
   };
 
   // Handle session check (validates without clearing cache first)
+  const fetchSeoPreview = useCallback(async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoLoading(true);
+    setSeoData(null);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "programs",
+        pages: "pages",
+        landings: "landings",
+        locations: "locations",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      const res = await fetch(`/api/seo-preview/${apiContentType}/${contentInfo.slug}?locale=${locale}`);
+      if (!res.ok) throw new Error("Failed to fetch SEO data");
+      const [data, schemaKeysRes] = await Promise.all([
+        res.json(),
+        fetch("/api/schema").then(r => r.ok ? r.json() : { available: [] }),
+      ]);
+      setSeoData(data);
+      setSeoMeta({
+        page_title: (data.meta?.page_title as string) || "",
+        description: (data.meta?.description as string) || "",
+        canonical_url: (data.meta?.canonical_url as string) || "",
+      });
+      setAvailableSchemaKeys(schemaKeysRes.available || []);
+      setSeoSchemaInclude(data.schemaInclude || []);
+      const overridesObj: Record<string, string> = {};
+      if (data.schemaOverrides) {
+        for (const [key, val] of Object.entries(data.schemaOverrides)) {
+          overridesObj[key] = JSON.stringify(val, null, 2);
+        }
+      }
+      setSeoSchemaOverrides(overridesObj);
+      setSeoSchemaOverridesErrors({});
+    } catch (error) {
+      console.error("Error fetching SEO preview:", error);
+      toast({
+        title: "Failed to load SEO data",
+        description: "Could not fetch page SEO information.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoLoading(false);
+    }
+  }, [contentInfo.type, contentInfo.slug, pathname, i18n.language, toast]);
+
+  const handleSeoSave = async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoSaving(true);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "program",
+        pages: "page",
+        landings: "landing",
+        locations: "location",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      
+      const existingMeta = { ...(seoData?.meta || {}) };
+      const editableKeys = ["page_title", "description", "canonical_url"] as const;
+      for (const key of editableKeys) {
+        if (seoMeta[key]) {
+          existingMeta[key] = seoMeta[key];
+        } else {
+          delete existingMeta[key];
+        }
+      }
+      
+      const hasOverrideErrors = Object.keys(seoSchemaOverridesErrors).length > 0;
+      if (hasOverrideErrors) {
+        toast({
+          title: "Invalid JSON in schema overrides",
+          description: "Please fix the JSON errors before saving.",
+          variant: "destructive",
+        });
+        setSeoSaving(false);
+        return;
+      }
+
+      const parsedOverrides: Record<string, Record<string, unknown>> = {};
+      for (const [key, val] of Object.entries(seoSchemaOverrides)) {
+        if (val.trim() && seoSchemaInclude.includes(key)) {
+          try {
+            parsedOverrides[key] = JSON.parse(val);
+          } catch {
+            // skip invalid
+          }
+        }
+      }
+
+      const schemaValue: Record<string, unknown> = {};
+      if (seoSchemaInclude.length > 0) {
+        schemaValue.include = seoSchemaInclude;
+      }
+      if (Object.keys(parsedOverrides).length > 0) {
+        schemaValue.overrides = parsedOverrides;
+      }
+
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = getDebugToken();
+      if (token) headers["X-Debug-Token"] = token;
+      const author = getDebugUserName();
+
+      const operations: Array<{ action: string; path: string; value: unknown }> = [
+        { action: "update_field", path: "meta", value: existingMeta },
+        { action: "update_field", path: "schema", value: Object.keys(schemaValue).length > 0 ? schemaValue : null },
+      ];
+
+      const res = await fetch("/api/content/edit", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          contentType: apiContentType,
+          slug: contentInfo.slug,
+          locale,
+          author: author || undefined,
+          operations,
+        }),
+      });
+      
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to save");
+      }
+      
+      toast({
+        title: "SEO updated",
+        description: "Meta tags have been saved successfully.",
+      });
+      setSeoModalOpen(false);
+    } catch (error) {
+      console.error("Error saving SEO:", error);
+      toast({
+        title: "Failed to save SEO",
+        description: error instanceof Error ? error.message : "Could not save meta changes.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoSaving(false);
+    }
+  };
+
   const handleCheckSession = async () => {
     setIsCheckingSession(true);
     try {
@@ -1525,6 +1748,22 @@ export function DebugBubble() {
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm">Dev Tools</h3>
                   <div className="flex items-center gap-2">
+                    {/* SEO button - visible only on content pages */}
+                    {contentInfo.type && contentInfo.slug && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setSeoModalOpen(true);
+                          fetchSeoPreview();
+                        }}
+                        className="px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground transition-colors hover-elevate"
+                        data-testid="button-edit-seo"
+                        title="Edit page SEO & meta tags"
+                      >
+                        SEO
+                      </button>
+                    )}
                     {/* Read/Edit toggle */}
                     {editMode && (
                       <div 
@@ -1623,16 +1862,17 @@ export function DebugBubble() {
               {menuView === "main" ? (
               <>
               <div className="p-2 space-y-1">
-                <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
-                  <button
-                    onClick={() => setMenuView("sitemap")}
-                    className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
-                    data-testid="button-sitemap-menu"
-                  >
-                    <IconMap className="h-4 w-4 text-muted-foreground" />
-                    <span>Sitemap</span>
-                  </button>
-                  <div className="flex items-center gap-2">
+                <div className="space-y-0.5">
+                  <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                    <button
+                      onClick={() => setSitemapExpanded(!sitemapExpanded)}
+                      className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
+                      data-testid="button-sitemap-toggle"
+                    >
+                      <IconMap className="h-4 w-4 text-muted-foreground" />
+                      <span>Sitemap</span>
+                      <IconChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${sitemapExpanded ? "rotate-90" : ""}`} />
+                    </button>
                     <button
                       onClick={clearSitemapCache}
                       disabled={cacheClearStatus === "loading"}
@@ -1643,19 +1883,41 @@ export function DebugBubble() {
                       {cacheClearStatus === "loading" ? (
                         <IconRefresh className="h-3.5 w-3.5 animate-spin" />
                       ) : cacheClearStatus === "success" ? (
-                        <IconCheck className="h-3.5 w-3.5 text-green-600 dark:text-green-400" />
+                        <IconCheck className="h-3.5 w-3.5 text-chart-3" />
                       ) : (
                         <IconRefresh className="h-3.5 w-3.5" />
                       )}
                     </button>
-                    <button
-                      onClick={() => setMenuView("sitemap")}
-                      className="p-0.5 rounded hover-elevate"
-                      data-testid="button-sitemap-chevron"
-                    >
-                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                    </button>
                   </div>
+                  {sitemapExpanded && (
+                    <div className="pl-2 space-y-0.5">
+                      <button
+                        onClick={() => setMenuView("sitemap")}
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="button-sitemap-all-urls"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconMap className="h-4 w-4 text-muted-foreground" />
+                          <span>All URLs</span>
+                        </div>
+                        <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </button>
+                      <a
+                        href="/private/redirects"
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="link-redirects-page"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconRoute className="h-4 w-4 text-muted-foreground" />
+                          <span>Redirects</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                          <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                      </a>
+                    </div>
+                  )}
                 </div>
                 
                 <button
@@ -1669,21 +1931,6 @@ export function DebugBubble() {
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </button>
-                
-                <a
-                  href="/private/redirects"
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="link-redirects-page"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconRoute className="h-4 w-4 text-muted-foreground" />
-                    <span>Redirects</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
-                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                  </div>
-                </a>
                 
                 <button
                   onClick={() => setMenuView("menus")}
@@ -1705,6 +1952,18 @@ export function DebugBubble() {
                   <div className="flex items-center gap-3">
                     <IconPhoto className="h-4 w-4 text-muted-foreground" />
                     <span>Media Gallery</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </a>
+
+                <a
+                  href="/private/diagnostics"
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-diagnostics"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconStethoscope className="h-4 w-4 text-muted-foreground" />
+                    <span>Diagnostics</span>
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </a>
@@ -1899,40 +2158,86 @@ export function DebugBubble() {
               ) : menuView === "components" ? (
               <>
               <div className="px-3 py-2 border-b">
-                <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => setMenuView("main")}
-                    className="p-1 rounded-md hover-elevate"
-                    data-testid="button-back-to-main"
-                  >
-                    <IconArrowLeft className="h-4 w-4" />
-                  </button>
-                  <div>
-                    <h3 className="font-semibold text-sm">Components</h3>
-                    <p className="text-xs text-muted-foreground">Select a component to view</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => { setMenuView("main"); setComponentSearch(""); setShowComponentSearch(false); }}
+                      className="p-1 rounded-md hover-elevate"
+                      data-testid="button-back-to-main"
+                    >
+                      <IconArrowLeft className="h-4 w-4" />
+                    </button>
+                    {showComponentSearch ? (
+                      <div className="relative flex-1">
+                        <IconSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <input
+                          type="text"
+                          placeholder="Search components..."
+                          value={componentSearch}
+                          onChange={(e) => setComponentSearch(e.target.value)}
+                          className="w-full pl-8 pr-3 py-1.5 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-component-search"
+                          autoFocus
+                        />
+                      </div>
+                    ) : (
+                      <div>
+                        <h3 className="font-semibold text-sm">Components</h3>
+                        <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
+                      </div>
+                    )}
                   </div>
+                  {showComponentSearch ? (
+                    <button
+                      onClick={() => { setShowComponentSearch(false); setComponentSearch(""); }}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Cancel search"
+                      data-testid="button-cancel-component-search"
+                    >
+                      <IconX className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setShowComponentSearch(true)}
+                      className="p-1.5 rounded hover-elevate"
+                      title="Search components"
+                      data-testid="button-toggle-component-search"
+                    >
+                      <IconSearch className="h-4 w-4 text-muted-foreground" />
+                    </button>
+                  )}
                 </div>
               </div>
               
               <ScrollArea className="h-[280px]">
                 <div className="p-2 space-y-1">
-                  {componentsList.map((component) => {
-                    const Icon = component.icon;
-                    return (
-                      <a
-                        key={component.type}
-                        href={`/private/component-showcase/${component.type}`}
-                        className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
-                        data-testid={`link-component-${component.type}`}
-                      >
-                        <Icon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
-                        <div className="flex-1 min-w-0">
-                          <div className="font-medium">{component.label}</div>
-                          <div className="text-xs text-muted-foreground truncate">{component.description}</div>
-                        </div>
-                      </a>
-                    );
-                  })}
+                  {!componentRegistryData ? (
+                    <div className="flex items-center justify-center py-8">
+                      <IconRefresh className="h-5 w-5 animate-spin text-muted-foreground" />
+                    </div>
+                  ) : filteredComponents.length === 0 ? (
+                    <div className="text-center py-8 text-sm text-muted-foreground">
+                      No components found
+                    </div>
+                  ) : (
+                    filteredComponents.map((component) => {
+                      const Icon = componentIconMap[component.type] || IconComponents;
+                      return (
+                        <a
+                          key={component.type}
+                          href={`/private/component-showcase/${component.type}`}
+                          className="flex items-center gap-3 px-3 py-2 rounded-md text-sm hover-elevate cursor-pointer"
+                          data-testid={`link-component-${component.type}`}
+                        >
+                          <Icon className="h-4 w-4 text-muted-foreground flex-shrink-0" />
+                          <div className="flex-1 min-w-0">
+                            <div className="font-medium">{component.name}</div>
+                            <div className="text-xs text-muted-foreground truncate">{component.description}</div>
+                          </div>
+                        </a>
+                      );
+                    })
+                  )}
                 </div>
               </ScrollArea>
             </>
@@ -2175,15 +2480,15 @@ export function DebugBubble() {
                                         </button>
                                       </DropdownMenuTrigger>
                                       <DropdownMenuContent align="end" className="w-40">
-                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDuplicatePage(url)} className="text-[13px]" data-testid={`menu-duplicate-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconCopy className="h-3.5 w-3.5 mr-2" />
                                           Duplicate
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDownloadYml(url)} className="text-[13px]" data-testid={`menu-download-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconDownload className="h-3.5 w-3.5 mr-2" />
                                           Download YAML
                                         </DropdownMenuItem>
-                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                        <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-[13px] text-destructive" data-testid={`menu-delete-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                           <IconTrash className="h-3.5 w-3.5 mr-2" />
                                           Delete
                                         </DropdownMenuItem>
@@ -2221,15 +2526,15 @@ export function DebugBubble() {
                                 </button>
                               </DropdownMenuTrigger>
                               <DropdownMenuContent align="end" className="w-40">
-                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDuplicatePage(url)} className="text-[13px]" data-testid={`menu-duplicate-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconCopy className="h-3.5 w-3.5 mr-2" />
                                   Duplicate
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDownloadYml(url)} className="text-[13px]" data-testid={`menu-download-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconDownload className="h-3.5 w-3.5 mr-2" />
                                   Download YAML
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
+                                <DropdownMenuItem onClick={() => handleDeletePage(url)} className="text-[13px] text-destructive" data-testid={`menu-delete-root-${url.label.toLowerCase().replace(/\s+/g, '-')}`}>
                                   <IconTrash className="h-3.5 w-3.5 mr-2" />
                                   Delete
                                 </DropdownMenuItem>
@@ -3565,6 +3870,307 @@ export function DebugBubble() {
                   <IconPlus className="h-4 w-4 mr-2" />
                   Create {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* SEO Editor Modal */}
+      <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden">
+          <DialogHeader>
+            <DialogTitle>SEO & Meta Tags</DialogTitle>
+            <DialogDescription>
+              {contentInfo.slug ? `${contentInfo.label}: ${contentInfo.slug}` : "Page SEO settings"}
+            </DialogDescription>
+          </DialogHeader>
+
+          {seoLoading ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconRefresh className="h-6 w-6 animate-spin text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Loading SEO data...</p>
+            </div>
+          ) : seoData ? (
+            <div className="space-y-6 py-2">
+              {/* FAQ Schema - Read Only */}
+              {seoData.faqSchema && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoFaqExpanded(!seoFaqExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-faq-schema"
+                  >
+                    {seoFaqExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">FAQ Schema</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      Auto-generated
+                    </span>
+                  </button>
+                  {seoFaqExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        This FAQ structured data is generated automatically from FAQ sections on this page. Google uses it to show rich results in search.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-faq-schema-preview">
+                        {JSON.stringify(seoData.faqSchema, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema Includes - Editable */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setSeoSchemaIncludeExpanded(!seoSchemaIncludeExpanded)}
+                  className="flex items-center gap-2 w-full text-left"
+                  data-testid="button-toggle-schema-includes"
+                >
+                  {seoSchemaIncludeExpanded ? (
+                    <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  )}
+                  <h4 className="text-sm font-semibold">Schema Includes</h4>
+                  <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                    {seoSchemaInclude.length} selected
+                  </span>
+                </button>
+                {seoSchemaIncludeExpanded && (
+                  <div className="space-y-2">
+                    <p className="text-xs text-muted-foreground">
+                      Select which Schema.org schemas to include on this page. These are defined in schema-org.yml.
+                    </p>
+                    <div className="grid grid-cols-1 gap-1.5 max-h-[200px] overflow-y-auto">
+                      {availableSchemaKeys.map((key) => (
+                        <label
+                          key={key}
+                          className="flex items-center gap-2 px-2 py-1.5 rounded-md hover-elevate cursor-pointer text-sm"
+                          data-testid={`checkbox-schema-${key}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={seoSchemaInclude.includes(key)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSeoSchemaInclude(prev => [...prev, key]);
+                              } else {
+                                setSeoSchemaInclude(prev => prev.filter(k => k !== key));
+                                setSeoSchemaOverrides(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            className="rounded"
+                          />
+                          <span className="font-mono text-xs">{key}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Schema Overrides - JSON Editor */}
+              {seoSchemaInclude.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaOverridesExpanded(!seoSchemaOverridesExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-overrides"
+                  >
+                    {seoSchemaOverridesExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema Overrides</h4>
+                    {Object.keys(seoSchemaOverrides).length > 0 && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                        {Object.keys(seoSchemaOverrides).length} override{Object.keys(seoSchemaOverrides).length !== 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </button>
+                  {seoSchemaOverridesExpanded && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-muted-foreground">
+                        Add JSON overrides to customize properties of included schemas. Leave empty for no overrides.
+                      </p>
+                      {seoSchemaInclude.map((key) => (
+                        <div key={key} className="space-y-1.5">
+                          <label className="text-xs font-medium font-mono text-foreground">
+                            {key}
+                          </label>
+                          <textarea
+                            value={seoSchemaOverrides[key] || ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setSeoSchemaOverrides(prev => ({ ...prev, [key]: val }));
+                              if (val.trim()) {
+                                try {
+                                  JSON.parse(val);
+                                  setSeoSchemaOverridesErrors(prev => {
+                                    const next = { ...prev };
+                                    delete next[key];
+                                    return next;
+                                  });
+                                } catch {
+                                  setSeoSchemaOverridesErrors(prev => ({ ...prev, [key]: "Invalid JSON" }));
+                                }
+                              } else {
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            placeholder={`{\n  "name": "Custom Name",\n  "description": "Custom description"\n}`}
+                            rows={4}
+                            className={`w-full px-3 py-2 text-xs font-mono rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-y ${seoSchemaOverridesErrors[key] ? "border-destructive" : ""}`}
+                            data-testid={`input-schema-override-${key}`}
+                          />
+                          {seoSchemaOverridesErrors[key] && (
+                            <p className="text-xs text-destructive">{seoSchemaOverridesErrors[key]}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema.org Preview - Read Only */}
+              {seoData.schemaOrg && seoData.schemaOrg.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaExpanded(!seoSchemaExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-org"
+                  >
+                    {seoSchemaExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema.org Preview</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      Current output
+                    </span>
+                  </button>
+                  {seoSchemaExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        This is the current Schema.org output injected via SSR. Save changes above to update it.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-schema-org-preview">
+                        {JSON.stringify(seoData.schemaOrg, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Editable Meta Fields */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Meta Tags</h4>
+                <p className="text-xs text-muted-foreground">
+                  Edit these fields to improve how the page appears in search results and social media.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-page-title">
+                      Page Title
+                    </label>
+                    <input
+                      id="seo-page-title"
+                      type="text"
+                      value={seoMeta.page_title}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, page_title: e.target.value }))}
+                      placeholder="e.g. Full Stack Developer Program | 4Geeks"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-page-title"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.page_title.length}/60 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-description">
+                      Description
+                    </label>
+                    <textarea
+                      id="seo-description"
+                      value={seoMeta.description}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, description: e.target.value }))}
+                      placeholder="e.g. Learn full stack development with unlimited mentorship..."
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                      data-testid="input-seo-description"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.description.length}/160 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-canonical-url">
+                      Canonical URL
+                    </label>
+                    <input
+                      id="seo-canonical-url"
+                      type="text"
+                      value={seoMeta.canonical_url}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, canonical_url: e.target.value }))}
+                      placeholder="e.g. https://4geeks.com/en/career-programs/full-stack"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-canonical-url"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconAlertTriangle className="h-6 w-6 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Could not load SEO data for this page.</p>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setSeoModalOpen(false)}
+              data-testid="button-cancel-seo"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSeoSave}
+              disabled={seoSaving || seoLoading || !seoData}
+              data-testid="button-save-seo"
+            >
+              {seoSaving ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
               )}
             </Button>
           </DialogFooter>

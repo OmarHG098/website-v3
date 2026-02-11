@@ -63,8 +63,9 @@ import {
 import { getFolderFromSlug } from "@shared/slugMappings";
 import { normalizeLocale } from "@shared/locale";
 import { getValidationService } from "../scripts/validation/service";
+import { getCanonicalUrl } from "../scripts/validation/shared/canonicalUrls";
 import { z } from "zod";
-import { generateSsrSchemaHtml, clearSsrSchemaCache } from "./ssr-schema";
+import { generateSsrSchemaHtml, clearSsrSchemaCache, loadRawYaml, resolveFaqItems, buildFaqPageSchema, type FaqSection } from "./ssr-schema";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
@@ -681,7 +682,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return;
     }
 
-    res.json({ ...landing, locale, _experiment: experimentInfo });
+    const landingLocations = (commonData?.locations as string[] | undefined) || undefined;
+    res.json({ ...landing, locale, landing_locations: landingLocations, _experiment: experimentInfo });
   });
 
   // Locations API
@@ -1371,6 +1373,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
     clearSchemaCache();
     clearSsrSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
+  });
+
+  app.get("/api/seo-preview/:contentType/:slug", (req, res) => {
+    try {
+      const { contentType, slug } = req.params;
+      const locale = normalizeLocale((req.query.locale as string) || "en");
+
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({ error: `Invalid content type. Must be one of: ${validTypes.join(", ")}` });
+        return;
+      }
+
+      const pageData = loadRawYaml(contentType, slug, locale);
+      if (!pageData) {
+        res.status(404).json({ error: "Content not found" });
+        return;
+      }
+
+      const meta = (pageData.meta as Record<string, unknown>) || {};
+      const schema = pageData.schema as { include?: string[]; overrides?: Record<string, Record<string, unknown>> } | undefined;
+
+      let faqSchema: Record<string, unknown> | null = null;
+      const sections = pageData.sections as Array<Record<string, unknown>> | undefined;
+      if (sections) {
+        const allFaqItems: Array<{ question: string; answer: string }> = [];
+        for (const section of sections) {
+          if (section.type === "faq") {
+            const items = resolveFaqItems(section as unknown as FaqSection, locale);
+            allFaqItems.push(...items);
+          }
+        }
+        if (allFaqItems.length > 0) {
+          faqSchema = buildFaqPageSchema(allFaqItems);
+        }
+      }
+
+      let schemaOrg: Record<string, unknown>[] = [];
+      if (schema?.include && schema.include.length > 0) {
+        schemaOrg = getMergedSchemas(schema, locale);
+      }
+
+      const schemaInclude = (schema?.include as string[]) || [];
+      const schemaOverrides = (schema?.overrides as Record<string, Record<string, unknown>>) || {};
+
+      res.json({
+        meta,
+        faqSchema,
+        schemaOrg,
+        schemaInclude,
+        schemaOverrides,
+        title: pageData.title || "",
+      });
+    } catch (error) {
+      console.error("[SEO Preview] Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   });
 
   // Experiments API endpoints
@@ -2833,6 +2892,14 @@ meta:
   page_title: "${title} | 4Geeks Academy"
   description: "${title} - Learn more at 4Geeks Academy."
   robots: "index, follow"
+  og_image: "/images/landing-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+
+schema:
+  include:
+    - "organization"
+    - "website"
 `;
 
       const promotedYml = `# Promoted variant - customize for marketing campaigns
@@ -3066,6 +3133,93 @@ sections: []
     res.json(registry);
   });
 
+  app.delete("/api/image-registry/:id", (req, res) => {
+    try {
+      const imageId = req.params.id;
+      const registry = loadImageRegistry();
+      if (!registry) {
+        res.status(500).json({ error: "Failed to load image registry" });
+        return;
+      }
+
+      const imageEntry = registry.images[imageId];
+      if (!imageEntry) {
+        res.status(404).json({ error: `Image "${imageId}" not found in registry` });
+        return;
+      }
+
+      const usedIn = contentIndex.getImageUsage(imageId, imageEntry.src);
+      if (usedIn.length > 0) {
+        res.status(409).json({
+          error: "Image is in use",
+          message: `Cannot delete "${imageId}" because it is referenced in ${usedIn.length} file(s)`,
+          usedIn,
+        });
+        return;
+      }
+
+      delete registry.images[imageId];
+      const registryPath = path.join(process.cwd(), "marketing-content", "image-registry.json");
+      fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n", "utf8");
+      clearImageRegistryCache();
+
+      res.json({ success: true, message: `Deleted "${imageId}" from registry` });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Delete failed" });
+    }
+  });
+
+  app.post("/api/image-registry/bulk-delete", (req, res) => {
+    try {
+      const { ids } = req.body as { ids?: string[] };
+      if (!ids || !Array.isArray(ids) || ids.length === 0) {
+        res.status(400).json({ error: "Missing or empty 'ids' array" });
+        return;
+      }
+
+      const registry = loadImageRegistry();
+      if (!registry) {
+        res.status(500).json({ error: "Failed to load image registry" });
+        return;
+      }
+
+      const results: Array<{ id: string; success: boolean; message: string }> = [];
+      let deletedCount = 0;
+
+      for (const imageId of ids) {
+        const imageEntry = registry.images[imageId];
+        if (!imageEntry) {
+          results.push({ id: imageId, success: false, message: "Not found in registry" });
+          continue;
+        }
+
+        const usedIn = contentIndex.getImageUsage(imageId, imageEntry.src);
+        if (usedIn.length > 0) {
+          results.push({
+            id: imageId,
+            success: false,
+            message: `Referenced in ${usedIn.length} file(s): ${usedIn.join(", ")}`,
+          });
+          continue;
+        }
+
+        delete registry.images[imageId];
+        deletedCount++;
+        results.push({ id: imageId, success: true, message: "Deleted" });
+      }
+
+      if (deletedCount > 0) {
+        const registryPath = path.join(process.cwd(), "marketing-content", "image-registry.json");
+        fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + "\n", "utf8");
+        clearImageRegistryCache();
+      }
+
+      res.json({ results, deletedCount, totalRequested: ids.length });
+    } catch (error: any) {
+      res.status(500).json({ error: error.message || "Bulk delete failed" });
+    }
+  });
+
   // ============================================
   // Image Registry Scanner Endpoints
   // ============================================
@@ -3096,8 +3250,11 @@ sections: []
       }
       const applied = applyRegistryChanges(filtered);
       clearImageRegistryCache();
+      const yamlMsg = applied.yamlFilesUpdated.length > 0
+        ? `. Updated paths in ${applied.yamlFilesUpdated.length} YAML file(s)`
+        : "";
       res.json({
-        message: `Applied ${applied.added} new, ${applied.updated} updated`,
+        message: `Applied ${applied.added} new, ${applied.updated} updated${yamlMsg}`,
         ...applied,
       });
     } catch (error: any) {
@@ -3215,6 +3372,383 @@ sections: []
     const service = getValidationService();
     service.clearContext();
     res.json({ success: true, message: "Validation cache cleared" });
+  });
+
+  // ============================================
+  // Diagnostics API
+  // ============================================
+
+  app.get("/api/diagnostics/pages", async (_req, res) => {
+    try {
+      const service = getValidationService();
+      let context = service.getContext();
+      if (!context) {
+        context = await service.buildContext();
+      }
+
+      const pages = context.contentFiles.map((file) => {
+        const url = getCanonicalUrl(file);
+        return {
+          url,
+          title: file.title || file.slug,
+          locale: file.locale,
+          contentType: file.type,
+          slug: file.slug,
+          filePath: file.filePath,
+          hasMeta: !!(file.meta?.page_title && file.meta?.description),
+          hasSchema: !!(file.schema?.include && file.schema.include.length > 0),
+        };
+      });
+
+      res.json({ pages, total: pages.length });
+    } catch (error) {
+      console.error("Diagnostics pages error:", error);
+      res.status(500).json({ error: "Failed to load pages" });
+    }
+  });
+
+  app.get("/api/diagnostics/page", async (req, res) => {
+    try {
+      const url = req.query.url as string;
+      if (!url) {
+        res.status(400).json({ error: "Missing url query parameter" });
+        return;
+      }
+
+      const service = getValidationService();
+      let context = service.getContext();
+      if (!context) {
+        context = await service.buildContext();
+      }
+
+      const file = context.contentFiles.find(
+        (f: any) => getCanonicalUrl(f) === url
+      );
+
+      if (!file) {
+        res.status(404).json({ error: `No content found for URL: ${url}` });
+        return;
+      }
+
+      let rawData: Record<string, unknown> = {};
+      try {
+        if (fs.existsSync(file.filePath)) {
+          rawData = yaml.load(fs.readFileSync(file.filePath, "utf-8")) || {};
+        }
+      } catch {}
+
+      const sections = (rawData.sections as any[]) || [];
+      const sectionTypes = sections
+        .filter((s: any) => s?.type)
+        .map((s: any) => s.type);
+      const hasFaq = sectionTypes.includes("faq");
+
+      let schemaHtml = "";
+      let parsedSchemas: any[] = [];
+      try {
+        schemaHtml = generateSsrSchemaHtml(url);
+        const scriptRegex =
+          /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g;
+        let match: RegExpExecArray | null;
+        while ((match = scriptRegex.exec(schemaHtml)) !== null) {
+          try {
+            parsedSchemas.push(JSON.parse(match[1]));
+          } catch {}
+        }
+      } catch {}
+
+      const imageIds = new Set<string>();
+      function extractImageIds(obj: unknown): void {
+        if (!obj || typeof obj !== "object") return;
+        if (Array.isArray(obj)) {
+          obj.forEach(extractImageIds);
+          return;
+        }
+        const rec = obj as Record<string, unknown>;
+        for (const [key, value] of Object.entries(rec)) {
+          if (
+            (key === "image_id" || key === "image") &&
+            typeof value === "string"
+          ) {
+            imageIds.add(value);
+          } else if (typeof value === "object" && value !== null) {
+            extractImageIds(value);
+          }
+        }
+      }
+      extractImageIds(rawData);
+
+      let registryImages: Record<string, any> = {};
+      try {
+        const registryPath = path.join(
+          process.cwd(),
+          "marketing-content",
+          "image-registry.json"
+        );
+        if (fs.existsSync(registryPath)) {
+          const reg = JSON.parse(fs.readFileSync(registryPath, "utf-8"));
+          registryImages = reg.images || {};
+        }
+      } catch {}
+
+      const missingFromRegistry: string[] = [];
+      const missingFromDisk: string[] = [];
+      imageIds.forEach((id) => {
+        if (!registryImages[id]) {
+          missingFromRegistry.push(id);
+        } else if (registryImages[id].src) {
+          const srcPath = path.join(process.cwd(), registryImages[id].src);
+          if (!fs.existsSync(srcPath)) {
+            missingFromDisk.push(id);
+          }
+        }
+      });
+
+      const counterpartLocale = file.locale === "en" ? "es" : "en";
+      const counterpartFile = context.contentFiles.find(
+        (f: any) =>
+          f.slug === file.slug &&
+          f.type === file.type &&
+          f.locale === counterpartLocale
+      );
+      const counterpartUrl = counterpartFile
+        ? getCanonicalUrl(counterpartFile)
+        : null;
+
+      const incomingRedirects: string[] = [];
+      if (context.redirectMap && context.redirectMap.size > 0) {
+        context.redirectMap.forEach((entry: any, from: string) => {
+          if (entry.to === url) {
+            incomingRedirects.push(from);
+          }
+        });
+      }
+
+      const issues: any[] = [];
+      const meta = file.meta || {};
+      let seoScore = 0;
+      let seoMax = 0;
+
+      seoMax += 20;
+      if (meta.page_title) {
+        seoScore += 20;
+      } else {
+        issues.push({
+          type: "warning",
+          code: "MISSING_PAGE_TITLE",
+          message: "Missing page_title",
+        });
+      }
+
+      seoMax += 10;
+      if (
+        meta.page_title &&
+        meta.page_title.length >= 30 &&
+        meta.page_title.length <= 60
+      ) {
+        seoScore += 10;
+      }
+
+      seoMax += 20;
+      if (meta.description) {
+        seoScore += 20;
+      } else {
+        issues.push({
+          type: "warning",
+          code: "MISSING_DESCRIPTION",
+          message: "Missing description",
+        });
+      }
+
+      seoMax += 10;
+      if (
+        meta.description &&
+        meta.description.length >= 70 &&
+        meta.description.length <= 160
+      ) {
+        seoScore += 10;
+      }
+
+      seoMax += 10;
+      if (meta.og_image) seoScore += 10;
+
+      seoMax += 10;
+      if (meta.canonical_url) seoScore += 10;
+
+      let schemaScore = 0;
+      let schemaMax = 0;
+
+      schemaMax += 30;
+      if (file.schema?.include && file.schema.include.length > 0) {
+        schemaScore += 30;
+      }
+
+      schemaMax += 20;
+      if (parsedSchemas.length > 0) {
+        schemaScore += 20;
+      }
+
+      schemaMax += 15;
+      if (parsedSchemas.some((s: any) => s.name)) {
+        schemaScore += 15;
+      }
+
+      schemaMax += 15;
+      if (parsedSchemas.some((s: any) => s.description)) {
+        schemaScore += 15;
+      }
+
+      schemaMax += 10;
+      const hasPlaceholders = parsedSchemas.some((s: any) =>
+        JSON.stringify(s).match(/todo/i)
+      );
+      if (!hasPlaceholders) {
+        schemaScore += 10;
+      }
+
+      schemaMax += 10;
+      if (hasFaq) {
+        if (parsedSchemas.some((s: any) => s["@type"] === "FAQPage")) {
+          schemaScore += 10;
+        }
+      } else {
+        schemaScore += 10;
+      }
+
+      let contentScore = 0;
+      let contentMax = 0;
+
+      contentMax += 25;
+      if (sections.length > 0) {
+        contentScore += 25;
+      }
+
+      contentMax += 20;
+      const allTyped = sections.every((s: any) => s.type);
+      if (sections.length > 0 && allTyped) {
+        contentScore += 20;
+      }
+
+      contentMax += 20;
+      if (counterpartFile) {
+        contentScore += 20;
+      }
+
+      contentMax += 15;
+      const emptyFields: string[] = [];
+      function findEmptyFields(
+        obj: unknown,
+        path: string = ""
+      ): void {
+        if (!obj || typeof obj !== "object") return;
+        if (Array.isArray(obj)) {
+          obj.forEach((item, i) => findEmptyFields(item, `${path}[${i}]`));
+          return;
+        }
+        const rec = obj as Record<string, unknown>;
+        const criticalKeys = new Set([
+          "title",
+          "heading",
+          "description",
+          "subtitle",
+          "tagline",
+        ]);
+        for (const [key, value] of Object.entries(rec)) {
+          const fieldPath = path ? `${path}.${key}` : key;
+          if (
+            criticalKeys.has(key) &&
+            typeof value === "string" &&
+            value.trim() === ""
+          ) {
+            emptyFields.push(fieldPath);
+          } else if (typeof value === "object" && value !== null) {
+            findEmptyFields(value, fieldPath);
+          }
+        }
+      }
+      findEmptyFields(rawData);
+      if (emptyFields.length === 0) {
+        contentScore += 15;
+      }
+
+      contentMax += 20;
+      if (missingFromRegistry.length === 0 && missingFromDisk.length === 0) {
+        contentScore += 20;
+      }
+
+      const seoPercent = seoMax > 0 ? Math.round((seoScore / seoMax) * 100) : 0;
+      const schemaPercent =
+        schemaMax > 0 ? Math.round((schemaScore / schemaMax) * 100) : 0;
+      const contentPercent =
+        contentMax > 0 ? Math.round((contentScore / contentMax) * 100) : 0;
+      const totalScore = Math.round(
+        (seoPercent + schemaPercent + contentPercent) / 3
+      );
+
+      res.json({
+        url,
+        contentType: file.type,
+        slug: file.slug,
+        locale: file.locale,
+        filePath: file.filePath,
+        title: file.title,
+
+        meta: {
+          page_title: meta.page_title || null,
+          titleLength: meta.page_title ? meta.page_title.length : 0,
+          description: meta.description || null,
+          descriptionLength: meta.description ? meta.description.length : 0,
+          og_image: meta.og_image || null,
+          canonical_url: meta.canonical_url || null,
+          robots: meta.robots || null,
+        },
+
+        schema: {
+          configured: !!(
+            file.schema?.include && file.schema.include.length > 0
+          ),
+          includes: file.schema?.include || [],
+          renderedJsonLd: parsedSchemas,
+          htmlPreview: schemaHtml,
+        },
+
+        sections: {
+          count: sections.length,
+          types: sectionTypes,
+          hasFaq,
+        },
+
+        images: {
+          referencedIds: Array.from(imageIds),
+          missingFromRegistry,
+          missingFromDisk,
+        },
+
+        translations: {
+          hasEnglish: file.locale === "en" || !!counterpartFile,
+          hasSpanish:
+            file.locale === "es" ||
+            (counterpartFile && counterpartFile.locale === "es"),
+          counterpartUrl,
+        },
+
+        redirects: {
+          incomingRedirects,
+        },
+
+        emptyFields,
+
+        score: {
+          total: totalScore,
+          seo: seoPercent,
+          schema: schemaPercent,
+          content: contentPercent,
+        },
+      });
+    } catch (error) {
+      console.error("Diagnostics page error:", error);
+      res.status(500).json({ error: "Failed to generate page diagnostics" });
+    }
   });
 
   // ============================================

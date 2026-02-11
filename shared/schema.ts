@@ -981,6 +981,7 @@ export const landingPageSchema = z.object({
   meta: landingPageMetaSchema,
   schema: schemaRefSchema.optional(),
   sections: z.array(sectionSchema),
+  landing_locations: z.array(z.string()).optional(),
 });
 
 export type LandingPageMeta = z.infer<typeof landingPageMetaSchema>;
