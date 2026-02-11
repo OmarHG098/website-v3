@@ -43,7 +43,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
       <h3 className="text-base font-semibold text-foreground" data-testid="text-profile-name">
         {profile.name}
       </h3>
-
+      {/* test */}
       {profile.role && (
         <p className="text-sm text-muted-foreground mt-0.5" data-testid="text-profile-role">
           {profile.role}
