@@ -38,7 +38,7 @@ export default function Header() {
   
   return (
     <header className={`sticky top-0 z-50 w-full bg-background transition-colors ${isScrolled ? 'border-b' : 'border-b border-background'}`}>
-      <div className="container mx-auto flex h-16 items-center justify-between gap-4 px-4">
+      <div className="flex h-16 items-center justify-between gap-4 px-6">
         <Link 
           href="/" 
           className="flex items-center hover-elevate rounded-md px-3 py-2" 
