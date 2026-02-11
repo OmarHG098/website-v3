@@ -90,7 +90,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
       )}
 
       {profile.description && (
-        <p className="text-sm text-muted-foreground mt-2 " data-testid="text-profile-description">
+        <p className="text-sm text-muted-foreground mt-2" data-testid="text-profile-description">
           {profile.description}
         </p>
       )}
@@ -117,10 +117,13 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
 
   const totalPages = useMemo(() => Math.ceil(profiles.length / PROFILES_PER_PAGE), [profiles.length]);
 
-  const currentProfiles = useMemo(
-    () => profiles.slice(currentPage * PROFILES_PER_PAGE, (currentPage + 1) * PROFILES_PER_PAGE),
-    [profiles, currentPage]
-  );
+  const pages = useMemo(() => {
+    const result: ProfileCard[][] = [];
+    for (let i = 0; i < profiles.length; i += PROFILES_PER_PAGE) {
+      result.push(profiles.slice(i, i + PROFILES_PER_PAGE));
+    }
+    return result;
+  }, [profiles]);
 
   const goTo = (page: number) => {
     if (page >= 0 && page < totalPages) setCurrentPage(page);
@@ -155,8 +158,8 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
                 key={i}
                 onClick={() => goTo(i)}
                 className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-colors duration-200",
-                  i === currentPage ? "bg-primary" : "bg-border"
+                  "w-2.5 h-2.5 rounded-full transition-all duration-300",
+                  i === currentPage ? "bg-primary scale-110" : "bg-border"
                 )}
                 data-testid={`button-dot-${i}`}
               />
@@ -178,10 +181,26 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
             </Button>
           )}
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 flex-1 mx-2">
-            {currentProfiles.map((profile, i) => (
-              <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
-            ))}
+          <div className="flex-1 overflow-hidden mx-2">
+            <div
+              className="flex transition-transform duration-500 ease-in-out"
+              style={{ transform: `translateX(-${currentPage * 100}%)` }}
+            >
+              {pages.map((page, pageIndex) => (
+                <div
+                  key={pageIndex}
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 w-full flex-shrink-0"
+                >
+                  {page.map((profile, i) => (
+                    <ProfileCardItem
+                      key={pageIndex * PROFILES_PER_PAGE + i}
+                      profile={profile}
+                      isRound={isRound}
+                    />
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
 
           {totalPages > 1 && (
