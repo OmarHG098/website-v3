@@ -328,10 +328,35 @@ export function PartnershipCarouselSplitCard({
   } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeHeight, setActiveHeight] = useState<number>(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
+  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const totalSlides = slides.length;
+
+  useEffect(() => {
+    const el = slideRefs.current[activeIndex];
+    if (el) {
+      setActiveHeight(el.scrollHeight);
+    }
+  }, [activeIndex]);
+
+  useEffect(() => {
+    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
+    const onResize = () => {
+      if (debounceTimer) clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        const el = slideRefs.current[activeIndex];
+        if (el) setActiveHeight(el.scrollHeight);
+      }, 150);
+    };
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+      if (debounceTimer) clearTimeout(debounceTimer);
+    };
+  }, [activeIndex]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -456,25 +481,29 @@ export function PartnershipCarouselSplitCard({
 
         <div className="lg:hidden mb-4">{carouselNav}</div>
 
-        <div className="grid grid-cols-1 grid-rows-1">
-          {slides.map((slide, i) => (
-            <div
-              key={i}
-              className={cn(
-                "col-start-1 row-start-1 transition-opacity duration-500",
-                i === activeIndex
-                  ? "opacity-100 z-10"
-                  : "opacity-0 z-0 pointer-events-none",
-              )}
-            >
-              <SlideContent
-                slide={slide}
-                verticalCards={vertical_cards}
-                institutionsHeading={data.institutions_heading}
-                referencesHeading={data.references_heading}
-              />
-            </div>
-          ))}
+        <div
+          className="relative overflow-hidden transition-[height] duration-500 ease-in-out"
+          style={{ height: activeHeight > 0 ? `${activeHeight}px` : "auto" }}
+        >
+          <div
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
+          >
+            {slides.map((slide, i) => (
+              <div
+                key={i}
+                ref={(el) => { slideRefs.current[i] = el; }}
+                className="w-full flex-shrink-0"
+              >
+                <SlideContent
+                  slide={slide}
+                  verticalCards={vertical_cards}
+                  institutionsHeading={data.institutions_heading}
+                  referencesHeading={data.references_heading}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="hidden lg:block mt-6">{carouselNav}</div>
