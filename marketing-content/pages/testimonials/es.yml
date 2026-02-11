@@ -1,0 +1,9 @@
+slug: testimonials
+template: default
+title: testimonials
+meta:
+  page_title: testimonials | 4Geeks Academy
+  description: testimonials - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /testimonials
+sections: []

@@ -1,0 +1,178 @@
+slug: partners
+template: default
+title: partners
+meta:
+  robots: index, follow
+  priority: 0.8
+  change_frequency: weekly
+  page_title: partners | 4Geeks Academy
+  description: partners - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /partners
+schema:
+  include:
+    - organization
+    - website
+sections:
+  - type: hero
+    version: "1.0"
+    variant: simpleTwoColumn
+    title: Building the Future of Tech, Together
+    subtitle: At 4Geeks Academy, we believe in the power of collaboration to drive real impact. We partner with universities, nonprofits, workforce development initiatives, and global organizations to expand access to tech education and create stronger career pathways. Together, we train and place diverse talent, bridge the digital skills gap, and build the tech workforce of the future.
+    image:
+      src: /attached_assets/our-story_1765323971104.webp
+      alt: Students collaborating in a tech workspace
+    cta_buttons:
+      - text: Join our partnership network
+        url: "#apply"
+        variant: primary
+        icon: Rocket
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    marginY:
+      desktop: none lg
+    paddingY:
+      desktop: md none
+  - type: features_quad
+    version: "1.0"
+    variant: default
+    heading: Why Partner with 4Geeks?
+    description: Every collaboration is designed to drive measurable results for both organizations and communities. Our partnerships span across
+    cards:
+      - icon: Trophy
+        title: Scholarships & Funding
+        description: Break down financial barriers and make coding education accessible to underserved communities.
+      - icon: Wallet
+        title: Reskilling & Upskilling Programs
+        description: Invest in your workforce and prepare employees for the digital-first future.
+      - icon: Clock
+        title: Recruitment & Hiring Pipelines
+        description: Gain direct access to job-ready developers, data scientists, and cybersecurity specialists.
+      - icon: Users
+        title: Events & Outreach
+        description: Partner on hackathons, speaker series, and innovation initiatives that amplify your brand and mission.
+    background: hsl(var(--muted))
+    marginY:
+      desktop: none lg
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Impact by the Numbers
+    subtitle: $20M+ in scholarships and grants awarded
+    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    background: hsl(210 100% 50% / 0.05)
+    items:
+      - value: 84%
+        title: hiring rate within 6 months of graduation
+      - value: 5K+
+        title: hiring partners
+      - value: 6K+
+        title: students supported worldwide
+    paddingY:
+      desktop: none
+    marginY:
+      desktop: none lg
+  - type: two_column
+    proportions:
+      - 5
+      - 7
+    background: bg-muted/30
+    alignment: center
+    left:
+      image: https://4geeksacademy.com/static/0e206e6ab1ae7f4ca09668b2d287baa7/56f2e/alejandrosanchez.webp
+      image_alt: Team collaborating on a project
+      justify: center
+    right:
+      heading: Become a partner
+      description: Collaborate with our mission and leverage yours!
+      bullets:
+        - text: Elevate your brand's visibility and exposure.
+        - text: Establish your brand as a leading force in the tech industry.
+        - text: Foster a spirit of community and collaboration.
+        - text: Strengthen job retention through our impactful reskilling programs.
+        - text: Bridge the technology divide within your community.
+        - text: Fill vital tech roles within your organization with our highly skilled bootcamp graduates.
+        - text: Enhance brand recognition and add value by sponsoring significant events.
+      bullet_icon: Check
+      font_size: base
+    reverse_on_mobile: true
+    gap: "12"
+    marginY:
+      desktop: none md
+  - type: partnership_carousel
+    version: v1.0
+    heading: Our Global Partnerships
+    subtitle: Collaborating with leading institutions to bring coding education worldwide
+    slides:
+      - image_id: costa_rica_city
+        image_object_fit: cover
+        image_object_position: center
+        title: CRUSA Forte Scholarship
+        subtitle: Empowering Costa Rican talent through tech education
+        description: In partnership with Fundación CRUSA, we launched the Forte Scholarship program to train the next generation of software developers in Costa Rica, providing full scholarships to underrepresented communities.
+        stats:
+          - value: 200+
+            label: Scholarships awarded
+          - value: 85%
+            label: Employment rate
+          - value: "12"
+            label: Months program
+        institution_logos:
+          - image_id: costa_rica_city
+            alt: CRUSA Foundation
+            logo_height: 40px
+        press_references:
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            source: La Nación
+            url: https://example.com/article-1
+        cta:
+          text: Learn More
+          url: /en/costa-rica
+          variant: primary
+      - image_id: united_way_event
+        image_object_fit: cover
+        image_object_position: center bottom
+        title: United Way Miami Partnership
+        subtitle: Breaking barriers to tech careers in South Florida
+        description: Together with United Way Miami, we provide coding bootcamp scholarships to low-income residents, helping them transition into high-paying tech careers and strengthening the local workforce.
+        stats:
+          - value: 150+
+            label: Students trained
+          - value: 92%
+            label: Completion rate
+        institution_logos:
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+        press_references:
+          - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
+            source: Miami Herald
+            url: https://example.com/article-2
+        cta:
+          text: See Impact
+          url: /en/united-way
+          variant: primary
+      - image_id: uruguay_city
+        image_object_fit: cover
+        image_object_position: center
+        title: Uruguay Tech Initiative
+        subtitle: Expanding coding education across Latin America
+        description: Our expansion to Uruguay brings world-class coding education to Montevideo, partnering with local institutions to develop a thriving tech ecosystem in the region.
+        stats:
+          - value: "3"
+            label: Campuses
+          - value: 500+
+            label: Graduates
+        cta:
+          text: Explore Uruguay
+          url: /en/uruguay
+          variant: outline
+  - type: faq
+    version: v1.0
+    title: Frequently Asked Questions
+    related_features:
+      - outcomes
+    marginY:
+      desktop: none md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
