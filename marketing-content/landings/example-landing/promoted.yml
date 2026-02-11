@@ -425,9 +425,11 @@ sections:
             text: 1-on-1 career coaching and strategy sessions
           - icon: IconMicrophone
             text: Mock interviews and technical interview prep
-        col3_image_id: career_coach_portrait
+        col3_image_id: our_story
         col3_object_fit: cover
         col3_object_position: center
+        alt: Our story image
+        id: our-story
       - tab_label: Get noticed
       - tab_label: Build a portfolio
       - tab_label: Find your edge

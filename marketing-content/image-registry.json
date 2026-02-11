@@ -806,7 +806,15 @@
       "src": "/attached_assets/micitt-logo.webp",
       "alt": "MICITT logo",
       "focal_point": "center",
-      "tags": ["logo", "partner"]
+      "tags": ["logo", "partner"],
+      "usage_count": 0
+    },
+    "4geeks_member": {
+      "src": "/attached_assets/4geeks_member.webp",
+      "alt": "4Geeks Member",
+      "focal_point": "center",
+      "tags": ["brand", "academy"],
+      "usage_count": 0
     }
   }
 }

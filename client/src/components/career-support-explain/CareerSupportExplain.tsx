@@ -5,7 +5,6 @@ import { UniversalImage } from "@/components/UniversalImage";
 import type { CareerSupportExplainSection, CareerSupportTab } from "@shared/schema";
 import * as TablerIcons from "@tabler/icons-react";
 
-// test
 interface CareerSupportExplainProps {
   data: CareerSupportExplainSection;
 }
@@ -48,9 +47,9 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="lg:col-span-4 bg-primary/5 p-6 flex flex-col" data-testid="col-2-bullets">
+      <div className="lg:col-span-4 bg-primary/5 p-6 flex flex-col text-foreground" data-testid="col-2-bullets">
         {tab.col2_heading && (
-          <p className="text-lg font-semibold text-primary-foreground mb-6 leading-snug" data-testid="text-col2-heading">
+          <p className="text-lg font-semibold mb-6 leading-snug" data-testid="text-col2-heading">
             {tab.col2_heading}
           </p>
         )}
@@ -66,7 +65,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-sm text-primary-foreground">{bullet.text}</span>
+                  <span className="text-sm">{bullet.text}</span>
                 </div>
               );
             })}
@@ -156,7 +155,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
           </div>
         )}
 
-        <div className="min-h-[450px]">
+        <div className="h-[500px] mx-12">
           <TabContent tab={tabs[activeTab]} />
         </div>
       </div>
