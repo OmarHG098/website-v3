@@ -319,7 +319,7 @@ export default function PrivateRedirects() {
                   data-testid="button-toggle-validation"
                 >
                   {validationResult.status === "passed" ? (
-                    <Badge variant="secondary" className="gap-1">
+                    <Badge variant="secondary" className="gap-1 bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
                       <IconCircleCheck className="h-3.5 w-3.5" />
                       Passed
                     </Badge>
