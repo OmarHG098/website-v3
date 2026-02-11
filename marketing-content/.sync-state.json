@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "d3aead59a101a8ee73f40bbb03dd5e4c554a845c",
-  "lastSyncedAt": "2026-02-11T18:40:35.708Z",
+  "lastSyncedCommit": "361489b8b957cc58e8ea05d78ebe86d0914e8d12",
+  "lastSyncedAt": "2026-02-11T19:14:23.530Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -636,9 +636,9 @@
       "remoteSha": "0a20ed628666a4f3abd896728ff4b6e1cae06e8fd144d7088b4fb60376c71687"
     },
     "marketing-content/pages/financials/en.yml": {
-      "sha": "7a0614dc2926a893cc2c60cd060db4ee56e085836e4b72575a9d11e4556e0ab0",
-      "lastModified": 1770822237551.8948,
-      "remoteSha": "7a0614dc2926a893cc2c60cd060db4ee56e085836e4b72575a9d11e4556e0ab0"
+      "sha": "1f9877480f7d0f64f9bd139c14c5622451fbeaa902d85262c8b5f9063cdce869",
+      "lastModified": 1770837262238.4646,
+      "remoteSha": "1f9877480f7d0f64f9bd139c14c5622451fbeaa902d85262c8b5f9063cdce869"
     },
     "marketing-content/pages/financials/es.yml": {
       "sha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec",
@@ -797,12 +797,12 @@
     },
     "marketing-content/pages/press/en.yml": {
       "sha": "1b4e6a469b29d9dc5cdcba8e9a14e4e49c46393e00eaff12c7b0830743b05f93",
-      "lastModified": 1770834094797.0513,
+      "lastModified": 1770837262678.4644,
       "remoteSha": "1b4e6a469b29d9dc5cdcba8e9a14e4e49c46393e00eaff12c7b0830743b05f93"
     },
     "marketing-content/pages/press/es.yml": {
       "sha": "1ae64d761c6b22ab622492a78646b950462fbf6eeac0b2dc0f9f1439c2e91e29",
-      "lastModified": 1770835192442.8162,
+      "lastModified": 1770837263193.4639,
       "remoteSha": "1ae64d761c6b22ab622492a78646b950462fbf6eeac0b2dc0f9f1439c2e91e29"
     },
     "marketing-content/pages/rigobot-ai-coding-mentor/_common.yml": {
