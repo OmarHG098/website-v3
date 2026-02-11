@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -459,57 +459,59 @@ export default function PrivateRedirects() {
 
             <div className="space-y-2">
               <Label>Destination</Label>
-              <div className="flex items-center">
-                <SitemapSearch
-                  value={newTo}
-                  onChange={handleDestinationChange}
-                  placeholder="Search for a page..."
-                  testId="input-redirect-to"
-                  portalContainer={dialogRef.current}
-                />
-              </div>
-              {newTo && (
-                <p className="text-xs text-muted-foreground">
-                  {allLanguages && !isLandingDestination
-                    ? <>All languages of <code className="bg-muted px-1 rounded">{newTo}</code> will have this redirect</>
-                    : <>Redirecting to: <code className="bg-muted px-1 rounded">{newTo}</code></>
-                  }
-                </p>
+              {!newTo ? (
+                <div className="flex items-center">
+                  <SitemapSearch
+                    value={newTo}
+                    onChange={handleDestinationChange}
+                    placeholder="Search for a page..."
+                    testId="input-redirect-to"
+                    portalContainer={dialogRef.current}
+                  />
+                </div>
+              ) : (
+                <div className="rounded-md border p-3 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 flex-1 space-y-1.5">
+                      <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{newTo}</code>
+                      <p className="text-xs text-muted-foreground">
+                        {isLandingDestination
+                          ? <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will land on this exact landing page.</>
+                          : allLanguages
+                            ? <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to this page. Because "all languages" is on, the redirect applies to every language version of this content.</>
+                            : <>Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be sent to the <strong>{originalTo.match(/^\/(en|es)/)?.[1] || "en"}</strong> version of this page only.</>
+                        }
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => { setNewTo(""); setOriginalTo(""); }}
+                      data-testid="button-clear-destination"
+                    >
+                      <IconX className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {!isLandingDestination && (
+                    <div className="flex items-center justify-between gap-4 border-t pt-3">
+                      <Label htmlFor="all-languages" className="text-sm font-medium">All languages</Label>
+                      <Switch
+                        id="all-languages"
+                        checked={allLanguages}
+                        onCheckedChange={(checked) => {
+                          setAllLanguages(checked);
+                          if (originalTo && !originalTo.startsWith("/landing")) {
+                            setNewTo(checked ? stripLocalePrefix(originalTo) : originalTo);
+                          }
+                        }}
+                        data-testid="switch-all-languages"
+                      />
+                    </div>
+                  )}
+                </div>
               )}
             </div>
-
-            {!isLandingDestination && (
-              <div className="flex items-center justify-between gap-4 rounded-md border p-3">
-                <div className="space-y-0.5">
-                  <Label htmlFor="all-languages" className="text-sm font-medium">Match all languages</Label>
-                  <p className="text-xs text-muted-foreground">
-                    {allLanguages
-                      ? "Stored in _common.yml — all language versions of the destination content will have this redirect"
-                      : "Stored in locale file — only the selected language version will have this redirect"
-                    }
-                  </p>
-                </div>
-                <Switch
-                  id="all-languages"
-                  checked={allLanguages}
-                  onCheckedChange={(checked) => {
-                    setAllLanguages(checked);
-                    if (originalTo && !originalTo.startsWith("/landing")) {
-                      setNewTo(checked ? stripLocalePrefix(originalTo) : originalTo);
-                    }
-                  }}
-                  data-testid="switch-all-languages"
-                />
-              </div>
-            )}
-
-            {isLandingDestination && (
-              <div className="rounded-md border p-3">
-                <p className="text-xs text-muted-foreground">
-                  Landing pages use exact path matching only. The redirect will be stored in the landing's variant file.
-                </p>
-              </div>
-            )}
 
             <div className="space-y-2">
               <Label>Status Code</Label>
