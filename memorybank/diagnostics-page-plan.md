@@ -1,6 +1,10 @@
 # Diagnostics Page — Implementation Plan
 
 > **Goal:** A private, self-service diagnostics page that scans all marketing content pages and reports SEO health, Schema.org correctness, content quality, and infrastructure integrity — eliminating the need for third-party audit tools.
+>
+> **Status:** IMPLEMENTED (all 6 steps complete)
+> **Route:** `/private/diagnostics` (accessible via debug bubble)
+> **Last Updated:** 2026-02-11
 
 ---
 
@@ -22,14 +26,18 @@ scripts/validation/
 │   ├── canonicalUrls.ts  # URL normalization and canonical URL generation
 │   └── schemaRegistry.ts # Available Schema.org keys from schema-org.yml
 └── validators/
-    ├── index.ts           # Registry of all validators + discovery utilities
+    ├── index.ts           # Registry of all 11 validators + discovery utilities
     ├── meta.ts            # SEO meta: page_title, description, priority, change_frequency, robots
     ├── schema.ts          # Schema.org reference validation (checks refs exist in schema-org.yml)
     ├── redirects.ts       # Redirect conflicts, loops, self-redirects, content overwrites
     ├── sitemap.ts         # Sitemap-to-content coverage, orphaned entries, duplicates
     ├── components.ts      # Component registry: schema files, examples, versions
     ├── backgrounds.ts     # Theme compliance: background colors match theme.json
-    └── faqs.ts            # FAQ freshness: last_updated within 6 months
+    ├── faqs.ts            # FAQ freshness: last_updated within 6 months
+    ├── seo-depth.ts       # NEW: SEO title/description length, duplicates, OG image, canonical
+    ├── schema-completeness.ts # NEW: Renders JSON-LD per page, validates fields, placeholders, FAQ coverage
+    ├── images.ts          # NEW: Image registry integrity, missing files, orphaned entries
+    └── content-quality.ts # NEW: Section structure, translations, empty fields
 ```
 
 **Key Types:**
@@ -83,18 +91,18 @@ interface Validator extends ValidatorMetadata {
   - Parses routes to resolve content type, slug, locale
   - Loads raw YAML (merging `_common.yml` + locale file)
   - Generates JSON-LD `<script>` tags for Schema.org includes and auto-detected FAQ sections
-  - `generateSsrSchemaHtml(url)` → returns full JSON-LD HTML string
+  - `generateSsrSchemaHtml(url)` -> returns full JSON-LD HTML string
 
 ### 1.4 Content Index Singleton (`server/content-index.ts`)
 
 - Indexes all `marketing-content/` YAML on startup
 - Tracks image usage via `imageUsage` Map (by image_id and src)
-- `getImageUsage(imageId, imageSrc)` → O(1) lookup returning files that use the image
+- `getImageUsage(imageId, imageSrc)` -> O(1) lookup returning files that use the image
 - Auto-refreshes on file changes
 
 ---
 
-## 2. New Validators to Add
+## 2. New Validators (IMPLEMENTED)
 
 ### 2.1 SEO Depth Validator (`seo-depth`)
 
@@ -141,8 +149,8 @@ Actually renders the JSON-LD per page and validates output quality.
 | `INVALID_SCHEMA_TYPE` | error | `@type` value is not a recognized Schema.org type |
 
 **Implementation notes:**
-- Uses `generateSsrSchemaHtml()` from `server/ssr-schema.ts` to render actual JSON-LD
-- Needs to construct URLs for each content file (using canonical URL generation)
+- Uses dynamic `await import()` for `generateSsrSchemaHtml()` from `server/ssr-schema.ts` (ESM compatible)
+- Constructs URLs using `getCanonicalUrl()` from shared utilities
 - Parses rendered JSON-LD to validate field presence
 - Category: `seo`
 
@@ -187,21 +195,21 @@ Validates content completeness and cross-locale consistency.
 
 ---
 
-## 3. Per-Page Diagnostics API
+## 3. Per-Page Diagnostics API (IMPLEMENTED)
 
 ### 3.1 Endpoint: `GET /api/diagnostics/page?url=/en/some-page`
 
 Returns a comprehensive diagnostic report for a single page.
 
-**Response shape:**
+**Actual response shape (as implemented):**
 ```typescript
-interface PageDiagnosticResult {
+{
   url: string;
-  contentType: "programs" | "pages" | "locations" | "landings";
+  contentType: string;
   slug: string;
   locale: string;
   filePath: string;
-
+  title: string;
   meta: {
     page_title: string | null;
     titleLength: number;
@@ -210,56 +218,42 @@ interface PageDiagnosticResult {
     og_image: string | null;
     canonical_url: string | null;
     robots: string | null;
-    hasMeta: boolean;
   };
-
   schema: {
     configured: boolean;
     includes: string[];
-    renderedJsonLd: object[];  // parsed JSON-LD objects
-    htmlPreview: string;       // raw <script> tags
-    issues: ValidationIssue[];
+    renderedJsonLd: object[];
+    htmlPreview: string;
   };
-
   sections: {
     count: number;
-    types: string[];            // list of section types used
+    types: string[];
     hasFaq: boolean;
-    issues: ValidationIssue[];
   };
-
   images: {
     referencedIds: string[];
-    referencedSrcs: string[];
     missingFromRegistry: string[];
     missingFromDisk: string[];
-    issues: ValidationIssue[];
   };
-
   translations: {
     hasEnglish: boolean;
     hasSpanish: boolean;
     counterpartUrl: string | null;
   };
-
   redirects: {
-    incomingRedirects: string[];   // URLs that redirect to this page
+    incomingRedirects: string[];
   };
-
+  emptyFields: string[];
   score: {
-    total: number;      // 0-100
-    seo: number;        // 0-100
-    schema: number;     // 0-100
-    content: number;    // 0-100
-    breakdown: {
-      category: string;
-      score: number;
-      maxScore: number;
-      checks: { name: string; passed: boolean; weight: number }[];
-    }[];
+    total: number;   // 0-100
+    seo: number;     // 0-100
+    schema: number;  // 0-100
+    content: number; // 0-100
   };
 }
 ```
+
+**Deviation from original plan:** The `score.breakdown` detail array was omitted from the response for simplicity. The three category scores and total score are sufficient for the UI. Inline issue lists per section were also omitted — the Global Health tab serves as the detailed issue viewer.
 
 ### 3.2 Scoring System
 
@@ -285,7 +279,7 @@ Each check has a weight. Score = (sum of passed weights) / (sum of all weights) 
 | Has name field | 15 | JSON-LD includes name |
 | Has description field | 15 | JSON-LD includes description |
 | No placeholders | 10 | No TODO values |
-| FAQ schema if needed | 10 | FAQ section → FAQPage schema |
+| FAQ schema if needed | 10 | FAQ section -> FAQPage schema |
 
 **Content Score (max 100):**
 | Check | Weight | Criteria |
@@ -298,142 +292,131 @@ Each check has a weight. Score = (sum of passed weights) / (sum of all weights) 
 
 ### 3.3 Endpoint: `GET /api/diagnostics/pages`
 
-Returns a summary list of all pages with their scores for the dashboard view.
+Returns a summary list of all pages for the page selector.
 
-**Response:**
+**Actual response (as implemented):**
 ```typescript
-interface PageSummary {
-  url: string;
-  title: string;
-  locale: string;
-  contentType: string;
-  scores: { seo: number; schema: number; content: number; total: number };
-  errorCount: number;
-  warningCount: number;
+{
+  pages: Array<{
+    url: string;
+    title: string;
+    locale: string;
+    contentType: string;
+    slug: string;
+    filePath: string;
+    hasMeta: boolean;
+    hasSchema: boolean;
+  }>;
+  total: number;
 }
 ```
 
+**Deviation from original plan:** The pages list endpoint returns lightweight metadata only (no scores) since calculating scores for 127+ pages on every request would be expensive. Scores are calculated on-demand when a specific page is selected.
+
 ---
 
-## 4. Frontend: Diagnostics Page
+## 4. Frontend: Diagnostics Page (IMPLEMENTED)
 
 ### 4.1 Page Structure
 
-**Route:** `/diagnostics` (private, accessible from debug bubble)
+**Route:** `/private/diagnostics` (lazy-loaded via PrivateRouter)
+**File:** `client/src/pages/DiagnosticsPage.tsx` (~890 lines, self-contained)
 
 **Two-tab layout:**
 
-#### Tab 1: Global Dashboard
-- **Health Summary Bar**: Total pages, overall health score, counts of errors/warnings/passes
-- **Validator Cards Grid**: One card per validator (all 11 validators)
-  - Status badge (green checkmark / yellow warning / red X)
-  - Error count, warning count
-  - Duration
-  - Expandable: shows individual issues with file path, code, message, suggestion
+#### Tab 1: Global Health
+- **Health Summary Bar**: 4 stat cards — Total Validators, Passed (chart-3 color), Warnings (chart-2 color), Failed (destructive color)
+- **Filter bar**: Search input, severity filter (All/Errors/Warnings), category filter buttons (all, seo, integrity, content, components)
+- **Validator Cards Grid**: Responsive (1 col mobile, 2 col md, 3 col lg)
+  - Status badge (passed/warning/failed)
+  - Error count, warning count, duration
+  - Accordion expand to show individual issues with severity icon, code badge, message, file path, suggestion
   - Individual "Run" button per card
-- **"Run All Diagnostics"** button at top
-- **Filter bar**: Filter issues by severity (error/warning), category (seo/integrity/content/components), search by code or message
-- **Export button**: Download results as JSON
+- **"Run All"** button at top with last-run timestamp
 
-#### Tab 2: Per-Page Deep Dive
-- **Page selector**: Searchable dropdown of all pages (grouped by content type)
-- **Score dashboard**: Three circular progress indicators (SEO / Schema / Content) + overall score
-- **Meta section**: Table showing all meta fields with values and length indicators (green/yellow/red bars)
-- **Schema section**: 
-  - List of configured schemas
-  - Rendered JSON-LD preview (syntax-highlighted JSON)
-  - Issue list
-- **Sections section**: 
-  - Section count and type list
-  - Issues for empty/untyped sections
-- **Images section**:
-  - Referenced image IDs with resolution status
-  - Missing references highlighted
-- **Translation status**: EN/ES availability with link to counterpart
-- **Incoming redirects**: List of URLs that redirect to this page
+#### Tab 2: Page Analysis
+- **Page selector**: Searchable dropdown of all pages, grouped by contentType, with click-outside handler
+- **Score dashboard**: 4 circular progress indicators (Total, SEO, Schema, Content) using CSS `conic-gradient` with semantic CSS variables (`--chart-3`, `--chart-2`, `--destructive`)
+- **Meta section Card**: Table of meta fields with title/description length bars
+- **Schema section Card**: Configured status, includes list, JSON-LD preview in scrollable `<pre>` with `bg-muted`
+- **Sections Card**: Count, types list, FAQ status
+- **Images Card**: Referenced IDs with found/missing badges
+- **Translations Card**: EN/ES badges with counterpart link
+- **Redirects Card**: Incoming redirect list
+- **Empty Fields Card**: List of fields with empty values
 
-### 4.2 Component Hierarchy
+### 4.2 Technical Conventions
 
-```
-DiagnosticsPage
-├── DiagnosticsHeader (title, run all button, export button)
-├── Tabs
-│   ├── Tab: "Global Health"
-│   │   ├── HealthSummaryBar (total pages, scores, issue counts)
-│   │   ├── FilterBar (severity, category, search)
-│   │   └── ValidatorCardGrid
-│   │       └── ValidatorCard (per validator)
-│   │           ├── StatusBadge
-│   │           ├── IssueCount
-│   │           └── IssueList (expandable)
-│   │               └── IssueRow (code, message, file, suggestion)
-│   └── Tab: "Page Analysis"
-│       ├── PageSelector (searchable dropdown)
-│       ├── ScoreDashboard (three score circles + overall)
-│       ├── MetaAnalysis (table of meta fields)
-│       ├── SchemaPreview (JSON-LD preview)
-│       ├── SectionsOverview (types, counts)
-│       ├── ImageReferences (IDs + status)
-│       └── TranslationStatus (EN/ES)
-```
+- Icons: `@tabler/icons-react` only (IconStethoscope, IconCheck, IconAlertTriangle, IconX, IconSearch, IconRefresh, IconArrowLeft, IconWorld, IconPhoto, IconCode, IconFileText, IconLayoutGrid)
+- Colors: Semantic tokens only (`text-chart-3`, `text-chart-2`, `text-destructive`, `bg-muted`, `text-foreground`, `text-muted-foreground`)
+- Score circle colors: CSS custom properties via `conic-gradient(hsl(var(--chart-3)) ...)` etc.
+- Components: shadcn Card, Badge, Button, Tabs, ScrollArea, Accordion, Input
+- Data fetching: TanStack Query with default fetcher (no queryFn), mutations via `apiRequest`
+- Routing: wouter Link component
+- `data-testid` on all interactive/meaningful elements
+- Card border radius: 0.8rem
+- No emojis
 
 ### 4.3 State Management
 
-- Use TanStack Query for all API calls
-- `queryKey: ['/api/validation/run']` for global diagnostics
-- `queryKey: ['/api/diagnostics/page', url]` for per-page
-- `queryKey: ['/api/diagnostics/pages']` for page list with scores
-- Results cached in-memory, invalidated on "Run" or page navigation
-
-### 4.4 UI Design Notes
-
-- Uses existing shadcn components: Card, Badge, Tabs, Button, ScrollArea, Accordion
-- Status colors via semantic tokens only (no hardcoded colors)
-- Score circles: use CSS `conic-gradient` with semantic color variables
-- JSON preview: `<pre>` with `bg-muted` and `text-foreground`, `overflow-x-auto`
-- Responsive: cards stack on mobile, 2-3 columns on desktop
-- Icons from `@tabler/icons-react` only
+- TanStack Query keys:
+  - `['/api/validation/validators']` — validator list
+  - `['/api/diagnostics/pages']` — page list for selector
+  - `['/api/diagnostics/page', selectedUrl]` — per-page deep dive (enabled only when URL selected)
+- Mutations:
+  - Run all: `POST /api/validation/run` with `{ includeArtifacts: true }`
+  - Run single: `POST /api/validation/run/:name`
+- Local state: selected tab, search term, severity filter, category filter, selected page URL, dropdown open state
 
 ---
 
-## 5. Debug Bubble Integration
+## 5. Debug Bubble Integration (IMPLEMENTED)
 
-Add a "Diagnostics" link to the debug bubble's navigation menu, alongside existing items like the component registry and media gallery links.
-
----
-
-## 6. Implementation Order
-
-| Step | Task | Dependencies |
-|------|------|-------------|
-| 1 | Add 4 new validators (seo-depth, schema-completeness, images, content-quality) | Existing validator framework |
-| 2 | Register new validators in `scripts/validation/validators/index.ts` | Step 1 |
-| 3 | Create per-page diagnostics API (`/api/diagnostics/page`, `/api/diagnostics/pages`) | Steps 1-2, existing SSR schema |
-| 4 | Build Global Dashboard tab (frontend) | Step 2 (uses existing `/api/validation/run`) |
-| 5 | Build Per-Page Analysis tab (frontend) | Step 3 |
-| 6 | Add debug bubble link | Step 4 |
+Added a "Diagnostics" link with `IconStethoscope` to the debug bubble's navigation menu, alongside the Media Gallery link. Uses an `<a>` tag pointing to `/private/diagnostics`.
 
 ---
 
-## 7. Files to Create/Modify
+## 6. Implementation Order (ALL COMPLETE)
+
+| Step | Task | Status |
+|------|------|--------|
+| 1 | Add 4 new validators (seo-depth, schema-completeness, images, content-quality) | DONE |
+| 2 | Register new validators in `scripts/validation/validators/index.ts` | DONE |
+| 3 | Create per-page diagnostics API (`/api/diagnostics/page`, `/api/diagnostics/pages`) | DONE |
+| 4 | Build DiagnosticsPage.tsx (Global Health + Page Analysis tabs) | DONE |
+| 5 | Register route in PrivateRouter.tsx | DONE |
+| 6 | Add debug bubble link | DONE |
+
+---
+
+## 7. Files Created/Modified
 
 **New files:**
-- `memorybank/diagnostics-page-plan.md` — this document
-- `scripts/validation/validators/seo-depth.ts` — SEO depth validator
-- `scripts/validation/validators/schema-completeness.ts` — Schema.org completeness validator
-- `scripts/validation/validators/images.ts` — Image integrity validator
-- `scripts/validation/validators/content-quality.ts` — Content quality validator
-- `client/src/pages/DiagnosticsPage.tsx` — Diagnostics page component
+- `memorybank/diagnostics-page-plan.md` -- this document
+- `scripts/validation/validators/seo-depth.ts` -- SEO depth validator
+- `scripts/validation/validators/schema-completeness.ts` -- Schema.org completeness validator
+- `scripts/validation/validators/images.ts` -- Image integrity validator
+- `scripts/validation/validators/content-quality.ts` -- Content quality validator
+- `client/src/pages/DiagnosticsPage.tsx` -- Diagnostics page component
 
 **Modified files:**
-- `scripts/validation/validators/index.ts` — Register 4 new validators
-- `server/routes.ts` — Add per-page diagnostics API endpoints
-- `client/src/App.tsx` — Add `/diagnostics` route
-- `client/src/components/DebugBubble.tsx` — Add diagnostics link
+- `scripts/validation/validators/index.ts` -- Registered 4 new validators (11 total)
+- `server/routes.ts` -- Added 2 diagnostics API endpoints
+- `client/src/pages/PrivateRouter.tsx` -- Added lazy-loaded `/private/diagnostics` route
+- `client/src/components/DebugBubble.tsx` -- Added diagnostics link with IconStethoscope
 
 ---
 
-## 8. Non-Goals (Explicitly Out of Scope)
+## 8. Known Limitations / Implementation Notes
+
+- **Map/Set iteration**: TypeScript `downlevelIteration` is disabled in this project. All Map/Set iteration must use `.forEach()` or `Array.from()` instead of `for...of`.
+- **ESM compliance**: `schema-completeness.ts` uses `await import()` (dynamic import) for `server/ssr-schema.ts` to maintain ESM compatibility.
+- **Performance**: The `/api/diagnostics/pages` endpoint returns lightweight metadata without scores. Full scoring is only computed on-demand per page via `/api/diagnostics/page?url=X`.
+- **No export button**: The original plan mentioned an "Export as JSON" button on the Global Health tab. This was not implemented in the MVP but could be easily added.
+
+---
+
+## 9. Non-Goals (Explicitly Out of Scope)
 
 - Lighthouse-style performance auditing (requires headless browser)
 - Accessibility (a11y) scanning (would need DOM rendering)
