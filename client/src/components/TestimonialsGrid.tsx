@@ -1,7 +1,31 @@
+import { useMemo } from "react";
 import { IconStarFilled, IconStar, IconBrandLinkedin } from "@tabler/icons-react";
 import type { TestimonialsGridSection as TestimonialsGridSectionType } from "@shared/schema";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { useQuery } from "@tanstack/react-query";
+import { useTranslation } from "react-i18next";
+
+interface BankTestimonial {
+  student_name: string;
+  student_thumb?: string;
+  linkedin_url?: string;
+  excerpt?: string;
+  full_text?: string;
+  content?: string;
+  short_content?: string;
+  related_features?: string[];
+  locations?: string[];
+  priority?: number;
+  rating?: number;
+  role?: string;
+  company?: string;
+  media?: {
+    url: string;
+    type?: "image" | "video";
+    ratio?: string;
+  };
+}
 
 interface TestimonialsGridProps {
   data: TestimonialsGridSectionType;
@@ -24,8 +48,70 @@ function isVideoUrl(url: string): boolean {
     videoHosts.some(host => lowerUrl.includes(host));
 }
 
+type GridItem = NonNullable<TestimonialsGridSectionType["items"]>[number];
+
+function mapBankToGridItem(t: BankTestimonial): GridItem {
+  return {
+    name: t.student_name,
+    role: t.role || "",
+    company: t.company,
+    comment: t.excerpt || t.short_content || t.content || t.full_text || "",
+    rating: t.rating,
+    avatar: t.student_thumb,
+    linkedin_url: t.linkedin_url,
+    media: t.media,
+  };
+}
+
+function filterByRelatedFeatures(
+  testimonials: BankTestimonial[],
+  relatedFeatures: string[],
+  limit: number
+): GridItem[] {
+  let filtered = testimonials.filter((t) => {
+    const features = t.related_features || [];
+    return relatedFeatures.some((f) => features.includes(f));
+  });
+
+  filtered.sort((a, b) => {
+    const aFeatures = a.related_features || [];
+    const bFeatures = b.related_features || [];
+    const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
+    const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
+
+    if (bMatchCount !== aMatchCount) {
+      return bMatchCount - aMatchCount;
+    }
+    return (b.priority ?? 0) - (a.priority ?? 0);
+  });
+
+  return filtered.slice(0, limit).map(mapBankToGridItem);
+}
+
 export function TestimonialsGrid({ data }: TestimonialsGridProps) {
-  const items = data.items || [];
+  const { i18n } = useTranslation();
+  const locale = i18n.language?.startsWith("es") ? "es" : "en";
+
+  const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
+  const hasInlineItems = data.items && data.items.length > 0;
+  const limit = Math.min(data.limit || 30, 30);
+
+  const { data: bankData, isLoading } = useQuery<{ testimonials: BankTestimonial[] }>({
+    queryKey: ["/api/testimonials", locale],
+    enabled: !!hasRelatedFeatures,
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const items: GridItem[] = useMemo(() => {
+    if (hasRelatedFeatures && bankData?.testimonials) {
+      return filterByRelatedFeatures(bankData.testimonials, data.related_features!, limit);
+    }
+    if (hasInlineItems) {
+      return data.items!.slice(0, limit);
+    }
+    return [];
+  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, bankData, limit]);
+
   const title = data.title;
   const subtitle = data.subtitle;
   const defaultBoxColor = data.default_box_color || "hsl(var(--muted))";
@@ -36,6 +122,23 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const defaultLinkedinColor = data.default_linkedin_color;
   const columns = data.columns || 3;
   const background = data.background;
+
+  if (isLoading && hasRelatedFeatures) {
+    return (
+      <section data-testid="section-testimonials-grid">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="animate-pulse">
+            <div className="h-10 w-64 bg-muted rounded mx-auto mb-8" />
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div key={i} className="h-40 bg-muted rounded-[0.8rem]" />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (items.length === 0) return null;
 
@@ -118,7 +221,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
 }
 
 interface TestimonialGridCardProps {
-  item: NonNullable<TestimonialsGridSectionType["items"]>[number];
+  item: GridItem;
   defaultBoxColor: string;
   defaultNameColor?: string;
   defaultRoleColor?: string;

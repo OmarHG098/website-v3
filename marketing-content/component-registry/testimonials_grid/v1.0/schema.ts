@@ -36,6 +36,8 @@ export const testimonialsGridSectionSchema = z.object({
   default_linkedin_color: z.string().optional(),
   columns: z.number().optional(),
   items: z.array(testimonialsGridItemSchema).optional(),
+  related_features: z.array(z.string()).optional(),
+  limit: z.number().optional(),
   background: z.string().optional(),
 });
 

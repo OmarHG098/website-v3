@@ -3966,6 +3966,32 @@ sections: []
   // ============================================
   
   // Get centralized FAQs from YAML file
+  app.get("/api/testimonials/:locale", (req, res) => {
+    const { locale } = req.params;
+    const normalizedLocale = normalizeLocale(locale);
+
+    const testimonialsPath = path.join(
+      process.cwd(),
+      "marketing-content",
+      "testimonials",
+      `${normalizedLocale}.yml`
+    );
+
+    if (!fs.existsSync(testimonialsPath)) {
+      res.status(404).json({ error: "Testimonials not found for locale" });
+      return;
+    }
+
+    try {
+      const content = fs.readFileSync(testimonialsPath, "utf8");
+      const data = yaml.load(content) as unknown[];
+      res.json({ testimonials: data || [] });
+    } catch (error) {
+      console.error("Error loading testimonials:", error);
+      res.status(500).json({ error: "Failed to load testimonials" });
+    }
+  });
+
   app.get("/api/faqs/:locale", (req, res) => {
     const { locale } = req.params;
     const normalizedLocale = normalizeLocale(locale);
