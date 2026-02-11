@@ -78,9 +78,8 @@ function isAnonymous(name: string): boolean {
 
 function isValidTestimonial(t: BankTestimonial): boolean {
   if (isAnonymous(t.student_name)) return false;
-  const hasRating = t.rating != null && t.rating > 0;
   const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
-  return hasRating || hasText;
+  return hasText;
 }
 
 function mapBankToGridItem(
