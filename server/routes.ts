@@ -1147,6 +1147,136 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete a redirect (for debug tools)
+  app.delete("/api/debug/redirects", (req, res) => {
+    try {
+      const { from, source } = req.body;
+
+      if (!from || !source) {
+        res.status(400).json({ error: "Both 'from' and 'source' fields are required" });
+        return;
+      }
+
+      let normalizedFrom = (from as string).startsWith("/") ? (from as string) : `/${from}`;
+      normalizedFrom = normalizedFrom.toLowerCase();
+      if (normalizedFrom.length > 1 && normalizedFrom.endsWith("/")) {
+        normalizedFrom = normalizedFrom.slice(0, -1);
+      }
+
+      const sourceFile = source as string;
+
+      const resolvedSource = path.resolve(process.cwd(), sourceFile);
+      const marketingDir = path.resolve(process.cwd(), "marketing-content");
+      if (!resolvedSource.startsWith(marketingDir + path.sep) && resolvedSource !== marketingDir) {
+        res.status(400).json({ error: "Invalid source file path" });
+        return;
+      }
+      if (!sourceFile.endsWith(".yml") && !sourceFile.endsWith(".yaml")) {
+        res.status(400).json({ error: "Invalid source file type" });
+        return;
+      }
+
+      if (sourceFile === "marketing-content/custom-redirects.yml") {
+        const customFilePath = path.join(process.cwd(), "marketing-content", "custom-redirects.yml");
+
+        if (!fs.existsSync(customFilePath)) {
+          res.status(404).json({ error: "Custom redirects file not found" });
+          return;
+        }
+
+        const raw = fs.readFileSync(customFilePath, "utf-8");
+        const loaded = yaml.load(raw) as { redirects?: Array<{ from: string; to: string; status?: number }> } | null;
+
+        if (!loaded || !Array.isArray(loaded.redirects)) {
+          res.status(404).json({ error: "No redirects found in custom redirects file" });
+          return;
+        }
+
+        const originalLength = loaded.redirects.length;
+        loaded.redirects = loaded.redirects.filter(r => {
+          let rFrom = r.from?.startsWith("/") ? r.from : `/${r.from}`;
+          rFrom = rFrom.toLowerCase();
+          if (rFrom.length > 1 && rFrom.endsWith("/")) rFrom = rFrom.slice(0, -1);
+          return rFrom !== normalizedFrom;
+        });
+
+        if (loaded.redirects.length === originalLength) {
+          res.status(404).json({ error: `Redirect "${normalizedFrom}" not found in custom-redirects.yml` });
+          return;
+        }
+
+        const yamlContent = yaml.dump(loaded, { lineWidth: -1, noRefs: true });
+        fs.writeFileSync(customFilePath, yamlContent, "utf-8");
+
+        contentIndex.scan();
+        clearRedirectCache();
+
+        res.json({
+          success: true,
+          message: `Custom redirect "${normalizedFrom}" deleted`,
+        });
+        return;
+      }
+
+      const filePath = path.join(process.cwd(), sourceFile);
+
+      if (!fs.existsSync(filePath)) {
+        res.status(404).json({ error: `Source file "${sourceFile}" not found` });
+        return;
+      }
+
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const parsed = (yaml.load(raw) as Record<string, unknown>) || {};
+
+      const meta = parsed.meta as Record<string, unknown> | undefined;
+      if (!meta || !Array.isArray(meta.redirects)) {
+        res.status(404).json({ error: `No redirects found in "${sourceFile}"` });
+        return;
+      }
+
+      const redirects = meta.redirects as unknown[];
+      const originalLength = redirects.length;
+
+      const getRedirectPath = (r: unknown): string => {
+        if (typeof r === "string") {
+          let p = r.startsWith("/") ? r : `/${r}`;
+          p = p.toLowerCase();
+          if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+          return p;
+        }
+        if (typeof r === "object" && r !== null && "path" in r) {
+          let p = ((r as { path: string }).path);
+          p = p.startsWith("/") ? p : `/${p}`;
+          p = p.toLowerCase();
+          if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+          return p;
+        }
+        return "";
+      };
+
+      meta.redirects = redirects.filter(r => getRedirectPath(r) !== normalizedFrom);
+
+      if ((meta.redirects as unknown[]).length === originalLength) {
+        res.status(404).json({ error: `Redirect "${normalizedFrom}" not found in "${sourceFile}"` });
+        return;
+      }
+
+      const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+
+      contentIndex.scan();
+      clearRedirectCache();
+
+      res.json({
+        success: true,
+        message: `Redirect "${normalizedFrom}" deleted from "${sourceFile}"`,
+      });
+    } catch (err) {
+      console.error("[Debug] Failed to delete redirect:", err);
+      res.status(500).json({ error: "Failed to delete redirect" });
+    }
+  });
+
   // Menus API - list all menu files (excludes translation files like .es.yml)
   app.get("/api/menus", (_req, res) => {
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");

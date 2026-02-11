@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -26,6 +26,7 @@ interface Redirect {
   to: string;
   type: string;
   status: number;
+  source: string;
 }
 
 interface ValidationIssue {
@@ -67,6 +68,8 @@ export default function PrivateRedirects() {
   const [redirectStatus, setRedirectStatus] = useState<number>(301);
   const [localeUrls, setLocaleUrls] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [deletingRedirect, setDeletingRedirect] = useState<Redirect | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
   const { toast } = useToast();
@@ -209,6 +212,45 @@ export default function PrivateRedirects() {
       });
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleDeleteRedirect = async () => {
+    if (!deletingRedirect) return;
+
+    setIsDeleting(true);
+    try {
+      const res = await apiRequest("DELETE", "/api/debug/redirects", {
+        from: deletingRedirect.from,
+        source: deletingRedirect.source,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast({
+          title: "Failed to delete redirect",
+          description: data.error || "An error occurred",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Redirect deleted",
+        description: `${deletingRedirect.from} has been removed`,
+      });
+
+      setDeletingRedirect(null);
+      queryClient.invalidateQueries({ queryKey: ['/api/debug/redirects'] });
+      runValidation();
+    } catch {
+      toast({
+        title: "Failed to delete redirect",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -447,6 +489,16 @@ export default function PrivateRedirects() {
                               <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                             </a>
                           </div>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="flex-shrink-0 text-muted-foreground hover:text-destructive"
+                            onClick={() => setDeletingRedirect(redirect)}
+                            title="Delete redirect"
+                            data-testid={`button-delete-redirect-${type}-${index}`}
+                          >
+                            <IconTrash className="h-3.5 w-3.5" />
+                          </Button>
                         </div>
                       ))}
                     </div>
@@ -611,6 +663,49 @@ export default function PrivateRedirects() {
               data-testid="button-save-redirect"
             >
               {isSubmitting ? "Adding..." : "Add Redirect"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={!!deletingRedirect} onOpenChange={(open) => { if (!open) setDeletingRedirect(null); }}>
+        <DialogContent className="sm:max-w-sm">
+          <DialogHeader>
+            <DialogTitle>Delete Redirect</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this redirect? This action cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          {deletingRedirect && (
+            <div className="space-y-2 py-2">
+              <div className="rounded-md border p-3 space-y-2">
+                <div className="min-w-0">
+                  <p className="text-xs text-muted-foreground mb-1">From</p>
+                  <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{deletingRedirect.from}</code>
+                </div>
+                <div className="min-w-0">
+                  <p className="text-xs text-muted-foreground mb-1">To</p>
+                  <code className="text-xs bg-muted px-2 py-1 rounded block truncate">{deletingRedirect.to}</code>
+                </div>
+              </div>
+            </div>
+          )}
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setDeletingRedirect(null)}
+              disabled={isDeleting}
+              data-testid="button-cancel-delete"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="destructive"
+              onClick={handleDeleteRedirect}
+              disabled={isDeleting}
+              data-testid="button-confirm-delete"
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
             </Button>
           </DialogFooter>
         </DialogContent>

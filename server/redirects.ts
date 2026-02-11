@@ -47,9 +47,9 @@ export function redirectMiddleware(req: Request, res: Response, next: NextFuncti
   next();
 }
 
-export function getRedirects(): Array<{ from: string; to: string; type: string; status: number }> {
+export function getRedirects(): Array<{ from: string; to: string; type: string; status: number; source: string }> {
   const map = getRedirectMap();
-  const result: Array<{ from: string; to: string; type: string; status: number }> = [];
+  const result: Array<{ from: string; to: string; type: string; status: number; source: string }> = [];
 
   for (const [from, entry] of map) {
     result.push({
@@ -57,6 +57,7 @@ export function getRedirects(): Array<{ from: string; to: string; type: string; 
       to: entry.to,
       type: entry.type,
       status: entry.status || 301,
+      source: entry.source,
     });
   }
 
