@@ -109,7 +109,7 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
           </div>
         )}
 
-        <div className="flex gap-4 md:gap-6 justify-center">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
           {currentProfiles.map((profile, i) => (
             <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
           ))}
