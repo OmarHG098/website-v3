@@ -38,9 +38,10 @@
       "remoteSha": "2fb6157612ecb83a0ed735dc0f916d1c18324f12091247959464f19465d34f9e"
     },
     "marketing-content/landings/ai-engineering-spain/_common.yml": {
-      "sha": "d6d96282be4b98f2ed5d8a1adc383d9906f6c2e5b1266c7b0dcefc43084d1eed",
-      "lastModified": 1770825087816.541,
-      "remoteSha": "d6d96282be4b98f2ed5d8a1adc383d9906f6c2e5b1266c7b0dcefc43084d1eed"
+      "sha": "a79f348f3128537b391ed3b436521c4e381fa75a61d16b6c966b8113fce84347",
+      "lastModified": 1770836835539.0015,
+      "remoteSha": "d6d96282be4b98f2ed5d8a1adc383d9906f6c2e5b1266c7b0dcefc43084d1eed",
+      "modifiedAt": "2026-02-11T19:07:15.540Z"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
       "sha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83",
