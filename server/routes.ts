@@ -908,6 +908,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  app.get("/api/debug/redirects/locale-urls", (req, res) => {
+    try {
+      const url = req.query.url as string;
+      if (!url) {
+        res.status(400).json({ error: "Missing 'url' query parameter" });
+        return;
+      }
+
+      let contentType: "programs" | "landings" | "pages" | "locations" | null = null;
+      let slug: string | null = null;
+
+      const programEn = url.match(/^\/(?:en\/)?career-programs\/([^/]+)/);
+      const programEs = url.match(/^\/(?:es\/)?programas-de-carrera\/([^/]+)/);
+      const locationEn = url.match(/^\/(?:en\/)?locations\/([^/]+)/);
+      const locationEs = url.match(/^\/(?:es\/)?ubicaciones\/([^/]+)/);
+      const landingMatch = url.match(/^\/landing\/([^/]+)/);
+      const pageEn = url.match(/^\/en\/([^/]+)/);
+      const pageEs = url.match(/^\/es\/([^/]+)/);
+
+      if (programEn) { contentType = "programs"; slug = programEn[1]; }
+      else if (programEs) { contentType = "programs"; slug = programEs[1]; }
+      else if (locationEn) { contentType = "locations"; slug = locationEn[1]; }
+      else if (locationEs) { contentType = "locations"; slug = locationEs[1]; }
+      else if (landingMatch) { contentType = "landings"; slug = landingMatch[1]; }
+      else if (pageEn) { contentType = "pages"; slug = pageEn[1]; }
+      else if (pageEs) { contentType = "pages"; slug = pageEs[1]; }
+
+      if (!contentType || !slug) {
+        res.status(400).json({ error: "Could not determine content type from URL" });
+        return;
+      }
+
+      const baseSlug = contentIndex.resolveBaseSlug(slug, contentType);
+      const urls = contentIndex.getLocaleUrls(baseSlug, contentType);
+      res.json({ urls, contentType, slug: baseSlug });
+    } catch (err) {
+      console.error("[Debug] Failed to resolve locale URLs:", err);
+      res.status(500).json({ error: "Failed to resolve locale URLs" });
+    }
+  });
+
   // Add a new redirect (for debug tools)
   app.post("/api/debug/redirects", (req, res) => {
     try {

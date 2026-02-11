@@ -29,6 +29,7 @@ class ContentIndex {
   private byPath: Map<string, ContentEntry> = new Map();
   private imageUsage: Map<string, Set<string>> = new Map();
   private redirectEntries: RedirectEntry[] = [];
+  private localeSlugMap: Map<string, string> = new Map();
   private initialized = false;
 
   private static instance: ContentIndex;
@@ -51,6 +52,7 @@ class ContentIndex {
     this.byPath = new Map();
     this.imageUsage = new Map();
     this.redirectEntries = [];
+    this.localeSlugMap = new Map();
 
     for (const contentType of contentTypes) {
       const typeDir = path.join(baseDir, contentType);
@@ -99,6 +101,12 @@ class ContentIndex {
             if (parsed && (contentType === "programs" || contentType === "landings")) {
               const locale = file.replace(/\.(yml|yaml)$/, "");
               this.extractRedirects(parsed, slug, locale, contentType, relFilePath);
+            }
+            if (parsed?.slug && typeof parsed.slug === "string") {
+              const localeSlug = parsed.slug;
+              if (localeSlug !== slug) {
+                this.localeSlugMap.set(`${localeSlug}:${contentType}`, slug);
+              }
             }
           } catch {}
         }
@@ -327,6 +335,58 @@ class ContentIndex {
       }
     }
     return results;
+  }
+
+  resolveBaseSlug(slug: string, contentType: ContentEntry["contentType"]): string {
+    this.ensureInitialized();
+    if (this.bySlug.has(slug)) return slug;
+    return this.localeSlugMap.get(`${slug}:${contentType}`) || slug;
+  }
+
+  getLocaleUrls(slug: string, contentType: ContentEntry["contentType"]): Record<string, string> {
+    this.ensureInitialized();
+    const entries = this.findBySlug(slug, { contentType });
+    if (entries.length === 0) return {};
+
+    const entry = entries[0];
+    const basePath = path.join(process.cwd(), entry.folder);
+    const urls: Record<string, string> = {};
+
+    for (const locale of entry.locales) {
+      if (locale.startsWith("_") || locale.includes(".")) continue;
+
+      let localeSlug = slug;
+      const candidates = [`${locale}.yml`, `${locale}.yaml`];
+      for (const candidate of candidates) {
+        const filePath = path.join(basePath, candidate);
+        if (fs.existsSync(filePath)) {
+          try {
+            const raw = fs.readFileSync(filePath, "utf-8");
+            const parsed = yaml.load(raw) as Record<string, unknown>;
+            if (parsed?.slug && typeof parsed.slug === "string") {
+              localeSlug = parsed.slug;
+            }
+          } catch {}
+          break;
+        }
+      }
+
+      if (contentType === "programs") {
+        urls[locale] = locale === "es"
+          ? `/es/programas-de-carrera/${localeSlug}`
+          : `/${locale}/career-programs/${localeSlug}`;
+      } else if (contentType === "locations") {
+        urls[locale] = locale === "es"
+          ? `/es/ubicaciones/${localeSlug}`
+          : `/${locale}/locations/${localeSlug}`;
+      } else if (contentType === "landings") {
+        urls[locale] = `/landing/${localeSlug}`;
+      } else {
+        urls[locale] = `/${locale}/${localeSlug}`;
+      }
+    }
+
+    return urls;
   }
 
   getImageUsage(imageId: string, imageSrc?: string): string[] {

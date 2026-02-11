@@ -64,6 +64,7 @@ export default function PrivateRedirects() {
   const [originalTo, setOriginalTo] = useState("");
   const [allLanguages, setAllLanguages] = useState(true);
   const [redirectStatus, setRedirectStatus] = useState<number>(301);
+  const [localeUrls, setLocaleUrls] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -126,24 +127,17 @@ export default function PrivateRedirects() {
 
   const stripLocalePrefix = (url: string) => url.replace(/^\/(en|es)(\/|$)/, "/");
 
-  const getLocaleUrls = (url: string): { en: string; es: string } => {
-    const programEn = url.match(/^\/(?:en\/)?career-programs\/(.+)/);
-    const programEs = url.match(/^\/(?:es\/)?programas-de-carrera\/(.+)/);
-    const locationEn = url.match(/^\/(?:en\/)?locations\/(.+)/);
-    const locationEs = url.match(/^\/(?:es\/)?ubicaciones\/(.+)/);
-    const pageEn = url.match(/^\/en\/(.+)/);
-    const pageEs = url.match(/^\/es\/(.+)/);
-
-    if (programEn) return { en: `/en/career-programs/${programEn[1]}`, es: `/es/programas-de-carrera/${programEn[1]}` };
-    if (programEs) return { en: `/en/career-programs/${programEs[1]}`, es: `/es/programas-de-carrera/${programEs[1]}` };
-    if (locationEn) return { en: `/en/locations/${locationEn[1]}`, es: `/es/ubicaciones/${locationEn[1]}` };
-    if (locationEs) return { en: `/en/locations/${locationEs[1]}`, es: `/es/ubicaciones/${locationEs[1]}` };
-    if (pageEn) return { en: `/en/${pageEn[1]}`, es: `/es/${pageEn[1]}` };
-    if (pageEs) return { en: `/en/${pageEs[1]}`, es: `/es/${pageEs[1]}` };
-
-    const stripped = url.replace(/^\//, "");
-    return { en: `/en/${stripped}`, es: `/es/${stripped}` };
-  };
+  const fetchLocaleUrls = useCallback(async (url: string) => {
+    try {
+      const res = await fetch(`/api/debug/redirects/locale-urls?url=${encodeURIComponent(url)}`);
+      if (res.ok) {
+        const data = await res.json();
+        setLocaleUrls(data.urls || {});
+      }
+    } catch {
+      setLocaleUrls({});
+    }
+  }, []);
 
   const handleOpenAddDialog = () => {
     setNewFrom("");
@@ -151,6 +145,7 @@ export default function PrivateRedirects() {
     setOriginalTo("");
     setAllLanguages(true);
     setRedirectStatus(301);
+    setLocaleUrls({});
     setShowAddDialog(true);
   };
 
@@ -160,6 +155,9 @@ export default function PrivateRedirects() {
       setNewTo(stripLocalePrefix(url));
     } else {
       setNewTo(url);
+    }
+    if (!url.startsWith("/landing")) {
+      fetchLocaleUrls(url);
     }
   };
 
@@ -501,18 +499,14 @@ export default function PrivateRedirects() {
                         </>
                       ) : allLanguages ? (
                         <>
-                          {(() => { const urls = getLocaleUrls(originalTo || newTo); return (
-                            <div className="space-y-1">
-                              <div className="flex items-center gap-2">
-                                <Badge variant="secondary" className="text-xs font-mono shrink-0">EN</Badge>
-                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{urls.en}</code>
+                          <div className="space-y-1">
+                            {Object.entries(localeUrls).map(([locale, url]) => (
+                              <div key={locale} className="flex items-center gap-2">
+                                <Badge variant="secondary" className="text-xs font-mono shrink-0">{locale.toUpperCase()}</Badge>
+                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{url}</code>
                               </div>
-                              <div className="flex items-center gap-2">
-                                <Badge variant="secondary" className="text-xs font-mono shrink-0">ES</Badge>
-                                <code className="text-xs bg-muted px-2 py-1 rounded truncate block">{urls.es}</code>
-                              </div>
-                            </div>
-                          ); })()}
+                            ))}
+                          </div>
                           <p className="text-xs text-muted-foreground">
                             Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected to the matching language version of this content.
                           </p>
@@ -529,7 +523,7 @@ export default function PrivateRedirects() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => { setNewTo(""); setOriginalTo(""); }}
+                      onClick={() => { setNewTo(""); setOriginalTo(""); setLocaleUrls({}); }}
                       data-testid="button-clear-destination"
                     >
                       <IconX className="h-4 w-4" />
