@@ -27,7 +27,7 @@ function SlideLeftCard({
   return (
     <Card className={`flex ${verticalCards ? "" : "flex-col"} h-full`}>
       <div
-        className={`min-h-[430px] relative overflow-hidden aspect-[16/9] md:aspect-[16/6] rounded-t-[0.8rem] ${verticalCards ? "w-[53%]" : ""}`}
+        className={`min-h-[415px] relative overflow-hidden aspect-[16/9] md:aspect-[16/6] rounded-t-[0.8rem] ${verticalCards ? "w-[53%]" : ""}`}
       >
         <UniversalImage
           id={slide.image_id}
@@ -90,7 +90,7 @@ function SlideLeftCard({
           {slide.cta && (
             <a
               href={slide.cta.url}
-              className="mt-2 w-full"
+              className="mt-3 w-full"
               data-testid="link-partnership-cta"
             >
               <Button
@@ -113,7 +113,15 @@ function SlideLeftCard({
   );
 }
 
-function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
+function SlideRightCard({
+  slide,
+  institutionsHeading,
+  referencesHeading,
+}: {
+  slide: PartnershipSlide;
+  institutionsHeading?: string;
+  referencesHeading?: string;
+}) {
   const hasInstitutions =
     slide.institution_logos && slide.institution_logos.length > 0;
   const hasReferences =
@@ -129,16 +137,16 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
             className="text-base font-bold text-foreground"
             data-testid="text-institutions-heading"
           >
-            Institutions that contributed to this project
+            {institutionsHeading || "Institutions that contributed to this project"}
           </h4>
           <div
-            className="flex flex-wrap gap-3"
+            className="flex justify-center gap-3"
             data-testid="logos-partnership"
           >
             {slide.institution_logos!.map((logo, i) => (
               <Card
                 key={i}
-                className="flex items-center justify-center p-2"
+                className="flex items-center justify-center p-1"
                 data-testid={`card-institution-logo-${i}`}
               >
                 <div
@@ -159,43 +167,52 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
       )}
 
       {hasReferences && (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <h4
             className="text-base font-bold text-foreground"
             data-testid="text-references-heading"
           >
-            References
+            {referencesHeading || "References"}
           </h4>
-          <div className="flex flex-col gap-2" data-testid="press-partnership">
-            {slide.press_references!.map((ref, i) => (
-              <div
-                key={i}
-                className="flex items-start gap-2 text-sm text-muted-foreground"
-              >
-                {ref.url ? (
-                  <a
-                    href={ref.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="underline underline-offset-2 hover-elevate inline-flex items-center gap-1"
-                    data-testid={`link-press-ref-${i}`}
-                  >
+          <div className="flex flex-col gap-3" data-testid="press-partnership">
+            {slide.press_references!.map((ref, i) => {
+              const wrapper = ref.url ? "a" : "div";
+              const linkProps = ref.url
+                ? {
+                    href: ref.url,
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                  }
+                : {};
+
+              const Tag = wrapper as keyof JSX.IntrinsicElements;
+
+              return (
+                <Tag
+                  key={i}
+                  {...linkProps}
+                  className={cn(
+                    "flex items-start gap-3",
+                    ref.url && "hover-elevate",
+                  )}
+                  data-testid={ref.url ? `link-press-ref-${i}` : `text-press-ref-${i}`}
+                >
+                  <IconExternalLink className="w-4 h-4 flex-shrink-0 mt-0.5 text-foreground" />
+                  <div className="flex flex-col">
                     {ref.source && (
-                      <span className="font-medium">{ref.source}:</span>
+                      <span className="text-sm font-bold text-foreground">
+                        {ref.source}
+                      </span>
                     )}
-                    <span>{ref.text}</span>
-                    <IconExternalLink className="w-3 h-3 flex-shrink-0" />
-                  </a>
-                ) : (
-                  <span data-testid={`text-press-ref-${i}`}>
-                    {ref.source && (
-                      <span className="font-medium">{ref.source}: </span>
+                    {ref.text && (
+                      <span className="text-sm text-muted-foreground">
+                        {ref.text}
+                      </span>
                     )}
-                    {ref.text}
-                  </span>
-                )}
-              </div>
-            ))}
+                  </div>
+                </Tag>
+              );
+            })}
           </div>
         </div>
       )}
@@ -206,9 +223,13 @@ function SlideRightCard({ slide }: { slide: PartnershipSlide }) {
 function SlideContent({
   slide,
   verticalCards = false,
+  institutionsHeading,
+  referencesHeading,
 }: {
   slide: PartnershipSlide;
   verticalCards?: boolean;
+  institutionsHeading?: string;
+  referencesHeading?: string;
 }) {
   const hasRightCard =
     (slide.institution_logos && slide.institution_logos.length > 0) ||
@@ -233,7 +254,11 @@ function SlideContent({
 
       {hasRightCard && (
         <div className={`${verticalCards ? "md:col-span-3" : "md:col-span-4"}`}>
-          <SlideRightCard slide={slide} />
+          <SlideRightCard
+            slide={slide}
+            institutionsHeading={institutionsHeading}
+            referencesHeading={referencesHeading}
+          />
         </div>
       )}
     </div>
@@ -372,7 +397,12 @@ export function PartnershipCarouselSplitCard({
                 }}
                 className="w-full flex-shrink-0"
               >
-                <SlideContent slide={slide} verticalCards={vertical_cards} />
+                <SlideContent
+                  slide={slide}
+                  verticalCards={vertical_cards}
+                  institutionsHeading={data.institutions_heading}
+                  referencesHeading={data.references_heading}
+                />
               </div>
             ))}
           </div>
