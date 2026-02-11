@@ -20,6 +20,7 @@ export interface RedirectEntry {
   to: string;
   type: string;
   source: string;
+  status: number;
 }
 
 class ContentIndex {
@@ -163,7 +164,7 @@ class ContentIndex {
     filePath: string,
   ): void {
     const meta = parsed.meta as Record<string, unknown> | undefined;
-    const redirects = meta?.redirects as string[] | undefined;
+    const redirects = meta?.redirects as unknown[] | undefined;
     if (!Array.isArray(redirects)) return;
 
     const isCommon = locale === "_common";
@@ -175,8 +176,22 @@ class ContentIndex {
       : (contentType === "programs" ? "program" : "landing");
 
     for (const redirect of redirects) {
-      if (typeof redirect !== "string") continue;
-      let normalized = redirect.startsWith("/") ? redirect : `/${redirect}`;
+      let rawPath: string;
+      let status = 301;
+
+      if (typeof redirect === "string") {
+        rawPath = redirect;
+      } else if (typeof redirect === "object" && redirect !== null && "path" in redirect) {
+        const obj = redirect as { path: string; status?: number };
+        rawPath = obj.path;
+        if (obj.status && [301, 302, 307, 308].includes(obj.status)) {
+          status = obj.status;
+        }
+      } else {
+        continue;
+      }
+
+      let normalized = rawPath.startsWith("/") ? rawPath : `/${rawPath}`;
       normalized = normalized.toLowerCase();
       if (normalized.length > 1 && normalized.endsWith("/")) {
         normalized = normalized.slice(0, -1);
@@ -186,6 +201,7 @@ class ContentIndex {
         to: targetUrl,
         type: typeLabel,
         source: filePath,
+        status,
       });
     }
   }

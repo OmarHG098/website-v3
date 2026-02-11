@@ -911,7 +911,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Add a new redirect (for debug tools)
   app.post("/api/debug/redirects", (req, res) => {
     try {
-      const { from, to, allLanguages } = req.body;
+      const { from, to, allLanguages, status: redirectStatus } = req.body;
+      const statusCode = redirectStatus && [301, 302, 307, 308].includes(redirectStatus) ? redirectStatus : 301;
 
       if (!from || !to) {
         res.status(400).json({ error: "Both 'from' and 'to' fields are required" });
@@ -1041,15 +1042,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!Array.isArray(meta.redirects)) {
         meta.redirects = [];
       }
-      const redirects = meta.redirects as string[];
+      const redirects = meta.redirects as unknown[];
 
-      // Check for duplicates
-      if (redirects.some(r => r.toLowerCase() === normalizedFrom)) {
+      const existingPath = (r: unknown) => {
+        if (typeof r === "string") return r.toLowerCase();
+        if (typeof r === "object" && r !== null && "path" in r) return ((r as { path: string }).path).toLowerCase();
+        return "";
+      };
+
+      if (redirects.some(r => existingPath(r) === normalizedFrom)) {
         res.status(409).json({ error: `Redirect "${normalizedFrom}" already exists in ${targetFile}` });
         return;
       }
 
-      redirects.push(normalizedFrom);
+      if (statusCode !== 301) {
+        redirects.push({ path: normalizedFrom, status: statusCode });
+      } else {
+        redirects.push(normalizedFrom);
+      }
 
       // Write back to file
       const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });

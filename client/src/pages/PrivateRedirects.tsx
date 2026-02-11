@@ -25,6 +25,7 @@ interface Redirect {
   from: string;
   to: string;
   type: string;
+  status: number;
 }
 
 interface ValidationIssue {
@@ -62,6 +63,7 @@ export default function PrivateRedirects() {
   const [newTo, setNewTo] = useState("");
   const [originalTo, setOriginalTo] = useState("");
   const [allLanguages, setAllLanguages] = useState(true);
+  const [redirectStatus, setRedirectStatus] = useState<number>(301);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
@@ -100,11 +102,13 @@ export default function PrivateRedirects() {
 
   const redirects = redirectsData?.redirects || [];
 
-  const filteredRedirects = redirects.filter((r) =>
-    r.from.toLowerCase().includes(search.toLowerCase()) ||
-    r.to.toLowerCase().includes(search.toLowerCase()) ||
-    r.type.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredRedirects = redirects.filter((r) => {
+    const q = search.toLowerCase();
+    return r.from.toLowerCase().includes(q) ||
+      r.to.toLowerCase().includes(q) ||
+      r.type.toLowerCase().includes(q) ||
+      String(r.status).includes(q);
+  });
 
   const groupedByType = filteredRedirects.reduce((acc, redirect) => {
     if (!acc[redirect.type]) {
@@ -127,6 +131,7 @@ export default function PrivateRedirects() {
     setNewTo("");
     setOriginalTo("");
     setAllLanguages(true);
+    setRedirectStatus(301);
     setShowAddDialog(true);
   };
 
@@ -148,6 +153,7 @@ export default function PrivateRedirects() {
         from: newFrom.trim(),
         to: newTo.trim(),
         allLanguages,
+        status: redirectStatus,
       });
       const data = await res.json();
 
@@ -395,6 +401,9 @@ export default function PrivateRedirects() {
                               {redirect.from}
                             </code>
                           </div>
+                          <Badge variant={redirect.status === 301 || redirect.status === 308 ? "secondary" : "outline"} className="text-xs flex-shrink-0 font-mono">
+                            {redirect.status}
+                          </Badge>
                           <IconArrowRight className="h-4 w-4 text-muted-foreground flex-shrink-0" />
                           <div className="flex-1 min-w-0 flex items-center gap-2">
                             <code className="text-xs bg-muted px-2 py-1 rounded block truncate flex-1">
@@ -501,6 +510,33 @@ export default function PrivateRedirects() {
                 </p>
               </div>
             )}
+
+            <div className="space-y-2">
+              <Label>Status Code</Label>
+              <div className="grid grid-cols-2 gap-2">
+                {[
+                  { code: 301, label: "301 — Permanent", desc: "The page has moved forever. Search engines transfer ranking to the new URL." },
+                  { code: 302, label: "302 — Temporary", desc: "The page is temporarily at a different URL. Search engines keep the original URL indexed." },
+                  { code: 307, label: "307 — Temporary (strict)", desc: "Like 302, but the browser must use the same request method (e.g. POST stays POST)." },
+                  { code: 308, label: "308 — Permanent (strict)", desc: "Like 301, but the browser must use the same request method (e.g. POST stays POST)." },
+                ].map((option) => (
+                  <button
+                    key={option.code}
+                    type="button"
+                    onClick={() => setRedirectStatus(option.code)}
+                    className={`text-left rounded-md border p-3 transition-colors ${
+                      redirectStatus === option.code
+                        ? "border-primary bg-primary/5"
+                        : "hover-elevate"
+                    }`}
+                    data-testid={`button-status-${option.code}`}
+                  >
+                    <span className="text-sm font-medium">{option.label}</span>
+                    <p className="text-xs text-muted-foreground mt-0.5">{option.desc}</p>
+                  </button>
+                ))}
+              </div>
+            </div>
           </div>
 
           <DialogFooter>

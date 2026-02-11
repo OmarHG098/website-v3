@@ -38,23 +38,25 @@ export function redirectMiddleware(req: Request, res: Response, next: NextFuncti
 
   const entry = map.get(normalizedPath);
   if (entry) {
-    console.log(`[Redirects] 301: ${req.path} -> ${entry.to}`);
-    res.redirect(301, entry.to);
+    const status = entry.status || 301;
+    console.log(`[Redirects] ${status}: ${req.path} -> ${entry.to}`);
+    res.redirect(status, entry.to);
     return;
   }
 
   next();
 }
 
-export function getRedirects(): Array<{ from: string; to: string; type: string }> {
+export function getRedirects(): Array<{ from: string; to: string; type: string; status: number }> {
   const map = getRedirectMap();
-  const result: Array<{ from: string; to: string; type: string }> = [];
+  const result: Array<{ from: string; to: string; type: string; status: number }> = [];
 
   for (const [from, entry] of map) {
     result.push({
       from,
       to: entry.to,
       type: entry.type,
+      status: entry.status || 301,
     });
   }
 
