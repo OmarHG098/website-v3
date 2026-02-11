@@ -282,18 +282,27 @@ export function PartnershipCarouselSplitCard({
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const totalSlides = slides.length;
 
   useEffect(() => {
     const measure = () => {
+      if (containerRef.current) {
+        containerRef.current.style.height = "auto";
+      }
       let tallest = 0;
       slideRefs.current.forEach((el) => {
         if (el) {
           tallest = Math.max(tallest, el.scrollHeight);
         }
       });
-      if (tallest > 0) setMaxHeight(tallest);
+      if (tallest > 0) {
+        setMaxHeight(tallest);
+        if (containerRef.current) {
+          containerRef.current.style.height = `${tallest}px`;
+        }
+      }
     };
 
     measure();
@@ -380,6 +389,7 @@ export function PartnershipCarouselSplitCard({
         )}
 
         <div
+          ref={containerRef}
           className="relative overflow-hidden"
           style={{
             height: maxHeight > 0 ? `${maxHeight}px` : "auto",
