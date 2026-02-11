@@ -289,7 +289,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
   const [showTurnstileModal, setShowTurnstileModal] = useState(false);
   const [pendingFormData, setPendingFormData] = useState<FormValues | null>(null);
 
-  const turnstileEnabled = data.turnstile?.enabled ?? false;
+  const turnstileEnabled = data.turnstile?.enabled ?? true;
 
   const { data: turnstileSiteKey } = useQuery<{ siteKey: string }>({
     queryKey: ["/api/turnstile/site-key"],
