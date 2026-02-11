@@ -38,6 +38,24 @@ function isLocaleMap(to: string | Record<string, string>): to is Record<string, 
   return typeof to === "object";
 }
 
+const localeFlags: Record<string, string> = {
+  en: "\u{1F1FA}\u{1F1F8}",
+  es: "\u{1F1EA}\u{1F1F8}",
+  fr: "\u{1F1EB}\u{1F1F7}",
+  pt: "\u{1F1E7}\u{1F1F7}",
+  de: "\u{1F1E9}\u{1F1EA}",
+  it: "\u{1F1EE}\u{1F1F9}",
+};
+
+function LocaleFlag({ locale }: { locale: string }) {
+  const flag = localeFlags[locale.toLowerCase()];
+  return (
+    <span className="inline-flex items-center text-sm leading-none flex-shrink-0" title={locale}>
+      {flag || locale.toUpperCase()}
+    </span>
+  );
+}
+
 interface ValidationIssue {
   type: "error" | "warning";
   code: string;
@@ -490,7 +508,7 @@ export default function PrivateRedirects() {
                               <div className="flex-1 min-w-0 space-y-1">
                                 {Object.entries(redirect.to).map(([locale, url]) => (
                                   <div key={locale} className="flex items-center gap-1.5">
-                                    <Badge variant="outline" className="text-[10px] px-1 py-0 font-mono flex-shrink-0">{locale}</Badge>
+                                    <LocaleFlag locale={locale} />
                                     <code className="text-xs bg-muted px-2 py-0.5 rounded truncate flex-1">{url}</code>
                                     <a href={url} target="_blank" rel="noopener noreferrer" className="p-0.5 rounded hover:bg-muted flex-shrink-0" data-testid={`link-redirect-target-${type}-${index}-${locale}`}>
                                       <IconExternalLink className="h-3 w-3 text-muted-foreground" />
@@ -719,7 +737,7 @@ export default function PrivateRedirects() {
                     <div className="space-y-1">
                       {Object.entries(deletingRedirect.to).map(([locale, url]) => (
                         <div key={locale} className="flex items-center gap-1.5">
-                          <Badge variant="outline" className="text-[10px] px-1 py-0 font-mono flex-shrink-0">{locale}</Badge>
+                          <LocaleFlag locale={locale} />
                           <code className="text-xs bg-muted px-2 py-0.5 rounded truncate">{url}</code>
                         </div>
                       ))}
