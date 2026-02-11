@@ -15,7 +15,7 @@ interface FaqItem {
   priority?: number;
 }
 
-interface FaqSection {
+export interface FaqSection {
   type: "faq";
   title?: string;
   items?: FaqItem[];
@@ -127,7 +127,7 @@ function parseRoute(url: string): ParsedRoute | null {
   return null;
 }
 
-function loadRawYaml(contentType: string, slug: string, locale: string): Record<string, unknown> | null {
+export function loadRawYaml(contentType: string, slug: string, locale: string): Record<string, unknown> | null {
   const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, slug);
   const commonPath = path.join(contentDir, "_common.yml");
 
@@ -149,7 +149,7 @@ function loadRawYaml(contentType: string, slug: string, locale: string): Record<
   }
 }
 
-function buildFaqPageSchema(faqItems: Array<{ question: string; answer: string }>): Record<string, unknown> {
+export function buildFaqPageSchema(faqItems: Array<{ question: string; answer: string }>): Record<string, unknown> {
   return {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -164,7 +164,7 @@ function buildFaqPageSchema(faqItems: Array<{ question: string; answer: string }
   };
 }
 
-function resolveFaqItems(section: FaqSection, locale: string): Array<{ question: string; answer: string }> {
+export function resolveFaqItems(section: FaqSection, locale: string): Array<{ question: string; answer: string }> {
   if (section.items && section.items.length > 0) {
     return section.items.map(({ question, answer }) => ({ question, answer }));
   }

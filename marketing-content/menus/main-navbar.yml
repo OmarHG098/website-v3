@@ -48,11 +48,11 @@ navbar:
               - label: Career Support
                 href: /en/geekforce-career-support
               - label: Online Platform
-                href: /online-platform
+                href: /en/online-platform
               - label: Rigobot
-                href: /rigobot
+                href: /en/rigobot-ai-coding-mentor
               - label: LearnPack
-                href: /learnpack
+                href: /en/learnpack
           - title: Validation
             items:
               - label: Awards
@@ -89,11 +89,11 @@ navbar:
           - label: Hire our alumni
             href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
           - label: Partner with 4Geeks
-            href: /partner
+            href: /en/partners
           - label: Work with us
-            href: /work-with-us
+            href: /en/work-with-us
           - label: Who we are
-            href: /who-we-are
+            href: /en/the-academy
           - label: Press
             href: /press
           - label: Blog

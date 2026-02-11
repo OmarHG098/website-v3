@@ -85,6 +85,7 @@ export default function LandingDetail() {
         contentType="landing"
         slug={slug}
         locale={locale}
+        landingLocations={landing.landing_locations}
       />
     </div>
   );
