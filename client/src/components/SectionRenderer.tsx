@@ -197,7 +197,9 @@ const FaqEditor = lazy(() => import("@/components/FaqEditor").then(m => ({ defau
 const ImageRow = lazy(() => import("@/components/sections/ImageRow"));
 const CourseSelector = lazy(() => import("@/components/course-selector/CourseSelector").then(m => ({ default: m.CourseSelector })));
 const ArticleSection = lazy(() => import("@/components/Article").then(m => ({ default: m.Article })));
-const PartnershipCarousel = lazy(() => import("@/components/PartnershipCarousel").then(m => ({ default: m.PartnershipCarousel })));
+const PartnershipCarousel = lazy(() => import("@/components/partnership-carousel/PartnershipCarousel").then(m => ({ default: m.PartnershipCarousel })));
+const CareerSupportExplain = lazy(() => import("@/components/career-support-explain/CareerSupportExplain"));
+const ProfilesCarousel = lazy(() => import("@/components/profiles-carousel/ProfilesCarousel"));
 
 import { EditableSection } from "@/components/editing/EditableSection";
 import { AddSectionButton } from "@/components/editing/AddSectionButton";
@@ -473,6 +475,10 @@ export function renderSection(section: Section, index: number, landingLocations?
       return <LazySection key={index}><ArticleSection data={section as Parameters<typeof ArticleSection>[0]["data"]} /></LazySection>;
     case "partnership_carousel":
       return <LazySection key={index}><PartnershipCarousel data={section as any} /></LazySection>;
+    case "career_support_explain":
+      return <LazySection key={index}><CareerSupportExplain data={section as Parameters<typeof CareerSupportExplain>[0]["data"]} /></LazySection>;
+    case "profiles_carousel":
+      return <LazySection key={index}><ProfilesCarousel data={section as Parameters<typeof ProfilesCarousel>[0]["data"]} /></LazySection>;
     default: {
       if (process.env.NODE_ENV === "development") {
         console.warn(`Unknown section type: ${sectionType}`);

@@ -3835,6 +3835,137 @@
       "alt": "El Economista logo",
       "focal_point": "center",
       "tags": ["logo", "press"],
+    "bid_logo": {
+      "src": "/attached_assets/bid-logo.webp",
+      "alt": "BID logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner", "finance"],
+      "usage_count": 0
+    },
+    "4geeks_academy_logo": {
+      "src": "/attached_assets/4geeks_academy_logo_black.webp",
+      "alt": "4Geeks Academy logo",
+      "focal_point": "center",
+      "tags": ["logo", "brand", "academy"],
+      "usage_count": 0
+    },
+    "micitt-logo": {
+      "src": "/attached_assets/micitt-logo.webp",
+      "alt": "MICITT logo",
+      "focal_point": "center",
+      "tags": ["logo", "partner"],
+      "usage_count": 0
+    },
+    "4geeks_member": {
+      "src": "/attached_assets/4geeks_member.webp",
+      "alt": "4Geeks Member",
+      "focal_point": "center",
+      "tags": ["brand", "academy"],
+      "usage_count": 0
+    },
+    "alejandro_sanchez": {
+      "src": "/attached_assets/alejandrosanchez.webp",
+      "alt": "Alejandro Sanchez",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "avatar"],
+      "usage_count": 0
+    },
+    "laura": {
+      "src": "/attached_assets/laura_1770843532792.webp",
+      "alt": "Laura",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "valentina_botana": {
+      "src": "/attached_assets/valentina-botana_1770843535798.webp",
+      "alt": "Valentina Botana",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "alissalandra": {
+      "src": "/attached_assets/alissalandra_1770843649003.webp",
+      "alt": "Alissalandra",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "marcelo_ricigliano": {
+      "src": "/attached_assets/marceloricigliano_1770843650728.webp",
+      "alt": "Marcelo Ricigliano",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "martha_lopez": {
+      "src": "/attached_assets/martha-lopez_1770843651992.webp",
+      "alt": "Martha Lopez",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "pablo_bullor": {
+      "src": "/attached_assets/pablobullor2_1770843653192.webp",
+      "alt": "Pablo Bullor",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "valentina_ancieta": {
+      "src": "/attached_assets/valentina-ancieta_1770843654768.webp",
+      "alt": "Valentina Ancieta",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "victor_gomez": {
+      "src": "/attached_assets/victorgomez_1770843663893.webp",
+      "alt": "Victor Gomez",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
+    },
+    "anahi_lacava": {
+      "src": "/attached_assets/partners_anahi_lacava_1770843882971.webp",
+      "alt": "Anahi Lacava",
+      "focal_point": "center top",
+      "tags": ["photo", "partner", "avatar"],
+      "usage_count": 0
+    },
+    "antonio_delgado": {
+      "src": "/attached_assets/partners_antonio_delgado_1770843884179.webp",
+      "alt": "Antonio Delgado",
+      "focal_point": "center top",
+      "tags": ["photo", "partner", "avatar"],
+      "usage_count": 0
+    },
+    "dug_jones": {
+      "src": "/attached_assets/partners_dug_jones_1770843885581.webp",
+      "alt": "Dug Jones",
+      "focal_point": "center top",
+      "tags": ["photo", "partner", "avatar"],
+      "usage_count": 0
+    },
+    "enrique_infanzon": {
+      "src": "/attached_assets/partners_enrique_infanzon_1770843887140.webp",
+      "alt": "Enrique Infanzon",
+      "focal_point": "center top",
+      "tags": ["photo", "partner", "avatar"],
+      "usage_count": 0
+    },
+    "juancarlos_navarro": {
+      "src": "/attached_assets/partners_juancarlos_navarro_1770843889351.webp",
+      "alt": "Juan Carlos Navarro",
+      "focal_point": "center top",
+      "tags": ["photo", "partner", "avatar"],
+      "usage_count": 0
+    },
+    "ariana_sanchez": {
+      "src": "/attached_assets/ariana-sanchez_1770845254732.webp",
+      "alt": "Ariana Sanchez",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
       "usage_count": 0
     }
   }
