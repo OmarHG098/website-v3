@@ -16,22 +16,39 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: simpleTwoColumn
-    title: Get into tech with our Job Guarantee test
-    subtitle: Your success is our mission. Get hired within 9 months of graduation, or we will refund your tuition. Conditions apply.
-    image:
-      src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
-      alt: Students collaborating in a tech workspace
-    cta_buttons:
-      - text: Apply now
-        url: "#apply"
-        variant: primary
-        icon: Rocket
-      - text: Download Details
-        url: "#syllabus"
-        variant: outline
-        icon: Download
-    background: bg-gradient-to-b from-primary/5 to-background
+    variant: singleColumn
+    title: Empowering Talent for the AI Era
+    subtitle: 4Geeks Academy is a global tech academy with 8 campuses across the U.S., Latin America, and Europe, training the next generation of tech professionals in AI-powered Full-Stack Development, Data Science & ML, and Cybersecurity.
+    badge: Bootcamps that launch careers
+    image_id: academy_header_coding
+    image_full_width: false
+    marginY:
+      desktop: none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    paddingY:
+      desktop: md none
+  - type: features_quad
+    version: "1.0"
+    variant: laptopEdge
+    heading: What Makes Us Different
+    cards:
+      - icon: Trophy
+        title: Career-Focused Programs
+        description: Hands-on, practical, and fast-paced training designed to launch real-world tech careers.
+      - icon: Wallet
+        title: Hyperpersonalized Learning
+        description: Rigobot provides instant 24/7 feedback as youship ensure you get the guidance you need.
+      - icon: Clock
+        title: Unlimited Human Mentorship
+        description: Mentors and career coaches provide persoduring your program and forever after.
+      - icon: Users
+        title: Future-Ready Skills
+        description: Continuously updated currict tools and technologies driving the tech industry.
+    description_with_background: false
+    marginY:
+      desktop: lg none
+    paddingY:
+      desktop: none
   - type: split_cards
     variant: primary-left
     primary_width: narrow
@@ -47,32 +64,10 @@ sections:
       image_id: what_is_4geeks
       image_object_fit: cover
       image_object_position: 60% 100%
-    background: muted
     marginY:
-      desktop: md none
-  - type: features_quad
-    version: "1.0"
-    variant: laptopEdge
-    heading: What You'll Learn
-    description: Master the esseessentialessentialessentialessentialntial skills tial skills for AI engineering.tial skills for AI engineering.tial skills for AI engineering.for AI engineering.
-    cards:
-      - icon: Trophy
-        title: Career-Focused Programs
-        description: Hands-on, practical, and fast-paced training designed to launch real-world tech careers.
-      - icon: Wallet
-        title: Hyperpersonalized Learning
-        description: Rigobot provides instant 24/7 feedback as youship ensure you get the guidance you need.
-      - icon: Clock
-        title: Unlimited Human Mentorship
-        description: Mentors and career coaches provide persoduring your program and forever after.
-      - icon: Users
-        title: Future-Ready Skills
-        description: Continuously updated currict tools and technologies driving the tech industry.
-    background: hsl(var(--secondary))
-    description_with_background: true
+      desktop: lg none
   - type: stats
     version: "1.0"
-    background: hsl(210 100% 50% / 0.05)
     items:
       - value: "+7000"
         label: Alumni
@@ -83,13 +78,14 @@ sections:
       - value: "4.9"
         label: Rating
     marginY:
-      desktop: none md
+      desktop: md sm
     paddingY:
-      desktop: sm
+      desktop: md sm
   - type: two_column
     proportions:
       - 4
       - 8
+    background: hsl(var(--muted))
     alignment: center
     left:
       image: /attached_assets/crusa-forte-scholarship_1770606829241.webp
@@ -102,46 +98,54 @@ sections:
       description: At 4Geeks Academy, we believe collaboration drives real impact. We work with universities, nonprofits, workforce development initiatives, global organizations, and local tech communities to expand access to top tech education and strengthen career pathways. Together, we train and place diverse talent, close the digital skills gap, and build the tech workforce of the future. We’re also active in the community, partnering on hackathons, tech challenges, and industry events that connect talent with opportunity and showcase the skills of our students and graduates.
       text_align: left
     gap: "12"
+    marginY:
+      desktop: md none
+    paddingY:
+      desktop: sm
   - type: awards_marquee
     version: v1.0
     speed: 40
     gradient: true
     gradientWidth: 100
     items:
-      - id: switchup-2025
-        alt: SwitchUp - Best Coding Bootcamps 2025
-        logo: /attached_assets/switchup_1765590146414.webp
-        logoHeight: 56px
-      - id: course-report-2024
-        alt: Course Report - Best Coding Bootcamp 2024
-        logo: /attached_assets/course-report_1765590146414.webp
-        logoHeight: 56px
+      - id: logo-crusa
+        alt: CRUSA Foundation logo
+        logo: /attached_assets/crusa-logo_1770608198366.webp
+        logoHeight: 65px
+      - id: logo-miami-tech-works
+        alt: Miami Tech Works logo
+        logo: /attached_assets/miamitech-logo-sidetext_1770608261416.png
+        logoHeight: 65px
       - id: tech-hub
         alt: South Florida Tech Hub
         logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
         logoHeight: 56px
-      - id: ebootcamp
-        alt: eBootcamp Top
-        logo: /attached_assets/ebootcamp-top_1765549056325.png
+      - id: logo-bite-con
+        alt: BITE-CON logo
+        logo: /attached_assets/bite-con_1770608313051.png
         logoHeight: 56px
-      - id: premios-tecnologia
-        alt: Premios Tecnologia Siglo XXI
-        logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+      - id: logo-kosmos
+        alt: Kosmos logo
+        logo: /attached_assets/kosmos-logo_1770608352885.png
         logoHeight: 56px
-      - id: newsweek
-        alt: Newsweek
-        logo: /attached_assets/newsweek_1764709608255.webp
+      - id: logo-united-way
+        alt: United Way logo
+        logo: /attached_assets/united_way_mini_1770608055840.PNG
         logoHeight: 56px
-      - id: reviews-coursereport
-        alt: 4.9 on Course Report Reviews
-        logo: /attached_assets/reviews_1765549549051.png
+      - id: clark-university
+        alt: Clark University Logo
+        logo: /attached_assets/clark-university_1769653206336.png
         logoHeight: 56px
-      - id: excelencia-educativa
-        alt: Excelencia Educativa - Institutional Quality
-        logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+      - id: logo-cinde
+        alt: CINDE Invest in Costa Rica logo
+        logo: /attached_assets/cinde_1770608132364.png
+        logoHeight: 56px
+      - id: logo-utec
+        alt: UTEC Universidad Tecnológica logo
+        logo: /attached_assets/utec_1770608159144.png
         logoHeight: 56px
     paddingY:
-      desktop: md none
+      desktop: lg none
   - type: whos_hiring
     variant: carousel
     title: Trusted by the world's most innovative companies
