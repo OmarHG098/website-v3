@@ -90,6 +90,92 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   );
 }
 
+function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
+  return (
+    <div className="flex gap-4 h-full" data-testid="grid-two-column-cards">
+      <Card className="flex flex-col flex-[1.6] p-6 overflow-hidden" data-testid="card-left">
+        {tab.title && (
+          <h3 className="text-2xl font-bold text-foreground mb-6" data-testid="text-tab-title">
+            {tab.title}
+          </h3>
+        )}
+
+        <div className="flex gap-4 flex-1 min-h-0">
+          <div className="flex flex-col flex-1">
+            {tab.left_text && (
+              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" data-testid="text-left-content">
+                {tab.left_text}
+              </p>
+            )}
+
+            {tab.left_stat && (
+              <div className="mt-auto pt-4" data-testid="stat-left">
+                <span className="text-4xl font-bold text-foreground">{tab.left_stat.value}</span>
+                <p className="text-sm text-muted-foreground mt-1">{tab.left_stat.label}</p>
+              </div>
+            )}
+          </div>
+
+          {tab.left_image_id && (
+            <div className="relative overflow-hidden rounded-lg flex-1 min-h-[200px]" data-testid="img-left-container">
+              <UniversalImage
+                id={tab.left_image_id}
+                className="w-full h-full absolute inset-0"
+                style={{
+                  objectFit: (tab.left_image_object_fit as React.CSSProperties["objectFit"]) || "cover",
+                  objectPosition: tab.left_image_object_position || "center",
+                }}
+                data-testid="img-left-content"
+              />
+            </div>
+          )}
+        </div>
+      </Card>
+
+      <Card className="flex flex-col flex-1 p-6 bg-primary/5" data-testid="card-right">
+        {tab.right_bullets && tab.right_bullets.length > 0 && (
+          <div className="flex flex-col gap-4 mb-6" data-testid="bullets-right">
+            {tab.right_bullets.map((bullet, i) => {
+              const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
+              return (
+                <div key={i} className="flex items-start gap-3" data-testid={`right-bullet-${i}`}>
+                  {IconComp && (
+                    <Card className="flex-shrink-0 p-1.5">
+                      <IconComp className="w-4 h-4 text-primary" />
+                    </Card>
+                  )}
+                  <span className="text-sm text-muted-foreground">{bullet.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {tab.right_logos && tab.right_logos.length > 0 && (
+          <div className="mt-auto" data-testid="logos-right">
+            <div className="flex flex-wrap items-center gap-4">
+              {tab.right_logos.map((logo, i) => (
+                <div
+                  key={i}
+                  className="flex items-center"
+                  style={{ height: logo.logo_height || "36px" }}
+                  data-testid={`logo-right-${i}`}
+                >
+                  <UniversalImage
+                    id={logo.image_id}
+                    alt={logo.alt || ""}
+                    className="h-full w-auto object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+      </Card>
+    </div>
+  );
+}
+
 function EmptyLayout() {
   return (
     <div className="flex items-center justify-center h-full rounded-[0.8rem] border border-dashed border-border" data-testid="tab-empty">
@@ -102,6 +188,8 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
   switch (tab.layout) {
     case "three_columns":
       return <ThreeColumnsLayout tab={tab} />;
+    case "two_column_cards":
+      return <TwoColumnCardsLayout tab={tab} />;
     default:
       return <EmptyLayout />;
   }
