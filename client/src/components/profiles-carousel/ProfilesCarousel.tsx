@@ -30,10 +30,11 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
           <UniversalImage
             id={profile.image_id}
             alt={profile.name}
-            className="w-full h-full object-cover"
-            style={
-              objectPosition: profile.image_object_position || "center"
-            }
+            className="w-full h-full"
+            style={{
+              objectFit: (profile.image_object_fit as React.CSSProperties["objectFit"]) || "cover",
+              objectPosition: profile.image_object_position || "center center",
+            }}
             data-testid="img-profile"
           />
         ) : (
