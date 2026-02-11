@@ -80,8 +80,8 @@ function SlideLeftCard({
       <div
         className={cn(
           "relative overflow-hidden rounded-t-[0.8rem]",
-          "min-h-[200px] md:min-h-[200px] aspect-[16/9] md:aspect-[16/5] lg:md-aspect-[16/6]",
-          verticalCards && "lg:min-h-[415px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
+          "min-h-[200px] md:h-[200px] aspect-[16/9] md:aspect-[16/5] lg:md-aspect-[16/6]",
+          verticalCards && "lg:min-h-[455px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
         )}
       >
         <UniversalImage
@@ -288,7 +288,7 @@ function SlideContent({
   return (
     <div
       className={cn(
-        "grid gap-6 h-full",
+        "grid gap-6",
         hasRightCard ? "grid-cols-1 lg:grid-cols-12" : "grid-cols-1",
       )}
     >
@@ -488,7 +488,7 @@ export function PartnershipCarouselSplitCard({
           style={{ height: activeHeight > 0 ? `${activeHeight}px` : "auto" }}
         >
           <div
-            className="flex transition-transform duration-500 ease-in-out"
+            className="flex items-start transition-transform duration-500 ease-in-out"
             style={{ transform: `translateX(-${activeIndex * 100}%)` }}
           >
             {slides.map((slide, i) => (
