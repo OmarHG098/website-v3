@@ -1,0 +1,8 @@
+slug: "testing-meta-tags"
+locale: "en"
+title: "Testing Meta Tags"
+
+meta:
+  page_title: "Testing Meta Tags | 4Geeks Academy"
+  description: "Testing Meta Tags - Learn more at 4Geeks Academy."
+  robots: "index, follow"

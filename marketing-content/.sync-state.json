@@ -896,6 +896,31 @@
       "sha": "8cb0b5f33277d13b1b8cf8db6bac4a32fc5bba1e2a421fbb35e9133999dcd242",
       "lastModified": 1770649563533.4868,
       "remoteSha": "8cb0b5f33277d13b1b8cf8db6bac4a32fc5bba1e2a421fbb35e9133999dcd242"
+    },
+    "marketing-content/landings/testing-meta-tags/_common.yml": {
+      "sha": "9cf3b0fafa18405cae6aacae88b7a2f5b74e83af0de95be184e9c71bb030c8b9",
+      "lastModified": 1770776662491.0447,
+      "modifiedAt": "2026-02-11T02:24:22.492Z"
+    },
+    "marketing-content/landings/testing-meta-tags/promoted.yml": {
+      "sha": "8d687b13b9d49085f578caff813faf3647657eb11a08ec9f72eef0408bd08a90",
+      "lastModified": 1770776674162.0364,
+      "modifiedAt": "2026-02-11T02:24:34.164Z"
+    },
+    "marketing-content/pages/testing-meta-page/_common.yml": {
+      "sha": "77e48a7489bd428c16d56860cae34816a51bc6efdb2d3f393b8b48bd1bdac527",
+      "lastModified": 1770777353881.5432,
+      "modifiedAt": "2026-02-11T02:35:53.883Z"
+    },
+    "marketing-content/pages/testing-meta-page/en.yml": {
+      "sha": "18095759a491022b38cba5845374a8810a4b1a85b777c671cf1a49971ed473d1",
+      "lastModified": 1770777353885.5432,
+      "modifiedAt": "2026-02-11T02:35:53.887Z"
+    },
+    "marketing-content/pages/testing-meta-page/es.yml": {
+      "sha": "c81f2e231d59b241b6f8625785c2d6b76438d1878d409674e1cb817df135b247",
+      "lastModified": 1770777353887.5432,
+      "modifiedAt": "2026-02-11T02:35:53.888Z"
     }
   }
 }

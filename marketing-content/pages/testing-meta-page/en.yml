@@ -1,0 +1,9 @@
+slug: testing-meta-page
+template: default
+title: testing meta page
+meta:
+  page_title: testing meta page | 4Geeks Academy
+  description: testing meta page - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /testing-meta-page
+sections: []
