@@ -75,7 +75,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
     setIsCustomMode(false);
   };
 
-  const hasLocalePrefix = (url: string) => /^\/(en|es)(\/|$)/i.test(url.trim());
+  const hasLocalePrefix = (url: string) => /^\/[a-z]{2}(\/|$)/i.test(url.trim());
 
   const handleCustomSubmit = () => {
     const trimmed = customUrl.trim();
