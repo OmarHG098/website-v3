@@ -27,6 +27,27 @@ interface BankTestimonial {
   };
 }
 
+interface GridItem {
+  name: string;
+  role: string;
+  company?: string;
+  comment: string;
+  rating?: number;
+  avatar?: string;
+  linkedin_url?: string;
+  box_color?: string;
+  name_color?: string;
+  role_color?: string;
+  comment_color?: string;
+  star_color?: string;
+  linkedin_color?: string;
+  media?: {
+    url: string;
+    type?: "image" | "video";
+    ratio?: string;
+  };
+}
+
 interface TestimonialsGridProps {
   data: TestimonialsGridSectionType;
 }
@@ -47,8 +68,6 @@ function isVideoUrl(url: string): boolean {
   return videoExtensions.some(ext => lowerUrl.endsWith(ext)) ||
     videoHosts.some(host => lowerUrl.includes(host));
 }
-
-type GridItem = NonNullable<TestimonialsGridSectionType["items"]>[number];
 
 function mapBankToGridItem(t: BankTestimonial): GridItem {
   return {
@@ -92,25 +111,21 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const { i18n } = useTranslation();
   const locale = i18n.language?.startsWith("es") ? "es" : "en";
 
-  const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
-  const hasInlineItems = data.items && data.items.length > 0;
+  const relatedFeatures = data.related_features || [];
   const limit = Math.min(data.limit || 30, 30);
 
   const { data: bankData, isLoading } = useQuery<{ testimonials: BankTestimonial[] }>({
     queryKey: ["/api/testimonials", locale],
-    enabled: !!hasRelatedFeatures,
     staleTime: 5 * 60 * 1000,
   });
 
   const items: GridItem[] = useMemo(() => {
-    if (hasRelatedFeatures && bankData?.testimonials) {
-      return filterByRelatedFeatures(bankData.testimonials, data.related_features!, limit);
+    if (!bankData?.testimonials) return [];
+    if (relatedFeatures.length > 0) {
+      return filterByRelatedFeatures(bankData.testimonials, relatedFeatures, limit);
     }
-    if (hasInlineItems) {
-      return data.items!.slice(0, limit);
-    }
-    return [];
-  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, bankData, limit]);
+    return bankData.testimonials.slice(0, limit).map(mapBankToGridItem);
+  }, [relatedFeatures, bankData, limit]);
 
   const title = data.title;
   const subtitle = data.subtitle;
@@ -123,7 +138,7 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
   const columns = data.columns || 3;
   const background = data.background;
 
-  if (isLoading && hasRelatedFeatures) {
+  if (isLoading) {
     return (
       <section data-testid="section-testimonials-grid">
         <div className="max-w-7xl mx-auto px-4 md:px-6">
