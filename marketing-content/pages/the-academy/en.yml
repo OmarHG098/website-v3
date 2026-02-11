@@ -27,6 +27,23 @@ sections:
     background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
     paddingY:
       desktop: md none
+  - type: split_cards
+    variant: primary-left
+    primary_width: narrow
+    primary:
+      heading: Our Mission & Approach
+      description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
+      badge: Results-Backed Promise
+    secondary:
+      benefits:
+        - text: Our curriculum is industry-aligned and AI-ready
+        - text: Our mentorship is unlimited and personalized
+        - text: Our career support never expires
+      image_id: what_is_4geeks
+      image_object_fit: cover
+      image_object_position: 60% 100%
+    marginY:
+      desktop: lg none
   - type: features_quad
     version: "1.0"
     variant: laptopEdge
@@ -49,23 +66,6 @@ sections:
       desktop: lg none
     paddingY:
       desktop: none
-  - type: split_cards
-    variant: primary-left
-    primary_width: narrow
-    primary:
-      heading: Our Mission & Approach
-      description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
-      badge: Results-Backed Promise
-    secondary:
-      benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
-      image_id: what_is_4geeks
-      image_object_fit: cover
-      image_object_position: 60% 100%
-    marginY:
-      desktop: lg none
   - type: stats
     version: "1.0"
     items:
@@ -80,7 +80,7 @@ sections:
     marginY:
       desktop: md sm
     paddingY:
-      desktop: md sm
+      desktop: none sm
   - type: two_column
     proportions:
       - 4
