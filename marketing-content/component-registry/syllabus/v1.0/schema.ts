@@ -38,6 +38,8 @@ export const syllabusDefaultSchema = z.object({
   title: z.string(),
   subtitle: z.string().optional(),
   modules: z.array(syllabusModuleSchema),
+  expand_label: z.string().optional(),
+  collapse_label: z.string().optional(),
 });
 
 // Landing syllabus variant with focus areas grid
