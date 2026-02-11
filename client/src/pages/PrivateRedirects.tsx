@@ -20,6 +20,7 @@ import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { SitemapSearch } from "@/components/menus/SitemapSearch";
 import { useToast } from "@/hooks/use-toast";
+import { LocaleFlag } from "@/components/DebugBubble/components/LocaleFlag";
 
 interface Redirect {
   from: string;
@@ -36,24 +37,6 @@ function formatRedirectTo(to: string | Record<string, string>): string {
 
 function isLocaleMap(to: string | Record<string, string>): to is Record<string, string> {
   return typeof to === "object";
-}
-
-const localeFlags: Record<string, string> = {
-  en: "\u{1F1FA}\u{1F1F8}",
-  es: "\u{1F1EA}\u{1F1F8}",
-  fr: "\u{1F1EB}\u{1F1F7}",
-  pt: "\u{1F1E7}\u{1F1F7}",
-  de: "\u{1F1E9}\u{1F1EA}",
-  it: "\u{1F1EE}\u{1F1F9}",
-};
-
-function LocaleFlag({ locale }: { locale: string }) {
-  const flag = localeFlags[locale.toLowerCase()];
-  return (
-    <span className="inline-flex items-center text-sm leading-none flex-shrink-0" title={locale}>
-      {flag || locale.toUpperCase()}
-    </span>
-  );
 }
 
 interface ValidationIssue {
