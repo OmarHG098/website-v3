@@ -2,6 +2,6 @@ export type EditorType = "icon-picker" | "color-picker" | "image-picker:logo" | 
 
 export const fieldEditors: Record<string, EditorType> = {
   "profiles[].image_id": "image-with-style-picker",
-  "profiles[].image_round": "boolean-toggle",
   "profiles[].linkedin_url": "link-picker",
+  "image_round": "boolean-toggle",
 };

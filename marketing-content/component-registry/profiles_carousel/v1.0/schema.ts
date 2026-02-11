@@ -6,7 +6,6 @@ import { z } from "zod";
 
 export const profileCardSchema = z.object({
   image_id: z.string().optional(),
-  image_round: z.boolean().optional(),
   name: z.string(),
   role: z.string().optional(),
   description: z.string().optional(),
@@ -19,6 +18,7 @@ export const profilesCarouselSectionSchema = z.object({
   heading: z.string().optional(),
   description: z.string().optional(),
   background: z.string().optional(),
+  image_round: z.boolean().optional(),
   profiles: z.array(profileCardSchema).min(1),
 });
 

@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { UniversalImage } from "@/components/UniversalImage";
 import { IconChevronLeft, IconChevronRight, IconBrandLinkedin } from "@tabler/icons-react";
@@ -9,18 +9,20 @@ interface ProfilesCarouselProps {
   data: ProfilesCarouselSection;
 }
 
-function ProfileCardItem({ profile }: { profile: ProfileCard }) {
-  const isRound = profile.image_round === true;
+const PROFILES_PER_PAGE = 5;
 
+function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: boolean }) {
   return (
     <div
-      className="flex flex-col items-center text-center flex-shrink-0 w-[220px] md:w-[240px]"
+      className="flex flex-col items-center text-center flex-1 min-w-0"
       data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div
         className={cn(
-          "w-full aspect-[3/4] mb-4 overflow-hidden flex items-center justify-center",
-          isRound ? "bg-transparent" : "bg-muted rounded-lg"
+          "mb-4 overflow-hidden flex items-center justify-center",
+          isRound
+            ? "w-28 h-28 rounded-full"
+            : "w-full aspect-[3/4] rounded-lg bg-muted"
         )}
         data-testid="profile-image-container"
       >
@@ -28,22 +30,11 @@ function ProfileCardItem({ profile }: { profile: ProfileCard }) {
           <UniversalImage
             id={profile.image_id}
             alt={profile.name}
-            className={cn(
-              isRound
-                ? "w-32 h-32 rounded-full object-cover"
-                : "w-full h-full object-cover"
-            )}
+            className="w-full h-full object-cover"
             data-testid="img-profile"
           />
         ) : (
-          <div
-            className={cn(
-              "flex items-center justify-center bg-muted text-muted-foreground text-3xl font-bold",
-              isRound
-                ? "w-32 h-32 rounded-full"
-                : "w-full h-full rounded-lg"
-            )}
-          >
+          <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-3xl font-bold">
             {profile.name.charAt(0)}
           </div>
         )}
@@ -82,27 +73,19 @@ function ProfileCardItem({ profile }: { profile: ProfileCard }) {
 
 export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
   const { profiles, heading, description } = data;
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const isRound = data.image_round === true;
+  const [currentPage, setCurrentPage] = useState(0);
 
-  const updateScrollState = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 4);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 4);
-  }, []);
+  const totalPages = useMemo(() => Math.ceil(profiles.length / PROFILES_PER_PAGE), [profiles.length]);
 
-  const scroll = useCallback((direction: "left" | "right") => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const cardWidth = 260;
-    el.scrollBy({
-      left: direction === "left" ? -cardWidth * 2 : cardWidth * 2,
-      behavior: "smooth",
-    });
-    setTimeout(updateScrollState, 350);
-  }, [updateScrollState]);
+  const currentProfiles = useMemo(
+    () => profiles.slice(currentPage * PROFILES_PER_PAGE, (currentPage + 1) * PROFILES_PER_PAGE),
+    [profiles, currentPage]
+  );
+
+  const goTo = (page: number) => {
+    if (page >= 0 && page < totalPages) setCurrentPage(page);
+  };
 
   return (
     <section
@@ -126,46 +109,49 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
           </div>
         )}
 
-        <div className="relative">
-          {canScrollLeft && (
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10 -ml-2">
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={() => scroll("left")}
-                className="rounded-full bg-background/80 backdrop-blur-sm"
-                data-testid="button-scroll-left"
-              >
-                <IconChevronLeft className="w-5 h-5" />
-              </Button>
-            </div>
-          )}
-
-          <div
-            ref={scrollRef}
-            onScroll={updateScrollState}
-            className="flex gap-6 overflow-x-auto scrollbar-hide py-2 px-1"
-            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-          >
-            {profiles.map((profile, i) => (
-              <ProfileCardItem key={i} profile={profile} />
-            ))}
-          </div>
-
-          {canScrollRight && profiles.length > 4 && (
-            <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10 -mr-2">
-              <Button
-                size="icon"
-                variant="outline"
-                onClick={() => scroll("right")}
-                className="rounded-full bg-background/80 backdrop-blur-sm"
-                data-testid="button-scroll-right"
-              >
-                <IconChevronRight className="w-5 h-5" />
-              </Button>
-            </div>
-          )}
+        <div className="flex gap-4 md:gap-6 justify-center">
+          {currentProfiles.map((profile, i) => (
+            <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
+          ))}
         </div>
+
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-8" data-testid="carousel-controls">
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => goTo(currentPage - 1)}
+              disabled={currentPage === 0}
+              data-testid="button-page-prev"
+            >
+              <IconChevronLeft className="w-5 h-5" />
+            </Button>
+
+            <div className="flex items-center gap-2" data-testid="carousel-dots">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className={cn(
+                    "w-2.5 h-2.5 rounded-full transition-colors duration-200",
+                    i === currentPage ? "bg-primary" : "bg-border"
+                  )}
+                  data-testid={`button-dot-${i}`}
+                />
+              ))}
+            </div>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              onClick={() => goTo(currentPage + 1)}
+              disabled={currentPage === totalPages - 1}
+              data-testid="button-page-next"
+            >
+              <IconChevronRight className="w-5 h-5" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );
