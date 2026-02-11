@@ -60,6 +60,7 @@ import {
   IconDotsVertical,
   IconDownload,
   IconPhoto,
+  IconBrowserPlus,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -590,6 +591,7 @@ export function DebugBubble() {
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
   const [sitemapExpanded, setSitemapExpanded] = useState(false);
+  const [componentsExpanded, setComponentsExpanded] = useState(false);
 
   // Wrapper to persist menu view changes to sessionStorage
   const setMenuView = (view: MenuView) => {
@@ -1920,29 +1922,55 @@ export function DebugBubble() {
                   )}
                 </div>
                 
-                <button
-                  onClick={() => setMenuView("components")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-components-menu"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconComponents className="h-4 w-4 text-muted-foreground" />
-                    <span>Components</span>
+                <div className="space-y-0.5">
+                  <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+                    <button
+                      onClick={() => setComponentsExpanded(!componentsExpanded)}
+                      className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
+                      data-testid="button-components-toggle"
+                    >
+                      <IconComponents className="h-4 w-4 text-muted-foreground" />
+                      <span>Components</span>
+                      <IconChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${componentsExpanded ? "rotate-90" : ""}`} />
+                    </button>
                   </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
-                
-                <button
-                  onClick={() => setMenuView("menus")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-menus-menu"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconMenu2 className="h-4 w-4 text-muted-foreground" />
-                    <span>Menus</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
+                  {componentsExpanded && (
+                    <div className="pl-2 space-y-0.5">
+                      <button
+                        onClick={() => setMenuView("components")}
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="button-gallery-registry"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconComponents className="h-4 w-4 text-muted-foreground" />
+                          <span>Gallery Registry</span>
+                        </div>
+                        <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </button>
+                      <button
+                        onClick={() => setMenuView("menus")}
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="button-menus-menu"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconMenu2 className="h-4 w-4 text-muted-foreground" />
+                          <span>Menus</span>
+                        </div>
+                        <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                      </button>
+                      <div
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm text-muted-foreground cursor-default"
+                        data-testid="placeholder-modals-menu"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconBrowserPlus className="h-4 w-4 text-muted-foreground" />
+                          <span>Modals</span>
+                        </div>
+                        <span className="text-xs text-muted-foreground">Soon</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
                 
                 <a
                   href="/private/media-gallery"
@@ -2182,7 +2210,7 @@ export function DebugBubble() {
                       </div>
                     ) : (
                       <div>
-                        <h3 className="font-semibold text-sm">Components</h3>
+                        <h3 className="font-semibold text-sm">Gallery Registry</h3>
                         <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
                       </div>
                     )}
