@@ -42,6 +42,7 @@ import {
   IconChartBar,
   IconTable,
   IconFlask,
+  IconStethoscope,
   IconPlus,
   IconUsersGroup,
   IconBrandGithub,
@@ -1743,6 +1744,18 @@ export function DebugBubble() {
                   <div className="flex items-center gap-3">
                     <IconPhoto className="h-4 w-4 text-muted-foreground" />
                     <span>Media Gallery</span>
+                  </div>
+                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                </a>
+
+                <a
+                  href="/private/diagnostics"
+                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                  data-testid="link-diagnostics"
+                >
+                  <div className="flex items-center gap-3">
+                    <IconStethoscope className="h-4 w-4 text-muted-foreground" />
+                    <span>Diagnostics</span>
                   </div>
                   <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                 </a>

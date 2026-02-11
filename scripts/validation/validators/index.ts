@@ -12,6 +12,10 @@ import { sitemapValidator } from "./sitemap";
 import { componentsValidator } from "./components";
 import { backgroundsValidator } from "./backgrounds";
 import { faqsValidator } from "./faqs";
+import { seoDepthValidator } from "./seo-depth";
+import { schemaCompletenessValidator } from "./schema-completeness";
+import { imagesValidator } from "./images";
+import { contentQualityValidator } from "./content-quality";
 
 export const validators: Validator[] = [
   redirectValidator,
@@ -21,6 +25,10 @@ export const validators: Validator[] = [
   componentsValidator,
   backgroundsValidator,
   faqsValidator,
+  seoDepthValidator,
+  schemaCompletenessValidator,
+  imagesValidator,
+  contentQualityValidator,
 ];
 
 export const validatorMap = new Map<string, Validator>(
@@ -53,4 +61,8 @@ export {
   componentsValidator,
   backgroundsValidator,
   faqsValidator,
+  seoDepthValidator,
+  schemaCompletenessValidator,
+  imagesValidator,
+  contentQualityValidator,
 };
