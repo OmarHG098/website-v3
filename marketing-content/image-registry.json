@@ -913,6 +913,13 @@
       "focal_point": "center top",
       "tags": ["photo", "partner", "avatar"],
       "usage_count": 0
+    },
+    "ariana_sanchez": {
+      "src": "/attached_assets/ariana-sanchez_1770845254732.webp",
+      "alt": "Ariana Sanchez",
+      "focal_point": "center top",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
     }
   }
 }

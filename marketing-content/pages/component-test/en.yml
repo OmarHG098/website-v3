@@ -191,4 +191,6 @@ sections:
         linkedin_url: "https://www.linkedin.com/in/martha-lópez-929b55145/"
       - name: "Ariana Sánchez"
         role: "Culture & Talent Leader"
+        image_id: "ariana_sanchez"
         linkedin_url: "https://www.linkedin.com/in/ariana-sánchez-7720aa78/"
+
