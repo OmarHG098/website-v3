@@ -7,19 +7,19 @@ items:
     excerpt: Since tech training boot camps are skills-based and shorter than an academic degree program, they can be an effective way to reach the incumbet workforce.
     link_text: Read Article
     link_url: https://example.com/article-1
-  - logo: businesswire-logo
-    title: "Global Coding Bootcamp Market 2021-2025"
-    excerpt: "The publisher's robust vendor analysis is designed to help clients improve their market position, and in line with this, this report provides a detailed analysis of several leading coding bootcamp market vendors that include 4Geeks Academy LLC"
-    link_text: Read Article
-    link_url: https://example.com/article-2
-  - logo: forbes-logo
-    title: Web Development Coding Bootcamp
-    excerpt: On a research made and published by Forbes while specified all the possible ways you can become a web developer in the USA.
-    link_text: Read Article
-    link_url: https://example.com/article-3
   - logo: forbes-logo
     title: 5 Best Online Full-Stack Bootcamps Of 2024
     excerpt: "Full-stack developers create and troubleshoot both the back-end and front-end of websites and software\u2014an indispensable skill set for companies across industries."
+    link_text: Read Article
+    link_url: https://example.com/article-2
+  - logo: forbes-logo
+    title: Best Data Science Bootcamps Online In 2024
+    excerpt: Current and prospective tech professionals can complete data science bootcamps to sharpen their existing skills, change fields or advance in their current careers.
+    link_text: Read Article
+    link_url: https://example.com/article-3
+  - logo: businesswire-logo
+    title: Global Coding Bootcamp Market 2021-2025
+    excerpt: The publisher's robust vendor analysis is designed to help clients improve their market position, and in line with this, this report provides a detailed analysis of several leading coding bootcamp market vendors that include 4Geeks Academy LLC
     link_text: Read Article
     link_url: https://example.com/article-4
   - logo: refresh-miami-logo
