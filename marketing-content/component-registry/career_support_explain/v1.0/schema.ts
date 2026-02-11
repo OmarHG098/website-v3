@@ -48,6 +48,13 @@ export const careerSupportTabSchema = z.object({
   left_stat: careerSupportStatSchema.optional(),
   right_bullets: z.array(careerSupportBulletSchema).optional(),
   right_logos: z.array(careerSupportLogoSchema).optional(),
+
+  left_description: z.string().optional(),
+  left_bullets: z.array(careerSupportBulletSchema).optional(),
+  right_image_id: z.string().optional(),
+  right_image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  right_image_object_position: z.string().optional(),
+  right_panel_background: z.string().optional(),
 });
 
 export const careerSupportExplainSectionSchema = z.object({

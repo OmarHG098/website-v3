@@ -523,7 +523,22 @@ sections:
             alt: eBay
           - image_id: logo_kpmg
             alt: KPMG
-      - tab_label: Build a portfolio
+      - tab_label: Proof That Converts
+        layout: text_and_image
+        title: Projects that demonstrate real skill.
+        left_description: |-
+          Visibility gets attention. Proof closes the gap.
+          Graduate with a portfolio that shows what you can actually build. From hands-on projects to a capstone that solves real business problems, your work becomes clear evidence of your ability.
+        left_bullets:
+          - icon: IconBriefcase
+            text: Industry-aligned, real-world projects
+          - icon: IconPresentation
+            text: A showcase-ready capstone project
+          - icon: IconBrandGithub
+            text: GitHub optimization and professional code review
+        right_image_id: student_asian
+        right_image_object_fit: cover
+        right_image_object_position: center
       - tab_label: Find your edge
   - type: profiles_carousel
     version: v1.0

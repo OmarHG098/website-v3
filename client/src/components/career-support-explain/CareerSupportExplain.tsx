@@ -240,6 +240,72 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
   );
 }
 
+function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
+  return (
+    <div className="flex gap-8 h-full" data-testid="grid-text-and-image">
+      <div className="flex flex-col justify-center flex-1" data-testid="col-text-content">
+        {tab.title && (
+          <h3
+            className="text-3xl font-bold text-foreground mb-4"
+            data-testid="text-tab-title"
+          >
+            {tab.title}
+          </h3>
+        )}
+        {tab.left_description && (
+          <p
+            className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+            data-testid="text-left-description"
+          >
+            {tab.left_description}
+          </p>
+        )}
+        {tab.left_bullets && tab.left_bullets.length > 0 && (
+          <div className="flex flex-col gap-3" data-testid="bullets-left">
+            {tab.left_bullets.map((bullet, i) => {
+              const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
+              return (
+                <div
+                  key={i}
+                  className="flex items-center gap-3"
+                  data-testid={`left-bullet-${i}`}
+                >
+                  {IconComp && (
+                    <Card className="flex-shrink-0 p-1.5">
+                      <IconComp className="w-4 h-4 text-primary" />
+                    </Card>
+                  )}
+                  <span className="text-sm text-foreground">{bullet.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <div
+        className="flex-1 rounded-l-2xl border-l border-t border-b border-border flex items-center justify-center p-8"
+        style={{ background: tab.right_panel_background ?? "hsl(var(--primary) / 0.15)" }}
+        data-testid="panel-right-image"
+      >
+        {tab.right_image_id && (
+          <UniversalImage
+            id={tab.right_image_id}
+            className="w-full h-auto rounded-lg shadow-lg"
+            style={{
+              objectFit:
+                (tab.right_image_object_fit as React.CSSProperties["objectFit"]) ??
+                "cover",
+              objectPosition: tab.right_image_object_position ?? "center",
+            }}
+            data-testid="img-right-content"
+          />
+        )}
+      </div>
+    </div>
+  );
+}
+
 function EmptyLayout() {
   return (
     <div
@@ -257,6 +323,8 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
       return <ThreeColumnsLayout tab={tab} />;
     case "two_column_cards":
       return <TwoColumnCardsLayout tab={tab} />;
+    case "text_and_image":
+      return <TextAndImageLayout tab={tab} />;
     default:
       return <EmptyLayout />;
   }
