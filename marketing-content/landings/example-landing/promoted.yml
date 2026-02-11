@@ -442,9 +442,9 @@ sections:
       - image_id: student_asian
         object_fit: cover
         object_position: 10% 80%
-        description: asasasa asasasa asasasa asasasa
         name: Alejandro Sánchez
         role: Co-Founder & Technology Director
+        description: We have recently launched the Miami Tech Coalition and 4Geeks is again showing up with a program and dedication that allows everyone involved to rely on their experience and program quality.
         linkedin_url: https://linkedin.com/in/example
       - image_id: student_asian
         name: Marcelo Ricigliano

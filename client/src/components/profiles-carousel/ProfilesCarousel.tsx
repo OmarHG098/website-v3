@@ -34,24 +34,22 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
         className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg"
         data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
       >
-        <div className="flex items-center gap-3">
-          <div
-            className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0"
-            data-testid="profile-image-container"
-          >
-            {imageElement}
-          </div>
-          <h3 className="text-base font-semibold text-foreground leading-tight min-w-0" data-testid="text-profile-name">
-            {profile.name}
-          </h3>
+        <div
+          className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0 mx-auto mb-3"
+          data-testid="profile-image-container"
+        >
+          {imageElement}
         </div>
+        <h3 className="text-lg font-semibold text-foreground text-center" data-testid="text-profile-name">
+          {profile.name}
+        </h3>
         {profile.role && (
-          <p className="text-sm text-muted-foreground mt-2 leading-tight" data-testid="text-profile-role">
+          <p className="text-center text-muted-foreground mt-1 leading-tight" data-testid="text-profile-role">
             {profile.role}
           </p>
         )}
         {profile.description && (
-          <p className="text-sm text-muted-foreground mt-2 line-clamp-3" data-testid="text-profile-description">
+          <p className="text-sm text-muted-foreground mt-2 text-center" data-testid="text-profile-description">
             {profile.description}
           </p>
         )}
@@ -92,7 +90,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
       )}
 
       {profile.description && (
-        <p className="text-sm text-muted-foreground mt-2 line-clamp-3" data-testid="text-profile-description">
+        <p className="text-sm text-muted-foreground mt-2 " data-testid="text-profile-description">
           {profile.description}
         </p>
       )}
