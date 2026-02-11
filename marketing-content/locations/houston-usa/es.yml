@@ -5,10 +5,6 @@ meta:
   og_image: /images/locations/houston-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /houston
-    - /campus/houston
-    - /en/houston
 sections:
   - type: hero
     variant: singleColumn

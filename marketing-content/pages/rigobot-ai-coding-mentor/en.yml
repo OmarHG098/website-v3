@@ -7,8 +7,6 @@ meta:
   change_frequency: weekly
   page_title: rigobot-ai-coding-mentor | 4Geeks Academy
   description: rigobot-ai-coding-mentor - Learn more about this topic at 4Geeks Academy.
-  redirects:
-    - /rigobot-ai-coding-mentor
 schema:
   include:
     - organization

@@ -5,11 +5,6 @@ meta:
   og_image: /images/locations/buenosaires-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /buenos-aires
-    - /buenosaires
-    - /campus/buenos-aires
-    - /ar/buenos-aires
 sections:
   - type: hero
     variant: singleColumn

@@ -5,11 +5,6 @@ meta:
   og_image: /images/locations/munich-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /munich
-    - /munchen
-    - /campus/munich
-    - /de/munich
 sections:
   - type: hero
     variant: singleColumn

@@ -5,12 +5,6 @@ meta:
   og_image: /images/locations/mexicocity-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /mexico-city
-    - /mexicocity
-    - /cdmx
-    - /campus/mexico-city
-    - /mx/mexico-city
 sections:
   - type: hero
     variant: singleColumn

@@ -7,8 +7,6 @@ meta:
   change_frequency: weekly
   page_title: work-with-us | 4Geeks Academy
   description: work-with-us - Learn more about this topic at 4Geeks Academy.
-  redirects:
-    - /work-with-us
 schema:
   include:
     - organization

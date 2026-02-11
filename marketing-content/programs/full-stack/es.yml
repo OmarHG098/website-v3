@@ -7,10 +7,6 @@ meta:
   og_image: /images/programs/full-stack-og.jpg
   priority: 0.9
   change_frequency: weekly
-  redirects:
-    - /bootcamp/full-stack-es
-    - /programas/desarrollador-fullstack
-    - /cursos/full-stack
 schema:
   include:
     - organization

@@ -5,10 +5,6 @@ meta:
   og_image: /images/locations/lima-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /lima
-    - /campus/lima
-    - /pe/lima
 sections:
   - type: hero
     variant: singleColumn

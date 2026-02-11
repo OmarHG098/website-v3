@@ -7,8 +7,6 @@ meta:
   change_frequency: weekly
   page_title: 4Geeks vs Other Bootcamps | 4Geeks Academy
   description: Compare 4Geeks Academy with other coding bootcamps. See why our unlimited mentorship, career support, and proven outcomes set us apart.
-  redirects:
-    - /geeks-vs-others
 schema:
   include:
     - organization

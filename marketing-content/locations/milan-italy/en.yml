@@ -5,11 +5,6 @@ meta:
   og_image: /images/locations/milan-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /milan
-    - /milano
-    - /campus/milan
-    - /it/milan
 sections:
   - type: hero
     variant: singleColumn

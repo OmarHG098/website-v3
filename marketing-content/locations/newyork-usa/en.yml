@@ -5,12 +5,6 @@ meta:
   og_image: /images/locations/newyork-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /new-york
-    - /newyork
-    - /nyc
-    - /campus/new-york
-    - /en/new-york
 sections:
   - type: hero
     variant: singleColumn

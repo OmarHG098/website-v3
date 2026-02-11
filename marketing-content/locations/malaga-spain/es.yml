@@ -5,10 +5,6 @@ meta:
   og_image: /images/locations/malaga-og.jpg
   priority: 0.8
   change_frequency: monthly
-  redirects:
-    - /malaga
-    - /campus/malaga
-    - /es/malaga
 sections:
   - type: hero
     variant: singleColumn

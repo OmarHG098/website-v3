@@ -7,8 +7,6 @@ meta:
   change_frequency: weekly
   page_title: scholarships | 4Geeks Academy
   description: scholarships - Aprende más sobre este tema en 4Geeks Academy.
-  redirects:
-    - /scholarships
 schema:
   include:
     - organization

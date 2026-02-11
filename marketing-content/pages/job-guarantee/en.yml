@@ -7,8 +7,6 @@ meta:
   change_frequency: weekly
   page_title: Job Guarantee | 4Geeks Academy
   description: Get into tech with our Job Guarantee. Get hired within 9 months of graduation, or we will refund your tuition.
-  redirects:
-    - /job-guarantee
 context:
   when_to_use: For visitors who are skeptical about bootcamp outcomes or need reassurance about their career investment.
   target_audience: Risk-averse career changers who need strong guarantees before committing to education investment.

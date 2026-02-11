@@ -7,10 +7,6 @@ meta:
   og_image: /images/programs/ai-engineering-og.jpg
   priority: 0.9
   change_frequency: weekly
-  redirects:
-    - /bootcamp/ai-engineering-es
-    - /programas/ingeniero-ia
-    - /cursos/ingenieria-ia
 schema:
   include:
     - organization
