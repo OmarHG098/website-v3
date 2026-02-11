@@ -26,8 +26,8 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[400px]" data-testid="grid-tab-content">
-      <div className="lg:col-span-4 bg-card p-6 flex flex-col rounded-l-[0.8rem]" data-testid="col-1-info">
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[400px] gap-4 mx-12" data-testid="grid-tab-content">
+      <div className="lg:col-span-4 bg-card p-6 flex flex-col rounded-lg" data-testid="col-1-info">
         {tab.col1_subtitle && (
           <h3 className="text-xl font-bold text-foreground mb-3" data-testid="text-col1-subtitle">
             {tab.col1_subtitle}
@@ -57,7 +57,7 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="lg:col-span-4 bg-primary p-6 flex flex-col" data-testid="col-2-bullets">
+      <div className="lg:col-span-4 bg-primary/5 p-6 flex flex-col" data-testid="col-2-bullets">
         {tab.col2_heading && (
           <p className="text-lg font-semibold text-primary-foreground mb-6 leading-snug" data-testid="text-col2-heading">
             {tab.col2_heading}
@@ -110,7 +110,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
       style={data.background ? { background: data.background } : undefined}
       data-testid="section-career-support-explain"
     >
-      <div className="max-w-7xl mx-auto px-4 md:px-8 py-12 md:py-16">
+      <div className="max-w-6xl mx-auto px-4 md:px-8 py-12 md:py-16">
         {(heading || description) && (
           <div className="text-center mb-10">
             {heading && (
@@ -127,14 +127,14 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
         )}
 
         {tabs.length > 1 && (
-          <div className="flex items-center justify-center mb-8" data-testid="tabs-selector">
-            <div className="inline-flex border border-border rounded-full p-1 gap-1">
+          <div className="flex items-center justify-center mb-8 w-full" data-testid="tabs-selector">
+            <div className="grid grid-cols-4 gap-3 border border-border bg-background rounded-lg w-full p-1">
               {tabs.map((tab, i) => (
                 <button
                   key={i}
                   onClick={() => setActiveTab(i)}
                   className={cn(
-                    "px-6 py-2 rounded-full text-sm font-medium transition-colors duration-200",
+                    "py-1 rounded-lg text-sm font-medium transition-colors duration-200 col-span-1 w-full",
                     i === activeTab
                       ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover-elevate",
