@@ -38,18 +38,18 @@
       "remoteSha": "2fb6157612ecb83a0ed735dc0f916d1c18324f12091247959464f19465d34f9e"
     },
     "marketing-content/landings/ai-engineering-spain/_common.yml": {
-      "sha": "435ad7956118c7ab9e089a0e84648c610dcc567d389ed025128f19d81ac04e68",
-      "lastModified": 1770840241015.199,
+      "sha": "aadeec6cf0d87b3f9024bcabb0c739f2205dac716f4b166e68a611ebc826af76",
+      "lastModified": 1770841633976.6501,
       "remoteSha": "d6d96282be4b98f2ed5d8a1adc383d9906f6c2e5b1266c7b0dcefc43084d1eed",
       "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-02-11T20:04:01.016Z"
+      "modifiedAt": "2026-02-11T20:27:13.978Z"
     },
     "marketing-content/landings/ai-engineering-spain/promoted.yml": {
-      "sha": "7a051c49c646831589c8d8094d8f2a32ad8f1a6fdb55fe7fa7c180ea36821efd",
-      "lastModified": 1770840240711.1995,
+      "sha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83",
+      "lastModified": 1770841633983.6501,
       "remoteSha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83",
       "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-02-11T20:04:00.714Z"
+      "modifiedAt": "2026-02-11T20:27:13.986Z"
     },
     "marketing-content/landings/example-landing/_common.yml": {
       "sha": "4ada0ec95c23f9ca4ad2688441e8b0eb1df461d349bcd9213fdd5c2a981a073f",
@@ -69,11 +69,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "3e0b1ab66d9454cbaf6176272c39db07743fc7892707ce4ab65c25e83e565fb4",
-      "lastModified": 1770839452623.0652,
+      "sha": "7c9569e7dcd06c882cfcef1fe29e84f8f553cc48b0115f4e5e74f2b444b4ed9e",
+      "lastModified": 1770841948317.299,
       "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
       "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-02-11T19:50:52.625Z"
+      "modifiedAt": "2026-02-11T20:32:28.322Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
