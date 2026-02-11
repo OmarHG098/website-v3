@@ -3822,6 +3822,20 @@
       "focal_point": "center",
       "tags": ["logo", "press"],
       "usage_count": 0
+    },
+    "cnn-logo": {
+      "src": "/attached_assets/cnn-logo_1770834336934.png",
+      "alt": "CNN Español logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "economista-logo": {
+      "src": "/attached_assets/economista_1770834336932.png",
+      "alt": "El Economista logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
     }
   }
 }

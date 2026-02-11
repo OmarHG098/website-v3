@@ -795,14 +795,18 @@
       "remoteSha": "71146055f552a0ec6146f489370c57af1a204e0a8198e3dd8265b35ef6fa2f2e"
     },
     "marketing-content/pages/press/en.yml": {
-      "sha": "01871556a83bd1a3c411a9511163f1cf2671bda68c929673c097cb1f13be8515",
-      "lastModified": 1770832856109.4539,
-      "remoteSha": "01871556a83bd1a3c411a9511163f1cf2671bda68c929673c097cb1f13be8515"
+      "sha": "1b4e6a469b29d9dc5cdcba8e9a14e4e49c46393e00eaff12c7b0830743b05f93",
+      "lastModified": 1770834094797.0513,
+      "remoteSha": "01871556a83bd1a3c411a9511163f1cf2671bda68c929673c097cb1f13be8515",
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-11T18:21:34.799Z"
     },
     "marketing-content/pages/press/es.yml": {
-      "sha": "ca1c06d67fe4c386d84943cb614a1ac15af6e368475ceee23fb0d40d90fcef9c",
-      "lastModified": 1770831486946.0076,
-      "remoteSha": "ca1c06d67fe4c386d84943cb614a1ac15af6e368475ceee23fb0d40d90fcef9c"
+      "sha": "ee16dcd4ee0d033e414a93b3d6fe18f52a7cf81cafcb6566d119ba4d353f9dd5",
+      "lastModified": 1770834427518.6758,
+      "remoteSha": "ca1c06d67fe4c386d84943cb614a1ac15af6e368475ceee23fb0d40d90fcef9c",
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-11T18:27:07.520Z"
     },
     "marketing-content/pages/rigobot-ai-coding-mentor/_common.yml": {
       "sha": "d107d4e95f03ba1deac5411b072c619870ddf0f36016c5e2a78c80fea21970d2",
