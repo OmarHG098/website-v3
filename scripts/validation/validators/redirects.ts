@@ -24,8 +24,16 @@ export const redirectValidator: Validator = {
     const warnings: ValidationIssue[] = [];
     const redirectMap = new Map<string, RedirectEntry>();
 
+    function getContentFolder(filePath: string): string {
+      const parts = filePath.split("/");
+      return parts.slice(0, -1).join("/");
+    }
+
     for (const file of context.contentFiles) {
       const redirects = file.meta?.redirects || [];
+      if (redirects.length === 0) continue;
+
+      const isCommon = file.locale === "_common";
       const targetUrl = getCanonicalUrl(file);
 
       for (const redirect of redirects) {
@@ -44,13 +52,26 @@ export const redirectValidator: Validator = {
 
         if (redirectMap.has(normalizedRedirect)) {
           const existing = redirectMap.get(normalizedRedirect)!;
-          errors.push({
-            type: "error",
-            code: "REDIRECT_CONFLICT",
-            message: `Redirect conflict: "${normalizedRedirect}" is claimed by both "${file.filePath}" and "${existing.source.filePath}"`,
-            file: file.filePath,
-            suggestion: "Remove one of the conflicting redirects",
-          });
+          const sameFolder = getContentFolder(file.filePath) === getContentFolder(existing.source.filePath);
+          const bothFromSameContent = sameFolder && (isCommon || existing.source.locale === "_common");
+
+          if (!bothFromSameContent) {
+            errors.push({
+              type: "error",
+              code: "REDIRECT_CONFLICT",
+              message: `Redirect conflict: "${normalizedRedirect}" is claimed by both "${file.filePath}" and "${existing.source.filePath}"`,
+              file: file.filePath,
+              suggestion: "Remove one of the conflicting redirects",
+            });
+          } else {
+            warnings.push({
+              type: "warning",
+              code: "REDIRECT_OVERLAP",
+              message: `Redirect "${normalizedRedirect}" exists in both _common.yml and locale file "${isCommon ? existing.source.filePath : file.filePath}"`,
+              file: file.filePath,
+              suggestion: "Keep the redirect in only one place: _common.yml for all languages, or locale file for a specific language",
+            });
+          }
           continue;
         }
 

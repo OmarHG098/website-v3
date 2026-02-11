@@ -32,15 +32,33 @@ function normalizePath(urlPath: string): string {
   return normalized;
 }
 
+function stripLocalePrefix(urlPath: string): string | null {
+  const match = urlPath.match(/^\/(en|es)(\/.*)/);
+  if (match) return match[2];
+  return null;
+}
+
 export function redirectMiddleware(req: Request, res: Response, next: NextFunction): void {
   const map = getRedirectMap();
   const normalizedPath = normalizePath(req.path);
-  const entry = map.get(normalizedPath);
 
+  const entry = map.get(normalizedPath);
   if (entry) {
     console.log(`[Redirects] 301: ${req.path} -> ${entry.to}`);
     res.redirect(301, entry.to);
     return;
+  }
+
+  if (!normalizedPath.startsWith("/landing")) {
+    const stripped = stripLocalePrefix(normalizedPath);
+    if (stripped) {
+      const fallback = map.get(stripped);
+      if (fallback) {
+        console.log(`[Redirects] 301 (locale-agnostic): ${req.path} -> ${fallback.to}`);
+        res.redirect(301, fallback.to);
+        return;
+      }
+    }
   }
 
   next();

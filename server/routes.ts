@@ -908,6 +908,141 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  // Add a new redirect (for debug tools)
+  app.post("/api/debug/redirects", (req, res) => {
+    try {
+      const { from, to, allLanguages } = req.body;
+
+      if (!from || !to) {
+        res.status(400).json({ error: "Both 'from' and 'to' fields are required" });
+        return;
+      }
+
+      let normalizedFrom = (from as string).startsWith("/") ? (from as string) : `/${from}`;
+      normalizedFrom = normalizedFrom.toLowerCase();
+      if (normalizedFrom.length > 1 && normalizedFrom.endsWith("/")) {
+        normalizedFrom = normalizedFrom.slice(0, -1);
+      }
+
+      const destUrl = to as string;
+
+      // Parse destination URL to find the content entry
+      let contentType: "programs" | "landings" | "pages" | "locations" | null = null;
+      let slug: string | null = null;
+      let locale: string = "en";
+
+      // Match program URLs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
+      const programEnMatch = destUrl.match(/^\/en\/career-programs\/([^/]+)/);
+      const programEsMatch = destUrl.match(/^\/es\/programas-de-carrera\/([^/]+)/);
+      // Match landing URLs: /landing/:slug
+      const landingMatch = destUrl.match(/^\/landing\/([^/]+)/);
+      // Match page URLs: /en/:slug or /es/:slug
+      const pageEnMatch = destUrl.match(/^\/en\/([^/]+)/);
+      const pageEsMatch = destUrl.match(/^\/es\/([^/]+)/);
+      // Match location URLs: /en/locations/:slug or /es/ubicaciones/:slug
+      const locationEnMatch = destUrl.match(/^\/en\/locations\/([^/]+)/);
+      const locationEsMatch = destUrl.match(/^\/es\/ubicaciones\/([^/]+)/);
+
+      if (programEnMatch) {
+        contentType = "programs";
+        slug = programEnMatch[1];
+        locale = "en";
+      } else if (programEsMatch) {
+        contentType = "programs";
+        slug = programEsMatch[1];
+        locale = "es";
+      } else if (landingMatch) {
+        contentType = "landings";
+        slug = landingMatch[1];
+        locale = "en";
+      } else if (locationEnMatch) {
+        contentType = "locations";
+        slug = locationEnMatch[1];
+        locale = "en";
+      } else if (locationEsMatch) {
+        contentType = "locations";
+        slug = locationEsMatch[1];
+        locale = "es";
+      } else if (pageEnMatch) {
+        contentType = "pages";
+        slug = pageEnMatch[1];
+        locale = "en";
+      } else if (pageEsMatch) {
+        contentType = "pages";
+        slug = pageEsMatch[1];
+        locale = "es";
+      }
+
+      if (!contentType || !slug) {
+        res.status(400).json({ error: "Could not determine content type from destination URL" });
+        return;
+      }
+
+      // Find the content entry
+      const entries = contentIndex.findBySlug(slug, { contentType });
+      if (entries.length === 0) {
+        res.status(404).json({ error: `No content found for slug "${slug}" in ${contentType}` });
+        return;
+      }
+
+      const entry = entries[0];
+      const basePath = path.join(process.cwd(), entry.folder);
+
+      // Determine which file to write to
+      // Landings always use _common.yml; programs/pages/locations use locale file or _common.yml
+      let targetFile: string;
+      if (contentType === "landings" || allLanguages) {
+        targetFile = "_common.yml";
+      } else {
+        targetFile = `${locale}.yml`;
+      }
+
+      const filePath = path.join(basePath, targetFile);
+
+      // Read existing file or create minimal structure
+      let parsed: Record<string, unknown> = {};
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, "utf-8");
+        parsed = (yaml.load(raw) as Record<string, unknown>) || {};
+      }
+
+      // Ensure meta.redirects array exists and append the new redirect
+      if (!parsed.meta || typeof parsed.meta !== "object") {
+        parsed.meta = {};
+      }
+      const meta = parsed.meta as Record<string, unknown>;
+      if (!Array.isArray(meta.redirects)) {
+        meta.redirects = [];
+      }
+      const redirects = meta.redirects as string[];
+
+      // Check for duplicates
+      if (redirects.some(r => r.toLowerCase() === normalizedFrom)) {
+        res.status(409).json({ error: `Redirect "${normalizedFrom}" already exists in ${targetFile}` });
+        return;
+      }
+
+      redirects.push(normalizedFrom);
+
+      // Write back to file
+      const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+
+      // Refresh content index and clear redirect cache
+      contentIndex.scan();
+      clearRedirectCache();
+
+      res.json({
+        success: true,
+        message: `Redirect added: ${normalizedFrom} -> ${destUrl}`,
+        file: `${entry.folder}/${targetFile}`,
+      });
+    } catch (err) {
+      console.error("[Debug] Failed to add redirect:", err);
+      res.status(500).json({ error: "Failed to add redirect" });
+    }
+  });
+
   // Menus API - list all menu files (excludes translation files like .es.yml)
   app.get("/api/menus", (_req, res) => {
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");

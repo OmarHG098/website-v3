@@ -4,10 +4,22 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck } from "@tabler/icons-react";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
-import { apiRequest } from "@/lib/queryClient";
+import { apiRequest, queryClient } from "@/lib/queryClient";
+import { SitemapSearch } from "@/components/menus/SitemapSearch";
+import { useToast } from "@/hooks/use-toast";
 
 interface Redirect {
   from: string;
@@ -44,6 +56,14 @@ export default function PrivateRedirects() {
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
   const [isValidating, setIsValidating] = useState(false);
   const [showValidation, setShowValidation] = useState(false);
+
+  const [showAddDialog, setShowAddDialog] = useState(false);
+  const [newFrom, setNewFrom] = useState("");
+  const [newTo, setNewTo] = useState("");
+  const [allLanguages, setAllLanguages] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { toast } = useToast();
 
   useEffect(() => {
     setIsAuthorized(isDebugModeActive());
@@ -96,6 +116,56 @@ export default function PrivateRedirects() {
     ? validationResult.errors.length + validationResult.warnings.length
     : 0;
 
+  const hasLocalePrefix = /^\/(en|es)(\/|$)/.test(newFrom);
+  const isLandingDestination = newTo.startsWith("/landing");
+
+  const handleOpenAddDialog = () => {
+    setNewFrom("");
+    setNewTo("");
+    setAllLanguages(true);
+    setShowAddDialog(true);
+  };
+
+  const handleSubmitRedirect = async () => {
+    if (!newFrom.trim() || !newTo.trim()) return;
+
+    setIsSubmitting(true);
+    try {
+      const res = await apiRequest("POST", "/api/debug/redirects", {
+        from: newFrom.trim(),
+        to: newTo.trim(),
+        allLanguages,
+      });
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast({
+          title: "Failed to add redirect",
+          description: data.error || "An error occurred",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Redirect added",
+        description: `${newFrom.trim()} → ${newTo.trim()}`,
+      });
+
+      setShowAddDialog(false);
+      queryClient.invalidateQueries({ queryKey: ['/api/debug/redirects'] });
+      runValidation();
+    } catch {
+      toast({
+        title: "Failed to add redirect",
+        description: "An unexpected error occurred",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   if (!isAuthorized) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -136,7 +206,7 @@ export default function PrivateRedirects() {
                   URL Redirects
                 </h1>
                 <p className="text-sm text-muted-foreground">
-                  {redirects.length} 301 redirect{redirects.length !== 1 ? 's' : ''} configured
+                  {redirects.length} redirect{redirects.length !== 1 ? 's' : ''} configured
                 </p>
               </div>
             </div>
@@ -187,6 +257,15 @@ export default function PrivateRedirects() {
                 data-testid="button-toggle-search"
               >
                 <IconSearch className="h-4 w-4" />
+              </Button>
+              <Button
+                variant="default"
+                size="sm"
+                onClick={handleOpenAddDialog}
+                data-testid="button-add-redirect"
+              >
+                <IconPlus className="h-3.5 w-3.5 mr-1" />
+                Add redirect
               </Button>
             </div>
           </div>
@@ -329,6 +408,102 @@ export default function PrivateRedirects() {
           </div>
         )}
       </div>
+
+      <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Add Redirect</DialogTitle>
+            <DialogDescription>
+              Create a new URL redirect. The origin URL will be redirected to the destination page.
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-4 py-2">
+            <div className="space-y-2">
+              <Label htmlFor="redirect-from">Origin URL</Label>
+              <Input
+                id="redirect-from"
+                placeholder="/old-page-url"
+                value={newFrom}
+                onChange={(e) => setNewFrom(e.target.value)}
+                data-testid="input-redirect-from"
+              />
+              {newFrom && !hasLocalePrefix && !newFrom.startsWith("/landing") && allLanguages && (
+                <p className="text-xs text-muted-foreground">
+                  Will match: <code className="bg-muted px-1 rounded">{newFrom}</code>, <code className="bg-muted px-1 rounded">/en{newFrom.startsWith("/") ? "" : "/"}{newFrom}</code>, and <code className="bg-muted px-1 rounded">/es{newFrom.startsWith("/") ? "" : "/"}{newFrom}</code>
+                </p>
+              )}
+              {newFrom && hasLocalePrefix && allLanguages && (
+                <p className="text-xs text-muted-foreground">
+                  This URL has a locale prefix. Remove it (e.g. use <code className="bg-muted px-1 rounded">{newFrom.replace(/^\/(en|es)/, "")}</code>) to match all languages, or turn off "Match all languages" for this specific locale only.
+                </p>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <Label>Destination</Label>
+              <div className="flex items-center">
+                <SitemapSearch
+                  value={newTo}
+                  onChange={setNewTo}
+                  placeholder="Search for a page..."
+                  testId="input-redirect-to"
+                />
+              </div>
+              {newTo && (
+                <p className="text-xs text-muted-foreground">
+                  Redirecting to: <code className="bg-muted px-1 rounded">{newTo}</code>
+                </p>
+              )}
+            </div>
+
+            {!isLandingDestination && (
+              <div className="flex items-center justify-between gap-4 rounded-md border p-3">
+                <div className="space-y-0.5">
+                  <Label htmlFor="all-languages" className="text-sm font-medium">Match all languages</Label>
+                  <p className="text-xs text-muted-foreground">
+                    {allLanguages
+                      ? "Stored in _common.yml — matches /en/ and /es/ variants automatically"
+                      : "Stored in locale file — only matches this exact URL"
+                    }
+                  </p>
+                </div>
+                <Switch
+                  id="all-languages"
+                  checked={allLanguages}
+                  onCheckedChange={setAllLanguages}
+                  data-testid="switch-all-languages"
+                />
+              </div>
+            )}
+
+            {isLandingDestination && (
+              <div className="rounded-md border p-3">
+                <p className="text-xs text-muted-foreground">
+                  Landing pages use exact path matching only. The redirect will be stored in the landing's variant file.
+                </p>
+              </div>
+            )}
+          </div>
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setShowAddDialog(false)}
+              data-testid="button-cancel-redirect"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSubmitRedirect}
+              disabled={!newFrom.trim() || !newTo.trim() || isSubmitting}
+              data-testid="button-save-redirect"
+            >
+              {isSubmitting ? "Adding..." : "Add Redirect"}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

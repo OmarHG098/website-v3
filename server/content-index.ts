@@ -166,8 +166,13 @@ class ContentIndex {
     const redirects = meta?.redirects as string[] | undefined;
     if (!Array.isArray(redirects)) return;
 
-    const targetUrl = this.getCanonicalUrl(contentType, slug, locale);
-    const typeLabel = contentType === "programs" ? "program" : "landing";
+    const isCommon = locale === "_common";
+    const targetUrl = isCommon
+      ? this.getCanonicalUrl(contentType, slug, "en")
+      : this.getCanonicalUrl(contentType, slug, locale);
+    const typeLabel = isCommon
+      ? `${contentType === "programs" ? "program" : "landing"}-common`
+      : (contentType === "programs" ? "program" : "landing");
 
     for (const redirect of redirects) {
       if (typeof redirect !== "string") continue;

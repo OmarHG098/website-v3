@@ -75,15 +75,16 @@ export function loadContentDirectory(
     const yamlFiles = fs.readdirSync(contentPath).filter((f) => f.endsWith(".yml"));
 
     for (const yamlFile of yamlFiles) {
-      if (yamlFile.startsWith("_")) continue;
+      const isCommon = yamlFile === "_common.yml" || yamlFile === "_common.yaml";
+      if (yamlFile.startsWith("_") && !isCommon) continue;
       
       const filePath = path.join(contentPath, yamlFile);
       const data = parseYamlFile(filePath);
       
       if (!data) continue;
 
-      const locale = extractLocaleFromFilename(yamlFile);
-      const { variant, version } = extractVariantFromFilename(yamlFile);
+      const locale = isCommon ? "_common" : extractLocaleFromFilename(yamlFile);
+      const { variant, version } = isCommon ? {} : extractVariantFromFilename(yamlFile);
 
       files.push({
         slug: data.slug || dir,
