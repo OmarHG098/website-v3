@@ -12,42 +12,81 @@ interface ProfilesCarouselProps {
 const PROFILES_PER_PAGE = 4;
 
 function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: boolean }) {
+  const imageElement = profile.image_id ? (
+    <UniversalImage
+      id={profile.image_id}
+      alt={profile.name}
+      className="w-full h-full"
+      style={{
+        objectFit: (profile.object_fit as React.CSSProperties["objectFit"]) || "cover",
+        objectPosition: profile.object_position || "center center",
+      }}
+    />
+  ) : (
+    <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-3xl font-bold">
+      {profile.name.charAt(0)}
+    </div>
+  );
+
+  if (isRound) {
+    return (
+      <div
+        className="flex items-center gap-3 flex-1 min-w-0 border p-4 rounded-lg"
+        data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
+      >
+        <div
+          className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0"
+          data-testid="profile-image-container"
+        >
+          {imageElement}
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-base font-semibold text-foreground leading-tight" data-testid="text-profile-name">
+            {profile.name}
+          </h3>
+          {profile.role && (
+            <p className="text-sm text-muted-foreground mt-0.5 leading-tight" data-testid="text-profile-role">
+              {profile.role}
+            </p>
+          )}
+          {profile.description && (
+            <p className="text-xs text-muted-foreground mt-1 line-clamp-2" data-testid="text-profile-description">
+              {profile.description}
+            </p>
+          )}
+          {profile.linkedin_url && (
+            <a
+              href={profile.linkedin_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 inline-block text-muted-foreground transition-colors hover:text-foreground"
+              data-testid="link-profile-linkedin"
+            >
+              <IconBrandLinkedin className="w-4 h-4" />
+            </a>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
-      className="flex flex-col items-center text-center flex-1 min-w-0"
+      className="flex flex-col items-center text-center flex-1 min-w-0 border p-4 rounded-lg"
       data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div
-        className={cn(
-          "mb-4 overflow-hidden flex items-center justify-center h-[250px]",
-          isRound
-            ? "w-28 h-28 rounded-full"
-            : "w-full aspect-[3/4] rounded-lg bg-muted"
-        )}
+        className="mb-4 overflow-hidden flex items-center justify-center w-full h-[250px] rounded-lg bg-muted"
         data-testid="profile-image-container"
       >
-        {profile.image_id ? (
-          <UniversalImage
-            id={profile.image_id}
-            alt={profile.name}
-            className="w-full h-full"
-            style={{
-              objectFit: (profile.object_fit as React.CSSProperties["objectFit"]) || "cover",
-              objectPosition: profile.object_position || "center center",
-            }}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center bg-muted text-muted-foreground text-3xl font-bold">
-            {profile.name.charAt(0)}
-          </div>
-        )}
+        {imageElement}
       </div>
 
-      <h3 className="text-base font-semibold text-foreground" data-testid="text-profile-name">
+      <h3 className="text-xl font-semibold text-foreground" data-testid="text-profile-name">
         {profile.name}
       </h3>
       {profile.role && (
-        <p className="text-sm text-muted-foreground mt-0.5" data-testid="text-profile-role">
+        <p className="text-foreground mt-0.5" data-testid="text-profile-role">
           {profile.role}
         </p>
       )}
