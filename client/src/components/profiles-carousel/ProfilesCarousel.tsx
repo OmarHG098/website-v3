@@ -41,19 +41,17 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
           >
             {imageElement}
           </div>
-          <div className="min-w-0">
-            <h3 className="text-base font-semibold text-foreground leading-tight" data-testid="text-profile-name">
-              {profile.name}
-            </h3>
-            {profile.role && (
-              <p className="text-sm text-muted-foreground mt-0.5 leading-tight" data-testid="text-profile-role">
-                {profile.role}
-              </p>
-            )}
-          </div>
+          <h3 className="text-base font-semibold text-foreground leading-tight min-w-0" data-testid="text-profile-name">
+            {profile.name}
+          </h3>
         </div>
+        {profile.role && (
+          <p className="text-sm text-muted-foreground mt-2 leading-tight" data-testid="text-profile-role">
+            {profile.role}
+          </p>
+        )}
         {profile.description && (
-          <p className="text-sm text-muted-foreground mt-3 line-clamp-3" data-testid="text-profile-description">
+          <p className="text-sm text-muted-foreground mt-2 line-clamp-3" data-testid="text-profile-description">
             {profile.description}
           </p>
         )}

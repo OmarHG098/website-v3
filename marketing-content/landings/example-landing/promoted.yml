@@ -542,14 +542,12 @@ sections:
     version: v1.0
     heading: Meet the Geeks
     description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
-    image_round: false
+    image_round: true
     profiles:
       - image_id: alejandro_sanchez
         name: Alejandro Sánchez
         role: Co-Founder & Technology Director
         linkedin_url: https://linkedin.com/in/example
-        alt: Alejandro Sanchez
-        id: alejandro-sanchez
       - image_id: student_asian
         name: Marcelo Ricigliano
         role: Co-founder & CEO
