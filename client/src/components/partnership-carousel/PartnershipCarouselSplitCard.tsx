@@ -336,11 +336,13 @@ export function PartnershipCarouselSplitCard({
   const totalSlides = slides.length;
 
   useEffect(() => {
-    const el = slideRefs.current[activeIndex];
-    if (el) {
-      setActiveHeight(el.scrollHeight);
-    }
-  }, [activeIndex]);
+    requestAnimationFrame(() => {
+      const el = slideRefs.current[activeIndex];
+      if (el) {
+        setActiveHeight(el.scrollHeight);
+      }
+    });
+  }, [activeIndex, slides]);
 
   useEffect(() => {
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -492,15 +494,16 @@ export function PartnershipCarouselSplitCard({
             {slides.map((slide, i) => (
               <div
                 key={i}
-                ref={(el) => { slideRefs.current[i] = el; }}
                 className="w-full flex-shrink-0"
               >
-                <SlideContent
-                  slide={slide}
-                  verticalCards={vertical_cards}
-                  institutionsHeading={data.institutions_heading}
-                  referencesHeading={data.references_heading}
-                />
+                <div ref={(el) => { slideRefs.current[i] = el; }}>
+                  <SlideContent
+                    slide={slide}
+                    verticalCards={vertical_cards}
+                    institutionsHeading={data.institutions_heading}
+                    referencesHeading={data.references_heading}
+                  />
+                </div>
               </div>
             ))}
           </div>
