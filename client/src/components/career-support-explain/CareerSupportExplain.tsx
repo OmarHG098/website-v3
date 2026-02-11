@@ -15,6 +15,16 @@ function getTablerIcon(name: string) {
 }
 
 function TabContent({ tab }: { tab: CareerSupportTab }) {
+  const hasContent = tab.col1_subtitle || tab.col1_description || tab.col1_boxes?.length || tab.col2_heading || tab.col2_bullets?.length || tab.col3_image_id;
+
+  if (!hasContent) {
+    return (
+      <div className="flex items-center justify-center min-h-[300px] rounded-[0.8rem] border border-dashed border-border" data-testid="tab-empty">
+        <p className="text-muted-foreground text-sm">Content coming soon</p>
+      </div>
+    );
+  }
+
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 min-h-[400px]" data-testid="grid-tab-content">
       <div className="lg:col-span-4 bg-card p-6 flex flex-col rounded-l-[0.8rem]" data-testid="col-1-info">
