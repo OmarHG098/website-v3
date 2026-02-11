@@ -118,7 +118,6 @@ export default function PrivateRedirects() {
     ? validationResult.errors.length + validationResult.warnings.length
     : 0;
 
-  const hasLocalePrefix = /^\/(en|es)(\/|$)/.test(newFrom);
   const isLandingDestination = newTo.startsWith("/landing");
 
   const stripLocalePrefix = (url: string) => url.replace(/^\/(en|es)(\/|$)/, "/");
@@ -442,14 +441,9 @@ export default function PrivateRedirects() {
                 onChange={(e) => setNewFrom(e.target.value)}
                 data-testid="input-redirect-from"
               />
-              {newFrom && !hasLocalePrefix && !newFrom.startsWith("/landing") && allLanguages && (
+              {newFrom && (
                 <p className="text-xs text-muted-foreground">
-                  Will match: <code className="bg-muted px-1 rounded">{newFrom}</code>, <code className="bg-muted px-1 rounded">/en{newFrom.startsWith("/") ? "" : "/"}{newFrom}</code>, and <code className="bg-muted px-1 rounded">/es{newFrom.startsWith("/") ? "" : "/"}{newFrom}</code>
-                </p>
-              )}
-              {newFrom && hasLocalePrefix && allLanguages && (
-                <p className="text-xs text-muted-foreground">
-                  This URL has a locale prefix. Remove it (e.g. use <code className="bg-muted px-1 rounded">{newFrom.replace(/^\/(en|es)/, "")}</code>) to match all languages, or turn off "Match all languages" for this specific locale only.
+                  Visitors to <code className="bg-muted px-1 rounded">{newFrom.startsWith("/") ? newFrom : `/${newFrom}`}</code> will be redirected
                 </p>
               )}
             </div>
@@ -481,8 +475,8 @@ export default function PrivateRedirects() {
                   <Label htmlFor="all-languages" className="text-sm font-medium">Match all languages</Label>
                   <p className="text-xs text-muted-foreground">
                     {allLanguages
-                      ? "Stored in _common.yml — matches /en/ and /es/ variants automatically"
-                      : "Stored in locale file — only matches this exact URL"
+                      ? "Stored in _common.yml — all language versions of the destination content will have this redirect"
+                      : "Stored in locale file — only the selected language version will have this redirect"
                     }
                   </p>
                 </div>
