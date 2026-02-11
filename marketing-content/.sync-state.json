@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "f1684ccb98e28cb9b5c1b8db4005bf8b22b3c84a",
-  "lastSyncedAt": "2026-02-11T15:51:29.236Z",
+  "lastSyncedCommit": "8168dcf58ea30a74f2873fcd3402c9df7fdfedb9",
+  "lastSyncedAt": "2026-02-11T18:02:32.063Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -795,14 +795,14 @@
       "remoteSha": "71146055f552a0ec6146f489370c57af1a204e0a8198e3dd8265b35ef6fa2f2e"
     },
     "marketing-content/pages/press/en.yml": {
-      "sha": "151c36817bb28ceb966e94741401f6cd359ee63a5f051a81eabcc556e4dd0488",
-      "lastModified": 1770822242713.8906,
-      "remoteSha": "151c36817bb28ceb966e94741401f6cd359ee63a5f051a81eabcc556e4dd0488"
+      "sha": "01871556a83bd1a3c411a9511163f1cf2671bda68c929673c097cb1f13be8515",
+      "lastModified": 1770832856109.4539,
+      "remoteSha": "01871556a83bd1a3c411a9511163f1cf2671bda68c929673c097cb1f13be8515"
     },
     "marketing-content/pages/press/es.yml": {
-      "sha": "f82fefb7535312d4140d050904c4fb7a8b8b3828f7b15318be9daa8d9e59b1b5",
-      "lastModified": 1770822243252.8901,
-      "remoteSha": "f82fefb7535312d4140d050904c4fb7a8b8b3828f7b15318be9daa8d9e59b1b5"
+      "sha": "ca1c06d67fe4c386d84943cb614a1ac15af6e368475ceee23fb0d40d90fcef9c",
+      "lastModified": 1770831486946.0076,
+      "remoteSha": "ca1c06d67fe4c386d84943cb614a1ac15af6e368475ceee23fb0d40d90fcef9c"
     },
     "marketing-content/pages/rigobot-ai-coding-mentor/_common.yml": {
       "sha": "d107d4e95f03ba1deac5411b072c619870ddf0f36016c5e2a78c80fea21970d2",
