@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "6aa2bac2e398f7097bcdd91c70dce39c737ab299",
-  "lastSyncedAt": "2026-02-11T21:42:57.710Z",
+  "lastSyncedCommit": "ad2caef872ca2b94038d0a132c30e0798f705231",
+  "lastSyncedAt": "2026-02-11T21:59:46.475Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -63,11 +63,9 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "6facb231a1ea03e58db59242e8459e19f4dd23ed97125ab79cdb88c84a0b580c",
-      "lastModified": 1770847121192.7183,
-      "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
-      "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-11T21:58:41.194Z"
+      "sha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
+      "lastModified": 1770847185115.6682,
+      "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
@@ -615,9 +613,9 @@
       "remoteSha": "1df86d25c1566b75f14180ba4bf798b1d3307eba581bf3c7c66ea5c44c5ef852"
     },
     "marketing-content/pages/component-test/en.yml": {
-      "sha": "2d0684b30ee2bd212671564d88f1d8f9faeaf8259ffac2b21c40b41c7173458a",
-      "lastModified": 1770846173428.46,
-      "remoteSha": "2d0684b30ee2bd212671564d88f1d8f9faeaf8259ffac2b21c40b41c7173458a"
+      "sha": "43da30205446f5559b85f0dfa463fb37736d85eecc5e92faec839e4b48df73ed",
+      "lastModified": 1770847185577.668,
+      "remoteSha": "43da30205446f5559b85f0dfa463fb37736d85eecc5e92faec839e4b48df73ed"
     },
     "marketing-content/pages/faq/en.yml": {
       "sha": "aea7f1de42c796aa044b4840375b08dc3b9c84fddde00d35ba60b107984f88ad",
@@ -650,9 +648,9 @@
       "remoteSha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1"
     },
     "marketing-content/pages/geekforce-career-support/en.yml": {
-      "sha": "8dd3f2c4d18262c108d712ffe45eb9ff061d0307cb21a5c37ad641adf767deb3",
-      "lastModified": 1770846174375.4592,
-      "remoteSha": "8dd3f2c4d18262c108d712ffe45eb9ff061d0307cb21a5c37ad641adf767deb3"
+      "sha": "6c68501a563553f3e47805cd2f2ccb14214c1b613928556a059acc431b697799",
+      "lastModified": 1770847186125.6675,
+      "remoteSha": "6c68501a563553f3e47805cd2f2ccb14214c1b613928556a059acc431b697799"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
       "sha": "c1d001f121237d8d6eef7fc1510d73135abd1e0b406323b87a6f3f0a008ca711",
