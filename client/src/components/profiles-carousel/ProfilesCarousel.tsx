@@ -30,7 +30,8 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
           <UniversalImage
             id={profile.image_id}
             alt={profile.name}
-            className="w-full h-full"
+            className="w-full h-full object-cover"
+            style={profile.object_position ? { objectPosition: profile.object_position } : undefined}
             data-testid="img-profile"
           />
         ) : (
@@ -134,11 +135,11 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
               className="flex-shrink-0"
               data-testid="button-page-prev"
             >
-              <IconChevronLeft className="w-5 h-5" />
+              <IconChevronLeft className="!w-7 !h-7" />
             </Button>
           )}
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 flex-1">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 flex-1 mx-2">
             {currentProfiles.map((profile, i) => (
               <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
             ))}
@@ -153,7 +154,7 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
               className="flex-shrink-0"
               data-testid="button-page-next"
             >
-              <IconChevronRight className="w-5 h-5" />
+              <IconChevronRight className="!w-7 !h-7" />
             </Button>
           )}
         </div>
