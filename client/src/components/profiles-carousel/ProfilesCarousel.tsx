@@ -31,7 +31,9 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
             id={profile.image_id}
             alt={profile.name}
             className="w-full h-full object-cover"
-            style={profile.object_position ? { objectPosition: profile.object_position } : undefined}
+            style={
+              objectPosition: profile.image_object_position || "center"
+            }
             data-testid="img-profile"
           />
         ) : (
