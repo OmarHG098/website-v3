@@ -9,7 +9,7 @@ interface ProfilesCarouselProps {
   data: ProfilesCarouselSection;
 }
 
-const PROFILES_PER_PAGE = 5;
+const PROFILES_PER_PAGE = 4;
 
 function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: boolean }) {
   return (
@@ -19,7 +19,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
     >
       <div
         className={cn(
-          "mb-4 overflow-hidden flex items-center justify-center h-[100px]",
+          "mb-4 overflow-hidden flex items-center justify-center h-[250px]",
           isRound
             ? "w-28 h-28 rounded-full"
             : "w-full aspect-[3/4] rounded-lg bg-muted"
@@ -43,7 +43,6 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
       <h3 className="text-base font-semibold text-foreground" data-testid="text-profile-name">
         {profile.name}
       </h3>
-      {/* test */}
       {profile.role && (
         <p className="text-sm text-muted-foreground mt-0.5" data-testid="text-profile-role">
           {profile.role}
@@ -109,49 +108,55 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
           </div>
         )}
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 md:gap-6">
-          {currentProfiles.map((profile, i) => (
-            <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
-          ))}
-        </div>
-
         {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-4 mt-8" data-testid="carousel-controls">
+          <div className="flex items-center justify-center gap-2 mb-6" data-testid="carousel-dots">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => goTo(i)}
+                className={cn(
+                  "w-2.5 h-2.5 rounded-full transition-colors duration-200",
+                  i === currentPage ? "bg-primary" : "bg-border"
+                )}
+                data-testid={`button-dot-${i}`}
+              />
+            ))}
+          </div>
+        )}
+
+        <div className="flex items-center gap-2 md:gap-4" data-testid="carousel-controls">
+          {totalPages > 1 && (
             <Button
               size="icon"
               variant="ghost"
               onClick={() => goTo(currentPage - 1)}
               disabled={currentPage === 0}
+              className="flex-shrink-0"
               data-testid="button-page-prev"
             >
               <IconChevronLeft className="w-5 h-5" />
             </Button>
+          )}
 
-            <div className="flex items-center gap-2" data-testid="carousel-dots">
-              {Array.from({ length: totalPages }).map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "w-2.5 h-2.5 rounded-full transition-colors duration-200",
-                    i === currentPage ? "bg-primary" : "bg-border"
-                  )}
-                  data-testid={`button-dot-${i}`}
-                />
-              ))}
-            </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 flex-1">
+            {currentProfiles.map((profile, i) => (
+              <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
+            ))}
+          </div>
 
+          {totalPages > 1 && (
             <Button
               size="icon"
               variant="ghost"
               onClick={() => goTo(currentPage + 1)}
               disabled={currentPage === totalPages - 1}
+              className="flex-shrink-0"
               data-testid="button-page-next"
             >
               <IconChevronRight className="w-5 h-5" />
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </section>
   );
