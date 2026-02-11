@@ -75,6 +75,11 @@ export function UniversalImage({
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
+  }, [id]);
+
   const handleLoad = () => {
     setIsLoaded(true);
     onLoad?.();
