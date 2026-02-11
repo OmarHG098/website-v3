@@ -15,11 +15,19 @@ export interface FindOptions {
   contentType?: ContentEntry["contentType"];
 }
 
+export interface RedirectEntry {
+  from: string;
+  to: string;
+  type: string;
+  source: string;
+}
+
 class ContentIndex {
   private entries: ContentEntry[] = [];
   private bySlug: Map<string, ContentEntry[]> = new Map();
   private byPath: Map<string, ContentEntry> = new Map();
   private imageUsage: Map<string, Set<string>> = new Map();
+  private redirectEntries: RedirectEntry[] = [];
   private initialized = false;
 
   private static instance: ContentIndex;
@@ -41,6 +49,7 @@ class ContentIndex {
     this.bySlug = new Map();
     this.byPath = new Map();
     this.imageUsage = new Map();
+    this.redirectEntries = [];
 
     for (const contentType of contentTypes) {
       const typeDir = path.join(baseDir, contentType);
@@ -84,8 +93,12 @@ class ContentIndex {
           const relFilePath = `${relFolder}/${file}`;
           try {
             const raw = fs.readFileSync(filePath, "utf-8");
-            const parsed = yaml.load(raw);
+            const parsed = yaml.load(raw) as Record<string, unknown> | null;
             this.extractImageReferences(parsed, relFilePath);
+            if (parsed && (contentType === "programs" || contentType === "landings")) {
+              const locale = file.replace(/\.(yml|yaml)$/, "");
+              this.extractRedirects(parsed, slug, locale, contentType, relFilePath);
+            }
           } catch {}
         }
       }
@@ -93,7 +106,7 @@ class ContentIndex {
 
     this.initialized = true;
     const imageRefCount = this.imageUsage.size;
-    console.log(`[ContentIndex] Scanned ${this.entries.length} content entries, ${imageRefCount} image references tracked`);
+    console.log(`[ContentIndex] Scanned ${this.entries.length} content entries, ${imageRefCount} image references tracked, ${this.redirectEntries.length} redirects`);
   }
 
   private addImageRef(ref: string, filePath: string): void {
@@ -130,6 +143,45 @@ class ContentIndex {
       } else if (typeof value === "object" && value !== null) {
         this.extractImageReferences(value, filePath);
       }
+    }
+  }
+
+  private getCanonicalUrl(type: "programs" | "landings", slug: string, locale: string): string {
+    if (type === "programs") {
+      return locale === "es"
+        ? `/es/programas-de-carrera/${slug}`
+        : `/en/career-programs/${slug}`;
+    }
+    return `/landing/${slug}`;
+  }
+
+  private extractRedirects(
+    parsed: Record<string, unknown>,
+    slug: string,
+    locale: string,
+    contentType: "programs" | "landings",
+    filePath: string,
+  ): void {
+    const meta = parsed.meta as Record<string, unknown> | undefined;
+    const redirects = meta?.redirects as string[] | undefined;
+    if (!Array.isArray(redirects)) return;
+
+    const targetUrl = this.getCanonicalUrl(contentType, slug, locale);
+    const typeLabel = contentType === "programs" ? "program" : "landing";
+
+    for (const redirect of redirects) {
+      if (typeof redirect !== "string") continue;
+      let normalized = redirect.startsWith("/") ? redirect : `/${redirect}`;
+      normalized = normalized.toLowerCase();
+      if (normalized.length > 1 && normalized.endsWith("/")) {
+        normalized = normalized.slice(0, -1);
+      }
+      this.redirectEntries.push({
+        from: normalized,
+        to: targetUrl,
+        type: typeLabel,
+        source: filePath,
+      });
     }
   }
 
@@ -270,6 +322,11 @@ class ContentIndex {
       }
     }
     return Array.from(files);
+  }
+
+  getRedirects(): RedirectEntry[] {
+    this.ensureInitialized();
+    return [...this.redirectEntries];
   }
 
   refresh(): void {
