@@ -160,13 +160,13 @@ sections:
         excerpt: Gracias a nuestros amigos de CNN Chile por haber estado presentes en nuestro evento y publicar tan buen material sobre el futuro en educación que ofrecemos a la comunidad de Santiago a través de nuestro programa de
         link_text: Ver Entrevista
         link_url: https://example.com/interview
-        alt: Evernote logo
-        id: logo-evernote
-      - logo: /attached_assets/forbes-logo.png
+      - logo: /attached_assets/twilio_1764719992371.png
         title: Mejores Bootcamps de Ciencia de Datos en 2024
         excerpt: Los profesionales actuales y futuros de la tecnología pueden completar un bootcamp de ciencia de datos para perfeccionar sus habilidades y avanzar en sus carreras.
         link_text: Leer Artículo
         link_url: https://example.com/article-3
+        alt: Twilio logo
+        id: logo-twilio
       - logo: /attached_assets/forbes-logo.png
         title: Coding Bootcamps para aprender a programar
         excerpt: En un estudio publicado por Forbes donde se especifica todas las maneras en las que puedes convertirte en un desarrollador web en los EEUU
