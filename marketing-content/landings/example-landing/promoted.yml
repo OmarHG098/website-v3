@@ -437,14 +437,13 @@ sections:
     version: v1.0
     heading: Meet the Geeks
     description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
-    image_round: true
+    image_round: false
     profiles:
       - image_id: student_asian
         object_fit: cover
         object_position: 10% 80%
         name: Alejandro Sánchez
-        role: Co-Founder & Technology Director
-        description: We have recently launched the Miami Tech Coalition and 4Geeks is again showing up with a program and dedication that allows everyone involved to rely on their experience and program quality.
+        role: Program Director for Workforce Grants @ Clark University
         linkedin_url: https://linkedin.com/in/example
       - image_id: student_asian
         name: Marcelo Ricigliano

@@ -31,7 +31,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
   if (isRound) {
     return (
       <div
-        className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg"
+        className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg min-h-[340px]"
         data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
       >
         <div
@@ -44,7 +44,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
           {profile.name}
         </h3>
         {profile.role && (
-          <p className="text-center text-muted-foreground mt-1 leading-tight" data-testid="text-profile-role">
+          <p className="text-center text-foreground mt-1 leading-tight" data-testid="text-profile-role">
             {profile.role}
           </p>
         )}
@@ -58,7 +58,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
             href={profile.linkedin_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 text-muted-foreground transition-colors hover:text-foreground"
+            className="mt-2 text-muted-foreground transition-colors hover:text-foreground h-full flex items-end justify-center"
             data-testid="link-profile-linkedin"
           >
             <IconBrandLinkedin className="w-5 h-5" />
@@ -70,7 +70,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
 
   return (
     <div
-      className="flex flex-col items-center text-center flex-1 min-w-0 border p-4 rounded-lg"
+      className="flex flex-col items-center text-center flex-1 min-w-0 rounded-lg"
       data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div
