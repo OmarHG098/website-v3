@@ -2886,6 +2886,14 @@ meta:
   page_title: "${title} | 4Geeks Academy"
   description: "${title} - Learn more at 4Geeks Academy."
   robots: "index, follow"
+  og_image: "/images/landing-og.jpg"
+  priority: 0.9
+  change_frequency: "weekly"
+
+schema:
+  include:
+    - "organization"
+    - "website"
 `;
 
       const promotedYml = `# Promoted variant - customize for marketing campaigns

@@ -921,6 +921,26 @@
       "sha": "c81f2e231d59b241b6f8625785c2d6b76438d1878d409674e1cb817df135b247",
       "lastModified": 1770777353887.5432,
       "modifiedAt": "2026-02-11T02:35:53.888Z"
+    },
+    "marketing-content/landings/test-template-check/_common.yml": {
+      "sha": "0201fdfe2e4ab1826a878f167fd3e6f98dc1b138fa2c48cf47ad55702d164313",
+      "lastModified": 1770777725696.2612,
+      "modifiedAt": "2026-02-11T02:42:05.702Z"
+    },
+    "marketing-content/landings/test-template-check/promoted.yml": {
+      "sha": "44eab2f23ac7724859af742f3674f21c13a1b58ea320a0d43461fb8577d68963",
+      "lastModified": 1770777725704.2612,
+      "modifiedAt": "2026-02-11T02:42:05.709Z"
+    },
+    "marketing-content/landings/test-template-v2/_common.yml": {
+      "sha": "f44f133d72191411d6da6532b66b8e2c51249e141e450ceefd402442b2c90e19",
+      "lastModified": 1770777766182.2295,
+      "modifiedAt": "2026-02-11T02:42:46.184Z"
+    },
+    "marketing-content/landings/test-template-v2/promoted.yml": {
+      "sha": "44eab2f23ac7724859af742f3674f21c13a1b58ea320a0d43461fb8577d68963",
+      "lastModified": 1770777766184.2295,
+      "modifiedAt": "2026-02-11T02:42:46.185Z"
     }
   }
 }
