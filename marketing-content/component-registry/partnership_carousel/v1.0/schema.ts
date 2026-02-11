@@ -18,7 +18,7 @@ export const partnershipLogoSchema = z.object({
 });
 
 export const partnershipPressRefSchema = z.object({
-  text: z.string(),
+  text: z.string().optional(),
   url: z.string().optional(),
   source: z.string().optional(),
 });

@@ -81,7 +81,7 @@ function SlideLeftCard({
         className={cn(
           "relative overflow-hidden rounded-t-[0.8rem]",
           "min-h-[200px] md:h-[200px] aspect-[16/9] md:aspect-[16/5] lg:md-aspect-[16/6]",
-          verticalCards && "lg:min-h-[455px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
+          verticalCards && "lg:min-h-[400px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
         )}
       >
         <UniversalImage
@@ -107,7 +107,7 @@ function SlideLeftCard({
         {slide.description && (
           <TruncatedDescription text={slide.description} />
         )}
-        <div className="flex flex-col mt-auto">
+        <div className="flex flex-col justify-end h-full">
           {slide.stats && slide.stats.length > 0 && (
             <div className="flex justify-center">
               <div
