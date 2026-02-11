@@ -17,7 +17,7 @@ interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
 }
 
-function TruncatedDescription({ text }: { text: string }) {
+function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () => void }) {
   const [expanded, setExpanded] = useState(false);
   const [needsTruncation, setNeedsTruncation] = useState(false);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -43,7 +43,7 @@ function TruncatedDescription({ text }: { text: string }) {
       </p>
       {needsTruncation && !expanded && (
         <button
-          onClick={() => setExpanded(true)}
+          onClick={() => { setExpanded(true); onExpand?.(); }}
           className="text-primary text-sm font-medium mt-1 lg:hidden"
           data-testid="button-see-more"
         >
@@ -57,9 +57,11 @@ function TruncatedDescription({ text }: { text: string }) {
 function SlideLeftCard({
   slide,
   verticalCards = false,
+  onDescriptionExpand,
 }: {
   slide: PartnershipSlide;
   verticalCards?: boolean;
+  onDescriptionExpand?: () => void;
 }) {
   return (
     <Card
@@ -96,7 +98,7 @@ function SlideLeftCard({
         </h3>
 
         {slide.description && (
-          <TruncatedDescription text={slide.description} />
+          <TruncatedDescription text={slide.description} onExpand={onDescriptionExpand} />
         )}
         <div className="flex flex-col justify-end h-full">
           {slide.stats && slide.stats.length > 0 && (
@@ -266,11 +268,13 @@ function SlideContent({
   verticalCards = false,
   institutionsHeading,
   referencesHeading,
+  onDescriptionExpand,
 }: {
   slide: PartnershipSlide;
   verticalCards?: boolean;
   institutionsHeading?: string;
   referencesHeading?: string;
+  onDescriptionExpand?: () => void;
 }) {
   const hasRightCard =
     (slide.institution_logos && slide.institution_logos.length > 0) ||
@@ -290,7 +294,7 @@ function SlideContent({
             : ""
         }
       >
-        <SlideLeftCard slide={slide} verticalCards={verticalCards} />
+        <SlideLeftCard slide={slide} verticalCards={verticalCards} onDescriptionExpand={onDescriptionExpand} />
       </div>
 
       {hasRightCard && (
@@ -327,31 +331,31 @@ export function PartnershipCarouselSplitCard({
 
   const totalSlides = slides.length;
 
-  useEffect(() => {
-    const measureNatural = () => {
+  const measureHeight = useCallback(() => {
+    if (containerRef.current) {
+      containerRef.current.style.height = "auto";
+    }
+    let tallest = 0;
+    slideRefs.current.forEach((el) => {
+      if (el) {
+        tallest = Math.max(tallest, el.scrollHeight);
+      }
+    });
+    if (tallest > 0) {
+      setMaxHeight(tallest);
       if (containerRef.current) {
-        containerRef.current.style.height = "auto";
+        containerRef.current.style.height = `${tallest}px`;
       }
-      let tallest = 0;
-      slideRefs.current.forEach((el) => {
-        if (el) {
-          tallest = Math.max(tallest, el.scrollHeight);
-        }
-      });
-      if (tallest > 0) {
-        setMaxHeight(tallest);
-        if (containerRef.current) {
-          containerRef.current.style.height = `${tallest}px`;
-        }
-      }
-    };
+    }
+  }, []);
 
-    measureNatural();
+  useEffect(() => {
+    measureHeight();
 
     let debounceTimer: ReturnType<typeof setTimeout> | null = null;
     const onResize = () => {
       if (debounceTimer) clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(measureNatural, 150);
+      debounceTimer = setTimeout(measureHeight, 150);
     };
 
     window.addEventListener("resize", onResize);
@@ -359,7 +363,11 @@ export function PartnershipCarouselSplitCard({
       window.removeEventListener("resize", onResize);
       if (debounceTimer) clearTimeout(debounceTimer);
     };
-  }, [slides]);
+  }, [slides, measureHeight]);
+
+  useEffect(() => {
+    requestAnimationFrame(measureHeight);
+  }, [activeIndex, measureHeight]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -438,7 +446,8 @@ export function PartnershipCarouselSplitCard({
           <div className="flex lg:hidden items-center justify-between mb-4 px-2">
             <Button
               size="icon"
-              variant="outline"
+              variant="ghost"
+              className="rounded-full"
               onClick={goToPrevious}
               disabled={isTransitioning}
               data-testid="button-carousel-prev-mobile"
@@ -467,7 +476,8 @@ export function PartnershipCarouselSplitCard({
 
             <Button
               size="icon"
-              variant="outline"
+              variant="ghost"
+              className="rounded-full"
               onClick={goToNext}
               disabled={isTransitioning}
               data-testid="button-carousel-next-mobile"
@@ -500,6 +510,7 @@ export function PartnershipCarouselSplitCard({
                   slide={slide}
                   verticalCards={vertical_cards}
                   institutionsHeading={data.institutions_heading}
+                  onDescriptionExpand={() => requestAnimationFrame(measureHeight)}
                   referencesHeading={data.references_heading}
                 />
               </div>
@@ -511,7 +522,8 @@ export function PartnershipCarouselSplitCard({
           <div className="hidden lg:flex items-center justify-between mt-6 px-2">
             <Button
               size="icon"
-              variant="outline"
+              variant="ghost"
+              className="rounded-full"
               onClick={goToPrevious}
               disabled={isTransitioning}
               data-testid="button-carousel-prev"
@@ -540,7 +552,8 @@ export function PartnershipCarouselSplitCard({
 
             <Button
               size="icon"
-              variant="outline"
+              variant="ghost"
+              className="rounded-full"
               onClick={goToNext}
               disabled={isTransitioning}
               data-testid="button-carousel-next"
