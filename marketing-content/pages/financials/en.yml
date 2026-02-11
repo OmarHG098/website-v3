@@ -17,19 +17,17 @@ sections:
   - type: hero
     version: "1.0"
     variant: productShowcase
-    title: in Tech, Your Way
-    subtitle: for the AI Era
-    welcome_text: Welcome to
+    title: In Tech, Your Way
+    subtitle: Flexible payment options designed for real career growth.
     brand_mark:
       prefix: Finance Your
       highlight: Future
-      suffix: ":"
       color: chart-1
-    description: We offer several ways to fund your education, so you can focus on building your career without worrying about the cost. There’s an option to fit every need.
+    description: We offer flexible payment plans, financing options, and scholarships so you can focus on launching your tech career, not navigating financial uncertainty.
     bullets:
-      - text: Flexible payment plans.
-      - text: Affordable loans.
-      - text: Scholarships.
+      - text: Structured monthly payment plans
+      - text: Competitive financing options
+      - text: Scholarship opportunities for qualified candidates
     video:
       url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
       ratio: "3:4"
