@@ -216,15 +216,26 @@ function deslugify(slug: string): string {
 
 // Detect content type and slug from URL path
 function detectContentInfo(pathname: string): ContentInfo {
+  const typeLabels: Record<string, string> = {
+    programs: "Program",
+    pages: "Page",
+    landings: "Landing",
+    locations: "Location",
+  };
+
+  // Private preview route: /private/preview/:contentType/:slug
+  const previewMatch = pathname.match(/^\/private\/preview\/(programs|pages|landings|locations)\/([^/]+)\/?$/);
+  if (previewMatch) {
+    return { 
+      type: previewMatch[1] as ContentInfo["type"], 
+      slug: previewMatch[2], 
+      label: typeLabels[previewMatch[1]] || "Content" 
+    };
+  }
+
   // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
   const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
   if (experimentMatch) {
-    const typeLabels: Record<string, string> = {
-      programs: "Program",
-      pages: "Page",
-      landings: "Landing",
-      locations: "Location",
-    };
     return { 
       type: experimentMatch[1] as ContentInfo["type"], 
       slug: experimentMatch[2], 
