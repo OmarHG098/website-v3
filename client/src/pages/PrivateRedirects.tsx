@@ -14,7 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash, IconWorld } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconSearch, IconRoute, IconExternalLink, IconChevronRight, IconShieldCheck, IconRefresh, IconAlertTriangle, IconCircleCheck, IconPlus, IconX, IconTrash } from "@tabler/icons-react";
 import { Link } from "wouter";
 import { isDebugModeActive } from "@/hooks/useDebugAuth";
 import { apiRequest, queryClient } from "@/lib/queryClient";
@@ -532,9 +532,6 @@ export default function PrivateRedirects() {
                                   <IconExternalLink className="h-3.5 w-3.5 text-muted-foreground" />
                                 </a>
                               </>
-                            )}
-                            {isLocaleMap(redirect.to) && (
-                              <IconWorld className="h-4 w-4 text-muted-foreground flex-shrink-0" title="Multi-language redirect" />
                             )}
                           </div>
                           <Button
