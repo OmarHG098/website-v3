@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useRef } from "react";
+import { useState, useCallback, useEffect, useRef, useMemo } from "react";
 import {
   IconChevronLeft,
   IconChevronRight,
@@ -17,7 +17,7 @@ interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
 }
 
-function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () => void }) {
+function TruncatedDescription({ text }: { text: string }) {
   const [expanded, setExpanded] = useState(false);
   const [needsTruncation, setNeedsTruncation] = useState(false);
   const textRef = useRef<HTMLParagraphElement>(null);
@@ -43,7 +43,7 @@ function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () 
       </p>
       {needsTruncation && !expanded && (
         <button
-          onClick={() => { setExpanded(true); onExpand?.(); }}
+          onClick={() => setExpanded(true)}
           className="text-primary text-sm font-medium mt-1 lg:hidden"
           data-testid="button-see-more"
         >
@@ -52,7 +52,7 @@ function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () 
       )}
       {needsTruncation && expanded && (
         <button
-          onClick={() => { setExpanded(false); onExpand?.(); }}
+          onClick={() => setExpanded(false)}
           className="text-primary text-sm font-medium mt-1 lg:hidden"
           data-testid="button-see-less"
         >
@@ -66,11 +66,9 @@ function TruncatedDescription({ text, onExpand }: { text: string; onExpand?: () 
 function SlideLeftCard({
   slide,
   verticalCards = false,
-  onDescriptionExpand,
 }: {
   slide: PartnershipSlide;
   verticalCards?: boolean;
-  onDescriptionExpand?: () => void;
 }) {
   return (
     <Card
@@ -107,7 +105,7 @@ function SlideLeftCard({
         </h3>
 
         {slide.description && (
-          <TruncatedDescription text={slide.description} onExpand={onDescriptionExpand} />
+          <TruncatedDescription text={slide.description} />
         )}
         <div className="flex flex-col justify-end h-full">
           {slide.stats && slide.stats.length > 0 && (
@@ -277,13 +275,11 @@ function SlideContent({
   verticalCards = false,
   institutionsHeading,
   referencesHeading,
-  onDescriptionExpand,
 }: {
   slide: PartnershipSlide;
   verticalCards?: boolean;
   institutionsHeading?: string;
   referencesHeading?: string;
-  onDescriptionExpand?: () => void;
 }) {
   const hasRightCard =
     (slide.institution_logos && slide.institution_logos.length > 0) ||
@@ -303,7 +299,7 @@ function SlideContent({
             : ""
         }
       >
-        <SlideLeftCard slide={slide} verticalCards={verticalCards} onDescriptionExpand={onDescriptionExpand} />
+        <SlideLeftCard slide={slide} verticalCards={verticalCards} />
       </div>
 
       {hasRightCard && (
@@ -332,51 +328,10 @@ export function PartnershipCarouselSplitCard({
   } = data;
   const [activeIndex, setActiveIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [maxHeight, setMaxHeight] = useState(0);
   const autoplayRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const isPausedRef = useRef(false);
-  const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const containerRef = useRef<HTMLDivElement | null>(null);
 
   const totalSlides = slides.length;
-
-  const measureHeight = useCallback(() => {
-    if (containerRef.current) {
-      containerRef.current.style.height = "auto";
-    }
-    let tallest = 0;
-    slideRefs.current.forEach((el) => {
-      if (el) {
-        tallest = Math.max(tallest, el.scrollHeight);
-      }
-    });
-    if (tallest > 0) {
-      setMaxHeight(tallest);
-      if (containerRef.current) {
-        containerRef.current.style.height = `${tallest}px`;
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    measureHeight();
-
-    let debounceTimer: ReturnType<typeof setTimeout> | null = null;
-    const onResize = () => {
-      if (debounceTimer) clearTimeout(debounceTimer);
-      debounceTimer = setTimeout(measureHeight, 150);
-    };
-
-    window.addEventListener("resize", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      if (debounceTimer) clearTimeout(debounceTimer);
-    };
-  }, [slides, measureHeight]);
-
-  useEffect(() => {
-    requestAnimationFrame(measureHeight);
-  }, [activeIndex, measureHeight]);
 
   const goTo = useCallback(
     (index: number) => {
@@ -421,6 +376,54 @@ export function PartnershipCarouselSplitCard({
     isPausedRef.current = false;
   }, []);
 
+  const carouselNav = useMemo(() => {
+    if (totalSlides <= 1) return null;
+    return (
+      <div className="flex items-center justify-between px-2">
+        <Button
+          size="icon"
+          variant="ghost"
+          className="rounded-full"
+          onClick={goToPrevious}
+          disabled={isTransitioning}
+          data-testid="button-carousel-prev"
+        >
+          <IconChevronLeft className="w-5 h-5" />
+        </Button>
+
+        <div
+          className="flex items-center gap-2"
+          data-testid="dots-carousel"
+        >
+          {slides.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => goTo(i)}
+              className={cn(
+                "rounded-full transition-all duration-300",
+                i === activeIndex
+                  ? "w-8 h-2 bg-primary"
+                  : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
+              )}
+              data-testid={`button-carousel-dot-${i}`}
+            />
+          ))}
+        </div>
+
+        <Button
+          size="icon"
+          variant="ghost"
+          className="rounded-full"
+          onClick={goToNext}
+          disabled={isTransitioning}
+          data-testid="button-carousel-next"
+        >
+          <IconChevronRight className="w-5 h-5" />
+        </Button>
+      </div>
+    );
+  }, [totalSlides, activeIndex, isTransitioning, goTo, goToPrevious, goToNext, slides]);
+
   return (
     <section
       className="w-full"
@@ -451,126 +454,30 @@ export function PartnershipCarouselSplitCard({
           </div>
         )}
 
-        {totalSlides > 1 && (
-          <div className="flex lg:hidden items-center justify-between mb-4 px-2">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="rounded-full"
-              onClick={goToPrevious}
-              disabled={isTransitioning}
-              data-testid="button-carousel-prev-mobile"
-            >
-              <IconChevronLeft className="w-5 h-5" />
-            </Button>
+        <div className="lg:hidden mb-4">{carouselNav}</div>
 
+        <div className="grid grid-cols-1 grid-rows-1">
+          {slides.map((slide, i) => (
             <div
-              className="flex items-center gap-2"
-              data-testid="dots-carousel-mobile"
+              key={i}
+              className={cn(
+                "col-start-1 row-start-1 transition-opacity duration-500",
+                i === activeIndex
+                  ? "opacity-100 z-10"
+                  : "opacity-0 z-0 pointer-events-none",
+              )}
             >
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "rounded-full transition-all duration-300",
-                    i === activeIndex
-                      ? "w-8 h-2 bg-primary"
-                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
-                  )}
-                  data-testid={`button-carousel-dot-mobile-${i}`}
-                />
-              ))}
+              <SlideContent
+                slide={slide}
+                verticalCards={vertical_cards}
+                institutionsHeading={data.institutions_heading}
+                referencesHeading={data.references_heading}
+              />
             </div>
-
-            <Button
-              size="icon"
-              variant="ghost"
-              className="rounded-full"
-              onClick={goToNext}
-              disabled={isTransitioning}
-              data-testid="button-carousel-next-mobile"
-            >
-              <IconChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
-        )}
-
-        <div
-          ref={containerRef}
-          className="relative overflow-hidden"
-          style={{
-            height: maxHeight > 0 ? `${maxHeight}px` : "auto",
-          }}
-        >
-          <div
-            className="flex transition-transform duration-500 ease-in-out h-full"
-            style={{ transform: `translateX(-${activeIndex * 100}%)` }}
-          >
-            {slides.map((slide, i) => (
-              <div
-                key={i}
-                ref={(el) => {
-                  slideRefs.current[i] = el;
-                }}
-                className="w-full flex-shrink-0 h-full"
-              >
-                <SlideContent
-                  slide={slide}
-                  verticalCards={vertical_cards}
-                  institutionsHeading={data.institutions_heading}
-                  onDescriptionExpand={() => requestAnimationFrame(measureHeight)}
-                  referencesHeading={data.references_heading}
-                />
-              </div>
-            ))}
-          </div>
+          ))}
         </div>
 
-        {totalSlides > 1 && (
-          <div className="hidden lg:flex items-center justify-between mt-6 px-2">
-            <Button
-              size="icon"
-              variant="ghost"
-              className="rounded-full"
-              onClick={goToPrevious}
-              disabled={isTransitioning}
-              data-testid="button-carousel-prev"
-            >
-              <IconChevronLeft className="w-5 h-5" />
-            </Button>
-
-            <div
-              className="flex items-center gap-2"
-              data-testid="dots-carousel"
-            >
-              {slides.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => goTo(i)}
-                  className={cn(
-                    "rounded-full transition-all duration-300",
-                    i === activeIndex
-                      ? "w-8 h-2 bg-primary"
-                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
-                  )}
-                  data-testid={`button-carousel-dot-${i}`}
-                />
-              ))}
-            </div>
-
-            <Button
-              size="icon"
-              variant="ghost"
-              className="rounded-full"
-              onClick={goToNext}
-              disabled={isTransitioning}
-              data-testid="button-carousel-next"
-            >
-              <IconChevronRight className="w-5 h-5" />
-            </Button>
-          </div>
-        )}
+        <div className="hidden lg:block mt-6">{carouselNav}</div>
       </div>
     </section>
   );
