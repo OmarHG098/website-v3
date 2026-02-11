@@ -50,7 +50,7 @@ function SlideLeftCard({
         />
       </div>
 
-      <div className="flex flex-col gap-4 p-6 flex-1">
+      <div className="flex flex-col gap-2 md:gap-4 p-6 flex-1">
         <h3
           className="text-2xl md:text-3xl font-bold text-foreground"
           data-testid="text-partnership-title"
@@ -402,6 +402,49 @@ export function PartnershipCarouselSplitCard({
           </div>
         )}
 
+        {totalSlides > 1 && (
+          <div className="flex lg:hidden items-center justify-between mb-4 px-2">
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={goToPrevious}
+              disabled={isTransitioning}
+              data-testid="button-carousel-prev-mobile"
+            >
+              <IconChevronLeft className="w-5 h-5" />
+            </Button>
+
+            <div
+              className="flex items-center gap-2"
+              data-testid="dots-carousel-mobile"
+            >
+              {slides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className={cn(
+                    "rounded-full transition-all duration-300",
+                    i === activeIndex
+                      ? "w-8 h-2 bg-primary"
+                      : "w-2 h-2 bg-muted-foreground/30 hover-elevate",
+                  )}
+                  data-testid={`button-carousel-dot-mobile-${i}`}
+                />
+              ))}
+            </div>
+
+            <Button
+              size="icon"
+              variant="outline"
+              onClick={goToNext}
+              disabled={isTransitioning}
+              data-testid="button-carousel-next-mobile"
+            >
+              <IconChevronRight className="w-5 h-5" />
+            </Button>
+          </div>
+        )}
+
         <div
           ref={containerRef}
           className="relative overflow-hidden"
@@ -433,7 +476,7 @@ export function PartnershipCarouselSplitCard({
         </div>
 
         {totalSlides > 1 && (
-          <div className="flex items-center justify-between mt-6 px-2">
+          <div className="hidden lg:flex items-center justify-between mt-6 px-2">
             <Button
               size="icon"
               variant="outline"
