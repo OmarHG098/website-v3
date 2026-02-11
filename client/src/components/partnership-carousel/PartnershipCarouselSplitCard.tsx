@@ -25,9 +25,19 @@ function SlideLeftCard({
   verticalCards?: boolean;
 }) {
   return (
-    <Card className={`flex ${verticalCards ? "" : "flex-col"} h-full`}>
+    <Card
+      className={cn(
+        "flex h-full",
+        verticalCards ? "flex-row" : "flex-row lg:flex-col",
+      )}
+    >
       <div
-        className={`min-h-[415px] relative overflow-hidden aspect-[16/9] md:aspect-[16/6] rounded-t-[0.8rem] ${verticalCards ? "w-[53%]" : ""}`}
+        className={cn(
+          "relative overflow-hidden",
+          verticalCards
+            ? "w-[53%] min-h-[250px] md:min-h-[415px] rounded-l-[0.8rem]"
+            : "w-[53%] min-h-[250px] rounded-l-[0.8rem] lg:w-full lg:min-h-[415px] lg:rounded-l-none lg:rounded-t-[0.8rem] lg:aspect-[16/6]",
+        )}
       >
         <UniversalImage
           id={slide.image_id}
@@ -41,9 +51,9 @@ function SlideLeftCard({
         />
       </div>
 
-      <div className="flex flex-col gap-4 p-6 flex-1">
+      <div className="flex flex-col gap-4 p-4 lg:p-6 flex-1">
         <h3
-          className="text-2xl md:text-3xl font-bold text-foreground"
+          className="text-lg md:text-2xl lg:text-3xl font-bold text-foreground"
           data-testid="text-partnership-title"
         >
           {slide.title}
@@ -61,7 +71,7 @@ function SlideLeftCard({
           {slide.stats && slide.stats.length > 0 && (
             <div className="flex justify-center">
               <div
-                className={`grid ${slide.stats.length > 2 ? "sm:grid-cols-3" : "sm:grid-cols-2"} grid-cols-2 gap-3 mt-auto`}
+                className={`grid ${slide.stats.length > 2 ? "lg:grid-cols-3" : "lg:grid-cols-2"} grid-cols-2 gap-2 lg:gap-3 mt-auto`}
                 data-testid="stats-partnership"
               >
                 {slide.stats.map((stat, i) => (
@@ -70,7 +80,7 @@ function SlideLeftCard({
                     className="flex flex-col items-center justify-center p-3"
                   >
                     <span
-                      className="text-2xl md:text-3xl font-bold text-primary"
+                      className="text-xl lg:text-3xl font-bold text-primary"
                       data-testid={`text-stat-value-${i}`}
                     >
                       {stat.value}
@@ -239,13 +249,13 @@ function SlideContent({
     <div
       className={cn(
         "grid gap-6 h-full",
-        hasRightCard ? "grid-cols-1 md:grid-cols-12" : "grid-cols-1",
+        hasRightCard ? "grid-cols-1 lg:grid-cols-12" : "grid-cols-1",
       )}
     >
       <div
         className={
           hasRightCard
-            ? `${verticalCards ? "md:col-span-9" : "md:col-span-8"}`
+            ? `${verticalCards ? "lg:col-span-9" : "lg:col-span-8"}`
             : ""
         }
       >
@@ -253,7 +263,7 @@ function SlideContent({
       </div>
 
       {hasRightCard && (
-        <div className={`${verticalCards ? "md:col-span-3" : "md:col-span-4"}`}>
+        <div className={`${verticalCards ? "lg:col-span-3" : "lg:col-span-4"}`}>
           <SlideRightCard
             slide={slide}
             institutionsHeading={institutionsHeading}
