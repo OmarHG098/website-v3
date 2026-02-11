@@ -48,7 +48,10 @@ export function Navbar({ config }: { config: NavbarConfig }) {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 
   const handleOpenChange = useCallback((label: string) => (open: boolean) => {
-    setActiveDropdown(open ? label : null);
+    setActiveDropdown((prev) => {
+      if (open) return label;
+      return prev === label ? null : prev;
+    });
   }, []);
 
   if (!config?.navbar?.items) {

@@ -320,6 +320,14 @@ export function Dropdown({ label, href, dropdown, controlledOpen, onOpenChange }
       closeTimeoutRef.current = null;
     }
   }, [isControlled, controlledOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) {
+        clearTimeout(closeTimeoutRef.current);
+      }
+    };
+  }, []);
   
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
