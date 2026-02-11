@@ -27,7 +27,7 @@ function extractPath(url: string): string {
 
 interface SitemapSearchProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, isCustom: boolean) => void;
   placeholder?: string;
   testId?: string;
   locale?: string;
@@ -68,14 +68,14 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
   }, [sitemapUrls, value]);
 
   const handleSelect = (url: string) => {
-    onChange(url);
+    onChange(url, false);
     setOpen(false);
     setSearchQuery("");
     setIsCustomMode(false);
   };
 
   const handleCustomSubmit = () => {
-    onChange(customUrl);
+    onChange(customUrl, true);
     setOpen(false);
     setIsCustomMode(false);
   };

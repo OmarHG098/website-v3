@@ -63,6 +63,7 @@ export default function PrivateRedirects() {
   const [newTo, setNewTo] = useState("");
   const [originalTo, setOriginalTo] = useState("");
   const [allLanguages, setAllLanguages] = useState(true);
+  const [isCustomDestination, setIsCustomDestination] = useState(false);
   const [redirectStatus, setRedirectStatus] = useState<number>(301);
   const [localeUrls, setLocaleUrls] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -144,20 +145,28 @@ export default function PrivateRedirects() {
     setNewTo("");
     setOriginalTo("");
     setAllLanguages(true);
+    setIsCustomDestination(false);
     setRedirectStatus(301);
     setLocaleUrls({});
     setShowAddDialog(true);
   };
 
-  const handleDestinationChange = (url: string) => {
+  const handleDestinationChange = (url: string, isCustom: boolean) => {
     setOriginalTo(url);
-    if (allLanguages && !url.startsWith("/landing")) {
-      setNewTo(stripLocalePrefix(url));
-    } else {
+    setIsCustomDestination(isCustom);
+    if (isCustom) {
+      setAllLanguages(false);
       setNewTo(url);
-    }
-    if (!url.startsWith("/landing")) {
-      fetchLocaleUrls(url);
+      setLocaleUrls({});
+    } else {
+      if (allLanguages && !url.startsWith("/landing")) {
+        setNewTo(stripLocalePrefix(url));
+      } else {
+        setNewTo(url);
+      }
+      if (!url.startsWith("/landing")) {
+        fetchLocaleUrls(url);
+      }
     }
   };
 
@@ -523,14 +532,14 @@ export default function PrivateRedirects() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => { setNewTo(""); setOriginalTo(""); setLocaleUrls({}); }}
+                      onClick={() => { setNewTo(""); setOriginalTo(""); setLocaleUrls({}); setIsCustomDestination(false); setAllLanguages(true); }}
                       data-testid="button-clear-destination"
                     >
                       <IconX className="h-4 w-4" />
                     </Button>
                   </div>
 
-                  {!isLandingDestination && (
+                  {!isLandingDestination && !isCustomDestination && (
                     <div className="flex items-center justify-between gap-4 border-t pt-3">
                       <Label htmlFor="all-languages" className="text-sm font-medium">All languages</Label>
                       <Switch
