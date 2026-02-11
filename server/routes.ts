@@ -931,17 +931,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let slug: string | null = null;
       let locale: string = "en";
 
-      // Match program URLs: /en/career-programs/:slug or /es/programas-de-carrera/:slug
+      // Match program URLs: /en/career-programs/:slug, /es/programas-de-carrera/:slug, or locale-stripped /career-programs/:slug
       const programEnMatch = destUrl.match(/^\/en\/career-programs\/([^/]+)/);
       const programEsMatch = destUrl.match(/^\/es\/programas-de-carrera\/([^/]+)/);
+      const programStrippedMatch = destUrl.match(/^\/career-programs\/([^/]+)/);
+      const programStrippedEsMatch = destUrl.match(/^\/programas-de-carrera\/([^/]+)/);
       // Match landing URLs: /landing/:slug
       const landingMatch = destUrl.match(/^\/landing\/([^/]+)/);
-      // Match page URLs: /en/:slug or /es/:slug
+      // Match page URLs: /en/:slug, /es/:slug, or locale-stripped /:slug
       const pageEnMatch = destUrl.match(/^\/en\/([^/]+)/);
       const pageEsMatch = destUrl.match(/^\/es\/([^/]+)/);
-      // Match location URLs: /en/locations/:slug or /es/ubicaciones/:slug
+      // Match location URLs: /en/locations/:slug, /es/ubicaciones/:slug, or locale-stripped
       const locationEnMatch = destUrl.match(/^\/en\/locations\/([^/]+)/);
       const locationEsMatch = destUrl.match(/^\/es\/ubicaciones\/([^/]+)/);
+      const locationStrippedMatch = destUrl.match(/^\/locations\/([^/]+)/);
+      const locationStrippedEsMatch = destUrl.match(/^\/ubicaciones\/([^/]+)/);
 
       if (programEnMatch) {
         contentType = "programs";
@@ -950,6 +954,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } else if (programEsMatch) {
         contentType = "programs";
         slug = programEsMatch[1];
+        locale = "es";
+      } else if (programStrippedMatch) {
+        contentType = "programs";
+        slug = programStrippedMatch[1];
+        locale = "en";
+      } else if (programStrippedEsMatch) {
+        contentType = "programs";
+        slug = programStrippedEsMatch[1];
         locale = "es";
       } else if (landingMatch) {
         contentType = "landings";
@@ -963,6 +975,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         contentType = "locations";
         slug = locationEsMatch[1];
         locale = "es";
+      } else if (locationStrippedMatch) {
+        contentType = "locations";
+        slug = locationStrippedMatch[1];
+        locale = "en";
+      } else if (locationStrippedEsMatch) {
+        contentType = "locations";
+        slug = locationStrippedEsMatch[1];
+        locale = "es";
       } else if (pageEnMatch) {
         contentType = "pages";
         slug = pageEnMatch[1];
@@ -971,6 +991,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         contentType = "pages";
         slug = pageEsMatch[1];
         locale = "es";
+      } else if (!destUrl.startsWith("/en/") && !destUrl.startsWith("/es/") && !destUrl.startsWith("/landing/")) {
+        const pageStrippedMatch = destUrl.match(/^\/([^/]+)/);
+        if (pageStrippedMatch) {
+          contentType = "pages";
+          slug = pageStrippedMatch[1];
+          locale = "en";
+        }
       }
 
       if (!contentType || !slug) {

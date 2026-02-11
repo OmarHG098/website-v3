@@ -119,11 +119,21 @@ export default function PrivateRedirects() {
   const hasLocalePrefix = /^\/(en|es)(\/|$)/.test(newFrom);
   const isLandingDestination = newTo.startsWith("/landing");
 
+  const stripLocalePrefix = (url: string) => url.replace(/^\/(en|es)(\/|$)/, "/");
+
   const handleOpenAddDialog = () => {
     setNewFrom("");
     setNewTo("");
     setAllLanguages(true);
     setShowAddDialog(true);
+  };
+
+  const handleDestinationChange = (url: string) => {
+    if (allLanguages && !url.startsWith("/landing")) {
+      setNewTo(stripLocalePrefix(url));
+    } else {
+      setNewTo(url);
+    }
   };
 
   const handleSubmitRedirect = async () => {
@@ -445,14 +455,17 @@ export default function PrivateRedirects() {
               <div className="flex items-center">
                 <SitemapSearch
                   value={newTo}
-                  onChange={setNewTo}
+                  onChange={handleDestinationChange}
                   placeholder="Search for a page..."
                   testId="input-redirect-to"
                 />
               </div>
               {newTo && (
                 <p className="text-xs text-muted-foreground">
-                  Redirecting to: <code className="bg-muted px-1 rounded">{newTo}</code>
+                  {allLanguages && !isLandingDestination
+                    ? <>All languages of <code className="bg-muted px-1 rounded">{newTo}</code> will have this redirect</>
+                    : <>Redirecting to: <code className="bg-muted px-1 rounded">{newTo}</code></>
+                  }
                 </p>
               )}
             </div>
@@ -471,7 +484,12 @@ export default function PrivateRedirects() {
                 <Switch
                   id="all-languages"
                   checked={allLanguages}
-                  onCheckedChange={setAllLanguages}
+                  onCheckedChange={(checked) => {
+                    setAllLanguages(checked);
+                    if (checked && newTo && !newTo.startsWith("/landing")) {
+                      setNewTo(stripLocalePrefix(newTo));
+                    }
+                  }}
                   data-testid="switch-all-languages"
                 />
               </div>
