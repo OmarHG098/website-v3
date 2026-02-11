@@ -1140,6 +1140,7 @@ export function SectionEditorPanel({
             {(() => {
               const arrayFieldGroups: Record<string, { fieldName: string; editorType: string; variant?: string; fullPath: string }[]> = {};
               Object.entries(configuredFields).forEach(([fieldPath, editorTypeRaw]) => {
+                if (/^[\w]+\[\]\.[\w]+\[\]\./.test(fieldPath)) return;
                 const match = fieldPath.match(/^([\w.]+)\[\]\.(.+)$/);
                 if (!match) return;
                 const [, arrPath, fieldName] = match;
@@ -1502,9 +1503,225 @@ export function SectionEditorPanel({
                 );
               });
             })()}
+            {/* Render double-nested array item editors (e.g., slides[].institution_logos[].image_id) */}
+            {(() => {
+              const nestedArrayGroups: Record<string, { parentArr: string; nestedArr: string; leafField: string; editorType: string; variant?: string }[]> = {};
+              Object.entries(configuredFields).forEach(([fieldPath, editorTypeRaw]) => {
+                const nestedMatch = fieldPath.match(/^([\w]+)\[\]\.([\w]+)\[\]\.(.+)$/);
+                if (!nestedMatch) return;
+                const [, parentArr, nestedArr, leafField] = nestedMatch;
+                const groupKey = `${parentArr}[].${nestedArr}`;
+                if (!nestedArrayGroups[groupKey]) nestedArrayGroups[groupKey] = [];
+                const { type: edType, variant: edVariant } = parseEditorType(editorTypeRaw);
+                nestedArrayGroups[groupKey].push({ parentArr, nestedArr, leafField, editorType: edType, variant: edVariant });
+              });
+
+              if (Object.keys(nestedArrayGroups).length === 0) return null;
+
+              return Object.entries(nestedArrayGroups).map(([groupKey, fields]) => {
+                if (!parsedSection) return null;
+                const { parentArr, nestedArr } = fields[0];
+                const parentData = (parsedSection as Record<string, unknown>)[parentArr];
+                if (!Array.isArray(parentData)) return null;
+
+                const nestedHiddenFields = new Set(["type"]);
+
+                return (
+                  <div key={`nested-${groupKey}`} className="space-y-3">
+                    {parentData.map((parentItem, parentIdx) => {
+                      const parentItemObj = parentItem as Record<string, unknown>;
+                      const nestedData = parentItemObj[nestedArr];
+                      if (!Array.isArray(nestedData)) return null;
+                      const nestedItems = nestedData as Record<string, unknown>[];
+
+                      const parentLabel = (parentItemObj.title as string) || (parentItemObj.name as string) || `Slide ${parentIdx + 1}`;
+                      const resolvedArrPath = `${parentArr}.${parentIdx}.${nestedArr}`;
+
+                      const configuredLeafNames = new Set(fields.map(f => f.leafField));
+                      const collectNestedKeys = (items: Record<string, unknown>[]): string[] => {
+                        const keySet = new Set<string>();
+                        items.forEach(item => {
+                          Object.keys(item).forEach(k => {
+                            if (!configuredLeafNames.has(k) && !nestedHiddenFields.has(k) && typeof item[k] !== "object") {
+                              keySet.add(k);
+                            }
+                          });
+                        });
+                        return Array.from(keySet);
+                      };
+                      const extraTextFields = collectNestedKeys(nestedItems);
+
+                      const fieldOrder = [
+                        ...extraTextFields,
+                        ...fields.map(f => f.leafField),
+                      ];
+
+                      const buildNestedDefault = (): Record<string, unknown> => {
+                        if (nestedItems.length === 0) return {};
+                        const template: Record<string, unknown> = {};
+                        Object.keys(nestedItems[0]).forEach(k => {
+                          const val = nestedItems[0][k];
+                          if (typeof val === "string") template[k] = "";
+                          else if (typeof val === "number") template[k] = 0;
+                        });
+                        return template;
+                      };
+
+                      return (
+                        <div key={`nested-${groupKey}-${parentIdx}`} className="space-y-2">
+                          <div className="flex items-center justify-between">
+                            <Label className="text-xs text-muted-foreground">
+                              {nestedArr.replace(/_/g, " ")} — {parentLabel} ({nestedItems.length})
+                            </Label>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => addArrayItem(resolvedArrPath, buildNestedDefault())}
+                              data-testid={`props-nested-add-${resolvedArrPath}`}
+                            >
+                              <IconPlus className="h-4 w-4 mr-1" />
+                              Agregar
+                            </Button>
+                          </div>
+                          <div className="space-y-2">
+                            {nestedItems.map((nestedItem, nestedIdx) => {
+                              const itemLabel = (nestedItem.alt as string) || (nestedItem.name as string) || (nestedItem.title as string) || `Item ${nestedIdx + 1}`;
+                              const logoSrc = (nestedItem.image_id as string) || (nestedItem.logo as string) || "";
+                              const displayLogoSrc = imageRegistry?.images?.[logoSrc]?.src || logoSrc;
+
+                              return (
+                                <Collapsible key={nestedIdx} className="border rounded-md">
+                                  <CollapsibleTrigger asChild>
+                                    <button
+                                      type="button"
+                                      className="w-full flex items-center gap-3 p-2 hover:bg-muted/50 transition-colors"
+                                      data-testid={`props-nested-item-${resolvedArrPath}-${nestedIdx}-trigger`}
+                                    >
+                                      {logoSrc ? (
+                                        <div className="w-8 h-8 flex-shrink-0 overflow-hidden border rounded-md bg-background p-1">
+                                          <img src={displayLogoSrc} alt={itemLabel} className="w-full h-full object-contain" />
+                                        </div>
+                                      ) : (
+                                        <div className="w-8 h-8 rounded-md bg-muted border flex-shrink-0 flex items-center justify-center text-xs font-semibold text-muted-foreground">
+                                          {itemLabel.slice(0, 2).toUpperCase()}
+                                        </div>
+                                      )}
+                                      <span className="flex-1 text-left text-xs font-medium truncate">{itemLabel}</span>
+                                      <IconChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+                                    </button>
+                                  </CollapsibleTrigger>
+                                  <CollapsibleContent>
+                                    <div className="p-2 pt-0 space-y-2 border-t">
+                                      <div className="flex justify-end">
+                                        <Button
+                                          size="sm"
+                                          variant="ghost"
+                                          className="text-destructive h-6 px-2 text-xs"
+                                          onClick={() => removeArrayItem(resolvedArrPath, nestedIdx)}
+                                          data-testid={`props-nested-delete-${resolvedArrPath}-${nestedIdx}`}
+                                        >
+                                          <IconTrash className="h-3.5 w-3.5 mr-1" />
+                                          Eliminar
+                                        </Button>
+                                      </div>
+                                      {fieldOrder.map((fieldKey) => {
+                                        const currentValue = String(nestedItem[fieldKey] ?? "");
+                                        const label = fieldKey.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+                                        const configuredField = fields.find(f => f.leafField === fieldKey);
+
+                                        if (configuredField?.editorType === "image-picker") {
+                                          const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
+                                          return (
+                                            <div key={fieldKey} className="space-y-1">
+                                              <Label className="text-xs text-muted-foreground">{label}</Label>
+                                              <div className="flex items-center gap-2">
+                                                <button
+                                                  type="button"
+                                                  onClick={() => {
+                                                    setImagePickerTarget({
+                                                      arrayPath: resolvedArrPath,
+                                                      index: nestedIdx,
+                                                      srcField: fieldKey,
+                                                      currentSrc: currentValue,
+                                                      currentAlt: (nestedItem.alt as string) || "",
+                                                      tagFilter: configuredField.variant,
+                                                    });
+                                                    setImagePickerOpen(true);
+                                                  }}
+                                                  className="relative w-10 h-10 rounded-md border border-input bg-muted/50 hover:bg-muted transition-colors overflow-hidden group"
+                                                  data-testid={`props-nested-image-${fieldKey}-${nestedIdx}`}
+                                                >
+                                                  {currentValue ? (
+                                                    <>
+                                                      <img src={displaySrc} alt={label} className="w-full h-full object-contain p-0.5" />
+                                                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                                        <IconPhoto className="h-3.5 w-3.5 text-white" />
+                                                      </div>
+                                                    </>
+                                                  ) : (
+                                                    <div className="w-full h-full flex items-center justify-center">
+                                                      <IconPhoto className="h-4 w-4 text-muted-foreground" />
+                                                    </div>
+                                                  )}
+                                                </button>
+                                                {currentValue && (
+                                                  <span className="text-xs text-muted-foreground truncate max-w-[100px]">
+                                                    {currentValue}
+                                                  </span>
+                                                )}
+                                              </div>
+                                            </div>
+                                          );
+                                        }
+
+                                        if (typeof nestedItem[fieldKey] === "number") {
+                                          return (
+                                            <div key={fieldKey} className="space-y-1">
+                                              <Label className="text-xs text-muted-foreground">{label}</Label>
+                                              <Input
+                                                type="number"
+                                                value={currentValue}
+                                                onChange={(e) => {
+                                                  const num = e.target.value === "" ? undefined : Number(e.target.value);
+                                                  updateArrayItemField(resolvedArrPath, nestedIdx, fieldKey, num as number);
+                                                }}
+                                                className="h-7 text-xs"
+                                                data-testid={`props-nested-number-${fieldKey}-${nestedIdx}`}
+                                              />
+                                            </div>
+                                          );
+                                        }
+
+                                        return (
+                                          <div key={fieldKey} className="space-y-1">
+                                            <Label className="text-xs text-muted-foreground">{label}</Label>
+                                            <Input
+                                              value={currentValue}
+                                              onChange={(e) => updateArrayItemField(resolvedArrPath, nestedIdx, fieldKey, e.target.value)}
+                                              className="h-7 text-xs"
+                                              data-testid={`props-nested-input-${fieldKey}-${nestedIdx}`}
+                                            />
+                                          </div>
+                                        );
+                                      })}
+                                    </div>
+                                  </CollapsibleContent>
+                                </Collapsible>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              });
+            })()}
             {/* Render array fields with configured editors */}
             {Object.entries(configuredFields).map(
               ([fieldPath, editorTypeRaw]) => {
+                // Skip double-nested array fields (handled above)
+                if (/^[\w]+\[\]\.[\w]+\[\]\./.test(fieldPath)) return null;
                 // Skip fields that are already rendered in grouped collapsible items above
                 const groupedSkipMatch = fieldPath.match(/^([\w.]+)\[\]\./);
                 if (groupedSkipMatch) {
