@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import {
   Carousel,
   CarouselContent,
@@ -93,13 +94,23 @@ export function AwardBadges({
         </p>
       )}
       {item.link && (
-        <a
-          href={item.link}
-          className="text-sm text-primary font-medium hover:underline"
-          data-testid={`link-${item.id}`}
-        >
-          {item.linkText || "Learn more"}
-        </a>
+        item.link.startsWith("/") && !item.link.startsWith("//") ? (
+          <Link
+            href={item.link}
+            className="text-sm text-primary font-medium hover:underline"
+            data-testid={`link-${item.id}`}
+          >
+            {item.linkText || "Learn more"}
+          </Link>
+        ) : (
+          <a
+            href={item.link}
+            className="text-sm text-primary font-medium hover:underline"
+            data-testid={`link-${item.id}`}
+          >
+            {item.linkText || "Learn more"}
+          </a>
+        )
       )}
     </div>
   );
