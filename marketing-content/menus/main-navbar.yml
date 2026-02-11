@@ -48,11 +48,11 @@ navbar:
               - label: Career Support
                 href: /en/geekforce-career-support
               - label: Online Platform
-                href: /online-platform
+                href: /en/online-platform
               - label: Rigobot
-                href: /rigobot
+                href: /en/rigobot-ai-coding-mentor
               - label: LearnPack
-                href: /learnpack
+                href: /en/learnpack
           - title: Validation
             items:
               - label: Awards
