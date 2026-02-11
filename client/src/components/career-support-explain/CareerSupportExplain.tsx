@@ -16,8 +16,8 @@ function getTablerIcon(name: string) {
 
 function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 h-full" data-testid="grid-tab-content">
-      <div className="lg:col-span-4 bg-card p-6 flex flex-col rounded-lg" data-testid="col-1-info">
+    <div className="flex gap-4 h-full" data-testid="grid-tab-content">
+      <div className="bg-card p-6 flex flex-col rounded-lg flex-1" data-testid="col-1-info">
         {tab.col1_subtitle && (
           <h3 className="text-xl font-bold text-foreground mb-3" data-testid="text-col1-subtitle">
             {tab.col1_subtitle}
@@ -47,15 +47,15 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="lg:col-span-4 bg-primary/5 p-6 flex flex-col text-foreground" data-testid="col-2-bullets">
+      <div className="bg-primary/5 p-6 flex-1 flex-col text-muted-foreground rounded-lg" data-testid="col-2-bullets">
         {tab.col2_heading && (
-          <p className="text-lg font-semibold mb-6 leading-snug" data-testid="text-col2-heading">
+          <p className="text-lg font-semibold mb-6 leading-snug text-muteforeground" data-testid="text-col2-heading">
             {tab.col2_heading}
           </p>
         )}
 
         {tab.col2_bullets && tab.col2_bullets.length > 0 && (
-          <div className="flex flex-col gap-4" data-testid="bullets-col2">
+          <div className="flex flex-col gap-4 " data-testid="bullets-col2">
             {tab.col2_bullets.map((bullet, i) => {
               const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
               return (
@@ -73,7 +73,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="lg:col-span-4 relative overflow-hidden rounded-lg min-h-[300px]" data-testid="col-3-image">
+      <div className="relative overflow-hidden rounded-lg flex-[1.4]" data-testid="col-3-image">
         {tab.col3_image_id && (
           <UniversalImage
             id={tab.col3_image_id}
