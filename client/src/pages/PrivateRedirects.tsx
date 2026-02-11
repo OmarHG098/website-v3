@@ -337,18 +337,18 @@ export default function PrivateRedirects() {
                 </Button>
               )}
               <Button
-                variant="outline"
-                size="sm"
+                variant="ghost"
+                size="icon"
                 onClick={runValidation}
                 disabled={isValidating}
+                title="Run validation"
                 data-testid="button-run-validation"
               >
                 {isValidating ? (
-                  <div className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent mr-2" />
+                  <div className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent" />
                 ) : (
-                  <IconTestPipe className="h-3.5 w-3.5 mr-2" />
+                  <IconTestPipe className="h-4 w-4" />
                 )}
-                {isValidating ? "Validating..." : "Re-validate"}
               </Button>
               <Button
                 variant="ghost"
