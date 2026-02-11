@@ -1,0 +1,30 @@
+type: profiles_carousel
+heading: "Meet the Geeks"
+description: "Our team is dedicated, highly skilled, and always ready to support you on your journey into tech."
+profiles:
+  - name: "Alejandro Sánchez"
+    role: "Co-Founder & Technology Director"
+    image_id: "student_asian"
+    image_round: false
+    linkedin_url: "https://linkedin.com/in/example"
+  - name: "Marcelo Ricigliano"
+    role: "Co-founder & CEO"
+    image_id: "student_asian"
+    image_round: false
+    linkedin_url: "https://linkedin.com/in/example"
+  - name: "Alissa Landra"
+    role: "Campus & Growth Manager USA"
+    image_id: "student_asian"
+    image_round: true
+    description: "Passionate about growing tech education across the US."
+    linkedin_url: "https://linkedin.com/in/example"
+  - name: "Victor Gómez"
+    role: "Regional Manager Europe"
+    image_id: "student_asian"
+    image_round: false
+  - name: "Sofia Torres"
+    role: "Head of Education"
+    image_id: "student_asian"
+    image_round: true
+    description: "Leading curriculum development for AI-driven programs."
+    linkedin_url: "https://linkedin.com/in/example"
