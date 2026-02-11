@@ -217,15 +217,26 @@ function deslugify(slug: string): string {
 
 // Detect content type and slug from URL path
 function detectContentInfo(pathname: string): ContentInfo {
+  const typeLabels: Record<string, string> = {
+    programs: "Program",
+    pages: "Page",
+    landings: "Landing",
+    locations: "Location",
+  };
+
+  // Private preview route: /private/preview/:contentType/:slug
+  const previewMatch = pathname.match(/^\/private\/preview\/(programs|pages|landings|locations)\/([^/]+)\/?$/);
+  if (previewMatch) {
+    return { 
+      type: previewMatch[1] as ContentInfo["type"], 
+      slug: previewMatch[2], 
+      label: typeLabels[previewMatch[1]] || "Content" 
+    };
+  }
+
   // Private experiment editor: /private/:contentType/:contentSlug/experiment/:experimentSlug
   const experimentMatch = pathname.match(/^\/private\/(programs|pages|landings|locations)\/([^/]+)\/experiment\/[^/]+\/?$/);
   if (experimentMatch) {
-    const typeLabels: Record<string, string> = {
-      programs: "Program",
-      pages: "Page",
-      landings: "Landing",
-      locations: "Location",
-    };
     return { 
       type: experimentMatch[1] as ContentInfo["type"], 
       slug: experimentMatch[2], 
@@ -538,6 +549,30 @@ export function DebugBubble() {
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
   
+  // SEO modal state
+  const [seoModalOpen, setSeoModalOpen] = useState(false);
+  const [seoLoading, setSeoLoading] = useState(false);
+  const [seoData, setSeoData] = useState<{
+    meta: Record<string, unknown>;
+    faqSchema: Record<string, unknown> | null;
+    schemaOrg: Record<string, unknown>[];
+    title: string;
+  } | null>(null);
+  const [seoMeta, setSeoMeta] = useState<{
+    page_title: string;
+    description: string;
+    canonical_url: string;
+  }>({ page_title: "", description: "", canonical_url: "" });
+  const [seoSaving, setSeoSaving] = useState(false);
+  const [seoFaqExpanded, setSeoFaqExpanded] = useState(true);
+  const [seoSchemaExpanded, setSeoSchemaExpanded] = useState(false);
+  const [seoSchemaInclude, setSeoSchemaInclude] = useState<string[]>([]);
+  const [seoSchemaOverrides, setSeoSchemaOverrides] = useState<Record<string, string>>({});
+  const [seoSchemaOverridesErrors, setSeoSchemaOverridesErrors] = useState<Record<string, string>>({});
+  const [availableSchemaKeys, setAvailableSchemaKeys] = useState<string[]>([]);
+  const [seoSchemaIncludeExpanded, setSeoSchemaIncludeExpanded] = useState(false);
+  const [seoSchemaOverridesExpanded, setSeoSchemaOverridesExpanded] = useState(false);
+  
   // Breathecode host state
   const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
   
@@ -554,6 +589,7 @@ export function DebugBubble() {
 
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
+  const [sitemapExpanded, setSitemapExpanded] = useState(false);
 
   // Wrapper to persist menu view changes to sessionStorage
   const setMenuView = (view: MenuView) => {
@@ -776,6 +812,154 @@ export function DebugBubble() {
   };
 
   // Handle session check (validates without clearing cache first)
+  const fetchSeoPreview = useCallback(async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoLoading(true);
+    setSeoData(null);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "programs",
+        pages: "pages",
+        landings: "landings",
+        locations: "locations",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      const res = await fetch(`/api/seo-preview/${apiContentType}/${contentInfo.slug}?locale=${locale}`);
+      if (!res.ok) throw new Error("Failed to fetch SEO data");
+      const [data, schemaKeysRes] = await Promise.all([
+        res.json(),
+        fetch("/api/schema").then(r => r.ok ? r.json() : { available: [] }),
+      ]);
+      setSeoData(data);
+      setSeoMeta({
+        page_title: (data.meta?.page_title as string) || "",
+        description: (data.meta?.description as string) || "",
+        canonical_url: (data.meta?.canonical_url as string) || "",
+      });
+      setAvailableSchemaKeys(schemaKeysRes.available || []);
+      setSeoSchemaInclude(data.schemaInclude || []);
+      const overridesObj: Record<string, string> = {};
+      if (data.schemaOverrides) {
+        for (const [key, val] of Object.entries(data.schemaOverrides)) {
+          overridesObj[key] = JSON.stringify(val, null, 2);
+        }
+      }
+      setSeoSchemaOverrides(overridesObj);
+      setSeoSchemaOverridesErrors({});
+    } catch (error) {
+      console.error("Error fetching SEO preview:", error);
+      toast({
+        title: "Failed to load SEO data",
+        description: "Could not fetch page SEO information.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoLoading(false);
+    }
+  }, [contentInfo.type, contentInfo.slug, pathname, i18n.language, toast]);
+
+  const handleSeoSave = async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoSaving(true);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "program",
+        pages: "page",
+        landings: "landing",
+        locations: "location",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      
+      const existingMeta = { ...(seoData?.meta || {}) };
+      const editableKeys = ["page_title", "description", "canonical_url"] as const;
+      for (const key of editableKeys) {
+        if (seoMeta[key]) {
+          existingMeta[key] = seoMeta[key];
+        } else {
+          delete existingMeta[key];
+        }
+      }
+      
+      const hasOverrideErrors = Object.keys(seoSchemaOverridesErrors).length > 0;
+      if (hasOverrideErrors) {
+        toast({
+          title: "Invalid JSON in schema overrides",
+          description: "Please fix the JSON errors before saving.",
+          variant: "destructive",
+        });
+        setSeoSaving(false);
+        return;
+      }
+
+      const parsedOverrides: Record<string, Record<string, unknown>> = {};
+      for (const [key, val] of Object.entries(seoSchemaOverrides)) {
+        if (val.trim() && seoSchemaInclude.includes(key)) {
+          try {
+            parsedOverrides[key] = JSON.parse(val);
+          } catch {
+            // skip invalid
+          }
+        }
+      }
+
+      const schemaValue: Record<string, unknown> = {};
+      if (seoSchemaInclude.length > 0) {
+        schemaValue.include = seoSchemaInclude;
+      }
+      if (Object.keys(parsedOverrides).length > 0) {
+        schemaValue.overrides = parsedOverrides;
+      }
+
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = getDebugToken();
+      if (token) headers["X-Debug-Token"] = token;
+      const author = getDebugUserName();
+
+      const operations: Array<{ action: string; path: string; value: unknown }> = [
+        { action: "update_field", path: "meta", value: existingMeta },
+        { action: "update_field", path: "schema", value: Object.keys(schemaValue).length > 0 ? schemaValue : null },
+      ];
+
+      const res = await fetch("/api/content/edit", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          contentType: apiContentType,
+          slug: contentInfo.slug,
+          locale,
+          author: author || undefined,
+          operations,
+        }),
+      });
+      
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to save");
+      }
+      
+      toast({
+        title: "SEO updated",
+        description: "Meta tags have been saved successfully.",
+      });
+      setSeoModalOpen(false);
+    } catch (error) {
+      console.error("Error saving SEO:", error);
+      toast({
+        title: "Failed to save SEO",
+        description: error instanceof Error ? error.message : "Could not save meta changes.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoSaving(false);
+    }
+  };
+
   const handleCheckSession = async () => {
     setIsCheckingSession(true);
     try {
@@ -1564,6 +1748,22 @@ export function DebugBubble() {
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm">Dev Tools</h3>
                   <div className="flex items-center gap-2">
+                    {/* SEO button - visible only on content pages */}
+                    {contentInfo.type && contentInfo.slug && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setSeoModalOpen(true);
+                          fetchSeoPreview();
+                        }}
+                        className="px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground transition-colors hover-elevate"
+                        data-testid="button-edit-seo"
+                        title="Edit page SEO & meta tags"
+                      >
+                        SEO
+                      </button>
+                    )}
                     {/* Read/Edit toggle */}
                     {editMode && (
                       <div 
@@ -1664,10 +1864,15 @@ export function DebugBubble() {
               <div className="p-2 space-y-1">
                 <div className="space-y-0.5">
                   <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
-                    <div className="flex items-center gap-3">
+                    <button
+                      onClick={() => setSitemapExpanded(!sitemapExpanded)}
+                      className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
+                      data-testid="button-sitemap-toggle"
+                    >
                       <IconMap className="h-4 w-4 text-muted-foreground" />
                       <span>Sitemap</span>
-                    </div>
+                      <IconChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${sitemapExpanded ? "rotate-90" : ""}`} />
+                    </button>
                     <button
                       onClick={clearSitemapCache}
                       disabled={cacheClearStatus === "loading"}
@@ -1684,33 +1889,35 @@ export function DebugBubble() {
                       )}
                     </button>
                   </div>
-                  <div className="pl-2 space-y-0.5">
-                    <button
-                      onClick={() => setMenuView("sitemap")}
-                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                      data-testid="button-sitemap-all-urls"
-                    >
-                      <div className="flex items-center gap-3">
-                        <IconMap className="h-4 w-4 text-muted-foreground" />
-                        <span>All URLs</span>
-                      </div>
-                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                    </button>
-                    <a
-                      href="/private/redirects"
-                      className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                      data-testid="link-redirects-page"
-                    >
-                      <div className="flex items-center gap-3">
-                        <IconRoute className="h-4 w-4 text-muted-foreground" />
-                        <span>Redirects</span>
-                      </div>
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                  {sitemapExpanded && (
+                    <div className="pl-2 space-y-0.5">
+                      <button
+                        onClick={() => setMenuView("sitemap")}
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="button-sitemap-all-urls"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconMap className="h-4 w-4 text-muted-foreground" />
+                          <span>All URLs</span>
+                        </div>
                         <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                      </div>
-                    </a>
-                  </div>
+                      </button>
+                      <a
+                        href="/private/redirects"
+                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
+                        data-testid="link-redirects-page"
+                      >
+                        <div className="flex items-center gap-3">
+                          <IconRoute className="h-4 w-4 text-muted-foreground" />
+                          <span>Redirects</span>
+                        </div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
+                          <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                        </div>
+                      </a>
+                    </div>
+                  )}
                 </div>
                 
                 <button
@@ -3663,6 +3870,307 @@ export function DebugBubble() {
                   <IconPlus className="h-4 w-4 mr-2" />
                   Create {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* SEO Editor Modal */}
+      <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden">
+          <DialogHeader>
+            <DialogTitle>SEO & Meta Tags</DialogTitle>
+            <DialogDescription>
+              {contentInfo.slug ? `${contentInfo.label}: ${contentInfo.slug}` : "Page SEO settings"}
+            </DialogDescription>
+          </DialogHeader>
+
+          {seoLoading ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconRefresh className="h-6 w-6 animate-spin text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Loading SEO data...</p>
+            </div>
+          ) : seoData ? (
+            <div className="space-y-6 py-2">
+              {/* FAQ Schema - Read Only */}
+              {seoData.faqSchema && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoFaqExpanded(!seoFaqExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-faq-schema"
+                  >
+                    {seoFaqExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">FAQ Schema</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      Auto-generated
+                    </span>
+                  </button>
+                  {seoFaqExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        This FAQ structured data is generated automatically from FAQ sections on this page. Google uses it to show rich results in search.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-faq-schema-preview">
+                        {JSON.stringify(seoData.faqSchema, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema Includes - Editable */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => setSeoSchemaIncludeExpanded(!seoSchemaIncludeExpanded)}
+                  className="flex items-center gap-2 w-full text-left"
+                  data-testid="button-toggle-schema-includes"
+                >
+                  {seoSchemaIncludeExpanded ? (
+                    <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                  ) : (
+                    <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                  )}
+                  <h4 className="text-sm font-semibold">Schema Includes</h4>
+                  <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                    {seoSchemaInclude.length} selected
+                  </span>
+                </button>
+                {seoSchemaIncludeExpanded && (
+                  <div className="space-y-2">
+                    <p className="text-xs text-muted-foreground">
+                      Select which Schema.org schemas to include on this page. These are defined in schema-org.yml.
+                    </p>
+                    <div className="grid grid-cols-1 gap-1.5 max-h-[200px] overflow-y-auto">
+                      {availableSchemaKeys.map((key) => (
+                        <label
+                          key={key}
+                          className="flex items-center gap-2 px-2 py-1.5 rounded-md hover-elevate cursor-pointer text-sm"
+                          data-testid={`checkbox-schema-${key}`}
+                        >
+                          <input
+                            type="checkbox"
+                            checked={seoSchemaInclude.includes(key)}
+                            onChange={(e) => {
+                              if (e.target.checked) {
+                                setSeoSchemaInclude(prev => [...prev, key]);
+                              } else {
+                                setSeoSchemaInclude(prev => prev.filter(k => k !== key));
+                                setSeoSchemaOverrides(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            className="rounded"
+                          />
+                          <span className="font-mono text-xs">{key}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Schema Overrides - JSON Editor */}
+              {seoSchemaInclude.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaOverridesExpanded(!seoSchemaOverridesExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-overrides"
+                  >
+                    {seoSchemaOverridesExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema Overrides</h4>
+                    {Object.keys(seoSchemaOverrides).length > 0 && (
+                      <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                        {Object.keys(seoSchemaOverrides).length} override{Object.keys(seoSchemaOverrides).length !== 1 ? "s" : ""}
+                      </span>
+                    )}
+                  </button>
+                  {seoSchemaOverridesExpanded && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-muted-foreground">
+                        Add JSON overrides to customize properties of included schemas. Leave empty for no overrides.
+                      </p>
+                      {seoSchemaInclude.map((key) => (
+                        <div key={key} className="space-y-1.5">
+                          <label className="text-xs font-medium font-mono text-foreground">
+                            {key}
+                          </label>
+                          <textarea
+                            value={seoSchemaOverrides[key] || ""}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setSeoSchemaOverrides(prev => ({ ...prev, [key]: val }));
+                              if (val.trim()) {
+                                try {
+                                  JSON.parse(val);
+                                  setSeoSchemaOverridesErrors(prev => {
+                                    const next = { ...prev };
+                                    delete next[key];
+                                    return next;
+                                  });
+                                } catch {
+                                  setSeoSchemaOverridesErrors(prev => ({ ...prev, [key]: "Invalid JSON" }));
+                                }
+                              } else {
+                                setSeoSchemaOverridesErrors(prev => {
+                                  const next = { ...prev };
+                                  delete next[key];
+                                  return next;
+                                });
+                              }
+                            }}
+                            placeholder={`{\n  "name": "Custom Name",\n  "description": "Custom description"\n}`}
+                            rows={4}
+                            className={`w-full px-3 py-2 text-xs font-mono rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-y ${seoSchemaOverridesErrors[key] ? "border-destructive" : ""}`}
+                            data-testid={`input-schema-override-${key}`}
+                          />
+                          {seoSchemaOverridesErrors[key] && (
+                            <p className="text-xs text-destructive">{seoSchemaOverridesErrors[key]}</p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema.org Preview - Read Only */}
+              {seoData.schemaOrg && seoData.schemaOrg.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaExpanded(!seoSchemaExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-org"
+                  >
+                    {seoSchemaExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema.org Preview</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      Current output
+                    </span>
+                  </button>
+                  {seoSchemaExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        This is the current Schema.org output injected via SSR. Save changes above to update it.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-schema-org-preview">
+                        {JSON.stringify(seoData.schemaOrg, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Editable Meta Fields */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Meta Tags</h4>
+                <p className="text-xs text-muted-foreground">
+                  Edit these fields to improve how the page appears in search results and social media.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-page-title">
+                      Page Title
+                    </label>
+                    <input
+                      id="seo-page-title"
+                      type="text"
+                      value={seoMeta.page_title}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, page_title: e.target.value }))}
+                      placeholder="e.g. Full Stack Developer Program | 4Geeks"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-page-title"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.page_title.length}/60 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-description">
+                      Description
+                    </label>
+                    <textarea
+                      id="seo-description"
+                      value={seoMeta.description}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, description: e.target.value }))}
+                      placeholder="e.g. Learn full stack development with unlimited mentorship..."
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                      data-testid="input-seo-description"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.description.length}/160 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-canonical-url">
+                      Canonical URL
+                    </label>
+                    <input
+                      id="seo-canonical-url"
+                      type="text"
+                      value={seoMeta.canonical_url}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, canonical_url: e.target.value }))}
+                      placeholder="e.g. https://4geeks.com/en/career-programs/full-stack"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-canonical-url"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconAlertTriangle className="h-6 w-6 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Could not load SEO data for this page.</p>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setSeoModalOpen(false)}
+              data-testid="button-cancel-seo"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSeoSave}
+              disabled={seoSaving || seoLoading || !seoData}
+              data-testid="button-save-seo"
+            >
+              {seoSaving ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
               )}
             </Button>
           </DialogFooter>
