@@ -49,7 +49,7 @@ sections:
     marginY:
       desktop: none md
   - type: syllabus
-    title: Launch your tech career with payment options that fit your budget
+    title: Fund Your Tech Career
     subtitle: Explore flexible financing paths, from upfront savings to income-based plans, and choose the option that works for you.
     modules:
       - title: Pay Upfront and Save 10%
