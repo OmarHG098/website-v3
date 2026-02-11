@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useCallback } from "react";
+import { useState, useRef, useLayoutEffect, useCallback, useEffect } from "react";
 import { ChevronDown, ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -313,6 +313,13 @@ export function Dropdown({ label, href, dropdown, controlledOpen, onOpenChange }
   const panelRef = useRef<HTMLDivElement>(null);
   
   const isWideDropdown = dropdown.type === "cards" || dropdown.type === "columns";
+
+  useEffect(() => {
+    if (isControlled && !controlledOpen && closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  }, [isControlled, controlledOpen]);
   
   const handleMouseEnter = () => {
     if (closeTimeoutRef.current) {
