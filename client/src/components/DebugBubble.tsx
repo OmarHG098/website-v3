@@ -1943,7 +1943,7 @@ export function DebugBubble() {
                       >
                         <div className="flex items-center gap-3">
                           <IconComponents className="h-4 w-4 text-muted-foreground" />
-                          <span>Gallery Registry</span>
+                          <span>Component Gallery</span>
                         </div>
                         <IconChevronRight className="h-4 w-4 text-muted-foreground" />
                       </button>
@@ -3145,7 +3145,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Pull Conflict Modal */}
       <Dialog open={pullConflictModalOpen} onOpenChange={setPullConflictModalOpen}>
         <DialogContent className="sm:max-w-md">
@@ -3218,7 +3217,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Per-file Download Confirmation Modal */}
       <Dialog open={confirmPullFile !== null} onOpenChange={(open) => !open && setConfirmPullFile(null)}>
         <DialogContent className="sm:max-w-md">
@@ -3286,7 +3284,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Delete Page Confirmation Modal */}
       <Dialog open={deletePageModalOpen} onOpenChange={(open) => {
         setDeletePageModalOpen(open);
@@ -3337,7 +3334,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       {/* Create Content Modal */}
       <Dialog open={createContentModalOpen} onOpenChange={(open) => {
         setCreateContentModalOpen(open);
@@ -3903,7 +3899,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       {/* SEO Editor Modal */}
       <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
         <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden">
