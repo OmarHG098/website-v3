@@ -104,9 +104,6 @@ sections:
     subtitle: Real stories from graduates who transformed their careers
     default_box_color: hsl(var(--muted))
     columns: 3
-    related_features:
-      - outcomes
-      - career-support
   - type: press_mentions
     version: v1.0
     title: Destacados en Prensa
