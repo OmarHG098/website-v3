@@ -107,7 +107,7 @@ function SlideLeftCard({
         {slide.description && (
           <TruncatedDescription text={slide.description} />
         )}
-        <div className="flex flex-col justify-end h-full">
+        <div className="flex flex-col mt-auto">
           {slide.stats && slide.stats.length > 0 && (
             <div className="flex justify-center">
               <div
