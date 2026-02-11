@@ -98,7 +98,21 @@ export function UniversalVideo({
   
   const thumbnailUrl = preview_image_url || (youtubeId ? getYouTubeThumbnail(youtubeId) : null);
 
+  const isMobile = (): boolean => {
+    if (typeof window === 'undefined') return false;
+    return window.matchMedia('(max-width: 768px)').matches 
+      || ('ontouchstart' in window && window.matchMedia('(pointer: coarse)').matches);
+  };
+
+  const getYouTubeWatchUrl = (videoId: string): string => {
+    return `https://www.youtube.com/watch?v=${videoId}`;
+  };
+
   const handleClick = () => {
+    if (isYouTube && youtubeId && isMobile()) {
+      window.open(getYouTubeWatchUrl(youtubeId), '_blank', 'noopener,noreferrer');
+      return;
+    }
     setIsModalOpen(true);
   };
 
