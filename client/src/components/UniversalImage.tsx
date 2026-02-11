@@ -94,19 +94,15 @@ export function UniversalImage({
     );
   }
 
+  if (!id || !id.trim()) {
+    return null;
+  }
+
   const imageEntry = registry.images[id];
   const isDirectPath = !imageEntry && (id.startsWith("/") || id.startsWith("http://") || id.startsWith("https://") || id.startsWith("data:"));
 
   if (!imageEntry && !isDirectPath) {
-    console.warn(`Image not found in registry: ${id}`);
-    return (
-      <div 
-        className={`bg-muted flex items-center justify-center text-muted-foreground text-sm ${className}`}
-        data-testid={`img-not-found-${id}`}
-      >
-        Image not found
-      </div>
-    );
+    return null;
   }
 
   const presetConfig = registry.presets[preset];
@@ -122,15 +118,7 @@ export function UniversalImage({
     : {};
 
   if (hasError) {
-    return (
-      <div 
-        className={`bg-muted flex items-center justify-center text-muted-foreground text-sm ${className}`}
-        style={containerStyle}
-        data-testid={`img-error-${id}`}
-      >
-        Failed to load
-      </div>
-    );
+    return null;
   }
 
   const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";

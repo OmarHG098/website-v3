@@ -77,23 +77,6 @@ sections:
       desktop: none lg
     marginY:
       desktop: none md
-  - type: syllabus
-    version: "1.0"
-    title: Get Job-Ready with Our Syllabus!
-    subtitle: We've fine-tuned our course content with hundreds of job positions to prepare you for a successful entry into tech.
-    modules:
-      - title: Introduction To HTML And CSS
-        description: Learn to create web structures with HTML and style them with CSS, essential for building visually appealing and functional websites.
-      - title: JavaScript Fundamentals
-        description: Master JavaScript programming concepts including variables, functions, DOM manipulation, and event handling.
-      - title: React Development
-        description: Build modern user interfaces with React, learning component architecture, state management, and hooks.
-      - title: Backend with Python
-        description: Create server-side applications using Python and Flask, handling routing, databases, and REST APIs.
-      - title: Databases & SQL
-        description: Design and implement databases using SQL, understanding relationships, queries, and data modeling.
-      - title: API Development
-        description: Build and consume RESTful APIs, implementing authentication, validation, and error handling.
   - type: testimonials_grid
     version: v1.0
     title: What Our Students Say
@@ -167,16 +150,18 @@ sections:
         title_color: hsl(var(--secondary))
         excerpt_color: hsl(var(--secondary))
         link_color: hsl(var(--secondary))
-      - logo: /attached_assets/miami-herald-logo.png
+      - logo: /attached_assets/beacon_council_1764720100166.jpg
         title: Becas para aprender a programar
         excerpt: Después de mucho trabajo hemos logrado aliarnos con United Way para ofrecer 100 becas en poblaciones minorias para convertirse en desarrollador de software
         link_text: Leer Artículo
         link_url: https://example.com/article-2
-      - logo: /attached_assets/cnn-chile-logo.png
+      - logo: /attached_assets/evernote_1764719981901.png
         title: Entrevista / 4Geeks Academy en CNN Chile
         excerpt: Gracias a nuestros amigos de CNN Chile por haber estado presentes en nuestro evento y publicar tan buen material sobre el futuro en educación que ofrecemos a la comunidad de Santiago a través de nuestro programa de
         link_text: Ver Entrevista
         link_url: https://example.com/interview
+        alt: Evernote logo
+        id: logo-evernote
       - logo: /attached_assets/forbes-logo.png
         title: Mejores Bootcamps de Ciencia de Datos en 2024
         excerpt: Los profesionales actuales y futuros de la tecnología pueden completar un bootcamp de ciencia de datos para perfeccionar sus habilidades y avanzar en sus carreras.
