@@ -1,18 +1,21 @@
-slug: ai-engineering-spain
-title: Programa de Ingeniería de IA (España)
-locale: es
+# Common properties for AI Engineering Landing (Spain)
+slug: "ai-engineering-spain"
+title: "Programa de Ingeniería de IA (España)"
+locale: "es"
 locations:
-  - barcelona-spain
-  - madrid-spain
-  - valencia-spain
-  - malaga-spain
+  - "madrid-spain"
+  - "barcelona-spain"
+  - "malaga-spain"
+  - "valencia-spain"
+
 meta:
-  robots: index, follow
-  og_image: /images/programs/ai-engineering-og.jpg
+  robots: "index, follow"
+  og_image: "/images/programs/ai-engineering-og.jpg"
   priority: 0.9
-  change_frequency: weekly
+  change_frequency: "weekly"
+
 schema:
   include:
-    - organization
-    - website
-    - courses:ai-engineering
+    - "organization"
+    - "website"
+    - "courses:ai-engineering"
