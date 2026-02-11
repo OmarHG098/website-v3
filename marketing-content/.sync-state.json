@@ -49,9 +49,11 @@
       "remoteSha": "23ced479b38808f7b4531b4f717c6bf485a0a308446b531304ee06b458fecf83"
     },
     "marketing-content/landings/example-landing/_common.yml": {
-      "sha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
-      "lastModified": 1769638432339.858,
-      "remoteSha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e"
+      "sha": "4ada0ec95c23f9ca4ad2688441e8b0eb1df461d349bcd9213fdd5c2a981a073f",
+      "lastModified": 1770839453041.0647,
+      "remoteSha": "ce7b4124157ed53924a80ba852e41364ae6f5c5522c5969a08dba6364f271d4e",
+      "author": "Luis Miguel Del Valle",
+      "modifiedAt": "2026-02-11T19:50:53.041Z"
     },
     "marketing-content/landings/example-landing/colorful.v1.en.yml": {
       "sha": "13a0c05d98cf1df310cc532817943ce29205f8f04c0c20466d13576243ded8ce",
@@ -64,11 +66,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "8daa80475f516117b203bd45c8d5ebe1d8827853bac0b8e6836caffa0fd68004",
-      "lastModified": 1770831843166.595,
+      "sha": "3e0b1ab66d9454cbaf6176272c39db07743fc7892707ce4ab65c25e83e565fb4",
+      "lastModified": 1770839452623.0652,
       "remoteSha": "4c9d369a4d4be1464846a4905a863ef4411aa1818aa8b8c533df99bf7c829531",
       "author": "Luis Miguel Del Valle",
-      "modifiedAt": "2026-02-11T17:44:03.169Z"
+      "modifiedAt": "2026-02-11T19:50:52.625Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
