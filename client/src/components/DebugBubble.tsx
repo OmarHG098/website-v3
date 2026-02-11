@@ -514,7 +514,7 @@ function ExpandableMenuItem({ icon: Icon, label, expanded, onToggle, testId, act
         {actions}
       </div>
       {expanded && (
-        <div className="pl-2 space-y-0.5">
+        <div className="ml-2 pl-1 space-y-0.5 bg-muted/40 rounded-md py-1">
           {children}
         </div>
       )}
