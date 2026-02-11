@@ -108,55 +108,49 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
           </div>
         )}
 
-        {totalPages > 1 && (
-          <div className="flex items-center justify-center gap-2 mb-6" data-testid="carousel-dots">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => goTo(i)}
-                className={cn(
-                  "w-2.5 h-2.5 rounded-full transition-colors duration-200",
-                  i === currentPage ? "bg-primary" : "bg-border"
-                )}
-                data-testid={`button-dot-${i}`}
-              />
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6">
+          {currentProfiles.map((profile, i) => (
+            <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
+          ))}
+        </div>
 
-        <div className="flex items-center gap-2 md:gap-4" data-testid="carousel-controls">
-          {totalPages > 1 && (
+        {totalPages > 1 && (
+          <div className="flex items-center justify-center gap-4 mt-8" data-testid="carousel-controls">
             <Button
               size="icon"
               variant="ghost"
               onClick={() => goTo(currentPage - 1)}
               disabled={currentPage === 0}
-              className="flex-shrink-0"
               data-testid="button-page-prev"
             >
               <IconChevronLeft className="w-5 h-5" />
             </Button>
-          )}
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 flex-1">
-            {currentProfiles.map((profile, i) => (
-              <ProfileCardItem key={currentPage * PROFILES_PER_PAGE + i} profile={profile} isRound={isRound} />
-            ))}
-          </div>
+            <div className="flex items-center gap-2" data-testid="carousel-dots">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => goTo(i)}
+                  className={cn(
+                    "w-4 h-4 rounded-full transition-colors duration-200",
+                    i === currentPage ? "bg-primary" : "bg-border"
+                  )}
+                  data-testid={`button-dot-${i}`}
+                />
+              ))}
+            </div>
 
-          {totalPages > 1 && (
             <Button
               size="icon"
               variant="ghost"
               onClick={() => goTo(currentPage + 1)}
               disabled={currentPage === totalPages - 1}
-              className="flex-shrink-0"
               data-testid="button-page-next"
             >
               <IconChevronRight className="w-5 h-5" />
             </Button>
-          )}
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );
