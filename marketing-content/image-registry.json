@@ -3913,6 +3913,13 @@
       "focal_point": "center top",
       "tags": ["photo", "staff", "avatar"],
       "usage_count": 0
+    },
+    "career_team_women": {
+      "src": "/attached_assets/IMG_3662_1770849949826.jpg",
+      "alt": "4Geeks career support team members",
+      "focal_point": "center",
+      "tags": ["photo", "staff", "team"],
+      "usage_count": 0
     }
   }
 }
