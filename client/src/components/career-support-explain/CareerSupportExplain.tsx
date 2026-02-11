@@ -5,6 +5,7 @@ import { UniversalImage } from "@/components/UniversalImage";
 import type { CareerSupportExplainSection, CareerSupportTab } from "@shared/schema";
 import * as TablerIcons from "@tabler/icons-react";
 
+// test
 interface CareerSupportExplainProps {
   data: CareerSupportExplainSection;
 }

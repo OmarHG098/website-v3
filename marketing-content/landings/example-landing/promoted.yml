@@ -399,8 +399,10 @@ sections:
     version: v1.0
     heading: GeekForce Career Support
     description: Our career support program is designed to help you land your first job in tech
+    background: hsl(var(--secondary))
     tabs:
       - tab_label: Job-Ready, Faster
+        layout: three_columns
         col1_subtitle: Build a recruiter-ready profile, smarter.
         col1_description: |-
           Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.
@@ -429,7 +431,6 @@ sections:
       - tab_label: Get noticed
       - tab_label: Build a portfolio
       - tab_label: Find your edge
-    background: hsl(var(--secondary))
   - type: partnership_carousel
     version: v1.0
     heading: Our Global Partnerships
