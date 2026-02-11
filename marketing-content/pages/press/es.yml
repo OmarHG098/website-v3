@@ -43,8 +43,8 @@ sections:
         link_text: Leer Artículo
         link_url: https://issuu.com/coralgablesmagazine.com/docs/gm_jan-feb_2024_fullissue/74?ff
       - logo: forbes_logo_award
-        title: "Mejores Bootcamps de Ciencia de Datos en 2024"
-        excerpt: "Los profesionales actuales y futuros de la tecnología pueden completar un bootcamp de ciencia de datos para perfeccionar sus habilidades existentes para cambiar de campo o avanzar en sus carreras actuales..."
+        title: Mejores Bootcamps de Ciencia de Datos en 2024
+        excerpt: Los profesionales actuales y futuros de la tecnología pueden completar un bootcamp de ciencia de datos para perfeccionar sus habilidades existentes para cambiar de campo o avanzar en sus carreras actuales...
         link_text: Leer Artículo
         link_url: https://www.forbes.com/advisor/education/bootcamps/best-data-science-bootcamps/
       - logo: the-miami-herald-logo
@@ -58,7 +58,7 @@ sections:
         link_text: Leer Artículo
         link_url: https://www.forbes.com/advisor/education/what-is-web-development
       - logo: forbes_logo_award
-        title: "5 Mejores Bootcamps Full-Stack en Línea para este 2024"
+        title: 5 Mejores Bootcamps Full-Stack en Línea para este 2024
         excerpt: Los desarrolladores full-stack crean y solucionan problemas para la web y software, habilidades muy demandadas actualmente para diversas industrias.
         link_text: Leer Artículo
         link_url: https://www.forbes.com/advisor/education/bootcamps/best-full-stack-developer-bootcamp/
@@ -68,22 +68,10 @@ sections:
         link_text: Ver Entrevista
         link_url: https://www.facebook.com/4GeeksAcademyCL/videos/492034597993382/
       - logo: economista-logo
-        title: "4Geeks Academy lanza un millón en becas para la formación de futuros programadores"
-        excerpt: "La escuela de programadores 4Geeks Academy apuesta por acercar el mundo de la programación a todos los públicos. La compañía lanza más de 300 becas con un valor de un millón de euros en todo el mundo a través del Marketplace Landing.Jobs."
+        title: 4Geeks Academy lanza un millón en becas para la formación de futuros programadores
+        excerpt: La escuela de programadores 4Geeks Academy apuesta por acercar el mundo de la programación a todos los públicos. La compañía lanza más de 300 becas con un valor de un millón de euros en todo el mundo a través del Marketplace Landing.Jobs.
         link_text: Ver Entrevista
         link_url: https://www.eleconomista.es/ecoaula/noticias/11389106/09/21/4Geeks-Academy-lanza-un-millon-en-becas-para-la-formacion-de-futuros-programadores.html
-      - title: Movimiento solidario para enseñar programación
-        excerpt: "Durante la crisis de COVID-19, una de las peores de los ultimos años, decidimos aumentar nuestros programas de becas en españa exponencialmente, logrando becar a más de 60 alumnos durante el año más difícil de la pandemia; Recibiendo el reconocimiento de la prensa local."
-        link_text: Ver Entrevista
-        link_url: https://www.elespanol.com/invertia/disruptores-innovadores/innovadores/20200317/movimiento-solidario-ensenar-programacion-crisis-covid-19/475454655_0.html
-      - title: "4Geeks Academy, reconocida como uno de los mejores bootcamps de programación"
-        excerpt: "El Campus de Madrid abrió sus puertas en marzo de 2020 y en menos de tres años ha conseguido posicionarse como uno de los mejores Bootcamps de Programación de España, siendo reconocido y premiado por diferentes entidades: 17 galardones vinculados a la educación y la tecnología en solo 3 años."
-        link_text: Ver Entrevista
-        link_url: http://revistanegocios.es/4geeks-academy-reconocida-como-uno-de-los-mejores-bootcamps-de-programacion-por-las-escuelas-de-negocios/
-      - title: "4Geeks o la (no) academia que da un vuelco a la programación"
-        excerpt: "Su método potencia el 'learning by doing' y utiliza la programación como medio para que los alumnos 'transformen sus vidas'. Ha formado a más de 600 personas en España desde 2020 y cosechado múltiples premios."
-        link_text: Ver Entrevista
-        link_url: https://www.elespanol.com/invertia/disruptores-innovadores/disruptores/startups/20230304/no-academia-vuelco-programacion-chatgpt-quitara-trabajo/745675491_0.html
     paddingY:
       desktop: none md
   - type: value_proof_panel

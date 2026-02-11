@@ -1761,7 +1761,7 @@ export function DebugBubble() {
                         data-testid="button-edit-seo"
                         title="Edit page SEO & meta tags"
                       >
-                        SEO
+                        META
                       </button>
                     )}
                     {/* Read/Edit toggle */}
