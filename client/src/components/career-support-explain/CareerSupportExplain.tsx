@@ -2,7 +2,10 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { UniversalImage } from "@/components/UniversalImage";
-import type { CareerSupportExplainSection, CareerSupportTab } from "@shared/schema";
+import type {
+  CareerSupportExplainSection,
+  CareerSupportTab,
+} from "@shared/schema";
 import * as TablerIcons from "@tabler/icons-react";
 
 interface CareerSupportExplainProps {
@@ -17,27 +20,44 @@ function getTablerIcon(name: string) {
 function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
     <div className="flex gap-4 h-full" data-testid="grid-tab-content">
-      <div className="bg-card p-6 flex flex-col rounded-lg flex-1" data-testid="col-1-info">
+      <div
+        className="bg-card p-6 flex flex-col rounded-lg flex-1"
+        data-testid="col-1-info"
+      >
         {tab.col1_subtitle && (
-          <h3 className="text-xl font-bold text-foreground mb-3" data-testid="text-col1-subtitle">
+          <h3
+            className="text-xl font-bold text-foreground mb-3"
+            data-testid="text-col1-subtitle"
+          >
             {tab.col1_subtitle}
           </h3>
         )}
         {tab.col1_description && (
-          <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" data-testid="text-col1-description">
+          <p
+            className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line"
+            data-testid="text-col1-description"
+          >
             {tab.col1_description}
           </p>
         )}
 
         {tab.col1_boxes && tab.col1_boxes.length > 0 && (
           <div className="mt-auto pt-4">
-            <p className="text-sm font-semibold text-foreground mb-2">We'll help you create tailored job search materials</p>
+            <p className="text-sm font-semibold text-foreground mb-2">
+              We'll help you create tailored job search materials
+            </p>
             <div className="flex flex-wrap gap-2" data-testid="boxes-col1">
               {tab.col1_boxes.map((box, i) => {
                 const IconComp = box.icon ? getTablerIcon(box.icon) : null;
                 return (
-                  <Card key={i} className="flex items-center gap-1.5 px-3 py-1.5 text-sm" data-testid={`box-item-${i}`}>
-                    {IconComp && <IconComp className="w-4 h-4 text-muted-foreground" />}
+                  <Card
+                    key={i}
+                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
+                    data-testid={`box-item-${i}`}
+                  >
+                    {IconComp && (
+                      <IconComp className="w-4 h-4 text-muted-foreground" />
+                    )}
                     <span className="text-foreground">{box.text}</span>
                   </Card>
                 );
@@ -47,9 +67,15 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="bg-primary/5 p-6 flex-1 flex-col text-muted-foreground rounded-lg" data-testid="col-2-bullets">
+      <div
+        className="bg-primary/5 p-6 flex-1 flex-col text-muted-foreground rounded-lg"
+        data-testid="col-2-bullets"
+      >
         {tab.col2_heading && (
-          <p className="text-lg font-semibold mb-6 leading-snug text-muteforeground" data-testid="text-col2-heading">
+          <p
+            className="text-lg font-semibold mb-6 leading-snug text-muteforeground"
+            data-testid="text-col2-heading"
+          >
             {tab.col2_heading}
           </p>
         )}
@@ -59,7 +85,11 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
             {tab.col2_bullets.map((bullet, i) => {
               const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
               return (
-                <div key={i} className="flex items-start gap-3" data-testid={`bullet-item-${i}`}>
+                <div
+                  key={i}
+                  className="flex items-start gap-3"
+                  data-testid={`bullet-item-${i}`}
+                >
                   {IconComp && (
                     <Card className="flex-shrink-0 p-1.5">
                       <IconComp className="w-4 h-4 text-primary" />
@@ -73,13 +103,18 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
       </div>
 
-      <div className="relative overflow-hidden rounded-lg flex-[1.4]" data-testid="col-3-image">
+      <div
+        className="relative overflow-hidden rounded-lg flex-[1.4]"
+        data-testid="col-3-image"
+      >
         {tab.col3_image_id && (
           <UniversalImage
             id={tab.col3_image_id}
             className="w-full h-full absolute inset-0"
             style={{
-              objectFit: (tab.col3_object_fit as React.CSSProperties["objectFit"]) || "cover",
+              objectFit:
+                (tab.col3_object_fit as React.CSSProperties["objectFit"]) ||
+                "cover",
               objectPosition: tab.col3_object_position || "center",
             }}
             data-testid="img-tab-content"
@@ -92,59 +127,87 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
 
 function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="flex gap-4 h-full" data-testid="grid-two-column-cards">
-      <Card className="flex flex-col flex-[1.6] p-6 overflow-hidden" data-testid="card-left">
+    <div className="flex gap-4 h-full items-center" data-testid="grid-two-column-cards">
+      <Card
+        className="flex flex-col flex-[2.5] p-6 overflow-hidden"
+        data-testid="card-left"
+      >
         {tab.title && (
-          <h3 className="text-2xl font-bold text-foreground mb-6" data-testid="text-tab-title">
+          <h3
+            className="text-4xl me-[200px] font-bold text-foreground mb-[50px]"
+            data-testid="text-tab-title"
+          >
             {tab.title}
           </h3>
         )}
+        <div className="flex items-end h-full">
+          <div className="flex gap-4 flex-1 max-h-full">
+            <div className="flex flex-col flex-1 mb-3">
+              {tab.left_text && (
+                <p
+                  className="text-sm text-muted-foreground  whitespace-pre-line"
+                  data-testid="text-left-content"
+                >
+                  {tab.left_text}
+                </p>
+              )}
 
-        <div className="flex gap-4 flex-1 min-h-0">
-          <div className="flex flex-col flex-1">
-            {tab.left_text && (
-              <p className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" data-testid="text-left-content">
-                {tab.left_text}
-              </p>
-            )}
+              {tab.left_stat && (
+                <div className="mt-auto pt-4" data-testid="stat-left">
+                  <span className="text-4xl font-bold text-foreground">
+                    {tab.left_stat.value}
+                  </span>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    {tab.left_stat.label}
+                  </p>
+                </div>
+              )}
+            </div>
 
-            {tab.left_stat && (
-              <div className="mt-auto pt-4" data-testid="stat-left">
-                <span className="text-4xl font-bold text-foreground">{tab.left_stat.value}</span>
-                <p className="text-sm text-muted-foreground mt-1">{tab.left_stat.label}</p>
+            {tab.left_image_id && (
+              <div
+                className="relative overflow-hidden rounded-lg flex-1 min-h-[300px]"
+                data-testid="img-left-container"
+              >
+                <UniversalImage
+                  id={tab.left_image_id}
+                  className="w-full h-full absolute inset-0"
+                  style={{
+                    objectFit:
+                      (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
+                      "cover",
+                    objectPosition: tab.left_image_object_position || "center",
+                  }}
+                  data-testid="img-left-content"
+                />
               </div>
             )}
           </div>
-
-          {tab.left_image_id && (
-            <div className="relative overflow-hidden rounded-lg flex-1 min-h-[200px]" data-testid="img-left-container">
-              <UniversalImage
-                id={tab.left_image_id}
-                className="w-full h-full absolute inset-0"
-                style={{
-                  objectFit: (tab.left_image_object_fit as React.CSSProperties["objectFit"]) || "cover",
-                  objectPosition: tab.left_image_object_position || "center",
-                }}
-                data-testid="img-left-content"
-              />
-            </div>
-          )}
         </div>
       </Card>
 
-      <Card className="flex flex-col flex-1 p-6 bg-primary/5" data-testid="card-right">
+      <Card
+        className="flex flex-col flex-1 p-6 bg-primary/5"
+        data-testid="card-right"
+      >
         {tab.right_bullets && tab.right_bullets.length > 0 && (
           <div className="flex flex-col gap-4 mb-6" data-testid="bullets-right">
             {tab.right_bullets.map((bullet, i) => {
               const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
               return (
-                <div key={i} className="flex items-start gap-3" data-testid={`right-bullet-${i}`}>
+                <div
+                  key={i}
+                  className="flex items-start gap-3"
+                  data-testid={`right-bullet-${i}`}
+                >
                   {IconComp && (
                     <Card className="flex-shrink-0 p-1.5">
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-sm text-muted-foreground">{bullet.text}</span>
+                  <span className="text-sm text-muted-foreground">
+                    {bullet.text}
+                  </span>
                 </div>
               );
             })}
@@ -178,7 +241,10 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
 
 function EmptyLayout() {
   return (
-    <div className="flex items-center justify-center h-full rounded-[0.8rem] border border-dashed border-border" data-testid="tab-empty">
+    <div
+      className="flex items-center justify-center h-full rounded-[0.8rem] border border-dashed border-border"
+      data-testid="tab-empty"
+    >
       <p className="text-muted-foreground text-sm">Content coming soon</p>
     </div>
   );
@@ -209,12 +275,18 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
         {(heading || description) && (
           <div className="text-center mb-10">
             {heading && (
-              <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-3" data-testid="text-career-heading">
+              <h2
+                className="text-3xl md:text-4xl font-bold text-foreground mb-3"
+                data-testid="text-career-heading"
+              >
                 {heading}
               </h2>
             )}
             {description && (
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto" data-testid="text-career-description">
+              <p
+                className="text-lg text-muted-foreground max-w-2xl mx-auto"
+                data-testid="text-career-description"
+              >
                 {description}
               </p>
             )}
@@ -222,7 +294,10 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
         )}
 
         {tabs.length > 1 && (
-          <div className="flex items-center justify-center mb-8 w-full" data-testid="tabs-selector">
+          <div
+            className="flex items-center justify-center mb-8 w-full"
+            data-testid="tabs-selector"
+          >
             <div className="grid grid-cols-4 gap-3 border border-border bg-background rounded-lg w-full p-1">
               {tabs.map((tab, i) => (
                 <button

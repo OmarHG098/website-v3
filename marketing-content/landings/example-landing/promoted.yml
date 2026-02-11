@@ -461,10 +461,8 @@ sections:
     background: bg-muted
     media_position: right
   - type: career_support_explain
-    version: v1.0
     heading: GeekForce Career Support
     description: Our career support program is designed to help you land your first job in tech
-    background: hsl(var(--secondary))
     tabs:
       - tab_label: Job-Ready, Faster
         layout: three_columns
@@ -490,10 +488,41 @@ sections:
             text: 1-on-1 career coaching and strategy sessions
           - icon: IconMicrophone
             text: Mock interviews and technical interview prep
-        col3_image_id: 4geeks_member
+        col3_image_id: student_asian
         col3_object_fit: cover
         col3_object_position: center
-      - tab_label: Get noticed
+      - tab_label: Real Hiring Access
+        layout: two_column_cards
+        title: Access the hidden job market.
+        left_text: |-
+          Once your profile is ready, visibility becomes the focus.
+          We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        left_image_id: career_team_women
+        left_image_object_fit: cover
+        left_image_object_position: center
+        left_stat:
+          value: 250+
+          label: companies in 4Geeks employer network
+        right_bullets:
+          - icon: IconUserPlus
+            text: Direct referrals to hiring partners
+          - icon: IconTargetArrow
+            text: Curated job matches based on your profile
+          - icon: IconMessageChatbot
+            text: Networking and recruiter conversation coaching
+        right_logos:
+          - image_id: logo_google
+            alt: Google
+          - image_id: logo_meta
+            alt: Meta
+          - image_id: logo_microsoft
+            alt: Microsoft
+          - image_id: logo_uber
+            alt: Uber
+          - image_id: logo_ebay
+            alt: eBay
+          - image_id: logo_kpmg
+            alt: KPMG
       - tab_label: Build a portfolio
       - tab_label: Find your edge
   - type: profiles_carousel

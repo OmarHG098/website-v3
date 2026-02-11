@@ -63,11 +63,11 @@
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
-      "sha": "c605d4022cee1d09b6007f5545929fa2c7f1834aa62989a6710ea8a449ac329c",
-      "lastModified": 1770849307108.017,
+      "sha": "1d6e80d62727792d28fed6c87eecaf69412b58a82711ad944e0ca0153c3ec3bc",
+      "lastModified": 1770850456165.1387,
       "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
       "author": "Lorena Gubaira",
-      "modifiedAt": "2026-02-11T22:35:07.110Z"
+      "modifiedAt": "2026-02-11T22:54:16.168Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
