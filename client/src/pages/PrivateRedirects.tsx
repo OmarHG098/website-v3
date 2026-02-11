@@ -32,8 +32,13 @@ interface ValidationResult {
   duration: number;
 }
 
+function stripContentPath(text: string): string {
+  return text.replace(/(?:\/home\/runner\/workspace\/)?marketing-content\//g, "");
+}
+
 export default function PrivateRedirects() {
   const [search, setSearch] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [expandedType, setExpandedType] = useState<string | null>(null);
   const [validationResult, setValidationResult] = useState<ValidationResult | null>(null);
@@ -118,7 +123,7 @@ export default function PrivateRedirects() {
     <div className="min-h-screen bg-background">
       <div className="border-b">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between gap-4 flex-wrap">
+          <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-4">
               <Link href="/">
                 <Button variant="ghost" size="icon" data-testid="link-back-home">
@@ -135,62 +140,76 @@ export default function PrivateRedirects() {
                 </p>
               </div>
             </div>
-            <div className="flex items-center gap-3 flex-wrap">
-              <div className="flex items-center gap-2">
-                {validationResult && (
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => setShowValidation(!showValidation)}
-                    data-testid="button-toggle-validation"
-                  >
-                    {validationResult.status === "passed" ? (
-                      <Badge variant="secondary" className="gap-1">
-                        <IconCircleCheck className="h-3.5 w-3.5" />
-                        Passed
-                      </Badge>
-                    ) : validationResult.status === "warning" ? (
-                      <Badge variant="outline" className="gap-1">
-                        <IconAlertTriangle className="h-3.5 w-3.5" />
-                        {totalIssues} warning{totalIssues !== 1 ? 's' : ''}
-                      </Badge>
-                    ) : (
-                      <Badge variant="destructive" className="gap-1">
-                        <IconAlertTriangle className="h-3.5 w-3.5" />
-                        {totalIssues} issue{totalIssues !== 1 ? 's' : ''}
-                      </Badge>
-                    )}
-                  </Button>
-                )}
+            <div className="flex items-center gap-2">
+              {validationResult && (
                 <Button
-                  variant="outline"
+                  variant="ghost"
                   size="sm"
-                  onClick={runValidation}
-                  disabled={isValidating}
-                  data-testid="button-run-validation"
+                  onClick={() => setShowValidation(!showValidation)}
+                  data-testid="button-toggle-validation"
                 >
-                  {isValidating ? (
-                    <div className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent mr-2" />
+                  {validationResult.status === "passed" ? (
+                    <Badge variant="secondary" className="gap-1">
+                      <IconCircleCheck className="h-3.5 w-3.5" />
+                      Passed
+                    </Badge>
+                  ) : validationResult.status === "warning" ? (
+                    <Badge variant="outline" className="gap-1">
+                      <IconAlertTriangle className="h-3.5 w-3.5" />
+                      {totalIssues} warning{totalIssues !== 1 ? 's' : ''}
+                    </Badge>
                   ) : (
-                    <IconRefresh className="h-3.5 w-3.5 mr-2" />
+                    <Badge variant="destructive" className="gap-1">
+                      <IconAlertTriangle className="h-3.5 w-3.5" />
+                      {totalIssues} issue{totalIssues !== 1 ? 's' : ''}
+                    </Badge>
                   )}
-                  {isValidating ? "Validating..." : "Re-validate"}
                 </Button>
-              </div>
-              <div className="relative w-full sm:w-64">
-                <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search redirects..."
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  className="pl-9"
-                  data-testid="input-search-redirects"
-                />
-              </div>
+              )}
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={runValidation}
+                disabled={isValidating}
+                data-testid="button-run-validation"
+              >
+                {isValidating ? (
+                  <div className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-solid border-current border-r-transparent mr-2" />
+                ) : (
+                  <IconRefresh className="h-3.5 w-3.5 mr-2" />
+                )}
+                {isValidating ? "Validating..." : "Re-validate"}
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={() => setShowSearch(prev => { if (prev) setSearch(""); return !prev; })}
+                data-testid="button-toggle-search"
+              >
+                <IconSearch className="h-4 w-4" />
+              </Button>
             </div>
           </div>
         </div>
       </div>
+
+      {showSearch && (
+        <div className="border-b" style={{ background: "hsl(var(--muted-foreground) / 0.03)" }}>
+          <div className="container mx-auto px-4 py-2">
+            <div className="relative">
+              <IconSearch className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Search redirects..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="pl-9"
+                autoFocus
+                data-testid="input-search-redirects"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {showValidation && validationResult && (
         <div className="border-b" style={{ background: "hsl(var(--muted-foreground) / 0.05)" }}>
@@ -213,11 +232,11 @@ export default function PrivateRedirects() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="destructive" className="text-xs">{issue.code}</Badge>
-                      {issue.file && <span className="text-xs text-muted-foreground truncate">{issue.file}</span>}
+                      {issue.file && <span className="text-xs text-muted-foreground truncate">{stripContentPath(issue.file)}</span>}
                     </div>
-                    <p className="text-sm mt-1">{issue.message}</p>
+                    <p className="text-sm mt-1">{stripContentPath(issue.message)}</p>
                     {issue.suggestion && (
-                      <p className="text-xs text-muted-foreground mt-1">{issue.suggestion}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{stripContentPath(issue.suggestion)}</p>
                     )}
                   </div>
                 </div>
@@ -228,11 +247,11 @@ export default function PrivateRedirects() {
                   <div className="min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
                       <Badge variant="secondary" className="text-xs">{issue.code}</Badge>
-                      {issue.file && <span className="text-xs text-muted-foreground truncate">{issue.file}</span>}
+                      {issue.file && <span className="text-xs text-muted-foreground truncate">{stripContentPath(issue.file)}</span>}
                     </div>
-                    <p className="text-sm mt-1">{issue.message}</p>
+                    <p className="text-sm mt-1">{stripContentPath(issue.message)}</p>
                     {issue.suggestion && (
-                      <p className="text-xs text-muted-foreground mt-1">{issue.suggestion}</p>
+                      <p className="text-xs text-muted-foreground mt-1">{stripContentPath(issue.suggestion)}</p>
                     )}
                   </div>
                 </div>
