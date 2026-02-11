@@ -60,6 +60,7 @@ export default function PrivateRedirects() {
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [newFrom, setNewFrom] = useState("");
   const [newTo, setNewTo] = useState("");
+  const [originalTo, setOriginalTo] = useState("");
   const [allLanguages, setAllLanguages] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -125,11 +126,13 @@ export default function PrivateRedirects() {
   const handleOpenAddDialog = () => {
     setNewFrom("");
     setNewTo("");
+    setOriginalTo("");
     setAllLanguages(true);
     setShowAddDialog(true);
   };
 
   const handleDestinationChange = (url: string) => {
+    setOriginalTo(url);
     if (allLanguages && !url.startsWith("/landing")) {
       setNewTo(stripLocalePrefix(url));
     } else {
@@ -488,8 +491,8 @@ export default function PrivateRedirects() {
                   checked={allLanguages}
                   onCheckedChange={(checked) => {
                     setAllLanguages(checked);
-                    if (checked && newTo && !newTo.startsWith("/landing")) {
-                      setNewTo(stripLocalePrefix(newTo));
+                    if (originalTo && !originalTo.startsWith("/landing")) {
+                      setNewTo(checked ? stripLocalePrefix(originalTo) : originalTo);
                     }
                   }}
                   data-testid="switch-all-languages"
