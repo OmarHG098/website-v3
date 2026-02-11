@@ -238,7 +238,7 @@ function SlideContent({
   return (
     <div
       className={cn(
-        "grid gap-6",
+        "grid gap-6 h-full",
         hasRightCard ? "grid-cols-1 md:grid-cols-12" : "grid-cols-1",
       )}
     >
@@ -395,7 +395,7 @@ export function PartnershipCarouselSplitCard({
                 ref={(el) => {
                   slideRefs.current[i] = el;
                 }}
-                className="w-full flex-shrink-0"
+                className="w-full flex-shrink-0 h-full"
               >
                 <SlideContent
                   slide={slide}
