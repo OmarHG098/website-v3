@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -62,6 +62,7 @@ export default function PrivateRedirects() {
   const [newTo, setNewTo] = useState("");
   const [allLanguages, setAllLanguages] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   const { toast } = useToast();
 
@@ -420,7 +421,7 @@ export default function PrivateRedirects() {
       </div>
 
       <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
-        <DialogContent className="sm:max-w-md" onPointerDownOutside={(e) => e.preventDefault()} onInteractOutside={(e) => e.preventDefault()}>
+        <DialogContent ref={dialogRef} className="sm:max-w-md" onPointerDownOutside={(e) => e.preventDefault()} onInteractOutside={(e) => e.preventDefault()}>
           <DialogHeader>
             <DialogTitle>Add Redirect</DialogTitle>
             <DialogDescription>
@@ -458,6 +459,7 @@ export default function PrivateRedirects() {
                   onChange={handleDestinationChange}
                   placeholder="Search for a page..."
                   testId="input-redirect-to"
+                  portalContainer={dialogRef.current}
                 />
               </div>
               {newTo && (

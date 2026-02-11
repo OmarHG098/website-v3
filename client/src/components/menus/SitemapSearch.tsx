@@ -31,9 +31,10 @@ interface SitemapSearchProps {
   placeholder?: string;
   testId?: string;
   locale?: string;
+  portalContainer?: HTMLElement | null;
 }
 
-export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId, locale = "en" }: SitemapSearchProps) {
+export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId, locale = "en", portalContainer }: SitemapSearchProps) {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCustomMode, setIsCustomMode] = useState(false);
@@ -102,7 +103,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
           <span className="truncate">{displayValue}</span>
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0 z-[10001]" align="start">
+      <PopoverContent className="w-80 p-0 z-[10001]" align="start" container={portalContainer}>
         <div className="p-2 border-b">
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
