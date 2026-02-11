@@ -283,26 +283,34 @@ export function PartnershipCarouselSplitCard({
   const isPausedRef = useRef(false);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const isMeasuringRef = useRef(false);
 
   const totalSlides = slides.length;
 
   useEffect(() => {
     const measure = () => {
+      if (isMeasuringRef.current) return;
+      isMeasuringRef.current = true;
+
       if (containerRef.current) {
         containerRef.current.style.height = "auto";
       }
-      let tallest = 0;
-      slideRefs.current.forEach((el) => {
-        if (el) {
-          tallest = Math.max(tallest, el.scrollHeight);
+
+      requestAnimationFrame(() => {
+        let tallest = 0;
+        slideRefs.current.forEach((el) => {
+          if (el) {
+            tallest = Math.max(tallest, el.scrollHeight);
+          }
+        });
+        if (tallest > 0) {
+          setMaxHeight(tallest);
+          if (containerRef.current) {
+            containerRef.current.style.height = `${tallest}px`;
+          }
         }
+        isMeasuringRef.current = false;
       });
-      if (tallest > 0) {
-        setMaxHeight(tallest);
-        if (containerRef.current) {
-          containerRef.current.style.height = `${tallest}px`;
-        }
-      }
     };
 
     measure();
