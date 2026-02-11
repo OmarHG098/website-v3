@@ -537,6 +537,26 @@ export function DebugBubble() {
   // Session check state
   const [isCheckingSession, setIsCheckingSession] = useState(false);
   
+  // SEO modal state
+  const [seoModalOpen, setSeoModalOpen] = useState(false);
+  const [seoLoading, setSeoLoading] = useState(false);
+  const [seoData, setSeoData] = useState<{
+    meta: Record<string, unknown>;
+    faqSchema: Record<string, unknown> | null;
+    schemaOrg: Record<string, unknown>[];
+    title: string;
+  } | null>(null);
+  const [seoMeta, setSeoMeta] = useState<{
+    page_title: string;
+    description: string;
+    robots: string;
+    og_image: string;
+    canonical_url: string;
+  }>({ page_title: "", description: "", robots: "", og_image: "", canonical_url: "" });
+  const [seoSaving, setSeoSaving] = useState(false);
+  const [seoFaqExpanded, setSeoFaqExpanded] = useState(true);
+  const [seoSchemaExpanded, setSeoSchemaExpanded] = useState(false);
+  
   // Breathecode host state
   const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
   
@@ -775,6 +795,110 @@ export function DebugBubble() {
   };
 
   // Handle session check (validates without clearing cache first)
+  const fetchSeoPreview = useCallback(async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoLoading(true);
+    setSeoData(null);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "programs",
+        pages: "pages",
+        landings: "landings",
+        locations: "locations",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      const res = await fetch(`/api/seo-preview/${apiContentType}/${contentInfo.slug}?locale=${locale}`);
+      if (!res.ok) throw new Error("Failed to fetch SEO data");
+      const data = await res.json();
+      setSeoData(data);
+      setSeoMeta({
+        page_title: (data.meta?.page_title as string) || "",
+        description: (data.meta?.description as string) || "",
+        robots: (data.meta?.robots as string) || "",
+        og_image: (data.meta?.og_image as string) || "",
+        canonical_url: (data.meta?.canonical_url as string) || "",
+      });
+    } catch (error) {
+      console.error("Error fetching SEO preview:", error);
+      toast({
+        title: "Failed to load SEO data",
+        description: "Could not fetch page SEO information.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoLoading(false);
+    }
+  }, [contentInfo.type, contentInfo.slug, pathname, i18n.language, toast]);
+
+  const handleSeoSave = async () => {
+    if (!contentInfo.type || !contentInfo.slug) return;
+    setSeoSaving(true);
+    try {
+      const pathSegments = pathname.split('/').filter(Boolean);
+      const urlLocale = pathSegments[0];
+      const locale = normalizeLocale(urlLocale || i18n.language);
+      const contentTypeMap: Record<string, string> = {
+        programs: "program",
+        pages: "page",
+        landings: "landing",
+        locations: "location",
+      };
+      const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
+      
+      const existingMeta = { ...(seoData?.meta || {}) };
+      const editableKeys = ["page_title", "description", "robots", "og_image", "canonical_url"] as const;
+      for (const key of editableKeys) {
+        if (seoMeta[key]) {
+          existingMeta[key] = seoMeta[key];
+        } else {
+          delete existingMeta[key];
+        }
+      }
+      
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      const token = getDebugToken();
+      if (token) headers["X-Debug-Token"] = token;
+      const author = getDebugUserName();
+
+      const res = await fetch("/api/content/edit", {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          contentType: apiContentType,
+          slug: contentInfo.slug,
+          locale,
+          author: author || undefined,
+          operations: [
+            { action: "update_field", path: "meta", value: existingMeta },
+          ],
+        }),
+      });
+      
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "Failed to save");
+      }
+      
+      toast({
+        title: "SEO updated",
+        description: "Meta tags have been saved successfully.",
+      });
+      setSeoModalOpen(false);
+    } catch (error) {
+      console.error("Error saving SEO:", error);
+      toast({
+        title: "Failed to save SEO",
+        description: error instanceof Error ? error.message : "Could not save meta changes.",
+        variant: "destructive",
+      });
+    } finally {
+      setSeoSaving(false);
+    }
+  };
+
   const handleCheckSession = async () => {
     setIsCheckingSession(true);
     try {
@@ -1563,6 +1687,22 @@ export function DebugBubble() {
                 <div className="flex items-center justify-between">
                   <h3 className="font-semibold text-sm">Dev Tools</h3>
                   <div className="flex items-center gap-2">
+                    {/* SEO button - visible only on content pages */}
+                    {contentInfo.type && contentInfo.slug && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          setSeoModalOpen(true);
+                          fetchSeoPreview();
+                        }}
+                        className="px-2 py-1 rounded-full text-xs font-medium bg-muted text-muted-foreground transition-colors hover-elevate"
+                        data-testid="button-edit-seo"
+                        title="Edit page SEO & meta tags"
+                      >
+                        SEO
+                      </button>
+                    )}
                     {/* Read/Edit toggle */}
                     {editMode && (
                       <div 
@@ -3649,6 +3789,209 @@ export function DebugBubble() {
                   <IconPlus className="h-4 w-4 mr-2" />
                   Create {createContentType.charAt(0).toUpperCase() + createContentType.slice(1)}
                 </>
+              )}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* SEO Editor Modal */}
+      <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>SEO & Meta Tags</DialogTitle>
+            <DialogDescription>
+              {contentInfo.slug ? `${contentInfo.label}: ${contentInfo.slug}` : "Page SEO settings"}
+            </DialogDescription>
+          </DialogHeader>
+
+          {seoLoading ? (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconRefresh className="h-6 w-6 animate-spin text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Loading SEO data...</p>
+            </div>
+          ) : seoData ? (
+            <div className="space-y-6 py-2">
+              {/* FAQ Schema - Read Only */}
+              {seoData.faqSchema && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoFaqExpanded(!seoFaqExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-faq-schema"
+                  >
+                    {seoFaqExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">FAQ Schema</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      Auto-generated
+                    </span>
+                  </button>
+                  {seoFaqExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        This FAQ structured data is generated automatically from FAQ sections on this page. Google uses it to show rich results in search.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono overflow-x-auto max-h-[200px] overflow-y-auto" data-testid="text-faq-schema-preview">
+                        {JSON.stringify(seoData.faqSchema, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Schema.org Includes - Read Only */}
+              {seoData.schemaOrg && seoData.schemaOrg.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoSchemaExpanded(!seoSchemaExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-schema-org"
+                  >
+                    {seoSchemaExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <h4 className="text-sm font-semibold">Schema.org</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      {seoData.schemaOrg.length} schema{seoData.schemaOrg.length !== 1 ? "s" : ""}
+                    </span>
+                  </button>
+                  {seoSchemaExpanded && (
+                    <div className="space-y-2">
+                      <p className="text-xs text-muted-foreground">
+                        These schemas are included from schema-org.yml and injected via SSR.
+                      </p>
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono overflow-x-auto max-h-[200px] overflow-y-auto" data-testid="text-schema-org-preview">
+                        {JSON.stringify(seoData.schemaOrg, null, 2)}
+                      </pre>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Editable Meta Fields */}
+              <div className="space-y-3">
+                <h4 className="text-sm font-semibold">Meta Tags</h4>
+                <p className="text-xs text-muted-foreground">
+                  Edit these fields to improve how the page appears in search results and social media.
+                </p>
+                
+                <div className="space-y-3">
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-page-title">
+                      Page Title
+                    </label>
+                    <input
+                      id="seo-page-title"
+                      type="text"
+                      value={seoMeta.page_title}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, page_title: e.target.value }))}
+                      placeholder="e.g. Full Stack Developer Program | 4Geeks"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-page-title"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.page_title.length}/60 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-description">
+                      Description
+                    </label>
+                    <textarea
+                      id="seo-description"
+                      value={seoMeta.description}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, description: e.target.value }))}
+                      placeholder="e.g. Learn full stack development with unlimited mentorship..."
+                      rows={3}
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring resize-none"
+                      data-testid="input-seo-description"
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      {seoMeta.description.length}/160 characters (recommended)
+                    </p>
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-robots">
+                      Robots
+                    </label>
+                    <input
+                      id="seo-robots"
+                      type="text"
+                      value={seoMeta.robots}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, robots: e.target.value }))}
+                      placeholder="e.g. index, follow"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-robots"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-og-image">
+                      OG Image
+                    </label>
+                    <input
+                      id="seo-og-image"
+                      type="text"
+                      value={seoMeta.og_image}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, og_image: e.target.value }))}
+                      placeholder="e.g. /images/programs/full-stack-og.jpg"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-og-image"
+                    />
+                  </div>
+
+                  <div className="space-y-1.5">
+                    <label className="text-xs font-medium text-foreground" htmlFor="seo-canonical-url">
+                      Canonical URL
+                    </label>
+                    <input
+                      id="seo-canonical-url"
+                      type="text"
+                      value={seoMeta.canonical_url}
+                      onChange={(e) => setSeoMeta(prev => ({ ...prev, canonical_url: e.target.value }))}
+                      placeholder="e.g. https://4geeks.com/en/career-programs/full-stack"
+                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                      data-testid="input-seo-canonical-url"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center py-12 gap-3">
+              <IconAlertTriangle className="h-6 w-6 text-muted-foreground" />
+              <p className="text-sm text-muted-foreground">Could not load SEO data for this page.</p>
+            </div>
+          )}
+
+          <DialogFooter>
+            <Button
+              variant="outline"
+              onClick={() => setSeoModalOpen(false)}
+              data-testid="button-cancel-seo"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={handleSeoSave}
+              disabled={seoSaving || seoLoading || !seoData}
+              data-testid="button-save-seo"
+            >
+              {seoSaving ? (
+                <>
+                  <IconRefresh className="h-4 w-4 mr-2 animate-spin" />
+                  Saving...
+                </>
+              ) : (
+                "Save Changes"
               )}
             </Button>
           </DialogFooter>

@@ -64,7 +64,7 @@ import { getFolderFromSlug } from "@shared/slugMappings";
 import { normalizeLocale } from "@shared/locale";
 import { getValidationService } from "../scripts/validation/service";
 import { z } from "zod";
-import { generateSsrSchemaHtml, clearSsrSchemaCache } from "./ssr-schema";
+import { generateSsrSchemaHtml, clearSsrSchemaCache, loadRawYaml, resolveFaqItems, buildFaqPageSchema, type FaqSection } from "./ssr-schema";
 
 const BREATHECODE_HOST =
   process.env.VITE_BREATHECODE_HOST || "https://breathecode.herokuapp.com";
@@ -1372,6 +1372,58 @@ export async function registerRoutes(app: Express): Promise<Server> {
     clearSchemaCache();
     clearSsrSchemaCache();
     res.json({ success: true, message: "Schema cache cleared" });
+  });
+
+  app.get("/api/seo-preview/:contentType/:slug", (req, res) => {
+    try {
+      const { contentType, slug } = req.params;
+      const locale = normalizeLocale((req.query.locale as string) || "en");
+
+      const validTypes = ["programs", "pages", "landings", "locations"];
+      if (!validTypes.includes(contentType)) {
+        res.status(400).json({ error: `Invalid content type. Must be one of: ${validTypes.join(", ")}` });
+        return;
+      }
+
+      const pageData = loadRawYaml(contentType, slug, locale);
+      if (!pageData) {
+        res.status(404).json({ error: "Content not found" });
+        return;
+      }
+
+      const meta = (pageData.meta as Record<string, unknown>) || {};
+      const schema = pageData.schema as { include?: string[]; overrides?: Record<string, Record<string, unknown>> } | undefined;
+
+      let faqSchema: Record<string, unknown> | null = null;
+      const sections = pageData.sections as Array<Record<string, unknown>> | undefined;
+      if (sections) {
+        const allFaqItems: Array<{ question: string; answer: string }> = [];
+        for (const section of sections) {
+          if (section.type === "faq") {
+            const items = resolveFaqItems(section as unknown as FaqSection, locale);
+            allFaqItems.push(...items);
+          }
+        }
+        if (allFaqItems.length > 0) {
+          faqSchema = buildFaqPageSchema(allFaqItems);
+        }
+      }
+
+      let schemaOrg: Record<string, unknown>[] = [];
+      if (schema?.include && schema.include.length > 0) {
+        schemaOrg = getMergedSchemas(schema, locale);
+      }
+
+      res.json({
+        meta,
+        faqSchema,
+        schemaOrg,
+        title: pageData.title || "",
+      });
+    } catch (error) {
+      console.error("[SEO Preview] Error:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
   });
 
   // Experiments API endpoints
