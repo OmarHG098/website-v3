@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 interface BankTestimonial {
   student_name: string;
   student_thumb?: string;
+  student_video?: string;
   linkedin_url?: string;
   excerpt?: string;
   full_text?: string;
@@ -70,6 +71,10 @@ function isVideoUrl(url: string): boolean {
 }
 
 function mapBankToGridItem(t: BankTestimonial): GridItem {
+  const media = t.student_video
+    ? { url: t.student_video, type: "video" as const, ratio: "16:9" }
+    : t.media;
+
   return {
     name: t.student_name,
     role: t.role || "",
@@ -78,8 +83,34 @@ function mapBankToGridItem(t: BankTestimonial): GridItem {
     rating: t.rating,
     avatar: t.student_thumb,
     linkedin_url: t.linkedin_url,
-    media: t.media,
+    media,
   };
+}
+
+function sortTestimonials(testimonials: BankTestimonial[], relatedFeatures?: string[]): BankTestimonial[] {
+  return [...testimonials].sort((a, b) => {
+    const aPriority5 = (a.priority ?? 0) >= 5 ? 1 : 0;
+    const bPriority5 = (b.priority ?? 0) >= 5 ? 1 : 0;
+    if (bPriority5 !== aPriority5) return bPriority5 - aPriority5;
+
+    const aHasVideo = a.student_video ? 1 : 0;
+    const bHasVideo = b.student_video ? 1 : 0;
+    if (bHasVideo !== aHasVideo) return bHasVideo - aHasVideo;
+
+    const aHasThumb = a.student_thumb ? 1 : 0;
+    const bHasThumb = b.student_thumb ? 1 : 0;
+    if (bHasThumb !== aHasThumb) return bHasThumb - aHasThumb;
+
+    if (relatedFeatures && relatedFeatures.length > 0) {
+      const aFeatures = a.related_features || [];
+      const bFeatures = b.related_features || [];
+      const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
+      const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
+      if (bMatchCount !== aMatchCount) return bMatchCount - aMatchCount;
+    }
+
+    return (b.priority ?? 0) - (a.priority ?? 0);
+  });
 }
 
 function filterByRelatedFeatures(
@@ -87,24 +118,13 @@ function filterByRelatedFeatures(
   relatedFeatures: string[],
   limit: number
 ): GridItem[] {
-  let filtered = testimonials.filter((t) => {
+  const filtered = testimonials.filter((t) => {
     const features = t.related_features || [];
     return relatedFeatures.some((f) => features.includes(f));
   });
 
-  filtered.sort((a, b) => {
-    const aFeatures = a.related_features || [];
-    const bFeatures = b.related_features || [];
-    const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
-    const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
-
-    if (bMatchCount !== aMatchCount) {
-      return bMatchCount - aMatchCount;
-    }
-    return (b.priority ?? 0) - (a.priority ?? 0);
-  });
-
-  return filtered.slice(0, limit).map(mapBankToGridItem);
+  const sorted = sortTestimonials(filtered, relatedFeatures);
+  return sorted.slice(0, limit).map(mapBankToGridItem);
 }
 
 export function TestimonialsGrid({ data }: TestimonialsGridProps) {
@@ -124,7 +144,8 @@ export function TestimonialsGrid({ data }: TestimonialsGridProps) {
     if (relatedFeatures.length > 0) {
       return filterByRelatedFeatures(bankData.testimonials, relatedFeatures, limit);
     }
-    return bankData.testimonials.slice(0, limit).map(mapBankToGridItem);
+    const sorted = sortTestimonials(bankData.testimonials);
+    return sorted.slice(0, limit).map(mapBankToGridItem);
   }, [relatedFeatures, bankData, limit]);
 
   const title = data.title;

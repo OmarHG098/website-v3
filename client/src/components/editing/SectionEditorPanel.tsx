@@ -1097,6 +1097,27 @@ export function SectionEditorPanel({
                 />
               </>
             )}
+            {/* Testimonials Grid related features picker */}
+            {sectionType === "testimonials_grid" && (
+              <>
+                <div 
+                  className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg flex items-start gap-2"
+                  data-testid="alert-testimonials-edit-info"
+                >
+                  <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-xs text-amber-800 dark:text-amber-200">
+                    {locale === "es" 
+                      ? "Los testimonios se cargan del banco centralizado y se filtran por las características seleccionadas."
+                      : "Testimonials are loaded from the centralized bank and filtered by the selected features."}
+                  </p>
+                </div>
+                <RelatedFeaturesPicker
+                  value={(parsedSection?.related_features as string[]) || []}
+                  onChange={(value) => updateArrayProperty("related_features", value)}
+                  locale={locale}
+                />
+              </>
+            )}
             
             <ColorPicker
               value={currentBackground}
