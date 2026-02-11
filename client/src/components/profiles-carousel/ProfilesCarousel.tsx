@@ -19,7 +19,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
     >
       <div
         className={cn(
-          "mb-4 overflow-hidden flex items-center justify-center",
+          "mb-4 overflow-hidden flex items-center justify-center h-[100px]",
           isRound
             ? "w-28 h-28 rounded-full"
             : "w-full aspect-[3/4] rounded-lg bg-muted"
@@ -30,7 +30,7 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
           <UniversalImage
             id={profile.image_id}
             alt={profile.name}
-            className="w-full h-full object-cover"
+            className="w-full h-full"
             data-testid="img-profile"
           />
         ) : (

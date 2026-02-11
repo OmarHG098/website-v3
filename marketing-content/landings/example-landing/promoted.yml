@@ -538,6 +538,37 @@ sections:
           text: Explore Uruguay
           url: /en/uruguay
           variant: outline
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
+    image_round: false
+    profiles:
+      - name: Alejandro Sánchez
+        role: Co-Founder & Technology Director
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
+      - name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
+      - name: Alissa Landra
+        role: Campus & Growth Manager USA
+        image_id: student_asian
+        description: Passionate about growing tech education across the US.
+        linkedin_url: https://linkedin.com/in/example
+      - name: Victor Gómez
+        role: Regional Manager Europe
+        image_id: student_asian
+      - name: Sofia Torres
+        role: Head of Education
+        image_id: student_asian
+        description: Leading curriculum development for AI-driven programs.
+        linkedin_url: https://linkedin.com/in/example
+      - name: Laura Méndez
+        role: Career Coach
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
