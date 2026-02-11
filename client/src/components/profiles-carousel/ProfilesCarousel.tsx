@@ -31,41 +31,43 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
   if (isRound) {
     return (
       <div
-        className="flex items-center gap-3 flex-1 min-w-0 border p-4 rounded-lg"
+        className="flex flex-col flex-1 min-w-0 border p-4 rounded-lg"
         data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
       >
-        <div
-          className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0"
-          data-testid="profile-image-container"
-        >
-          {imageElement}
+        <div className="flex items-center gap-3">
+          <div
+            className="w-14 h-14 rounded-full overflow-hidden flex-shrink-0"
+            data-testid="profile-image-container"
+          >
+            {imageElement}
+          </div>
+          <div className="min-w-0">
+            <h3 className="text-base font-semibold text-foreground leading-tight" data-testid="text-profile-name">
+              {profile.name}
+            </h3>
+            {profile.role && (
+              <p className="text-sm text-muted-foreground mt-0.5 leading-tight" data-testid="text-profile-role">
+                {profile.role}
+              </p>
+            )}
+          </div>
         </div>
-        <div className="min-w-0">
-          <h3 className="text-base font-semibold text-foreground leading-tight" data-testid="text-profile-name">
-            {profile.name}
-          </h3>
-          {profile.role && (
-            <p className="text-sm text-muted-foreground mt-0.5 leading-tight" data-testid="text-profile-role">
-              {profile.role}
-            </p>
-          )}
-          {profile.description && (
-            <p className="text-xs text-muted-foreground mt-1 line-clamp-2" data-testid="text-profile-description">
-              {profile.description}
-            </p>
-          )}
-          {profile.linkedin_url && (
-            <a
-              href={profile.linkedin_url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-1 inline-block text-muted-foreground transition-colors hover:text-foreground"
-              data-testid="link-profile-linkedin"
-            >
-              <IconBrandLinkedin className="w-4 h-4" />
-            </a>
-          )}
-        </div>
+        {profile.description && (
+          <p className="text-sm text-muted-foreground mt-3 line-clamp-3" data-testid="text-profile-description">
+            {profile.description}
+          </p>
+        )}
+        {profile.linkedin_url && (
+          <a
+            href={profile.linkedin_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 text-muted-foreground transition-colors hover:text-foreground"
+            data-testid="link-profile-linkedin"
+          >
+            <IconBrandLinkedin className="w-5 h-5" />
+          </a>
+        )}
       </div>
     );
   }
