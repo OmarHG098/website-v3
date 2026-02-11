@@ -17,6 +17,43 @@ interface PartnershipCarouselProps {
   data: PartnershipCarouselSection;
 }
 
+function TruncatedDescription({ text }: { text: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [needsTruncation, setNeedsTruncation] = useState(false);
+  const textRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    const el = textRef.current;
+    if (!el) return;
+    const lineHeight = parseFloat(getComputedStyle(el).lineHeight) || 20;
+    setNeedsTruncation(el.scrollHeight > lineHeight * 5 + 2);
+  }, [text]);
+
+  return (
+    <div>
+      <p
+        ref={textRef}
+        className={cn(
+          "text-muted-foreground leading-relaxed text-sm",
+          !expanded && "line-clamp-5 lg:line-clamp-none",
+        )}
+        data-testid="text-partnership-description"
+      >
+        {text}
+      </p>
+      {needsTruncation && !expanded && (
+        <button
+          onClick={() => setExpanded(true)}
+          className="text-primary text-sm font-medium mt-1 lg:hidden"
+          data-testid="button-see-more"
+        >
+          See more
+        </button>
+      )}
+    </div>
+  );
+}
+
 function SlideLeftCard({
   slide,
   verticalCards = false,
@@ -34,7 +71,7 @@ function SlideLeftCard({
       <div
         className={cn(
           "relative overflow-hidden rounded-t-[0.8rem]",
-          "min-h-[200px] md:min-h-[300px] aspect-[16/9] md:aspect-[16/6]",
+          "min-h-[200px] md:min-h-[200px] aspect-[16/9] md:aspect-[16/5] lg:md-aspect-[16/6]",
           verticalCards && "lg:min-h-[415px] lg:w-[53%] lg:rounded-t-none lg:rounded-l-[0.8rem] lg:aspect-auto",
         )}
       >
@@ -59,12 +96,7 @@ function SlideLeftCard({
         </h3>
 
         {slide.description && (
-          <p
-            className="text-muted-foreground leading-relaxed text-sm"
-            data-testid="text-partnership-description"
-          >
-            {slide.description}
-          </p>
+          <TruncatedDescription text={slide.description} />
         )}
         <div className="flex flex-col justify-end h-full">
           {slide.stats && slide.stats.length > 0 && (
