@@ -549,10 +549,8 @@ export function DebugBubble() {
   const [seoMeta, setSeoMeta] = useState<{
     page_title: string;
     description: string;
-    robots: string;
-    og_image: string;
     canonical_url: string;
-  }>({ page_title: "", description: "", robots: "", og_image: "", canonical_url: "" });
+  }>({ page_title: "", description: "", canonical_url: "" });
   const [seoSaving, setSeoSaving] = useState(false);
   const [seoFaqExpanded, setSeoFaqExpanded] = useState(true);
   const [seoSchemaExpanded, setSeoSchemaExpanded] = useState(false);
@@ -817,8 +815,6 @@ export function DebugBubble() {
       setSeoMeta({
         page_title: (data.meta?.page_title as string) || "",
         description: (data.meta?.description as string) || "",
-        robots: (data.meta?.robots as string) || "",
-        og_image: (data.meta?.og_image as string) || "",
         canonical_url: (data.meta?.canonical_url as string) || "",
       });
     } catch (error) {
@@ -849,7 +845,7 @@ export function DebugBubble() {
       const apiContentType = contentTypeMap[contentInfo.type] || contentInfo.type;
       
       const existingMeta = { ...(seoData?.meta || {}) };
-      const editableKeys = ["page_title", "description", "robots", "og_image", "canonical_url"] as const;
+      const editableKeys = ["page_title", "description", "canonical_url"] as const;
       for (const key of editableKeys) {
         if (seoMeta[key]) {
           existingMeta[key] = seoMeta[key];
@@ -3797,7 +3793,7 @@ export function DebugBubble() {
 
       {/* SEO Editor Modal */}
       <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
-        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden">
           <DialogHeader>
             <DialogTitle>SEO & Meta Tags</DialogTitle>
             <DialogDescription>
@@ -3835,7 +3831,7 @@ export function DebugBubble() {
                       <p className="text-xs text-muted-foreground">
                         This FAQ structured data is generated automatically from FAQ sections on this page. Google uses it to show rich results in search.
                       </p>
-                      <pre className="bg-muted p-3 rounded-md text-xs font-mono overflow-x-auto max-h-[200px] overflow-y-auto" data-testid="text-faq-schema-preview">
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-faq-schema-preview">
                         {JSON.stringify(seoData.faqSchema, null, 2)}
                       </pre>
                     </div>
@@ -3866,7 +3862,7 @@ export function DebugBubble() {
                       <p className="text-xs text-muted-foreground">
                         These schemas are included from schema-org.yml and injected via SSR.
                       </p>
-                      <pre className="bg-muted p-3 rounded-md text-xs font-mono overflow-x-auto max-h-[200px] overflow-y-auto" data-testid="text-schema-org-preview">
+                      <pre className="bg-muted p-3 rounded-md text-xs font-mono max-h-[200px] overflow-y-auto whitespace-pre-wrap break-all" data-testid="text-schema-org-preview">
                         {JSON.stringify(seoData.schemaOrg, null, 2)}
                       </pre>
                     </div>
@@ -3916,36 +3912,6 @@ export function DebugBubble() {
                     <p className="text-xs text-muted-foreground">
                       {seoMeta.description.length}/160 characters (recommended)
                     </p>
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-foreground" htmlFor="seo-robots">
-                      Robots
-                    </label>
-                    <input
-                      id="seo-robots"
-                      type="text"
-                      value={seoMeta.robots}
-                      onChange={(e) => setSeoMeta(prev => ({ ...prev, robots: e.target.value }))}
-                      placeholder="e.g. index, follow"
-                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                      data-testid="input-seo-robots"
-                    />
-                  </div>
-
-                  <div className="space-y-1.5">
-                    <label className="text-xs font-medium text-foreground" htmlFor="seo-og-image">
-                      OG Image
-                    </label>
-                    <input
-                      id="seo-og-image"
-                      type="text"
-                      value={seoMeta.og_image}
-                      onChange={(e) => setSeoMeta(prev => ({ ...prev, og_image: e.target.value }))}
-                      placeholder="e.g. /images/programs/full-stack-og.jpg"
-                      className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
-                      data-testid="input-seo-og-image"
-                    />
                   </div>
 
                   <div className="space-y-1.5">
