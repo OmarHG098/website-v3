@@ -536,9 +536,11 @@ sections:
             text: A showcase-ready capstone project
           - icon: IconBrandGithub
             text: GitHub optimization and professional code review
-        right_image_id: student_asian
+        right_image_id: geekforce_valentina_ancieta
         right_image_object_fit: cover
         right_image_object_position: center
+        alt: Valentina Ancieta
+        id: geekforce-valentina-ancieta
       - tab_label: Find your edge
   - type: profiles_carousel
     version: v1.0

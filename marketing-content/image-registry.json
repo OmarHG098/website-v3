@@ -3920,6 +3920,13 @@
       "focal_point": "center",
       "tags": ["photo", "staff", "team"],
       "usage_count": 0
+    },
+    "geekforce_valentina_ancieta": {
+      "src": "/attached_assets/geekforce_valentina_ancieta.webp",
+      "alt": "Valentina Ancieta",
+      "focal_point": "center",
+      "tags": ["photo", "staff", "avatar"],
+      "usage_count": 0
     }
   }
 }

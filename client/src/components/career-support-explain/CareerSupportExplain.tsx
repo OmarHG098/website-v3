@@ -243,7 +243,7 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
 function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
   return (
     <div className="flex gap-8 h-full" data-testid="grid-text-and-image">
-      <div className="flex flex-col justify-center flex-1" data-testid="col-text-content">
+      <div className="flex flex-col justify-start flex-1" data-testid="col-text-content">
         {tab.title && (
           <h3
             className="text-3xl font-bold text-foreground mb-4"
@@ -284,14 +284,14 @@ function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
       </div>
 
       <div
-        className="flex-1 rounded-l-2xl border-l border-t border-b border-border flex items-center justify-center p-8"
+        className="flex-[1.1] rounded-l-2xl border-l border-t border-b border-border flex items-center justify-center py-16 ps-16"
         style={{ background: tab.right_panel_background ?? "hsl(var(--primary) / 0.15)" }}
         data-testid="panel-right-image"
       >
         {tab.right_image_id && (
           <UniversalImage
             id={tab.right_image_id}
-            className="w-full h-auto rounded-lg shadow-lg"
+            className="w-full h-full rounded-lg shadow-lg"
             style={{
               objectFit:
                 (tab.right_image_object_fit as React.CSSProperties["objectFit"]) ??
