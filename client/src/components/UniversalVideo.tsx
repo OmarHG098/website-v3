@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { IconPlayerPlayFilled } from "@tabler/icons-react";
+import { IconPlayerPlayFilled, IconX } from "@tabler/icons-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import SolidCard from './SolidCard';
@@ -68,6 +68,11 @@ const parseRatioValue = (ratio?: string): number => {
   return 16 / 9;
 };
 
+const usesMobileLayout = (): boolean => {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(max-width: 768px)').matches;
+};
+
 export function UniversalVideo({
   url,
   ratio = "16:9",
@@ -82,6 +87,7 @@ export function UniversalVideo({
   bordered = false,
 }: UniversalVideoProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPlayingInline, setIsPlayingInline] = useState(false);
   const [videoId] = useState(() => `video-${Math.random().toString(36).substr(2, 9)}`);
   const aspectRatio = parseRatio(ratio);
   const mobileAspectRatio = mobileRatio ? parseRatio(mobileRatio) : null;
@@ -99,10 +105,81 @@ export function UniversalVideo({
   const thumbnailUrl = preview_image_url || (youtubeId ? getYouTubeThumbnail(youtubeId) : null);
 
   const handleClick = () => {
-    setIsModalOpen(true);
+    if (usesMobileLayout()) {
+      setIsPlayingInline(true);
+    } else {
+      setIsModalOpen(true);
+    }
+  };
+
+  const handleStopInline = () => {
+    setIsPlayingInline(false);
+  };
+
+  const buildYouTubeEmbedUrl = (ytId: string, forInline: boolean): string => {
+    const domain = 'https://www.youtube-nocookie.com';
+    const params = forInline
+      ? 'autoplay=1&playsinline=1&rel=0'
+      : 'autoplay=1&rel=0';
+    return `${domain}/embed/${ytId}?${params}`;
+  };
+
+  const renderInlinePlayer = () => {
+    return (
+      <>
+        {responsiveStyles && <style>{responsiveStyles}</style>}
+        <div
+          id={mobileAspectRatio ? videoId : undefined}
+          className={`relative overflow-hidden rounded-lg bg-black ${borderClasses} ${className}`}
+          style={mobileAspectRatio ? undefined : aspectRatio}
+          data-testid="video-inline-playing"
+        >
+          {isYouTube && youtubeId ? (
+            <iframe
+              src={buildYouTubeEmbedUrl(youtubeId, true)}
+              title="Video"
+              className="absolute inset-0 w-full h-full rounded-lg"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+              data-testid="video-inline-player"
+            />
+          ) : isLocalVideo(url) ? (
+            <video
+              src={url}
+              autoPlay
+              loop={loop}
+              muted={muted}
+              playsInline
+              controls
+              className="absolute inset-0 w-full h-full object-contain rounded-lg bg-black"
+              data-testid="video-inline-player"
+            />
+          ) : (
+            <iframe
+              src={url}
+              title="Video"
+              className="absolute inset-0 w-full h-full rounded-lg"
+              allowFullScreen
+              data-testid="video-inline-player"
+            />
+          )}
+          <button
+            onClick={handleStopInline}
+            className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/60 flex items-center justify-center hover:bg-black/80 transition-colors"
+            data-testid="button-close-inline-video"
+          >
+            <IconX className="w-4 h-4 text-white" />
+          </button>
+        </div>
+      </>
+    );
   };
 
   const renderPreview = () => {
+    if (isPlayingInline) {
+      return renderInlinePlayer();
+    }
+
     if (thumbnailUrl) {
       return (
         <>
@@ -158,11 +235,11 @@ export function UniversalVideo({
     );
   };
 
-  const renderVideoPlayer = () => {
+  const renderModalPlayer = () => {
     if (isYouTube && youtubeId) {
       return (
         <iframe
-          src={`https://www.youtube.com/embed/${youtubeId}?autoplay=1`}
+          src={buildYouTubeEmbedUrl(youtubeId, false)}
           title="Video"
           className="w-full h-full rounded-lg"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -198,7 +275,7 @@ export function UniversalVideo({
     );
   };
 
-  const renderInlineVideo = () => {
+  const renderAutoplayInlineVideo = () => {
     return (
       <>
         {responsiveStyles && <style>{responsiveStyles}</style>}
@@ -223,7 +300,7 @@ export function UniversalVideo({
 
   const shouldPlayInline = autoplay && isLocalVideo(url);
 
-  const previewContent = shouldPlayInline ? renderInlineVideo() : renderPreview();
+  const previewContent = shouldPlayInline ? renderAutoplayInlineVideo() : renderPreview();
 
   const wrappedPreview = (withShadowBorder || useSolidCard) ? (
     <SolidCard className="!p-0 !min-h-0 overflow-hidden">
@@ -231,7 +308,7 @@ export function UniversalVideo({
     </SolidCard>
   ) : previewContent;
 
-  if (shouldPlayInline) {
+  if (shouldPlayInline || isPlayingInline) {
     return wrappedPreview;
   }
 
@@ -254,7 +331,7 @@ export function UniversalVideo({
             <DialogTitle>Video Player</DialogTitle>
           </VisuallyHidden>
           <div className="w-full h-full">
-            {isModalOpen && renderVideoPlayer()}
+            {isModalOpen && renderModalPlayer()}
           </div>
         </DialogContent>
       </Dialog>

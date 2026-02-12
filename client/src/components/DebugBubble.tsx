@@ -656,6 +656,10 @@ export function DebugBubble() {
   const [availableSchemaKeys, setAvailableSchemaKeys] = useState<string[]>([]);
   const [seoSchemaIncludeExpanded, setSeoSchemaIncludeExpanded] = useState(false);
   const [seoSchemaOverridesExpanded, setSeoSchemaOverridesExpanded] = useState(false);
+  const [seoLocations, setSeoLocations] = useState<string[]>([]);
+  const [seoAvailableLocations, setSeoAvailableLocations] = useState<Array<{ slug: string; name: string; city: string; country: string }>>([]);
+  const [seoLocationsExpanded, setSeoLocationsExpanded] = useState(true);
+  const [seoLocationSearch, setSeoLocationSearch] = useState("");
   
   // Breathecode host state
   const [breathecodeHost, setBreathecodeHost] = useState<{ host: string; isDefault: boolean } | null>(null);
@@ -934,6 +938,9 @@ export function DebugBubble() {
       }
       setSeoSchemaOverrides(overridesObj);
       setSeoSchemaOverridesErrors({});
+      setSeoLocations((data.locations as string[]) || []);
+      setSeoAvailableLocations((data.availableLocations as Array<{ slug: string; name: string; city: string; country: string }>) || []);
+      setSeoLocationSearch("");
     } catch (error) {
       console.error("Error fetching SEO preview:", error);
       toast({
@@ -1026,6 +1033,23 @@ export function DebugBubble() {
       if (!res.ok) {
         const errData = await res.json().catch(() => ({}));
         throw new Error(errData.error || "Failed to save");
+      }
+
+      if (contentInfo.type === "landings" && seoAvailableLocations.length > 0) {
+        const locRes = await fetch("/api/content/update-locations", {
+          method: "POST",
+          headers,
+          body: JSON.stringify({
+            contentType: "landings",
+            slug: contentInfo.slug,
+            locations: seoLocations,
+            author: author || undefined,
+          }),
+        });
+        if (!locRes.ok) {
+          const locErr = await locRes.json().catch(() => ({}));
+          throw new Error(locErr.error || "Failed to save locations");
+        }
       }
       
       toast({
@@ -1846,7 +1870,7 @@ export function DebugBubble() {
                         data-testid="button-edit-seo"
                         title="Edit page SEO & meta tags"
                       >
-                        SEO
+                        META
                       </button>
                     )}
                     {/* Read/Edit toggle */}
@@ -4204,6 +4228,116 @@ export function DebugBubble() {
                   </div>
                 </div>
               </div>
+
+              {contentInfo.type === "landings" && seoAvailableLocations.length > 0 && (
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSeoLocationsExpanded(!seoLocationsExpanded)}
+                    className="flex items-center gap-2 w-full text-left"
+                    data-testid="button-toggle-locations"
+                  >
+                    {seoLocationsExpanded ? (
+                      <IconChevronDown className="h-4 w-4 text-muted-foreground" />
+                    ) : (
+                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
+                    )}
+                    <IconMapPin className="h-4 w-4 text-muted-foreground" />
+                    <h4 className="text-sm font-semibold">Locations</h4>
+                    <span className="text-xs px-1.5 py-0.5 rounded bg-muted text-muted-foreground font-medium">
+                      {seoLocations.length === 0 ? "All (session-based)" : `${seoLocations.length} selected`}
+                    </span>
+                  </button>
+                  {seoLocationsExpanded && (
+                    <div className="space-y-3">
+                      <p className="text-xs text-muted-foreground">
+                        Choose which campus locations appear on this landing page. If none are selected, the visitor's nearest location is used automatically.
+                      </p>
+
+                      {seoLocations.length > 0 && (
+                        <div className="flex flex-wrap gap-1.5">
+                          {seoLocations.map((locSlug) => {
+                            const locInfo = seoAvailableLocations.find(l => l.slug === locSlug);
+                            return (
+                              <span
+                                key={locSlug}
+                                className="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-muted text-sm"
+                                data-testid={`chip-location-${locSlug}`}
+                              >
+                                <span className="truncate max-w-[180px]">
+                                  {locInfo ? `${locInfo.city}, ${locInfo.country}` : locSlug}
+                                </span>
+                                <button
+                                  onClick={() => setSeoLocations(prev => prev.filter(s => s !== locSlug))}
+                                  className="ml-0.5 rounded-sm hover-elevate"
+                                  data-testid={`button-remove-location-${locSlug}`}
+                                >
+                                  <IconX className="h-3.5 w-3.5 text-muted-foreground" />
+                                </button>
+                              </span>
+                            );
+                          })}
+                          <button
+                            onClick={() => setSeoLocations([])}
+                            className="text-xs text-muted-foreground hover:text-foreground underline"
+                            data-testid="button-clear-all-locations"
+                          >
+                            Clear all
+                          </button>
+                        </div>
+                      )}
+
+                      <div className="space-y-1.5">
+                        <input
+                          type="text"
+                          value={seoLocationSearch}
+                          onChange={(e) => setSeoLocationSearch(e.target.value)}
+                          placeholder="Search locations..."
+                          className="w-full px-3 py-2 text-sm rounded-md border bg-background focus:outline-none focus:ring-1 focus:ring-ring"
+                          data-testid="input-location-search"
+                        />
+                        <div className="max-h-[160px] overflow-y-auto rounded-md border">
+                          {seoAvailableLocations
+                            .filter(loc => {
+                              if (seoLocations.includes(loc.slug)) return false;
+                              if (!seoLocationSearch) return true;
+                              const q = seoLocationSearch.toLowerCase();
+                              return loc.name.toLowerCase().includes(q)
+                                || loc.city.toLowerCase().includes(q)
+                                || loc.country.toLowerCase().includes(q)
+                                || loc.slug.toLowerCase().includes(q);
+                            })
+                            .map(loc => (
+                              <button
+                                key={loc.slug}
+                                onClick={() => setSeoLocations(prev => [...prev, loc.slug])}
+                                className="flex items-center gap-2 w-full text-left px-3 py-1.5 text-sm hover-elevate"
+                                data-testid={`button-add-location-${loc.slug}`}
+                              >
+                                <IconMapPin className="h-3.5 w-3.5 text-muted-foreground flex-shrink-0" />
+                                <span>{loc.city}, {loc.country}</span>
+                                <span className="text-xs text-muted-foreground ml-auto">{loc.slug}</span>
+                              </button>
+                            ))
+                          }
+                          {seoAvailableLocations.filter(loc => {
+                            if (seoLocations.includes(loc.slug)) return false;
+                            if (!seoLocationSearch) return true;
+                            const q = seoLocationSearch.toLowerCase();
+                            return loc.name.toLowerCase().includes(q)
+                              || loc.city.toLowerCase().includes(q)
+                              || loc.country.toLowerCase().includes(q)
+                              || loc.slug.toLowerCase().includes(q);
+                          }).length === 0 && (
+                            <p className="px-3 py-2 text-xs text-muted-foreground">
+                              {seoLocationSearch ? "No matching locations" : "All locations already added"}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-12 gap-3">

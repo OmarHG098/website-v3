@@ -18,7 +18,7 @@ export const partnershipLogoSchema = z.object({
 });
 
 export const partnershipPressRefSchema = z.object({
-  text: z.string(),
+  text: z.string().optional(),
   url: z.string().optional(),
   source: z.string().optional(),
 });
@@ -38,6 +38,10 @@ export const partnershipSlideSchema = z.object({
 
 export const partnershipCarouselSectionSchema = z.object({
   type: z.literal("partnership_carousel"),
+  variant: z.enum(["default", "split-card"]).optional(),
+  vertical_cards: z.boolean().optional(),
+  institutions_heading: z.string().optional(),
+  references_heading: z.string().optional(),
   version: z.string().optional(),
   heading: z.string().optional(),
   subtitle: z.string().optional(),

@@ -21,7 +21,7 @@ sections:
       prefix: Finance Your
       highlight: Future
       color: chart-1
-    description: We offer flexible payment plans, financing options, and scholarships so you can focus on launching your tech career, not navigating financial uncertainty.
+    description: We offer flexible payment plans, financing options, and scholarships so you can focus on launching your tech career without worrying about finances.
     bullets:
       - text: Structured monthly payment plans
       - text: Competitive financing options
@@ -46,6 +46,24 @@ sections:
       desktop: none lg
     marginY:
       desktop: none md
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Proven Career Outcomes
+    subtitle: Strong hiring results. Real salary growth.
+    description: Recognized by Forbes as a Best Online Bootcamp, including recognition for students on a budget, 4Geeks combines accessible tuition with proven career outcomes that help you launch your tech career with confidence.
+    background: hsl(var(--secondary))
+    items:
+      - value: 84%
+        title: Job placement rate
+      - value: 55%
+        title: Salary increase after graduation
+      - value: 3-6 Months
+        title: Average time to get hired
+    marginY:
+      desktop: lg
+    paddingY:
+      desktop: none lg
   - type: syllabus
     title: Fund Your Tech Career
     subtitle: Explore flexible financing paths, from upfront savings to income-based plans, and choose the option that works for you.
@@ -56,7 +74,7 @@ sections:
         description: Spread your tuition across 6 months with no interest. Pay the standard tuition cost in structured monthly installments.
       - title: Income-Based Payments
         description: Prefer to pay after you land a job? Through our partner Edly, you can start repayment once you earn at least $35,000 per year. Monthly payments adjust to your income and pause during periods of unemployment or underemployment. Cosigners are supported.
-      - title: Private Loans and Extended Payment Plans
+      - title: Loans and Extended Payment Plans
         description: We offer financing plans ranging from 1 to 5 years, depending on your credit profile, with monthly payments starting below $349. Terms and approval are based on eligibility.
       - title: Scholarships
         description: Partial scholarships are available for qualified applicants through select programs and partner organizations. Availability and award amounts vary.
@@ -71,11 +89,15 @@ sections:
     subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
+        highlight: true
       - name: Pay in Full
         highlight: true
       - name: Monthly Plans
+        highlight: true
       - name: Loans
+        highlight: true
       - name: Income-Based Plan
+        highlight: true
     rows:
       - feature: Tuition Discount
         values:
@@ -101,15 +123,74 @@ sections:
           - "No"
           - "No"
           - "Yes"
+    background: hsl(var(--background))
     marginY:
       desktop: lg md
     paddingY:
       desktop: md lg
+  - type: course_selector
+    version: "1.0"
+    variant: solid
+    heading: Program Tuition
+    subheading: Tuition, payment plans, and financing options for every program
+    courses:
+      - name: AI Engineering
+        icon: Brain
+        duration: 24 weeks
+        label: Updated in 2026
+        title: AI Engineering
+        badges:
+          - icon: DollarSign
+            text: $14,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Build and scale a fully AI-native business while learning production-ready AI systems and workflows.
+        price: $349
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/ai-engineering
+        course_background: accent
+      - name: Data Science & ML
+        icon: ChartLine
+        duration: 16 weeks
+        label: Updated in 2026
+        title: Data Science & Machine Learning with AI
+        badges:
+          - icon: DollarSign
+            text: $10,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Master AI-powered data analysis and build intelligent models to solve real-world problems.
+        price: $299
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/data-science-ml
+        course_background: primary
+      - name: Cybersecurity
+        icon: Shield
+        duration: 16 weeks
+        label: Updated in 2026
+        title: Cybersecurity
+        badges:
+          - icon: DollarSign
+            text: $9,999 full tuition
+          - icon: CheckCircle
+            text: Qualifies for 10% upfront discount, interest-free installments, extended financing, optional Job Guarantee
+        description: Learn to protect systems and data with modern cybersecurity tools, hands-on labs, and practical exercises.
+        price: $299
+        price_info: or less depending on your plan
+        cta_text: Discover program
+        cta_url: /en/cybersecurity
+        course_background: hsl(var(--destructive))
+    marginY:
+      desktop: lg
+    paddingY:
+      desktop: md lg
   - type: why_learn_ai
     variant: laptop-edge
-    title: Add a Job Guarantee for Extra Peace of Mind
-    subtitle: A stronger commitment to your career outcome.
-    description: For an additional investment, you can enroll with our optional Job Guarantee. If you don’t secure a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
+    title: Optional Job Guarantee for Extra Confidence
+    subtitle: Back your career outcome with a stronger commitment
+    description: For an additional $2,000, you can add our Job Guarantee. If you don’t land a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
     cta:
       text: Get More Info
       url: /job-guarantee
@@ -162,61 +243,6 @@ sections:
         rating: 5
         comment: Started as a complete beginner, now leading a team of developers. Forever grateful.
         outcome: Promoted in 1 year
-  - type: features_grid
-    version: "1.0"
-    variant: stats-text
-    title: Affordable tech education with proven results
-    subtitle: The talent shortage is your opportunity
-    description: Our programs offer the highest value at the lowest investment in tech education. That's why Forbes recognized us in 2024 as the Best Online Full-Stack Bootcamp and Best Online Data Science Bootcamp for Students on a Budget.
-    items:
-      - value: 84%
-        title: Job placement rate
-      - value: 55%
-        title: Salary increase after graduation
-      - value: 3-6 Months
-        title: Average time to get hired
-    marginY:
-      desktop: lg
-    paddingY:
-      desktop: none lg
-    background: hsl(var(--secondary))
-  - type: pricing
-    version: "1.0"
-    variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
-    tech_icons:
-      - html
-      - css
-      - javascript
-      - react
-      - python
-      - nodejs
-      - git
-      - bootstrap
-      - api
-      - settings
-    features_title: Access hundreds of exercises, projects tutorials and courses
-    features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of cloud-based coding challenges (no setup needed).
-      - text: AI-powered feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school.
-    cta:
-      text: Apply Now
-      url: /apply
-      variant: primary
-    marginY:
-      desktop: lg none
   - type: faq
     version: v1.0
     title: Frequently Asked Questions

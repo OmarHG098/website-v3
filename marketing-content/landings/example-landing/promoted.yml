@@ -77,6 +77,71 @@ sections:
       desktop: none lg
     marginY:
       desktop: none md
+  - type: profiles_carousel
+    version: v1.0
+    heading: What Our Partners Say
+    image_round: true
+    profiles:
+      - name: Enrique Infanzon
+        role: Dean Continuing Education @ Miami Dade College
+        image_id: enrique_infanzon
+        description: 4Geeks has been a great partner of us for the last 7 years. We have launched full-stack, web development, and AI programs successfully and we have helped more than 400 students already.
+        linkedin_url: https://www.linkedin.com/in/enriqueinfanzon
+      - name: Antonio Delgado
+        role: VP of Innovation and Technology @ Miami Dade College
+        image_id: antonio_delgado
+        description: We have recently launched the Miami Tech Coalition and 4Geeks is again showing up with a program and dedication that allows everyone involved to rely on their experience and program quality.
+        linkedin_url: https://www.linkedin.com/in/antoniodelgadofornaguera
+      - name: Vanessa Benavides
+        role: Vice-President @ United Way Miami
+        description: Together with 4Geeks we have successfully launched the Miami Workforce Project for the benefit of Miami-Dade County residents and we have created a great and positive impact.
+        linkedin_url: https://www.linkedin.com/in/vanessa-benavides-2a78849/
+      - name: Dug Jones
+        role: Program Director for Workforce Grants @ Clark University
+        image_id: dug_jones
+        description: We have a solid partnership focused on providing partial scholarships for students unemployed or underemployed, and we have exceeded by far the expectation we set at the beginning.
+        linkedin_url: https://www.linkedin.com/in/dugjones/
+      - name: Juan Carlos Navarro
+        role: Principal Leader of Science and Technology @ IDB
+        image_id: juancarlos_navarro
+        description: 4Geeks has been awarded by the IDB as the Coding School designated to carry on the responsibility of providing top-quality coding programs in Costa Rica and Uruguay.
+        linkedin_url: https://www.linkedin.com/in/juan-carlos-navarro-08948a8/
+      - name: Anahí Lacava
+        role: Bootcamp Project Leader in Digital Skills @ UTEC
+        image_id: anahi_lacava
+        description: Since 2021 we have been working on full-stack software development programs and on the launch of the first Artificial Intelligence and Machine Learning program in all of Latin America.
+        linkedin_url: https://www.linkedin.com/in/anah%C3%AD-lacava-melgratti/
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
+    image_round: false
+    profiles:
+      - name: Alejandro Sánchez
+        role: Co-Founder & Technology Director
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
+      - name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
+      - name: Alissa Landra
+        role: Campus & Growth Manager USA
+        image_id: student_asian
+        description: Passionate about growing tech education across the US.
+        linkedin_url: https://linkedin.com/in/example
+      - name: Victor Gómez
+        role: Regional Manager Europe
+        image_id: student_asian
+      - name: Sofia Torres
+        role: Head of Education
+        image_id: student_asian
+        description: Leading curriculum development for AI-driven programs.
+        linkedin_url: https://linkedin.com/in/example
+      - name: Laura Méndez
+        role: Career Coach
+        image_id: student_asian
+        linkedin_url: https://linkedin.com/in/example
   - type: testimonials_grid
     version: v1.0
     title: What Our Students Say
@@ -175,6 +240,299 @@ sections:
         excerpt: La academia de programación 4Geeks Academy ha anunciado el lanzamiento de un millón de dólares en becas para la formación de futuros programadores.
         link_text: Leer Artículo
         link_url: https://example.com/article-5
+  - type: course_selector
+    version: "1.0"
+    heading: Explore Our Programs
+    subheading: Choose the career path that's right for you
+    courses:
+      - name: AI Automation
+        duration: 4 months part-time
+        label: Updated in 2025
+        title: AI Automation
+        badges:
+          - icon: Bolt
+            text: AI tools for business operations
+        tags:
+          - icon: Plus
+            text: Python for Automation
+        description: Connect AI tools to enterprise platforms and business data. Optimize existing solutions or build new ones. Eliminate resource bottlenecks. Become indispensable in any organization.
+        price: $328
+        original_price: $442
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/ai-automation
+        course_background: primary
+      - name: AI and Machine Learning
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: AI and Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs & Generative AI training
+        description: Build systems that learn from data and improve over time without being explicitly programmed. Design, train, and deploy machine learning models to solve real-world problems.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/ai-machine-learning
+        course_background: accent
+      - name: BI Analytics
+        duration: 4 months part-time
+        label: Updated in 2025
+        title: Business Intelligence Analytics
+        badges:
+          - icon: Bolt
+            text: AI for faster data workflows
+        tags:
+          - icon: Plus
+            text: Python for BIA
+        description: Turn raw data into clear, helpful insights that guide important business decisions. Help companies understand what's working, what's not, and where to go next.
+        price: $328
+        original_price: $442
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/bi-analytics
+        course_background: secondary
+      - name: Full Stack Development
+        duration: 9 months part-time
+        title: Full Stack Software Development
+        badges:
+          - icon: Code
+            text: React, Node.js & Python
+        tags:
+          - icon: Plus
+            text: API Development
+        description: Master modern web development from frontend to backend. Build production-ready applications using industry-standard tools and frameworks.
+        price: $439
+        original_price: $588
+        cta_text: Discover program
+        cta_url: /en/full-stack
+        course_background: muted
+  - type: partnership_carousel
+    variant: split-card
+    vertical_cards: true
+    version: v1.0
+    heading: Our Global Partnerships
+    subtitle: Collaborating with leading institutions to bring coding education worldwide
+    background: bg-primary/5
+    slides:
+      - image_id: costa_rica_city
+        object_position: 100% 80%
+        title: CRUSA Forte Scholarship
+        subtitle: Empowering Costa Rican talent through tech education
+        description: United Wkforce Project=nd training to Miami-Dade County residents and is made possible by a multi-million gift from philanthropist Mackenzie Scott. Admitted students will receive coding training with no upfront costs.
+        stats:
+          - value: 200+
+            label: Scholarships awarded
+          - value: 85%
+            label: Employment rate
+        institution_logos:
+          - image_id: logo_crusa
+            alt: CRUSA Foundation
+            logo_height: 50px
+          - image_id: logo_utec
+            alt: CRUSA Foundation
+            logo_height: 50px
+          - image_id: bid_logo
+            alt: BID logo
+            logo_height: 50px
+        press_references:
+          - url: https://example.com/article-1
+            source: La Nación
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            url: https://example.com/article-1
+            source: La Nación
+        cta:
+          text: Learn More
+          url: /en/costa-rica
+          variant: primary
+      - image_id: reservation_form
+        object_position: 100% 80%
+        title: CRUSA Forte Scholarship
+        subtitle: Empowering Costa Rican talent through tech education
+        description: In colith hi In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with hi In collaboration with Forte and Crusa, 4Geeks As, focusing on women from areas with hi from areas with hi on women from areas with high unemployment. Through the program, participants receive free training, enabling them to access better jobs in the 4.0 industry and contribute to the country's economic growth.
+        stats:
+          - value: 200+
+            label: Scholarships awarded
+          - value: 85%
+            label: Employment rate
+        institution_logos:
+          - image_id: logo_crusa
+            alt: CRUSA Foundation
+            logo_height: 50px
+          - image_id: logo_utec
+            alt: CRUSA Foundation
+            logo_height: 50px
+          - image_id: bid_logo
+            alt: BID logo
+            logo_height: 50px
+        press_references:
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            url: https://example.com/article-1
+            source: La Nación
+          - text: 4Geeks Academy and CRUSA Foundation partner to bring tech education to Costa Rica
+            url: https://example.com/article-1
+            source: La Nación
+        cta:
+          text: Learn More
+          url: /en/costa-rica
+          variant: primary
+      - image_id: uruguay_city
+        object_position: 10% 80%
+        title: Uruguay Tech Initiative
+        subtitle: Expanding coding education across Latin America
+        description: Our expansion to Uruguay brings world-class coding education to Montevideo, partnering with local institutions to develop a thriving tech ecosystem in the region.
+        stats:
+          - value: "3"
+            label: Campuses
+          - value: 500+
+            label: Graduates
+        institution_logos:
+          - image_id: united_way_event
+            alt: United Way Miami
+            logo_height: 40px
+        press_references:
+          - text: United Way and 4Geeks bring free coding bootcamp to underserved communities
+            url: https://example.com/article-2
+            source: Miami Herald
+        cta:
+          text: Explore Uruguay
+          url: /en/uruguay
+          variant: outline
+  - type: projects
+    title: Learn by building **real-life projects**
+    subtitle: "When learning at your own pace, having access to video tutorials, code examples, and continuous, real-time feedback is crucial to succeed. The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
+    items:
+      - title: Machine Learning Final Project
+        description: "Learn to build your own end-to-end Machine Learning project: define a real-world problem, collect and process data, train and optimize a model, and deploy a web app to showcase it. Work collaboratively, apply your skills, and present your solution like a pro!"
+        image: ml-final-project
+        tags:
+          - HEROKU.COM
+          - DATA SCIENCE
+          - SQL
+          - SEABORN
+          - STREAMLIT
+          - SCIKIT-LEARN
+          - MATPLOTLIB
+          - WEB SCRAPING
+          - MACHINE LEARNING
+          - RENDER
+        duration: 2 HOURS
+        difficulty: easy
+        date: 16/1/2023
+      - title: ML web app using Streamlit tutorial
+        description: Use Streaml ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indusit to build an interactive web application that integrates a machine learning model. This will allow users to input data, make predictions, and visualize results in a user-friendly interface.
+        image: streamlit-render
+        tags:
+          - DATA SCIENCE
+          - MACHINE LEARNING
+        duration: 1 HOURS
+        difficulty: easy
+        date: 16/1/2023
+      - title: ML web app using Flask tutorial
+        description: Learn how to train and optimize a machine learning model, build a Flask web app to interact with it, and deploy the full application on Render. This hands-on project walks you through data exploration, model creation, app development, and cloud deployment step by step.
+        image: flask-render
+        tags:
+          - DATA SCIENCE
+          - SCIKIT-LEARN
+          - MACHINE LEARNING
+          - RENDER
+          - TENSORFLOW
+          - KERAS
+        duration: 1 HOURS
+        difficulty: easy
+        date: 8/2/2023
+  - type: project_showcase
+    version: "1.0"
+    project_title: TechConnect
+    description: A social networking platform designed specifically fo ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indus ed specifically for tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech indusr tech professionals. Connect with developers, share your projects, find collaborators, and discover job opportunities in the tech industry.
+    creators:
+      - name: Maria Garcia
+        github_url: https://github.com/mariagarcia
+        linkedin_url: https://linkedin.com/in/mariagarcia
+      - name: James Wilson
+        linkedin_url: https://linkedin.com/in/jameswilson
+    media:
+      - type: video
+        src: OZfv9kYl0_o
+      - type: image
+        src: /images/techconnect-demo.png
+        alt: TechConnect dashboard
+    background: bg-muted
+    media_position: right
+  - type: career_support_explain
+    version: v1.0
+    heading: GeekForce Career Support
+    description: Our career support program is designed to help you land your first job in tech
+    background: hsl(var(--secondary))
+    tabs:
+      - tab_label: Job-Ready, Faster
+        layout: three_columns
+        col1_subtitle: Build a recruiter-ready profile, smarter.
+        col1_description: |-
+          Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.
+
+          RigoBot reviews your resume and LinkedIn in real-time. Career mentors help you refine your story, portfolio, and interview performance for optimal impact.
+        col1_boxes:
+          - icon: IconBrandLinkedin
+            text: LinkedIn
+          - icon: IconFileText
+            text: Resume
+          - icon: IconBriefcase
+            text: Portfolio
+          - icon: IconMail
+            text: Cover letter
+        col2_heading: Get unlimited career coaching and AI job search tools throughout your program, plus alumni support.
+        col2_bullets:
+          - icon: IconRobot
+            text: 24/7 feedback from RigoBot to audit your LinkedIn and resume
+          - icon: IconUsers
+            text: 1-on-1 career coaching and strategy sessions
+          - icon: IconMicrophone
+            text: Mock interviews and technical interview prep
+        col3_image_id: 4geeks_member
+        col3_object_fit: cover
+        col3_object_position: center
+        alt: 4Geeks Member
+        id: 4geeks-member
+      - tab_label: Get noticed
+      - tab_label: Build a portfolio
+      - tab_label: Find your edge
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
+    image_round: true
+    profiles:
+      - image_id: enrique_infanzon
+        object_fit: cover
+        object_position: 10% 80%
+        name: Alejandro Sánchez
+        role: Program Director for Workforce Grants @ Clark University
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        description: asasasaasasasaasasasaasasasa asasasaasasasaasasasaasasasa asasasaasasasaasasasaasasasa asasasaasasasaasasasaasasasa asasasa asasasa
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Alissa Landra
+        role: Campus & Growth Manager USA
+        description: Passionate about growing tech education across the US.
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Victor Gómez
+        role: Regional Manager Europe
+      - image_id: student_asian
+        name: Sofia Torres
+        role: Head of Education
+        description: Leading curriculum development for AI-driven programs.
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Sofia Torres
+        role: Head of Education
+        description: Leading curriculum development for AI-driven programs.
+        linkedin_url: https://linkedin.com/in/example
   - type: partnership_carousel
     version: v1.0
     heading: Our Global Partnerships
@@ -244,6 +602,82 @@ sections:
           text: Explore Uruguay
           url: /en/uruguay
           variant: outline
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech. They provide all the guidance and encouragement you need to launch a successful new career.
+    image_round: false
+    profiles:
+      - image_id: alejandro_sanchez
+        name: Alejandro Sánchez
+        role: Co-Founder & Technology Director
+        linkedin_url: https://www.linkedin.com/in/alesanchezr/
+      - image_id: marcelo_ricigliano
+        name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        linkedin_url: https://www.linkedin.com/in/marcelo-ricigliano-32440379/
+      - image_id: alissalandra
+        name: Alissa Landra
+        role: Campus & Growth Manager USA
+        linkedin_url: https://www.linkedin.com/in/alissalandra/
+      - image_id: victor_gomez
+        name: Victor Manuel Gómez Pérez
+        role: Regional Manager Europe
+        linkedin_url: https://www.linkedin.com/in/victormgomezp/
+      - image_id: pablo_bullor
+        name: Pablo Bullor
+        role: Program Manager LATAM
+        linkedin_url: https://www.linkedin.com/in/pablobullor/
+      - image_id: laura
+        name: Laura Magallanes
+        role: Program Manager USA
+        linkedin_url: https://www.linkedin.com/in/laura-magallanes-dev/
+      - image_id: valentina_ancieta
+        name: Valentina Ancieta
+        role: Workforce Development Manager USA & LATAM
+        linkedin_url: https://www.linkedin.com/in/valentinaancieta/
+      - image_id: valentina_botana
+        name: Valentina Botana
+        role: Career Support Coordinator USA & LATAM
+        linkedin_url: https://www.linkedin.com/in/valentina-botana/
+      - image_id: martha_lopez
+        name: Martha López
+        role: Culture & Recruitment Analyst
+        linkedin_url: https://www.linkedin.com/in/martha-lópez-929b55145/
+      - name: Ariana Sánchez
+        role: Culture & Talent Leader
+        linkedin_url: https://www.linkedin.com/in/ariana-sánchez-7720aa78/
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech.
+    image_round: true
+    profiles:
+      - image_id: alejandro_sanchez
+        name: Alejandro Sánchez
+        role: Co-Founder & Technology Director
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Alissa Landra
+        role: Campus & Growth Manager USA
+        description: Passionate about growing tech education across the US.
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Victor Gómez
+        role: Regional Manager Europe
+      - image_id: student_asian
+        name: Sofia Torres
+        role: Head of Education
+        description: Leading curriculum development for AI-driven programs.
+        linkedin_url: https://linkedin.com/in/example
+      - image_id: student_asian
+        name: Laura Méndez
+        role: Career Coach
+        linkedin_url: https://linkedin.com/in/example
   - type: human_and_ai_duo
     version: "1.0"
     heading: "Human + AI: The Perfect Support Duo"
@@ -404,6 +838,8 @@ sections:
         alt: Student 2
       - image_id: student-3
         alt: Student 3
+      - image_id: student-4
+        alt: Student 4
       - image_id: student-4
         alt: Student 4
     cards:

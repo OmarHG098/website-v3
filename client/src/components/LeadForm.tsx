@@ -347,7 +347,7 @@ export function LeadForm({ data, programContext, landingLocations, termsStyle }:
 
     if (fieldName === "region" && hasLandingLocations) {
       if (singleLandingRegion) {
-        return { ...baseConfig, visible: true, required: false, default: singleLandingRegion };
+        return { ...baseConfig, visible: false, required: false, default: singleLandingRegion };
       }
       if (multipleLandingRegions) {
         return { ...baseConfig, visible: true, required: true, default: "" };
