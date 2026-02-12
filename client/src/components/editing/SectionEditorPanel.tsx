@@ -47,6 +47,7 @@ import {
 import { IconPickerModal } from "./IconPickerModal";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
 import { TestimonialItemsPreview } from "./TestimonialItemsPreview";
+import { DynamicTableChat } from "./DynamicTableChat";
 import { RichTextArea } from "./RichTextArea";
 import { MarkdownEditorField } from "./MarkdownEditorField";
 import type { Section, ImageRegistry } from "@shared/schema";
@@ -1127,6 +1128,35 @@ export function SectionEditorPanel({
                   }}
                 />
               </>
+            )}
+            {sectionType === "dynamic_table" && parsedSection?.endpoint && (
+              <DynamicTableChat
+                endpoint={parsedSection.endpoint as string}
+                dataPath={parsedSection.data_path as string | undefined}
+                currentColumns={(parsedSection.columns as Array<{ key: string; label: string; type: "text" | "number" | "date" | "image" | "link" | "boolean"; template?: string }>) || []}
+                currentTitle={parsedSection.title as string | undefined}
+                locale={locale}
+                onApplyConfig={(config) => {
+                  try {
+                    const parsed = yamlParser.load(yamlContent) as Record<string, unknown>;
+                    if (!parsed || typeof parsed !== "object") return;
+                    pushUndoState(yamlContent);
+                    parsed.columns = config.columns;
+                    if (config.title) {
+                      parsed.title = config.title;
+                    } else {
+                      delete parsed.title;
+                    }
+                    const newYaml = yamlParser.dump(parsed, { lineWidth: -1, noRefs: true, quotingType: '"' });
+                    setYamlContent(newYaml);
+                    setHasChanges(true);
+                    setParseError(null);
+                    if (onPreviewChange) onPreviewChange(parsed as Section);
+                  } catch (err) {
+                    console.error("Error applying table config:", err);
+                  }
+                }}
+              />
             )}
             
             <ColorPicker

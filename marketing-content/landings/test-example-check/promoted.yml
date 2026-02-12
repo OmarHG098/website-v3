@@ -38,16 +38,19 @@ sections:
     columns:
       - key: kickoff_date
         label: Date
-        type: date
+        type: text
+        template: "{kickoff_date} - {ending_date}"
       - key: syllabus_version.name
         label: Program
         type: text
       - key: academy.name
         label: Location
         type: text
+        template: "{academy.name} ({academy.city.name})"
       - key: syllabus_version.duration_in_days
         label: Duration
         type: text
+        template: "{syllabus_version.duration_in_days} days ({syllabus_version.duration_in_hours} hours)"
     action:
-      label: Apply Now
+      label: View
       href: https://new.4geeks.com/en/apply
