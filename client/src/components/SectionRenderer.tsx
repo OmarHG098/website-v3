@@ -169,6 +169,7 @@ const TwoColumn = lazy(() => import("@/components/TwoColumn").then(m => ({ defau
 const NumberedSteps = lazy(() => import("@/components/NumberedSteps"));
 const TestimonialsSlide = lazy(() => import("@/components/TestimonialsSlide"));
 const TestimonialsGrid = lazy(() => import("@/components/TestimonialsGrid").then(m => ({ default: m.TestimonialsGrid })));
+const DynamicTable = lazy(() => import("@/components/DynamicTable").then(m => ({ default: m.DynamicTable })));
 const PressMentions = lazy(() => import("@/components/PressMentions").then(m => ({ default: m.PressMentions })));
 const ProgramsListSection = lazy(() => import("./ProgramsListSection").then(m => ({ default: m.ProgramsListSection })));
 const CTABannerSection = lazy(() => import("./CTABannerSection").then(m => ({ default: m.CTABannerSection })));
@@ -422,6 +423,8 @@ export function renderSection(section: Section, index: number, landingLocations?
       return <LazySection key={index}><TestimonialsSlide data={section as Parameters<typeof TestimonialsSlide>[0]["data"]} /></LazySection>;
     case "testimonials_grid":
       return <LazySection key={index}><TestimonialsGrid data={section as Parameters<typeof TestimonialsGrid>[0]["data"]} /></LazySection>;
+    case "dynamic_table":
+      return <LazySection key={index}><DynamicTable data={section as Parameters<typeof DynamicTable>[0]["data"]} /></LazySection>;
     case "press_mentions":
       return <LazySection key={index}><PressMentions data={section as Parameters<typeof PressMentions>[0]["data"]} /></LazySection>;
     case "programs_list":

@@ -3961,6 +3961,33 @@ sections: []
     }
   });
 
+  app.post("/api/ai/generate-table-from-payload", async (req, res) => {
+    try {
+      const { generateTableFromPayload } = await import("./ai/generateTableFromPayload");
+
+      const { sampleData, availableKeys, userPrompt } = req.body;
+
+      if (!sampleData || !Array.isArray(sampleData) || sampleData.length === 0) {
+        res.status(400).json({ error: "sampleData must be a non-empty array" });
+        return;
+      }
+      if (!availableKeys || !Array.isArray(availableKeys) || availableKeys.length === 0) {
+        res.status(400).json({ error: "availableKeys must be a non-empty array" });
+        return;
+      }
+      if (!userPrompt || typeof userPrompt !== "string") {
+        res.status(400).json({ error: "userPrompt must be a non-empty string" });
+        return;
+      }
+
+      const config = await generateTableFromPayload({ sampleData, availableKeys, userPrompt });
+      res.json(config);
+    } catch (error) {
+      console.error("Error generating table config:", error);
+      res.status(500).json({ error: "Failed to generate table configuration" });
+    }
+  });
+
   // ============================================
   // Centralized FAQs API
   // ============================================
