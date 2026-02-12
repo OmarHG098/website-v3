@@ -130,7 +130,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
       </Card>
 
       <div
-        className="relative overflow-hidden rounded-lg md:flex-[1] lg:flex-[1.55] min-h-[200px] md:min-h-0"
+        className="relative overflow-hidden rounded-lg md:flex-[1] lg:flex-[1.55] min-h-[200px] md:min-h-0 h-[110px] md:h-auto"
         data-testid="col-3-image"
       >
         {tab.col3_image_id && (
@@ -329,7 +329,7 @@ function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
       >
         {tab.title && (
           <h3
-            className="text-2xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
+            className="text-2xl md:text-2xl lg:text-4xl font-bold text-foreground mb-4"
             data-testid="text-tab-title"
           >
             {tab.title}
@@ -397,9 +397,12 @@ function TestimonialSlide({
   testimonial: CareerSupportTestimonial;
 }) {
   return (
-    <div className="flex flex-col sm:flex-row gap-4 h-full min-w-0" data-testid="testimonial-slide">
+    <div
+      className="flex flex-col sm:flex-row gap-4 h-full min-w-0"
+      data-testid="testimonial-slide"
+    >
       <div
-        className="sm:flex-1 rounded-lg overflow-hidden"
+        className="sm:flex-1 rounded-lg overflow-hidden max-h-[250px] md:max-h-none"
         data-testid="testimonial-image-col"
       >
         {testimonial.image_id && (
@@ -429,7 +432,10 @@ function TestimonialSlide({
               data-testid="testimonial-logos"
             >
               {testimonial.contributor_logos.map((logo, i) => (
-                <Card key={i} className="p-1 bg-transparent shadow-none border-muted-foreground/10">
+                <Card
+                  key={i}
+                  className="p-1 bg-transparent shadow-none border-muted-foreground/10"
+                >
                   <UniversalImage
                     id={logo.image_id}
                     className="h-12 w-auto object-contain"
@@ -634,18 +640,21 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
     touchStartX.current = e.touches[0].clientX;
   }, []);
 
-  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const diff = touchStartX.current - e.changedTouches[0].clientX;
-    if (Math.abs(diff) > 50) {
-      if (diff > 0) {
-        setActiveTab((prev) => (prev + 1) % tabs.length);
-      } else {
-        setActiveTab((prev) => (prev - 1 + tabs.length) % tabs.length);
+  const handleTouchEnd = useCallback(
+    (e: React.TouchEvent) => {
+      if (touchStartX.current === null) return;
+      const diff = touchStartX.current - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          setActiveTab((prev) => (prev + 1) % tabs.length);
+        } else {
+          setActiveTab((prev) => (prev - 1 + tabs.length) % tabs.length);
+        }
       }
-    }
-    touchStartX.current = null;
-  }, [tabs.length]);
+      touchStartX.current = null;
+    },
+    [tabs.length],
+  );
 
   return (
     <section
@@ -677,7 +686,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
 
         {tabs.length > 1 && (
           <div
-            className="flex items-center justify-center mb-2 md:mb-8 w-full"
+            className=" mb-2 md:mb-8 w-full"
             data-testid="tabs-selector"
           >
             <div className="hidden md:flex w-full">
@@ -700,7 +709,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
               </div>
             </div>
 
-            <div className="flex md:hidden flex-col items-center gap-2 w-full justify-center">
+            <div className="flex md:hidden items-center gap-2 w-full justify-center">
               <div className="bg-primary w-full flex justify-between items-center rounded-lg py-1 px-1">
                 <Button
                   size="icon"
@@ -726,7 +735,12 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
                   <IconChevronRight className="w-4 h-4 text-primary-foreground" />
                 </Button>
               </div>
-              <div className="flex items-center justify-center gap-2" data-testid="tab-tracking-dots">
+            </div>
+            {tabs.length > 1 && (
+              <div
+                className="flex md:hidden items-center justify-center gap-2 mt-4"
+                data-testid="tab-tracking-dots"
+              >
                 {tabs.map((_, i) => (
                   <button
                     key={i}
@@ -740,7 +754,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
                   />
                 ))}
               </div>
-            </div>
+            )}
           </div>
         )}
 
