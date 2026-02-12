@@ -3982,9 +3982,10 @@ sections: []
 
       const config = await generateTableFromPayload({ sampleData, availableKeys, userPrompt });
       res.json(config);
-    } catch (error) {
-      console.error("Error generating table config:", error);
-      res.status(500).json({ error: "Failed to generate table configuration" });
+    } catch (error: any) {
+      console.error("Error generating table config:", error?.message || error);
+      const message = error?.message || "Failed to generate table configuration";
+      res.status(500).json({ error: message });
     }
   });
 

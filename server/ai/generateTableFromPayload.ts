@@ -26,29 +26,14 @@ Rules:
 - Use the user's desired labels for column headers. If the user doesn't specify labels, generate clean human-readable labels from the key names.
 - Preserve the order the user specifies.
 - If the user says something vague like "show all columns", include all available keys.
-- Return ONLY valid JSON matching the schema.`;
-
-const TABLE_CONFIG_SCHEMA = {
-  type: "object" as const,
-  properties: {
-    columns: {
-      type: "array" as const,
-      items: {
-        type: "object" as const,
-        properties: {
-          key: { type: "string" as const, description: "The property key from the data" },
-          label: { type: "string" as const, description: "The display label for the column header" },
-          type: { type: "string" as const, enum: ["text", "number", "date", "image", "link", "boolean"] },
-        },
-        required: ["key", "label", "type"] as const,
-        additionalProperties: false,
-      },
-    },
-    title: { type: "string" as const, description: "Optional table title suggested by context" },
-  },
-  required: ["columns"] as const,
-  additionalProperties: false,
-};
+- Return ONLY valid JSON with this exact structure:
+{
+  "columns": [
+    { "key": "field_name", "label": "Display Label", "type": "text|number|date|image|link|boolean" }
+  ],
+  "title": "Optional Table Title"
+}
+Do not include any text outside the JSON object.`;
 
 export async function generateTableFromPayload(input: GenerateTableInput): Promise<TableConfig> {
   const llm = getLLMService();
@@ -62,18 +47,34 @@ ${samplePreview}
 
 User's request: "${input.userPrompt}"
 
-Generate the table column configuration based on the user's request.`;
+Generate the table column configuration as JSON based on the user's request.`;
 
-  const result = await llm.adaptContentStructured(
+  const result = await llm.adaptContent(
     SYSTEM_PROMPT,
     userPrompt,
     {
-      jsonSchema: TABLE_CONFIG_SCHEMA,
-      schemaName: "table_config",
       temperature: 0.3,
       maxTokens: 1000,
     }
   );
 
-  return result.content as unknown as TableConfig;
+  let content = result.content.trim();
+  const fenceMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+  if (fenceMatch) {
+    content = fenceMatch[1].trim();
+  }
+
+  const parsed = JSON.parse(content) as TableConfig;
+
+  if (!parsed.columns || !Array.isArray(parsed.columns) || parsed.columns.length === 0) {
+    throw new Error("AI returned invalid table config: missing columns array");
+  }
+
+  for (const col of parsed.columns) {
+    if (!col.key || !col.label || !col.type) {
+      throw new Error(`Invalid column config: ${JSON.stringify(col)}`);
+    }
+  }
+
+  return parsed;
 }
