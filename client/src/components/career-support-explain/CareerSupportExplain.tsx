@@ -211,10 +211,7 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
         </div>
 
         <div className="hidden lg:flex flex-col flex-1">
-          <div className="flex items-end text-muted-foreground h-full">
-            <p>Once your profile is ready, visibility becomes the focus.</p>
-          </div>
-          <div className="flex items-end flex-1" style={{ marginTop: "0px" }}>
+          <div className="flex items-start flex-1 mt-5">
             <div className="flex gap-3 flex-1">
               <div className="flex flex-col flex-1 leading-snug">
                 {tab.left_text && (
@@ -224,19 +221,6 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
                   >
                     {tab.left_text}
                   </p>
-                )}
-
-                {tab.left_stat && (
-                  <div className="flex items-end h-full">
-                    <div className="mt-auto pt-4" data-testid="stat-left">
-                      <span className="text-5xl font-bold text-primary">
-                        {tab.left_stat.value}
-                      </span>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        {tab.left_stat.label}
-                      </p>
-                    </div>
-                  </div>
                 )}
               </div>
 
@@ -261,6 +245,18 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
               )}
             </div>
           </div>
+          {tab.left_stat && (
+            <div className="flex items-end h-full">
+              <div className="mt-auto pt-4" data-testid="stat-left">
+                <span className="text-5xl font-bold text-primary">
+                  {tab.left_stat.value}
+                </span>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {tab.left_stat.label}
+                </p>
+              </div>
+            </div>
+          )}
         </div>
       </Card>
 
