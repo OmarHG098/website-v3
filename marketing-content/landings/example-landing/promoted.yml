@@ -470,8 +470,7 @@ sections:
         col1_subtitle: Build a recruiter-ready profile, smarter.
         col1_description: |-
           Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.
-
-          RigoBot reviews your resume and LinkedIn in real-time. Career mentors help you refine your story, portfolio, and interview performance for optimal impact.
+          We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
         col1_boxes:
           - icon: IconBrandLinkedin
             text: LinkedIn
@@ -511,7 +510,6 @@ sections:
             text: Networking and recruiter conversation coaching
         right_logos:
           - image_id: logo_google
-            logoHeight: 13px
             alt: Google
           - image_id: logo_meta
             alt: Meta

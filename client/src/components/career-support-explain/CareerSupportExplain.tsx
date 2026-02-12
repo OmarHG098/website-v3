@@ -9,7 +9,11 @@ import type {
   CareerSupportTestimonial,
 } from "@shared/schema";
 import * as TablerIcons from "@tabler/icons-react";
-import { IconChevronLeft, IconChevronRight, IconFlag } from "@tabler/icons-react";
+import {
+  IconChevronLeft,
+  IconChevronRight,
+  IconFlag,
+} from "@tabler/icons-react";
 
 interface CareerSupportExplainProps {
   data: CareerSupportExplainSection;
@@ -22,7 +26,10 @@ function getTablerIcon(name: string) {
 
 function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="flex flex-col md:flex-row gap-4 h-full" data-testid="grid-tab-content">
+    <div
+      className="flex flex-col md:flex-row gap-4 h-full"
+      data-testid="grid-tab-content"
+    >
       <Card
         className="bg-card p-6 flex flex-col rounded-lg flex-1"
         data-testid="col-1-info"
@@ -35,11 +42,11 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
             {tab.col1_subtitle}
           </h3>
         )}
-        <div className="flex flex-col md:flex-row md:gap-4 flex-1">
+        <div className="flex flex-col md:gap-4 flex-1">
           <div className="flex-1">
             {tab.col1_description && (
               <p
-                className="text-xs md:text-sm lg:text-base text-muted-foreground leading-snug whitespace-pre-line"
+                className="text-sm text-muted-foreground leading-snug whitespace-pre-line"
                 data-testid="text-col1-description"
               >
                 {tab.col1_description}
@@ -58,11 +65,15 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
                   return (
                     <Card
                       key={i}
-                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
+                      className="flex items-center gap-1.5 px-2 py-1.5 text-sm"
                       data-testid={`box-item-${i}`}
                     >
-                      {IconComp && <IconComp className="w-4 h-4 text-primary" />}
-                      <span className="text-foreground">{box.text}</span>
+                      {IconComp && (
+                        <IconComp className="w-4 h-4 text-primary" />
+                      )}
+                      <span className="lg:text-xs text-foreground">
+                        {box.text}
+                      </span>
                     </Card>
                   );
                 })}
@@ -86,7 +97,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
 
         {tab.col2_bullets && tab.col2_bullets.length > 0 && (
-          <div className="flex flex-col md:grid md:grid-cols-2 gap-4" data-testid="bullets-col2">
+          <div className="flex flex-col gap-4" data-testid="bullets-col2">
             {tab.col2_bullets.map((bullet, i) => {
               const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
               return (
@@ -100,7 +111,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-xs md:text-sm lg:text-base">{bullet.text}</span>
+                  <span className="text-sm lg:text-base">{bullet.text}</span>
                 </div>
               );
             })}
@@ -150,8 +161,12 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
 
         <div className="lg:hidden flex flex-col flex-1">
-          <p className="text-muted-foreground mt-2 whitespace-pre-line" data-testid="text-left-content-mobile">
-            {"Once your profile is ready, visibility becomes the focus."}{tab.left_text ? `\n${tab.left_text}` : ""}
+          <p
+            className="text-muted-foreground mt-2 whitespace-pre-line"
+            data-testid="text-left-content-mobile"
+          >
+            {"Once your profile is ready, visibility becomes the focus."}
+            {tab.left_text ? `\n${tab.left_text}` : ""}
           </p>
 
           {tab.left_image_id && (
@@ -227,7 +242,8 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
                       objectFit:
                         (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
                         "cover",
-                      objectPosition: tab.left_image_object_position || "center",
+                      objectPosition:
+                        tab.left_image_object_position || "center",
                     }}
                     data-testid="img-left-content"
                   />
@@ -293,7 +309,10 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
 
 function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="flex flex-col lg:flex-row gap-8 h-full" data-testid="grid-text-and-image">
+    <div
+      className="flex flex-col lg:flex-row gap-8 h-full"
+      data-testid="grid-text-and-image"
+    >
       <div
         className="flex flex-col justify-start flex-1"
         data-testid="col-text-content"
@@ -428,9 +447,7 @@ function TestimonialSlide({
 
             <span className="font-medium text-foreground flex inline-flex items-end">
               {testimonial.achievement}
-
             </span>
-
           </Card>
         )}
       </div>
@@ -471,7 +488,7 @@ function TextWithTestimonialsCarouselLayout({
         )}
         {tab.left_description && (
           <p
-            className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+            className="text-sm lg:text-base text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
             data-testid="text-testimonials-description"
           >
             {tab.left_description}
@@ -495,7 +512,9 @@ function TextWithTestimonialsCarouselLayout({
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-sm text-foreground">{bullet.text}</span>
+                  <span className="text-sm md:text-base text-foreground">
+                    {bullet.text}
+                  </span>
                 </div>
               );
             })}
@@ -633,7 +652,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
 
         {tabs.length > 1 && (
           <div
-            className="flex items-center justify-center mb-8 w-full"
+            className="flex items-center justify-center mb-2 md:mb-8 w-full"
             data-testid="tabs-selector"
           >
             <div className="hidden md:flex w-full">
@@ -657,25 +676,31 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
             </div>
 
             <div className="flex md:hidden items-center gap-2 w-full justify-center">
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setActiveTab((activeTab - 1 + tabs.length) % tabs.length)}
-                data-testid="button-tab-prev-mobile"
-              >
-                <IconChevronLeft className="w-4 h-4" />
-              </Button>
-              <span className="bg-primary text-primary-foreground rounded-lg px-4 py-1 text-sm font-medium">
-                {tabs[activeTab]?.tab_label}
-              </span>
-              <Button
-                size="icon"
-                variant="ghost"
-                onClick={() => setActiveTab((activeTab + 1) % tabs.length)}
-                data-testid="button-tab-next-mobile"
-              >
-                <IconChevronRight className="w-4 h-4" />
-              </Button>
+              <div className="bg-primary w-full flex justify-between items-center rounded-lg py-1 px-1">
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="rounded-lg"
+                  onClick={() =>
+                    setActiveTab((activeTab - 1 + tabs.length) % tabs.length)
+                  }
+                  data-testid="button-tab-prev-mobile"
+                >
+                  <IconChevronLeft className="w-4 h-4 text-primary-foreground" />
+                </Button>
+                <span className="text-primary-foreground font-extrabold rounded-lg px-4 py-1 text-lg font-medium">
+                  {tabs[activeTab]?.tab_label}
+                </span>
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="rounded-lg"
+                  onClick={() => setActiveTab((activeTab + 1) % tabs.length)}
+                  data-testid="button-tab-next-mobile"
+                >
+                  <IconChevronRight className="w-4 h-4 text-primary-foreground" />
+                </Button>
+              </div>
             </div>
           </div>
         )}
