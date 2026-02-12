@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { IconArrowRight, IconArrowLeft, IconLoader2, IconCheck, IconAlertTriangle, IconLink, IconChevronDown, IconChevronRight } from "@tabler/icons-react";
+import { useState, useCallback, useRef } from "react";
+import { IconArrowRight, IconArrowLeft, IconLoader2, IconCheck, IconAlertTriangle, IconLink, IconChevronDown, IconChevronRight, IconSend } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -39,6 +39,12 @@ interface TableBuilderWizardProps {
 
 type WizardStep = "url" | "select-array" | "consistency" | "columns-prompt" | "ai-processing" | "review" | "action" | "done";
 
+interface ChatMessage {
+  role: "user" | "ai";
+  content: string;
+  config?: TableConfig;
+}
+
 interface StepState {
   url: string;
   rawData: unknown;
@@ -49,6 +55,7 @@ interface StepState {
   columnsPrompt: string;
   tableConfig: TableConfig | null;
   refinementPrompt: string;
+  chatMessages: ChatMessage[];
   addAction: boolean;
   actionLabel: string;
   actionHref: string;
@@ -94,11 +101,43 @@ function checkConsistency(arr: Record<string, unknown>[]): { consistent: boolean
   };
 }
 
+function formatConfigSummary(config: TableConfig): string {
+  const cols = config.columns.map((c) => c.label).join(", ");
+  return `${config.title ? `"${config.title}" with` : "Table with"} ${config.columns.length} columns: ${cols}`;
+}
+
+function resolvePreviewValue(col: TableColumnConfig, sample: Record<string, unknown>): string {
+  if (col.template) {
+    const val = col.template.replace(/\{([^}]+)\}/g, (_, k: string) => {
+      const parts = k.trim().split(".");
+      let cur: unknown = sample;
+      for (const p of parts) {
+        if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
+        else return "";
+      }
+      if (typeof cur === "string" && /^\d{4}-\d{2}-\d{2}(T|\s)/.test(cur)) {
+        try { return new Date(cur).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); } catch { /* */ }
+      }
+      return cur != null ? String(cur) : "";
+    });
+    return val || "-";
+  }
+  const parts = col.key.split(".");
+  let cur: unknown = sample;
+  for (const p of parts) {
+    if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
+    else return "-";
+  }
+  return cur != null ? String(cur).slice(0, 40) : "-";
+}
+
 export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilderWizardProps) {
   const [step, setStep] = useState<WizardStep>("url");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sampleExpanded, setSampleExpanded] = useState(false);
+  const [refining, setRefining] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
   const [state, setState] = useState<StepState>({
     url: "",
     rawData: null,
@@ -109,6 +148,7 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
     columnsPrompt: "",
     tableConfig: null,
     refinementPrompt: "",
+    chatMessages: [],
     addAction: false,
     actionLabel: "View",
     actionHref: "",
@@ -208,6 +248,10 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
     [state.rawData, updateState]
   );
 
+  const scrollChatToBottom = useCallback(() => {
+    setTimeout(() => chatEndRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
+  }, []);
+
   const handleGenerateColumns = useCallback(async () => {
     if (!state.columnsPrompt.trim()) {
       setError("Please describe the columns you want");
@@ -225,8 +269,13 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
         locale: locale || "en",
       });
       const config = await response.json();
-      updateState({ tableConfig: config, refinementPrompt: "" });
+      const initialMessages: ChatMessage[] = [
+        { role: "user", content: state.columnsPrompt },
+        { role: "ai", content: formatConfigSummary(config), config },
+      ];
+      updateState({ tableConfig: config, refinementPrompt: "", chatMessages: initialMessages });
       setStep("review");
+      scrollChatToBottom();
     } catch (err) {
       setError(err instanceof Error ? err.message : "AI failed to generate table configuration");
       setStep("columns-prompt");
@@ -236,8 +285,12 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
   const handleRefine = useCallback(async () => {
     if (!state.refinementPrompt.trim() || !state.tableConfig) return;
 
-    setStep("ai-processing");
+    const userMsg: ChatMessage = { role: "user", content: state.refinementPrompt };
+    const updatedMessages = [...state.chatMessages, userMsg];
+    updateState({ chatMessages: updatedMessages, refinementPrompt: "" });
+    setRefining(true);
     setError(null);
+    scrollChatToBottom();
 
     try {
       const response = await apiRequest("POST", "/api/ai/refine-table-config", {
@@ -248,13 +301,15 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
         locale: locale || "en",
       });
       const config = await response.json();
-      updateState({ tableConfig: config, refinementPrompt: "" });
-      setStep("review");
+      const aiMsg: ChatMessage = { role: "ai", content: formatConfigSummary(config), config };
+      updateState({ tableConfig: config, chatMessages: [...updatedMessages, aiMsg] });
+      scrollChatToBottom();
     } catch (err) {
       setError(err instanceof Error ? err.message : "AI failed to refine table configuration");
-      setStep("review");
+    } finally {
+      setRefining(false);
     }
-  }, [state.refinementPrompt, state.tableConfig, state.dataArray, state.availableKeys, locale, updateState]);
+  }, [state.refinementPrompt, state.tableConfig, state.chatMessages, state.dataArray, state.availableKeys, locale, updateState, scrollChatToBottom]);
 
   const handleFinish = useCallback(() => {
     if (!state.tableConfig) return;
@@ -471,82 +526,78 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
           <div className="space-y-4">
             <div>
               <h3 className="text-lg font-semibold text-foreground mb-1" data-testid="text-review-title">
-                Review generated columns
+                Review & refine columns
               </h3>
               <p className="text-sm text-muted-foreground">
-                Check the columns below. If they look good, continue. Otherwise, describe what you want to change.
+                Chat with AI to refine your table. When it looks good, click continue.
               </p>
             </div>
 
-            <div className="space-y-2">
-              {state.tableConfig.columns.map((col, i) => (
-                <div
-                  key={i}
-                  className="flex items-start gap-3 p-3 rounded-md border bg-muted/30"
-                  data-testid={`review-column-${col.key}`}
-                >
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <span className="font-medium text-foreground text-sm">{col.label}</span>
-                      <Badge variant="secondary" className="text-xs">{col.type}</Badge>
+            <div className="border rounded-md flex flex-col" style={{ maxHeight: "340px" }}>
+              <div className="flex-1 overflow-y-auto p-3 space-y-3" data-testid="chat-messages">
+                {state.chatMessages.map((msg, i) => (
+                  <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+                    <div
+                      className={`max-w-[85%] rounded-md px-3 py-2 text-sm ${
+                        msg.role === "user"
+                          ? "bg-primary text-primary-foreground"
+                          : "bg-muted text-foreground"
+                      }`}
+                      data-testid={`chat-message-${msg.role}-${i}`}
+                    >
+                      <p>{msg.content}</p>
+                      {msg.config && (
+                        <div className="mt-2 space-y-1">
+                          {msg.config.columns.map((col, ci) => (
+                            <div key={ci} className="flex items-center gap-2 text-xs opacity-90">
+                              <Badge variant="secondary" className="text-[10px] px-1.5 py-0">{col.type}</Badge>
+                              <span className="font-medium">{col.label}</span>
+                              {state.dataArray[0] && (
+                                <span className="opacity-70 truncate">
+                                  {resolvePreviewValue(col, state.dataArray[0])}
+                                </span>
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
                     </div>
-                    <p className="text-xs text-muted-foreground mt-0.5 truncate">
-                      {col.template ? `Template: ${col.template}` : `Key: ${col.key}`}
-                    </p>
                   </div>
-                  <span className="text-xs text-muted-foreground tabular-nums flex-shrink-0">
-                    {(() => {
-                      const sample = state.dataArray[0];
-                      if (!sample) return "-";
-                      if (col.template) {
-                        const val = col.template.replace(/\{([^}]+)\}/g, (_, k) => {
-                          const parts = k.trim().split(".");
-                          let cur: unknown = sample;
-                          for (const p of parts) {
-                            if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
-                            else return "";
-                          }
-                          if (typeof cur === "string" && /^\d{4}-\d{2}-\d{2}(T|\s)/.test(cur)) {
-                            try { return new Date(cur).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); } catch { /* */ }
-                          }
-                          return cur != null ? String(cur) : "";
-                        });
-                        return val || "-";
-                      }
-                      const parts = col.key.split(".");
-                      let cur: unknown = sample;
-                      for (const p of parts) {
-                        if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
-                        else return "-";
-                      }
-                      return cur != null ? String(cur).slice(0, 40) : "-";
-                    })()}
-                  </span>
-                </div>
-              ))}
-            </div>
+                ))}
+                {refining && (
+                  <div className="flex justify-start">
+                    <div className="bg-muted rounded-md px-3 py-2">
+                      <IconLoader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                    </div>
+                  </div>
+                )}
+                <div ref={chatEndRef} />
+              </div>
 
-            <div className="space-y-2 pt-2 border-t">
-              <Label htmlFor="refinement-prompt" className="text-sm font-medium">
-                Want changes? Describe them here:
-              </Label>
-              <Textarea
-                id="refinement-prompt"
-                placeholder='e.g. "Change the date format to show only month and year", "Remove the duration column", "Rename Location to Campus"...'
-                value={state.refinementPrompt}
-                onChange={(e) => updateState({ refinementPrompt: e.target.value })}
-                className="min-h-[60px]"
-                data-testid="input-refinement-prompt"
-              />
-              <Button
-                variant="outline"
-                onClick={handleRefine}
-                disabled={!state.refinementPrompt.trim()}
-                data-testid="button-refine"
-              >
-                <IconLoader2 className="w-4 h-4 mr-1" />
-                Regenerate with changes
-              </Button>
+              <div className="border-t p-2 flex gap-2 items-end">
+                <Textarea
+                  placeholder="Ask for changes... e.g. 'Remove duration', 'Rename Location to Campus'"
+                  value={state.refinementPrompt}
+                  onChange={(e) => updateState({ refinementPrompt: e.target.value })}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && !e.shiftKey) {
+                      e.preventDefault();
+                      handleRefine();
+                    }
+                  }}
+                  className="min-h-[40px] max-h-[80px] flex-1 resize-none text-sm"
+                  disabled={refining}
+                  data-testid="input-refinement-prompt"
+                />
+                <Button
+                  size="icon"
+                  onClick={handleRefine}
+                  disabled={refining || !state.refinementPrompt.trim()}
+                  data-testid="button-refine"
+                >
+                  {refining ? <IconLoader2 className="w-4 h-4 animate-spin" /> : <IconSend className="w-4 h-4" />}
+                </Button>
+              </div>
             </div>
 
             {error && <ErrorMessage message={error} />}
@@ -561,6 +612,7 @@ export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilde
               </Button>
               <Button
                 onClick={() => setStep("action")}
+                disabled={refining}
                 data-testid="button-accept-columns"
               >
                 <IconCheck className="w-4 h-4 mr-1" />
