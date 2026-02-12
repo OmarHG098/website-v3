@@ -8,86 +8,32 @@ import {
 import { Button } from "@/components/ui/button";
 import { IconMessageCircle } from "@tabler/icons-react";
 import type { FAQSection as FAQSectionType } from "@shared/schema";
-import { useLocation } from "@/contexts/SessionContext";
+import { useLocation as useSessionLocation } from "@/contexts/SessionContext";
+import { useLocation as useWouterLocation } from "wouter";
 import { useTranslation } from "react-i18next";
 import { useQuery } from "@tanstack/react-query";
 import { useInternalNav } from "@/hooks/useInternalNav";
-
-interface FaqItem {
-  question: string;
-  answer: string;
-  locations?: string[];
-  related_features?: string[];
-  last_updated?: string;
-  priority?: number;
-}
-
-interface SimpleFaq {
-  question: string;
-  answer: string;
-}
+import { filterFaqsByRelatedFeatures, type FaqItem } from "@/lib/faqConstants";
 
 interface FAQSectionProps {
   data: FAQSectionType;
+  programSlug?: string;
 }
 
 const CALENDLY_URL = "https://calendly.com/epilowsky-4geeksacademy/30min?month=2025-12";
 
-function filterFaqsByRelatedFeatures(
-  faqs: FaqItem[],
-  options: {
-    relatedFeatures?: string[];
-    location?: string;
-    limit?: number;
-  } = {}
-): SimpleFaq[] {
-  const { relatedFeatures, location, limit } = options;
-  let filtered = [...faqs];
-
-  if (location) {
-    filtered = filtered.filter((faq) => {
-      const locations = faq.locations || ["all"];
-      return locations.includes("all") || locations.includes(location);
-    });
-  }
-
-  if (relatedFeatures && relatedFeatures.length > 0) {
-    filtered = filtered.filter((faq) => {
-      const faqFeatures = faq.related_features || [];
-      return relatedFeatures.some((feature) => faqFeatures.includes(feature));
-    });
-  }
-
-  if (relatedFeatures && relatedFeatures.length > 0) {
-    filtered = filtered.sort((a, b) => {
-      const aFeatures = a.related_features || [];
-      const bFeatures = b.related_features || [];
-      const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
-      const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
-      
-      if (bMatchCount !== aMatchCount) {
-        return bMatchCount - aMatchCount;
-      }
-      return (b.priority ?? 0) - (a.priority ?? 0);
-    });
-  } else {
-    filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
-  }
-
-  if (limit !== undefined && limit > 0) {
-    filtered = filtered.slice(0, limit);
-  }
-
-  return filtered.map(({ question, answer }) => ({ question, answer }));
-}
-
-export function FAQSection({ data }: FAQSectionProps) {
+export function FAQSection({ data, programSlug }: FAQSectionProps) {
   const handleLinkClick = useInternalNav();
-  const location = useLocation();
+  const sessionLocation = useSessionLocation();
+  const [pathname] = useWouterLocation();
   const { i18n } = useTranslation();
   const locale = i18n.language?.startsWith("es") ? "es" : "en";
   
-  const isUsOrCanada = location?.country_code === 'US' || location?.country_code === 'CA';
+  // Detect if we're on a location page and extract location slug
+  const locationSlugMatch = pathname.match(/^\/(en|es)\/(location|ubicacion)\/([^/]+)/);
+  const locationSlug = locationSlugMatch ? locationSlugMatch[3] : undefined;
+  
+  const isUsOrCanada = sessionLocation?.country_code === 'US' || sessionLocation?.country_code === 'CA';
   
   const hasInlineItems = data.items && data.items.length > 0;
   const hasRelatedFeatures = data.related_features && data.related_features.length > 0;
@@ -98,12 +44,13 @@ export function FAQSection({ data }: FAQSectionProps) {
     staleTime: 5 * 60 * 1000,
   });
   
-  const faqItems: SimpleFaq[] = useMemo(() => {
+  const faqItems = useMemo(() => {
     if (hasRelatedFeatures && faqsData?.faqs) {
       return filterFaqsByRelatedFeatures(faqsData.faqs, {
         relatedFeatures: data.related_features!,
-        location: location?.country_code,
+        location: locationSlug,
         limit: 9,
+        programSlug,
       });
     }
     
@@ -112,7 +59,7 @@ export function FAQSection({ data }: FAQSectionProps) {
     }
     
     return [];
-  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, faqsData, location?.country_code]);
+  }, [hasRelatedFeatures, hasInlineItems, data.related_features, data.items, faqsData, locationSlug, programSlug]);
   
   if (isLoading && hasRelatedFeatures) {
     return (

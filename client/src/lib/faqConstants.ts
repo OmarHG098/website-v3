@@ -35,7 +35,10 @@ export const AVAILABLE_RELATED_FEATURES: RelatedFeature[] = [
   "certification",
 ];
 
-export const MAX_RELATED_FEATURES = 3;
+export const MAX_RELATED_FEATURES = 2;
+
+/** Max topics selectable for an FAQ section block in the editor (per-FAQ items stay at MAX_RELATED_FEATURES). */
+export const MAX_FAQ_SECTION_TOPICS = 3;
 
 export interface FaqItem {
   question: string;
@@ -57,15 +60,23 @@ export function filterFaqsByRelatedFeatures(
     relatedFeatures?: string[];
     location?: string;
     limit?: number;
+    programSlug?: string;
   } = {}
 ): SimpleFaq[] {
-  const { relatedFeatures, location, limit } = options;
+  const { relatedFeatures, location, limit, programSlug } = options;
   let filtered = [...faqs];
 
   if (location) {
+    // On location page: show "all" FAQs + FAQs for this specific location
     filtered = filtered.filter((faq) => {
       const locations = faq.locations || ["all"];
       return locations.includes("all") || locations.includes(location);
+    });
+  } else {
+    // On general page: only show "all" FAQs, exclude location-specific ones
+    filtered = filtered.filter((faq) => {
+      const locations = faq.locations || ["all"];
+      return locations.includes("all") || locations.length === 0;
     });
   }
 
@@ -83,13 +94,23 @@ export function filterFaqsByRelatedFeatures(
       const aMatchCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
       const bMatchCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
 
+      // Prioritize FAQs that have the programSlug tag when programSlug is provided and in selected topics
+      const shouldPrioritizeProgram = programSlug && relatedFeatures.includes(programSlug);
+      if (shouldPrioritizeProgram) {
+        const aHasProgram = aFeatures.includes(programSlug);
+        const bHasProgram = bFeatures.includes(programSlug);
+        if (aHasProgram !== bHasProgram) {
+          return aHasProgram ? -1 : 1; // FAQs with programSlug come first (lower sort value)
+        }
+      }
+
       if (bMatchCount !== aMatchCount) {
         return bMatchCount - aMatchCount;
       }
-      return (b.priority ?? 0) - (a.priority ?? 0);
+      return (a.priority ?? 2) - (b.priority ?? 2);
     });
   } else {
-    filtered = filtered.sort((a, b) => (b.priority ?? 0) - (a.priority ?? 0));
+    filtered = filtered.sort((a, b) => (a.priority ?? 2) - (b.priority ?? 2));
   }
 
   if (limit !== undefined && limit > 0) {
