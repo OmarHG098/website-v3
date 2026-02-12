@@ -50,7 +50,7 @@ sections:
       alt: AI Engineering program introduction
     signup_card:
       title: Get the Full Syllabus
-      description: Request the full syllabus, program description, class schedule and everything else you need to know.
+      description: Access the full 10-milestone roadmap and Company Case methodology.
       cta_button:
         text: Send me the Curriculum
         url: /en/apply
