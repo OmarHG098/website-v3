@@ -98,6 +98,28 @@ function validateFAQFile(filePath: string, errors: ValidationIssue[], warnings: 
           suggestion: "Review and update this FAQ answer, then set last_updated to today's date",
         });
       }
+
+      // Validate tag count: warn on 2 tags, error on 3+ tags
+      const tagCount = faq.related_features?.length || 0;
+      if (tagCount > 2) {
+        errors.push({
+          type: "error",
+          code: "TOO_MANY_TAGS",
+          message: `FAQ "${questionPreview}..." has ${tagCount} tags. Maximum allowed is 2 (1 tag preferred, 2 only in extraordinary cases).`,
+          file: filePath,
+          line: index + 1,
+          suggestion: "Reduce to 1-2 tags. Keep only the most relevant tag(s).",
+        });
+      } else if (tagCount === 2) {
+        warnings.push({
+          type: "warning",
+          code: "MULTIPLE_TAGS",
+          message: `FAQ "${questionPreview}..." has 2 tags. Consider reducing to 1 tag unless this is an extraordinary case.`,
+          file: filePath,
+          line: index + 1,
+          suggestion: "Review if both tags are necessary. Aim for 1 tag per question.",
+        });
+      }
     });
   } catch (error) {
     errors.push({
@@ -114,7 +136,7 @@ function validateFAQFile(filePath: string, errors: ValidationIssue[], warnings: 
 
 export const faqsValidator: Validator = {
   name: "faqs",
-  description: "Validates FAQ entries have last_updated dates within 6 months",
+  description: "Validates FAQ entries have last_updated dates within 6 months and proper tag counts (max 2 tags)",
   apiExposed: true,
   estimatedDuration: "fast",
   category: "content",

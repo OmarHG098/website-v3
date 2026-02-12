@@ -129,7 +129,7 @@ export function buildFaqPageSchema(faqItems: Array<{ question: string; answer: s
   };
 }
 
-export function resolveFaqItems(section: FaqSection, locale: string): Array<{ question: string; answer: string }> {
+export function resolveFaqItems(section: FaqSection, locale: string, locationSlug?: string, programSlug?: string): Array<{ question: string; answer: string }> {
   if (section.items && section.items.length > 0) {
     return section.items.map(({ question, answer }) => ({ question, answer }));
   }
@@ -138,18 +138,46 @@ export function resolveFaqItems(section: FaqSection, locale: string): Array<{ qu
     const allFaqs = loadCentralizedFaqs(locale);
     const relatedFeatures = section.related_features;
 
-    const filtered = allFaqs
+    let filtered = allFaqs
       .filter((faq) => {
         const faqFeatures = faq.related_features || [];
         return relatedFeatures.some((f) => faqFeatures.includes(f));
-      })
+      });
+
+    // Apply location filtering
+    if (locationSlug) {
+      // On location page: show "all" FAQs + FAQs for this specific location
+      filtered = filtered.filter((faq) => {
+        const locations = faq.locations || ["all"];
+        return locations.includes("all") || locations.includes(locationSlug);
+      });
+    } else {
+      // On general page: only show "all" FAQs, exclude location-specific ones
+      filtered = filtered.filter((faq) => {
+        const locations = faq.locations || ["all"];
+        return locations.includes("all") || locations.length === 0;
+      });
+    }
+
+    filtered = filtered
       .sort((a, b) => {
         const aFeatures = a.related_features || [];
         const bFeatures = b.related_features || [];
         const aCount = relatedFeatures.filter((f) => aFeatures.includes(f)).length;
         const bCount = relatedFeatures.filter((f) => bFeatures.includes(f)).length;
+        
+        // Prioritize FAQs that have the programSlug tag when programSlug is provided and in selected topics
+        const shouldPrioritizeProgram = programSlug && relatedFeatures.includes(programSlug);
+        if (shouldPrioritizeProgram) {
+          const aHasProgram = aFeatures.includes(programSlug);
+          const bHasProgram = bFeatures.includes(programSlug);
+          if (aHasProgram !== bHasProgram) {
+            return aHasProgram ? -1 : 1; // FAQs with programSlug come first (lower sort value)
+          }
+        }
+        
         if (bCount !== aCount) return bCount - aCount;
-        return (b.priority ?? 0) - (a.priority ?? 0);
+        return (a.priority ?? 2) - (b.priority ?? 2);
       })
       .slice(0, 9);
 
@@ -181,9 +209,14 @@ export function generateSsrSchemaHtml(url: string): string {
 
     const sections = pageData.sections as Array<Record<string, unknown>> | undefined;
     if (sections) {
+      // Extract location slug if we're on a location page
+      const locationSlug = route.contentType === "locations" ? route.slug : undefined;
+      // Extract program slug if we're on a program page
+      const programSlug = route.contentType === "programs" ? route.slug : undefined;
+      
       for (const section of sections) {
         if (section.type === "faq") {
-          const faqItems = resolveFaqItems(section as unknown as FaqSection, route.locale);
+          const faqItems = resolveFaqItems(section as unknown as FaqSection, route.locale, locationSlug, programSlug);
           if (faqItems.length > 0) {
             scripts.push(
               `<script type="application/ld+json">${JSON.stringify(buildFaqPageSchema(faqItems))}</script>`

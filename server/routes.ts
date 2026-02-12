@@ -182,7 +182,11 @@ function listLandingPages(): Array<{
     if (landing) {
       const commonData = loadCommonData("landings", slug);
       const locale = (commonData?.locale as string) || "en";
-      landings.push({ slug: landing.slug, title: landing.title, locale });
+      const landingSlug = landing.slug || slug;
+      const landingTitle = landing.title || "";
+      if (landingTitle) {
+        landings.push({ slug: landingSlug, title: landingTitle, locale });
+      }
     }
   }
 
@@ -555,7 +559,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         locale,
       );
       if (forcedContent) {
-        program = forcedContent;
+        program = forcedContent as unknown as CareerProgram;
         experimentInfo = {
           experiment: "preview",
           variant: forceVariant,
@@ -588,7 +592,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           locale,
         );
         if (variantContent) {
-          program = variantContent;
+          program = variantContent as unknown as CareerProgram;
           experimentInfo = {
             experiment: assignment.experiment_slug,
             variant: assignment.variant_slug,
@@ -1767,10 +1771,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       let faqSchema: Record<string, unknown> | null = null;
       const sections = pageData.sections as Array<Record<string, unknown>> | undefined;
       if (sections) {
+        // Extract location slug if we're on a location page
+        const locationSlug = contentType === "locations" ? slug : undefined;
+        // Extract program slug if we're on a program page
+        const programSlug = contentType === "programs" ? slug : undefined;
+        
         const allFaqItems: Array<{ question: string; answer: string }> = [];
         for (const section of sections) {
           if (section.type === "faq") {
-            const items = resolveFaqItems(section as unknown as FaqSection, locale);
+            const items = resolveFaqItems(section as unknown as FaqSection, locale, locationSlug, programSlug);
             allFaqItems.push(...items);
           }
         }
