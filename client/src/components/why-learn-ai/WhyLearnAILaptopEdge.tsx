@@ -32,7 +32,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
       {/* Background - hidden on mobile */}
       <div className="hidden md:block">
         <div 
-          className="absolute right-0 top-0 bottom-0 w-[20%] bg-primary/10 rounded-lg"
+          className="absolute right-0 top-0 bottom-0 w-[19%] bg-primary/10 rounded-lg"
           aria-hidden="true"
         />
       </div>
@@ -155,7 +155,7 @@ export function WhyLearnAILaptopEdge({ data }: WhyLearnAILaptopEdgeProps) {
       </div>
 
       {/* Laptop image - hidden on mobile only, visible from md */}
-      <div className="hidden md:flex absolute md:right-[-480px] lg:right-[-400px] xl:right-[-270px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
+      <div className="hidden md:flex absolute md:right-[-480px] lg:right-[-400px] xl:right-[-307px] top-0 bottom-0 w-[700px] items-center pointer-events-none">
         <img 
           src={laptopCodeEditor}
           alt="Code editor on laptop"
