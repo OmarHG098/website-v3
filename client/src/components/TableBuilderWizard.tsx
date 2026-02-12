@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { IconArrowRight, IconArrowLeft, IconLoader2, IconCheck, IconAlertTriangle, IconLink } from "@tabler/icons-react";
+import { IconArrowRight, IconArrowLeft, IconLoader2, IconCheck, IconAlertTriangle, IconLink, IconChevronDown, IconChevronRight } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -82,6 +82,7 @@ export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardP
   const [step, setStep] = useState<WizardStep>("url");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [sampleExpanded, setSampleExpanded] = useState(false);
   const [state, setState] = useState<StepState>({
     url: "",
     rawData: null,
@@ -357,6 +358,29 @@ export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardP
                   </Badge>
                 ))}
               </div>
+
+              {state.dataArray.length > 0 && (
+                <div className="mb-4">
+                  <button
+                    type="button"
+                    onClick={() => setSampleExpanded((v) => !v)}
+                    className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    data-testid="button-toggle-sample"
+                  >
+                    {sampleExpanded ? <IconChevronDown className="w-3.5 h-3.5" /> : <IconChevronRight className="w-3.5 h-3.5" />}
+                    Sample item preview
+                  </button>
+                  {sampleExpanded && (
+                    <pre
+                      className="mt-2 p-3 rounded-md bg-muted text-xs text-foreground overflow-auto max-h-[200px] border"
+                      data-testid="text-sample-item"
+                    >
+                      {JSON.stringify(state.dataArray[0], null, 2)}
+                    </pre>
+                  )}
+                </div>
+              )}
+
               <p className="text-sm text-muted-foreground">
                 Describe which columns you want to display and in what order. For example: "4 columns: first the weekday, then the name, then the email, and finally the age"
               </p>
