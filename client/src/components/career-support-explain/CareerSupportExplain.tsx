@@ -1,12 +1,15 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { UniversalImage } from "@/components/UniversalImage";
 import type {
   CareerSupportExplainSection,
   CareerSupportTab,
+  CareerSupportTestimonial,
 } from "@shared/schema";
 import * as TablerIcons from "@tabler/icons-react";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 interface CareerSupportExplainProps {
   data: CareerSupportExplainSection;
@@ -306,6 +309,184 @@ function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
   );
 }
 
+function TestimonialSlide({ testimonial }: { testimonial: CareerSupportTestimonial }) {
+  return (
+    <div className="flex gap-4 h-full min-w-0" data-testid="testimonial-slide">
+      <div
+        className="flex-1 rounded-lg overflow-hidden"
+        data-testid="testimonial-image-col"
+      >
+        {testimonial.image_id && (
+          <UniversalImage
+            id={testimonial.image_id}
+            className="w-full h-full"
+            style={{
+              objectFit:
+                (testimonial.image_object_fit as React.CSSProperties["objectFit"]) ??
+                "cover",
+              objectPosition: testimonial.image_object_position ?? "center",
+              minHeight: "320px",
+            }}
+            data-testid="testimonial-image"
+          />
+        )}
+      </div>
+
+      <div
+        className="flex-1 flex flex-col gap-4 p-5"
+        data-testid="testimonial-info-col"
+      >
+        {testimonial.contributor_logos && testimonial.contributor_logos.length > 0 && (
+          <div className="flex items-center gap-3" data-testid="testimonial-logos">
+            {testimonial.contributor_logos.map((logo, i) => (
+              <UniversalImage
+                key={i}
+                id={logo.image_id}
+                className="h-8 w-auto object-contain"
+                data-testid={`testimonial-logo-${i}`}
+              />
+            ))}
+          </div>
+        )}
+
+        {testimonial.description && (
+          <p
+            className="text-sm text-muted-foreground leading-relaxed"
+            data-testid="testimonial-description"
+          >
+            {testimonial.description}
+          </p>
+        )}
+
+        {testimonial.achievement && (
+          <Card
+            className="p-4 mt-auto"
+            data-testid="testimonial-achievement"
+          >
+            <p className="text-sm font-medium text-foreground">
+              {testimonial.achievement}
+            </p>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function TextWithTestimonialsCarouselLayout({ tab }: { tab: CareerSupportTab }) {
+  const testimonials = tab.testimonials ?? [];
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const totalSlides = testimonials.length;
+
+  const goNext = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % totalSlides);
+  }, [totalSlides]);
+
+  const goPrev = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + totalSlides) % totalSlides);
+  }, [totalSlides]);
+
+  return (
+    <div className="flex gap-8 h-full" data-testid="grid-text-with-testimonials">
+      <div className="flex flex-col justify-center flex-[1.2] min-w-0" data-testid="col-left-text">
+        {tab.title && (
+          <h3
+            className="text-3xl font-bold text-foreground mb-4"
+            data-testid="text-testimonials-title"
+          >
+            {tab.title}
+          </h3>
+        )}
+        {tab.left_description && (
+          <p
+            className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+            data-testid="text-testimonials-description"
+          >
+            {tab.left_description}
+          </p>
+        )}
+        {tab.left_bullets && tab.left_bullets.length > 0 && (
+          <div className="flex flex-col gap-3" data-testid="bullets-testimonials">
+            {tab.left_bullets.map((bullet, i) => {
+              const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
+              return (
+                <div
+                  key={i}
+                  className="flex items-center gap-3"
+                  data-testid={`testimonial-bullet-${i}`}
+                >
+                  {IconComp && (
+                    <Card className="flex-shrink-0 p-1.5">
+                      <IconComp className="w-4 h-4 text-primary" />
+                    </Card>
+                  )}
+                  <span className="text-sm text-foreground">{bullet.text}</span>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      <div className="flex-[2] flex flex-col gap-3 min-w-0" data-testid="col-testimonials-carousel">
+        {totalSlides > 0 && (
+          <>
+            <div className="relative overflow-hidden rounded-lg flex-1">
+              <div
+                className="flex h-full transition-transform duration-500 ease-in-out"
+                style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+              >
+                {testimonials.map((testimonial, i) => (
+                  <div key={i} className="w-full flex-shrink-0 h-full">
+                    <TestimonialSlide testimonial={testimonial} />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {totalSlides > 1 && (
+              <div className="flex items-center justify-between" data-testid="carousel-controls">
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={goPrev}
+                  data-testid="button-carousel-prev"
+                >
+                  <IconChevronLeft className="w-4 h-4" />
+                </Button>
+
+                <div className="flex items-center gap-2" data-testid="carousel-dots">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setCurrentSlide(i)}
+                      className={cn(
+                        "w-2 h-2 rounded-full transition-colors",
+                        i === currentSlide ? "bg-foreground" : "bg-muted-foreground/40"
+                      )}
+                      data-testid={`carousel-dot-${i}`}
+                    />
+                  ))}
+                </div>
+
+                <Button
+                  size="icon"
+                  variant="outline"
+                  onClick={goNext}
+                  data-testid="button-carousel-next"
+                >
+                  <IconChevronRight className="w-4 h-4" />
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 function EmptyLayout() {
   return (
     <div
@@ -325,6 +506,8 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
       return <TwoColumnCardsLayout tab={tab} />;
     case "text_and_image":
       return <TextAndImageLayout tab={tab} />;
+    case "text_with_testimonials_carousel":
+      return <TextWithTestimonialsCarouselLayout tab={tab} />;
     default:
       return <EmptyLayout />;
   }
