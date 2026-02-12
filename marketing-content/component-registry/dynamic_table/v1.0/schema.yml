@@ -1,0 +1,65 @@
+name: DynamicTable
+version: "1.0"
+component: DynamicTable
+file: client/src/components/DynamicTable.tsx
+description: >-
+  A table component that fetches data from an external API endpoint and renders it
+  with sortable columns, typed cell rendering (text, number, date, image, link, boolean),
+  and optional row action buttons with templated URLs.
+
+when_to_use: >
+  Use when you need to display tabular data fetched live from an external API endpoint.
+  Supports nested data paths, column sorting, and action buttons per row.
+  Best for displaying lists of students, courses, events, or any structured API data.
+
+props:
+  endpoint:
+    type: string
+    required: true
+    description: The full URL of the API endpoint that returns the data (e.g., "https://api.example.com/items")
+  data_path:
+    type: string
+    required: false
+    description: If the array is nested inside the response object, specify the property name (e.g., "results")
+  title:
+    type: string
+    required: false
+    description: Main heading displayed above the table
+  subtitle:
+    type: string
+    required: false
+    description: Supporting text below the title
+  background:
+    type: string
+    required: false
+    description: Background color or gradient for the section
+  columns:
+    type: array
+    required: true
+    description: Array of column definitions
+    items:
+      key:
+        type: string
+        required: true
+        description: The property key from each data item
+      label:
+        type: string
+        required: true
+        description: Display label for the column header
+      type:
+        type: string
+        required: true
+        description: "Column type: text, number, date, image, link, or boolean"
+  action:
+    type: object
+    required: false
+    description: Optional action button for each row
+    properties:
+      label:
+        type: string
+        required: true
+        description: Button text (e.g., "View", "Edit")
+      href:
+        type: string
+        required: true
+        description: "URL template with {columnName} placeholders (e.g., 'https://example.com/item/{id}')"
