@@ -40,6 +40,7 @@ import type { PricingSection as PricingSectionType } from "@shared/schema";
 import Matplotlib from "@/components/custom-icons/Matplotlib";
 import Marquee from "react-fast-marquee";
 import { getIcon } from "@/lib/icons";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface PricingSectionProps {
   data: PricingSectionType;
@@ -80,6 +81,7 @@ const techIconMap: Record<string, ComponentType<{ className?: string }>> = {
 
 
 export function PricingSection({ data }: PricingSectionProps) {
+  const handleLinkClick = useInternalNav();
   const { i18n } = useTranslation();
   const isSpanish = i18n.language?.startsWith('es');
   const [isYearly, setIsYearly] = useState(true);
@@ -183,7 +185,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                   className="w-full bg-white text-[#061258] border-0 hover:bg-white/90 font-bold h-10 text-[17px] tracking-wide rounded"
                   data-testid="button-get-plan"
                 >
-                  <a href={data.cta.url} className="flex items-center justify-center gap-2">
+                  <a href={data.cta.url} onClick={handleLinkClick} className="flex items-center justify-center gap-2">
                     <IconSchool size={24} className="text-[#061258]" />
                     {data.cta.text}
                   </a>
@@ -395,7 +397,7 @@ export function PricingSection({ data }: PricingSectionProps) {
                 className="w-full bg-white text-[#061258] border-0 hover:bg-white/90 font-bold h-10 text-[17px] tracking-wide rounded"
                 data-testid="button-get-plan"
               >
-                <a href={data.cta.url} className="flex items-center justify-center gap-2">
+                <a href={data.cta.url} onClick={handleLinkClick} className="flex items-center justify-center gap-2">
                   <IconSchool size={24} className="text-[#061258]" />
                   {data.cta.text}
                 </a>

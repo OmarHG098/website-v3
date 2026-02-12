@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "../custom-icons";
 import type { FeaturesGridCardHeaderSection } from "@shared/schema";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 const { IconCheck } = TablerIcons;
 
@@ -15,6 +16,7 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
   const backgroundClass = data.background || "bg-background";
   const [isExpanded, setIsExpanded] = useState(false);
   const collapsibleMobile = data.collapsible_mobile ?? false;
+  const handleLinkClick = useInternalNav();
 
   return (
     <section 
@@ -67,7 +69,7 @@ export function FeaturesGridCardHeader({ data }: FeaturesGridCardHeaderProps) {
                       className="mt-4 w-fit"
                       data-testid="button-features-grid-cta"
                     >
-                      <a href={data.cta.url}>{data.cta.text}</a>
+                      <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                     </Button>
                   )}
                 </div>

@@ -27,17 +27,19 @@ function extractPath(url: string): string {
 
 interface SitemapSearchProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, isCustom: boolean) => void;
   placeholder?: string;
   testId?: string;
   locale?: string;
+  portalContainer?: HTMLElement | null;
 }
 
-export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId, locale = "en" }: SitemapSearchProps) {
+export function SitemapSearch({ value, onChange, placeholder = "/page-url", testId, locale = "en", portalContainer }: SitemapSearchProps) {
   const [open, setOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isCustomMode, setIsCustomMode] = useState(false);
   const [customUrl, setCustomUrl] = useState(value);
+  const [customError, setCustomError] = useState("");
 
   useEffect(() => {
     setCustomUrl(value);
@@ -67,14 +69,22 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
   }, [sitemapUrls, value]);
 
   const handleSelect = (url: string) => {
-    onChange(url);
+    onChange(url, false);
     setOpen(false);
     setSearchQuery("");
     setIsCustomMode(false);
   };
 
+  const hasLocalePrefix = (url: string) => /^\/[a-z]{2}(\/|$)/i.test(url.trim());
+
   const handleCustomSubmit = () => {
-    onChange(customUrl);
+    const trimmed = customUrl.trim();
+    if (!trimmed.startsWith("http") && hasLocalePrefix(trimmed)) {
+      setCustomError("Custom URLs cannot start with a locale prefix like /en/ or /es/. Use the page search above instead.");
+      return;
+    }
+    setCustomError("");
+    onChange(trimmed, true);
     setOpen(false);
     setIsCustomMode(false);
   };
@@ -102,7 +112,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
           <span className="truncate">{displayValue}</span>
         </button>
       </PopoverTrigger>
-      <PopoverContent className="w-80 p-0" align="start">
+      <PopoverContent className="w-80 p-0 z-[10001]" align="start" container={portalContainer}>
         <div className="p-2 border-b">
           <div className="relative">
             <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -126,7 +136,7 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
             <div className="flex gap-2">
               <Input
                 value={customUrl}
-                onChange={(e) => setCustomUrl(e.target.value)}
+                onChange={(e) => { setCustomUrl(e.target.value.replace(/\s+/g, "-")); setCustomError(""); }}
                 placeholder="/custom-url or https://..."
                 className="h-8 text-sm flex-1"
                 autoFocus
@@ -144,8 +154,11 @@ export function SitemapSearch({ value, onChange, placeholder = "/page-url", test
                 Save
               </Button>
             </div>
+            {customError && (
+              <p className="text-xs text-destructive">{customError}</p>
+            )}
             <button
-              onClick={() => setIsCustomMode(false)}
+              onClick={() => { setIsCustomMode(false); setCustomError(""); }}
               className="text-xs text-muted-foreground hover-elevate px-1 py-0.5 rounded"
             >
               Back to search

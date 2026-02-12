@@ -10,6 +10,7 @@ import {
   IconChevronDown,
 } from "@tabler/icons-react";
 import type { ResolvedColor } from "./shared";
+import { useInternalNav } from "@/hooks/useInternalNav";
 interface CourseSelectorSolidProps {
   data: CourseSelectorSection;
 }
@@ -57,6 +58,7 @@ export function CourseContent({
   course: CourseItem;
   resolved: ResolvedColor;
 }) {
+  const handleLinkClick = useInternalNav();
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
   const descRef = useRef<HTMLParagraphElement>(null);
@@ -173,7 +175,7 @@ export function CourseContent({
             </p>
           )}
         </div>
-        <a href={course.cta_url} className="w-full md:w-auto" data-testid="link-cta">
+        <a href={course.cta_url} onClick={handleLinkClick} className="w-full md:w-auto" data-testid="link-cta">
           <Button variant="outline" className="gap-2 w-full md:w-auto">
             {course.cta_text}
             <IconArrowRight className="w-4 h-4" />

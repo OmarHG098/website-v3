@@ -1,12 +1,14 @@
 import { Button } from "@/components/ui/button";
 import type { WhyLearnAISection as WhyLearnAISectionType } from "@shared/schema";
 import manWithLaptop from "@assets/man-with-laptop_1764772912948.webp";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface WhyLearnAIDefaultProps {
   data: WhyLearnAISectionType;
 }
 
 export function WhyLearnAIDefault({ data }: WhyLearnAIDefaultProps) {
+  const handleLinkClick = useInternalNav();
   return (
     <section 
       className="bg-gradient-to-r from-muted/50 to-background dark:from-muted/30 dark:to-background"
@@ -42,7 +44,7 @@ export function WhyLearnAIDefault({ data }: WhyLearnAIDefaultProps) {
                 asChild
                 data-testid="button-why-learn-cta"
               >
-                <a href={data.cta.url}>{data.cta.text}</a>
+                <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
               </Button>
             )}
           </div>

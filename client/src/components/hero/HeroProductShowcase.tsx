@@ -9,6 +9,7 @@ import { UniversalImage } from "@/components/UniversalImage";
 import { Button } from "@/components/ui/button";
 import { IconStarFilled, IconArrowRight, IconCheck } from "@tabler/icons-react";
 import { LeadForm, type LeadFormData } from "@/components/LeadForm";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 function parseLogoHeight(value?: string): number | undefined {
   if (!value) return undefined;
@@ -34,6 +35,8 @@ export function HeroProductShowcase({ data, landingLocations }: HeroProductShowc
     window.addEventListener("resize", checkWidth);
     return () => window.removeEventListener("resize", checkWidth);
   }, []);
+
+  const handleLinkClick = useInternalNav();
 
   // Cast to the full type to access optional properties
   const fullData = data as HeroProductShowcaseType;
@@ -276,7 +279,7 @@ export function HeroProductShowcase({ data, landingLocations }: HeroProductShowc
                     asChild
                     data-testid="button-hero-cta"
                   >
-                    <a href={data.cta_button.url}>
+                    <a href={data.cta_button.url} onClick={handleLinkClick}>
                       {data.cta_button.text}
                       <IconArrowRight className="ml-2 h-4 w-4" />
                     </a>

@@ -1,5 +1,6 @@
 import { useState, useRef, useLayoutEffect, useCallback, useEffect } from "react";
 import { ChevronDown, ChevronRight, Code, BarChart3, Shield, Brain, Medal, GraduationCap, Building } from "lucide-react";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   code: Code,
@@ -83,7 +84,7 @@ export interface DropdownProps {
   dropdown: DropdownData;
 }
 
-function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
+function CardsDropdown({ dropdown, onLinkClick }: { dropdown: CardsDropdownData; onLinkClick: React.MouseEventHandler<HTMLAnchorElement> }) {
   return (
     <div className="p-6 bg-white dark:bg-zinc-900">
       {(dropdown.title || dropdown.description) && (
@@ -105,6 +106,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
               key={index}
               href={item.href}
               className="block hover-elevate rounded-lg p-2 -m-2"
+              onClick={onLinkClick}
               data-testid={`dropdown-card-${(item.title || "card").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {IconComponent && (
@@ -129,7 +131,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
       {dropdown.footer && (
         <div className="mt-6 pt-4 border-t text-center text-sm text-muted-foreground">
           {dropdown.footer.text}{" "}
-          <a href={dropdown.footer.href} className="text-primary hover:underline">
+          <a href={dropdown.footer.href} className="text-primary hover:underline" onClick={onLinkClick}>
             {dropdown.footer.linkText || "here"}
           </a>
           .
@@ -139,7 +141,7 @@ function CardsDropdown({ dropdown }: { dropdown: CardsDropdownData }) {
   );
 }
 
-function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
+function ColumnsDropdown({ dropdown, onLinkClick }: { dropdown: ColumnsDropdownData; onLinkClick: React.MouseEventHandler<HTMLAnchorElement> }) {
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
@@ -153,10 +155,10 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
           )}
           <div>
             {dropdown.title && (
-              <a href="#" className="flex items-center gap-1 text-lg font-semibold text-foreground hover-elevate rounded-md">
+              <span className="flex items-center gap-1 text-lg font-semibold text-foreground hover-elevate rounded-md">
                 {dropdown.title}
                 <ChevronRight className="w-4 h-4" />
-              </a>
+              </span>
             )}
             {dropdown.description && (
               <p className="text-sm text-muted-foreground mt-1">{dropdown.description}</p>
@@ -175,6 +177,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
                   <a
                     href={item.href}
                     className="flex items-center gap-1 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
+                    onClick={onLinkClick}
                     data-testid={`dropdown-column-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
                   >
                     {item.label}
@@ -190,7 +193,7 @@ function ColumnsDropdown({ dropdown }: { dropdown: ColumnsDropdownData }) {
   );
 }
 
-function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) {
+function SimpleListDropdown({ dropdown, onLinkClick }: { dropdown: SimpleListDropdownData; onLinkClick: React.MouseEventHandler<HTMLAnchorElement> }) {
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
   return (
@@ -219,6 +222,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
             <a
               href={item.href}
               className="flex items-center justify-between px-2 py-2 rounded-md text-sm text-foreground hover-elevate"
+              onClick={onLinkClick}
               data-testid={`dropdown-list-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
             >
               {item.label}
@@ -231,7 +235,7 @@ function SimpleListDropdown({ dropdown }: { dropdown: SimpleListDropdownData }) 
   );
 }
 
-function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }) {
+function GroupedListDropdown({ dropdown, onLinkClick }: { dropdown: GroupedListDropdownData; onLinkClick: React.MouseEventHandler<HTMLAnchorElement> }) {
   const [activeGroup, setActiveGroup] = useState(0);
   const IconComponent = dropdown.icon ? iconMap[dropdown.icon] : null;
   
@@ -280,6 +284,7 @@ function GroupedListDropdown({ dropdown }: { dropdown: GroupedListDropdownData }
                 key={index}
                 href={item.href}
                 className="flex items-center gap-1 py-1.5 text-sm text-muted-foreground hover-elevate rounded-md px-1 -mx-1"
+                onClick={onLinkClick}
                 data-testid={`dropdown-group-item-${(item.label || "item").toLowerCase().replace(/\s+/g, "-")}`}
               >
                 {item.label}
@@ -384,16 +389,20 @@ export function Dropdown({ label, href, dropdown, controlledOpen, onOpenChange }
     return () => window.removeEventListener("resize", positionPanel);
   }, [isOpen, isWideDropdown, positionPanel]);
   
+  const handleLinkClick = useInternalNav(useCallback(() => {
+    setIsOpen(false);
+  }, []));
+
   const renderDropdownContent = () => {
     switch (dropdown.type) {
       case "cards":
-        return <CardsDropdown dropdown={dropdown} />;
+        return <CardsDropdown dropdown={dropdown} onLinkClick={handleLinkClick} />;
       case "columns":
-        return <ColumnsDropdown dropdown={dropdown} />;
+        return <ColumnsDropdown dropdown={dropdown} onLinkClick={handleLinkClick} />;
       case "simple-list":
-        return <SimpleListDropdown dropdown={dropdown} />;
+        return <SimpleListDropdown dropdown={dropdown} onLinkClick={handleLinkClick} />;
       case "grouped-list":
-        return <GroupedListDropdown dropdown={dropdown} />;
+        return <GroupedListDropdown dropdown={dropdown} onLinkClick={handleLinkClick} />;
       default:
         return null;
     }

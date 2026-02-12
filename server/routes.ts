@@ -908,6 +908,375 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
+  app.get("/api/debug/redirects/locale-urls", (req, res) => {
+    try {
+      const url = req.query.url as string;
+      if (!url) {
+        res.status(400).json({ error: "Missing 'url' query parameter" });
+        return;
+      }
+
+      let contentType: "programs" | "landings" | "pages" | "locations" | null = null;
+      let slug: string | null = null;
+
+      const programEn = url.match(/^\/(?:en\/)?career-programs\/([^/]+)/);
+      const programEs = url.match(/^\/(?:es\/)?programas-de-carrera\/([^/]+)/);
+      const locationEn = url.match(/^\/(?:en\/)?locations\/([^/]+)/);
+      const locationEs = url.match(/^\/(?:es\/)?ubicaciones\/([^/]+)/);
+      const landingMatch = url.match(/^\/landing\/([^/]+)/);
+      const pageEn = url.match(/^\/en\/([^/]+)/);
+      const pageEs = url.match(/^\/es\/([^/]+)/);
+
+      if (programEn) { contentType = "programs"; slug = programEn[1]; }
+      else if (programEs) { contentType = "programs"; slug = programEs[1]; }
+      else if (locationEn) { contentType = "locations"; slug = locationEn[1]; }
+      else if (locationEs) { contentType = "locations"; slug = locationEs[1]; }
+      else if (landingMatch) { contentType = "landings"; slug = landingMatch[1]; }
+      else if (pageEn) { contentType = "pages"; slug = pageEn[1]; }
+      else if (pageEs) { contentType = "pages"; slug = pageEs[1]; }
+
+      if (!contentType || !slug) {
+        res.status(400).json({ error: "Could not determine content type from URL" });
+        return;
+      }
+
+      const baseSlug = contentIndex.resolveBaseSlug(slug, contentType);
+      const urls = contentIndex.getLocaleUrls(baseSlug, contentType);
+      res.json({ urls, contentType, slug: baseSlug });
+    } catch (err) {
+      console.error("[Debug] Failed to resolve locale URLs:", err);
+      res.status(500).json({ error: "Failed to resolve locale URLs" });
+    }
+  });
+
+  // Add a new redirect (for debug tools)
+  app.post("/api/debug/redirects", (req, res) => {
+    try {
+      const { from, to, allLanguages, status: redirectStatus, isCustomDestination } = req.body;
+      const statusCode = redirectStatus && [301, 302].includes(redirectStatus) ? redirectStatus : 301;
+
+      if (!from || !to) {
+        res.status(400).json({ error: "Both 'from' and 'to' fields are required" });
+        return;
+      }
+
+      let normalizedFrom = (from as string).startsWith("/") ? (from as string) : `/${from}`;
+      normalizedFrom = normalizedFrom.toLowerCase();
+      if (normalizedFrom.length > 1 && normalizedFrom.endsWith("/")) {
+        normalizedFrom = normalizedFrom.slice(0, -1);
+      }
+
+      const destUrl = to as string;
+
+      if (isCustomDestination) {
+        const customFilePath = path.join(process.cwd(), "marketing-content", "custom-redirects.yml");
+
+        let parsed: { redirects: Array<{ from: string; to: string; status?: number }> } = { redirects: [] };
+        if (fs.existsSync(customFilePath)) {
+          const raw = fs.readFileSync(customFilePath, "utf-8");
+          const loaded = yaml.load(raw) as { redirects?: unknown[] } | null;
+          if (loaded && Array.isArray(loaded.redirects)) {
+            parsed.redirects = loaded.redirects as Array<{ from: string; to: string; status?: number }>;
+          }
+        }
+
+        if (parsed.redirects.some(r => r.from?.toLowerCase() === normalizedFrom)) {
+          res.status(409).json({ error: `Redirect "${normalizedFrom}" already exists in custom-redirects.yml` });
+          return;
+        }
+
+        const newEntry: { from: string; to: string; status?: number } = { from: normalizedFrom, to: destUrl };
+        if (statusCode !== 301) {
+          newEntry.status = statusCode;
+        }
+        parsed.redirects.push(newEntry);
+
+        const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+        fs.writeFileSync(customFilePath, yamlContent, "utf-8");
+
+        contentIndex.scan();
+        clearRedirectCache();
+
+        res.json({
+          success: true,
+          message: `Custom redirect added: ${normalizedFrom} -> ${destUrl}`,
+          file: "marketing-content/custom-redirects.yml",
+        });
+        return;
+      }
+
+      // Parse destination URL to find the content entry
+      let contentType: "programs" | "landings" | "pages" | "locations" | null = null;
+      let slug: string | null = null;
+      let locale: string = "en";
+
+      const programEnMatch = destUrl.match(/^\/en\/career-programs\/([^/]+)/);
+      const programEsMatch = destUrl.match(/^\/es\/programas-de-carrera\/([^/]+)/);
+      const programStrippedMatch = destUrl.match(/^\/career-programs\/([^/]+)/);
+      const programStrippedEsMatch = destUrl.match(/^\/programas-de-carrera\/([^/]+)/);
+      const landingMatch = destUrl.match(/^\/landing\/([^/]+)/);
+      const pageEnMatch = destUrl.match(/^\/en\/([^/]+)/);
+      const pageEsMatch = destUrl.match(/^\/es\/([^/]+)/);
+      const locationEnMatch = destUrl.match(/^\/en\/locations\/([^/]+)/);
+      const locationEsMatch = destUrl.match(/^\/es\/ubicaciones\/([^/]+)/);
+      const locationStrippedMatch = destUrl.match(/^\/locations\/([^/]+)/);
+      const locationStrippedEsMatch = destUrl.match(/^\/ubicaciones\/([^/]+)/);
+
+      if (programEnMatch) {
+        contentType = "programs";
+        slug = programEnMatch[1];
+        locale = "en";
+      } else if (programEsMatch) {
+        contentType = "programs";
+        slug = programEsMatch[1];
+        locale = "es";
+      } else if (programStrippedMatch) {
+        contentType = "programs";
+        slug = programStrippedMatch[1];
+        locale = "en";
+      } else if (programStrippedEsMatch) {
+        contentType = "programs";
+        slug = programStrippedEsMatch[1];
+        locale = "es";
+      } else if (landingMatch) {
+        contentType = "landings";
+        slug = landingMatch[1];
+        locale = "en";
+      } else if (locationEnMatch) {
+        contentType = "locations";
+        slug = locationEnMatch[1];
+        locale = "en";
+      } else if (locationEsMatch) {
+        contentType = "locations";
+        slug = locationEsMatch[1];
+        locale = "es";
+      } else if (locationStrippedMatch) {
+        contentType = "locations";
+        slug = locationStrippedMatch[1];
+        locale = "en";
+      } else if (locationStrippedEsMatch) {
+        contentType = "locations";
+        slug = locationStrippedEsMatch[1];
+        locale = "es";
+      } else if (pageEnMatch) {
+        contentType = "pages";
+        slug = pageEnMatch[1];
+        locale = "en";
+      } else if (pageEsMatch) {
+        contentType = "pages";
+        slug = pageEsMatch[1];
+        locale = "es";
+      } else if (!destUrl.startsWith("/en/") && !destUrl.startsWith("/es/") && !destUrl.startsWith("/landing/")) {
+        const pageStrippedMatch = destUrl.match(/^\/([^/]+)/);
+        if (pageStrippedMatch) {
+          contentType = "pages";
+          slug = pageStrippedMatch[1];
+          locale = "en";
+        }
+      }
+
+      if (!contentType || !slug) {
+        res.status(400).json({ error: "Could not determine content type from destination URL" });
+        return;
+      }
+
+      const entries = contentIndex.findBySlug(slug, { contentType });
+      if (entries.length === 0) {
+        res.status(404).json({ error: `No content found for slug "${slug}" in ${contentType}` });
+        return;
+      }
+
+      const entry = entries[0];
+      const basePath = path.join(process.cwd(), entry.folder);
+
+      let targetFile: string;
+      if (contentType === "landings" || allLanguages) {
+        targetFile = "_common.yml";
+      } else {
+        targetFile = `${locale}.yml`;
+      }
+
+      const filePath = path.join(basePath, targetFile);
+
+      let parsed: Record<string, unknown> = {};
+      if (fs.existsSync(filePath)) {
+        const raw = fs.readFileSync(filePath, "utf-8");
+        parsed = (yaml.load(raw) as Record<string, unknown>) || {};
+      }
+
+      if (!parsed.meta || typeof parsed.meta !== "object") {
+        parsed.meta = {};
+      }
+      const meta = parsed.meta as Record<string, unknown>;
+      if (!Array.isArray(meta.redirects)) {
+        meta.redirects = [];
+      }
+      const redirects = meta.redirects as unknown[];
+
+      const existingPath = (r: unknown) => {
+        if (typeof r === "string") return r.toLowerCase();
+        if (typeof r === "object" && r !== null && "path" in r) return ((r as { path: string }).path).toLowerCase();
+        return "";
+      };
+
+      if (redirects.some(r => existingPath(r) === normalizedFrom)) {
+        res.status(409).json({ error: `Redirect "${normalizedFrom}" already exists in ${targetFile}` });
+        return;
+      }
+
+      if (statusCode !== 301) {
+        redirects.push({ path: normalizedFrom, status: statusCode });
+      } else {
+        redirects.push(normalizedFrom);
+      }
+
+      const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+
+      contentIndex.scan();
+      clearRedirectCache();
+
+      res.json({
+        success: true,
+        message: `Redirect added: ${normalizedFrom} -> ${destUrl}`,
+        file: `${entry.folder}/${targetFile}`,
+      });
+    } catch (err) {
+      console.error("[Debug] Failed to add redirect:", err);
+      res.status(500).json({ error: "Failed to add redirect" });
+    }
+  });
+
+  // Delete a redirect (for debug tools)
+  app.delete("/api/debug/redirects", (req, res) => {
+    try {
+      const { from, source } = req.body;
+
+      if (!from || !source) {
+        res.status(400).json({ error: "Both 'from' and 'source' fields are required" });
+        return;
+      }
+
+      let normalizedFrom = (from as string).startsWith("/") ? (from as string) : `/${from}`;
+      normalizedFrom = normalizedFrom.toLowerCase();
+      if (normalizedFrom.length > 1 && normalizedFrom.endsWith("/")) {
+        normalizedFrom = normalizedFrom.slice(0, -1);
+      }
+
+      const sourceFile = source as string;
+
+      const resolvedSource = path.resolve(process.cwd(), sourceFile);
+      const marketingDir = path.resolve(process.cwd(), "marketing-content");
+      if (!resolvedSource.startsWith(marketingDir + path.sep) && resolvedSource !== marketingDir) {
+        res.status(400).json({ error: "Invalid source file path" });
+        return;
+      }
+      if (!sourceFile.endsWith(".yml") && !sourceFile.endsWith(".yaml")) {
+        res.status(400).json({ error: "Invalid source file type" });
+        return;
+      }
+
+      if (sourceFile === "marketing-content/custom-redirects.yml") {
+        const customFilePath = path.join(process.cwd(), "marketing-content", "custom-redirects.yml");
+
+        if (!fs.existsSync(customFilePath)) {
+          res.status(404).json({ error: "Custom redirects file not found" });
+          return;
+        }
+
+        const raw = fs.readFileSync(customFilePath, "utf-8");
+        const loaded = yaml.load(raw) as { redirects?: Array<{ from: string; to: string; status?: number }> } | null;
+
+        if (!loaded || !Array.isArray(loaded.redirects)) {
+          res.status(404).json({ error: "No redirects found in custom redirects file" });
+          return;
+        }
+
+        const originalLength = loaded.redirects.length;
+        loaded.redirects = loaded.redirects.filter(r => {
+          let rFrom = r.from?.startsWith("/") ? r.from : `/${r.from}`;
+          rFrom = rFrom.toLowerCase();
+          if (rFrom.length > 1 && rFrom.endsWith("/")) rFrom = rFrom.slice(0, -1);
+          return rFrom !== normalizedFrom;
+        });
+
+        if (loaded.redirects.length === originalLength) {
+          res.status(404).json({ error: `Redirect "${normalizedFrom}" not found in custom-redirects.yml` });
+          return;
+        }
+
+        const yamlContent = yaml.dump(loaded, { lineWidth: -1, noRefs: true });
+        fs.writeFileSync(customFilePath, yamlContent, "utf-8");
+
+        contentIndex.scan();
+        clearRedirectCache();
+
+        res.json({
+          success: true,
+          message: `Custom redirect "${normalizedFrom}" deleted`,
+        });
+        return;
+      }
+
+      const filePath = path.join(process.cwd(), sourceFile);
+
+      if (!fs.existsSync(filePath)) {
+        res.status(404).json({ error: `Source file "${sourceFile}" not found` });
+        return;
+      }
+
+      const raw = fs.readFileSync(filePath, "utf-8");
+      const parsed = (yaml.load(raw) as Record<string, unknown>) || {};
+
+      const meta = parsed.meta as Record<string, unknown> | undefined;
+      if (!meta || !Array.isArray(meta.redirects)) {
+        res.status(404).json({ error: `No redirects found in "${sourceFile}"` });
+        return;
+      }
+
+      const redirects = meta.redirects as unknown[];
+      const originalLength = redirects.length;
+
+      const getRedirectPath = (r: unknown): string => {
+        if (typeof r === "string") {
+          let p = r.startsWith("/") ? r : `/${r}`;
+          p = p.toLowerCase();
+          if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+          return p;
+        }
+        if (typeof r === "object" && r !== null && "path" in r) {
+          let p = ((r as { path: string }).path);
+          p = p.startsWith("/") ? p : `/${p}`;
+          p = p.toLowerCase();
+          if (p.length > 1 && p.endsWith("/")) p = p.slice(0, -1);
+          return p;
+        }
+        return "";
+      };
+
+      meta.redirects = redirects.filter(r => getRedirectPath(r) !== normalizedFrom);
+
+      if ((meta.redirects as unknown[]).length === originalLength) {
+        res.status(404).json({ error: `Redirect "${normalizedFrom}" not found in "${sourceFile}"` });
+        return;
+      }
+
+      const yamlContent = yaml.dump(parsed, { lineWidth: -1, noRefs: true });
+      fs.writeFileSync(filePath, yamlContent, "utf-8");
+
+      contentIndex.scan();
+      clearRedirectCache();
+
+      res.json({
+        success: true,
+        message: `Redirect "${normalizedFrom}" deleted from "${sourceFile}"`,
+      });
+    } catch (err) {
+      console.error("[Debug] Failed to delete redirect:", err);
+      res.status(500).json({ error: "Failed to delete redirect" });
+    }
+  });
+
   // Menus API - list all menu files (excludes translation files like .es.yml)
   app.get("/api/menus", (_req, res) => {
     const menusDir = path.join(process.cwd(), "marketing-content", "menus");

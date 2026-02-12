@@ -7,6 +7,12 @@
 import type { ContentFile } from "./types";
 
 export function getCanonicalUrl(file: ContentFile): string {
+  if (file.locale === "_common") {
+    if (file.type === "landing") return `/landing/${file.slug}`;
+    if (file.type === "program") return `/en/career-programs/${file.slug}`;
+    return `/${file.slug}`;
+  }
+
   switch (file.type) {
     case "program":
       return file.locale === "es"

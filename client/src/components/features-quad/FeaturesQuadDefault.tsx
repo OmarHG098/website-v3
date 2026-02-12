@@ -3,6 +3,7 @@ import { UniversalImage } from "@/components/UniversalImage";
 import { UniversalVideo } from "@/components/UniversalVideo";
 import { Button } from "@/components/ui/button";
 import { getIcon } from "@/lib/icons";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface FeaturesQuadDefaultProps {
   data: FeatureQuadSection;
@@ -75,6 +76,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
   const hasDescription = !!data.description;
   const hasOnlyOne = (hasHeading && !hasDescription) || (!hasHeading && hasDescription);
   const textAlign = hasOnlyOne ? "text-center" : "text-left";
+  const handleLinkClick = useInternalNav();
 
   const getButtonVariant = (variant?: string) => {
     if (variant === "primary") return "default";
@@ -170,7 +172,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
                   className="mt-4"
                   data-testid="button-features-quad-cta-mobile"
                 >
-                  <a href={data.cta.url}>{data.cta.text}</a>
+                  <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                 </Button>
               )}
             </div>
@@ -205,7 +207,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
                   className="mt-4"
                   data-testid="button-features-quad-cta-tablet"
                 >
-                  <a href={data.cta.url}>{data.cta.text}</a>
+                  <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                 </Button>
               )}
             </div>
@@ -260,7 +262,7 @@ export function FeaturesQuadDefault({ data }: FeaturesQuadDefaultProps) {
                   className="mt-4"
                   data-testid="button-features-quad-cta-desktop"
                 >
-                  <a href={data.cta.url}>{data.cta.text}</a>
+                  <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
                 </Button>
               )}
             </div>

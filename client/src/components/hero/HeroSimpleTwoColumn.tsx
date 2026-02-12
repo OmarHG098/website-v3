@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { RichTextContent } from "@/components/ui/rich-text-content";
 import * as TablerIcons from "@tabler/icons-react";
 import type { ComponentType } from "react";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface HeroSimpleTwoColumnProps {
   data: HeroSimpleTwoColumnType;
@@ -21,6 +22,7 @@ const DEFAULT_IMAGE = {
 };
 
 export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
+  const handleLinkClick = useInternalNav();
   const image = data.image || DEFAULT_IMAGE;
   
   return (
@@ -73,7 +75,7 @@ export function HeroSimpleTwoColumn({ data }: HeroSimpleTwoColumnProps) {
                     asChild
                     data-testid={`button-hero-cta-${index}`}
                   >
-                    <a href={button.url} className="flex items-center gap-2">
+                    <a href={button.url} onClick={handleLinkClick} className="flex items-center gap-2">
                       {button.icon && getIcon(button.icon)}
                       {button.text}
                     </a>

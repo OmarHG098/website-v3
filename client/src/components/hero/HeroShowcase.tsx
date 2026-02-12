@@ -7,6 +7,7 @@ import avatar2 from "@assets/generated_images/Man_profile_headshot_1_0850c276.we
 import avatar3 from "@assets/generated_images/Woman_profile_headshot_2_a0ea2c29.webp";
 import avatar4 from "@assets/generated_images/Man_profile_headshot_2_516b72e4.webp";
 import curvedArrow from "@assets/curved-arrow-with-loop_1763159963338.png";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface HeroShowcaseProps {
   data: HeroShowcase;
@@ -14,6 +15,7 @@ interface HeroShowcaseProps {
 
 export function HeroShowcase({ data }: HeroShowcaseProps) {
   const avatars = [avatar1, avatar2, avatar3, avatar4];
+  const handleLinkClick = useInternalNav();
 
   return (
     <section className="relative container mx-auto px-4 overflow-hidden">
@@ -118,7 +120,7 @@ export function HeroShowcase({ data }: HeroShowcaseProps) {
               asChild
               data-testid="button-hero-cta"
             >
-              <a href={data.cta_button.url}>
+              <a href={data.cta_button.url} onClick={handleLinkClick}>
                 {data.cta_button.text}
               </a>
             </Button>

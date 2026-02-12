@@ -12,6 +12,7 @@ import rigobotLogo from "@assets/rigobot-logo_1764707022198.webp";
 import { cn } from "@/lib/utils";
 import { UniversalImage } from "@/components/UniversalImage";
 import { UniversalVideo } from "@/components/UniversalVideo";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 interface AILearningSectionProps {
   data: AILearningSectionType;
@@ -145,6 +146,7 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const handleLinkClick = useInternalNav();
   const videoId = data.video_url ? extractYouTubeId(data.video_url) : null;
 
   return (
@@ -293,7 +295,7 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
                       asChild
                       data-testid="button-feature-cta"
                     >
-                      <a href={displayedFeature.cta.url}>{displayedFeature.cta.text}</a>
+                      <a href={displayedFeature.cta.url} onClick={handleLinkClick}>{displayedFeature.cta.text}</a>
                     </Button>
                   )}
                 </div>
@@ -308,6 +310,7 @@ function AILearningFeatureTabs({ data }: { data: AiLearningFeatureTabsSection })
 
 // Highlight Variant Component
 function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
+  const handleLinkClick = useInternalNav();
   const videoUrl = data.video?.url || data.video_url;
   const hasVideo = !!videoUrl;
 
@@ -365,7 +368,7 @@ function AILearningHighlight({ data }: { data: AiLearningHighlightSection }) {
                 asChild
                 data-testid="button-highlight-cta"
               >
-                <a href={data.cta.url}>{data.cta.text}</a>
+                <a href={data.cta.url} onClick={handleLinkClick}>{data.cta.text}</a>
               </Button>
             )}
           </div>

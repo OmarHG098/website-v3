@@ -10,6 +10,7 @@ import {
 } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 const COLOR_MAP: Record<string, string> = {
   primary: "var(--primary)",
@@ -81,6 +82,7 @@ function CourseContent({
 }) {
   const [expanded, setExpanded] = useState(false);
   const [isClamped, setIsClamped] = useState(false);
+  const handleLinkClick = useInternalNav();
   const descRef = useRef<HTMLParagraphElement>(null);
 
   useEffect(() => {
@@ -191,7 +193,7 @@ function CourseContent({
             </p>
           )}
         </div>
-        <a href={course.cta_url} className="w-full md:w-auto" data-testid="link-cta">
+        <a href={course.cta_url} onClick={handleLinkClick} className="w-full md:w-auto" data-testid="link-cta">
           <Button variant="outline" className="gap-2 w-full md:w-auto">
             {course.cta_text}
             <IconArrowRight className="w-4 h-4" />

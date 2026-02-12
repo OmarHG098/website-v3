@@ -5,6 +5,7 @@ import * as TablerIcons from "@tabler/icons-react";
 import { getCustomIcon } from "@/components/custom-icons";
 import type { ComponentType } from "react";
 import { AIWorkflowDiagram } from "@/components/AIWorkflowDiagram";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 function getIcon(iconName: string, className?: string, color?: string) {
   const CustomIcon = getCustomIcon(iconName);
@@ -33,6 +34,7 @@ function DetailedCard({
   iconColor?: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
+  const handleLinkClick = useInternalNav();
   const itemId = item.id || item.title.toLowerCase().replace(/\s+/g, '-');
   const hasImage = item.image?.src;
   
@@ -86,6 +88,7 @@ function DetailedCard({
           {item.link_url && (
             <a 
               href={item.link_url}
+              onClick={handleLinkClick}
               className="text-primary hover:underline font-medium"
               data-testid={`link-feature-mobile-${itemId}`}
             >
@@ -102,6 +105,7 @@ function DetailedCard({
         {item.link_url && (
           <a 
             href={item.link_url}
+            onClick={handleLinkClick}
             className="text-primary hover:underline font-medium"
             data-testid={`link-feature-${itemId}`}
           >
