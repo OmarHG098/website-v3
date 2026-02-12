@@ -29,6 +29,7 @@ sections:
     version: v1.0
     title: Our Awards
     subtitle: Recognized globally for excellence in tech education
+    subtitle_color: hsl(var(--primary))
     columns: 3
     items:
       - logo: /attached_assets/forbes-logo-award_1764709625651.webp
@@ -36,6 +37,7 @@ sections:
         excerpt: Our bootcamp was chosen as the top option for its hands- on beginner friendly format, verified outcomes and job guarantee.
         link_text: See article
         link_url: https://www.forbes.com/advisor/education/bootcamps/best-data-science-bootcamps/#4geeks_academy_data_science_and_machine_learning_course_section
+        box_color: ""
       - logo: /attached_assets/arp-logo-certification_1765548854924.png
         title: Institutional Quality Online Education
         excerpt: 4Geeks Academy has earned the ARP certification, distinguishing it as a leader in online coding education.
@@ -66,6 +68,7 @@ sections:
         excerpt: Not only in Florida, but over each of our campus 4Geeks is constantly keeping a ~5 start rating that makes us one of the top bootcamp in the world
         link_text: See article
         link_url: https://www.switchup.org/bootcamps/4geeks-academy
+        box_color: ""
       - logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
         title: Top 5 Coding Bootcamps on Switchup 2025
         excerpt: SwitchUp has honored 4Geeks Academy by featuring it on their prestigious list of top coding bootcamps for 2025.
@@ -76,6 +79,7 @@ sections:
         excerpt: We have been selected as one of the Top Online Coding Bootcamps by Forbes.
         link_text: See article
         link_url: https://www.forbes.com/advisor/education/bootcamps/best-full-stack-developer-bootcamp/#4geeks_academy_full_stack_developer_bootcamp_section
+        box_color: hsl(var(--secondary))
       - logo: /attached_assets/ebootcamp-top_1765549056325.png
         title: Best Bootcamp Ebootcamp for 2024
         excerpt: We've been nominated by eBootcamp as the top coding bootcamp for 2024
