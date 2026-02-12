@@ -128,6 +128,20 @@ sections:
       desktop: none md
     marginY:
       desktop: none md
+  - type: why_learn_ai
+    variant: laptop-edge
+    title: Enroll with a Job Guarantee for Extra Confidence
+    subtitle: Back your career outcome with a stronger commitment
+    description: Our optional Job Guarantee reflects our confidence in your career outcome. If you don’t secure a qualifying role within 9 months of graduation, you’ll receive a full tuition refund.
+    cta:
+      text: Get More Info
+      url: /job-guarantee
+      variant: primary
+    marginY:
+      desktop: md
+    paddingY:
+      desktop: none sm
+    background: hsl(var(--secondary))
   - type: features_grid
     version: "1.0"
     variant: stats-text
