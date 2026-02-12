@@ -28,38 +28,38 @@ sections:
   - type: hero
     version: "1.0"
     variant: course
-    title: Become a Full Stack Developer
-    title_highlight: Full Stack Developer
-    subtitle: Launch your web development career in 16 weeks with $65K+ starting salaries.
+    title: Full Stack Development with AI Program
+    title_highlight: Full Stack Developer with AI
+    subtitle: Train for high-demand software development roles with an AI-powered full stack curriculum, personalized mentorship, and proven career outcomes.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
         - https://randomuser.me/api/portraits/men/2.jpg
         - https://randomuser.me/api/portraits/women/3.jpg
         - https://randomuser.me/api/portraits/men/4.jpg
-      count: +1,000 students enrolled
+      count: 1,000+ students enrolled across LATAM and the U.S.
     bullet_points:
-      - Master HTML, CSS, JavaScript, and React for modern frontends
-      - Build scalable backend APIs with Python and Flask
-      - Learn database design, authentication, and deployment
-      - Work on real-world projects with industry best practices
+      - Master modern frontend development with HTML, CSS, JavaScript, and React
+      - Build scalable backend systems with Python, APIs, and database architecture
+      - Integrate AI tools and workflows into real-world web applications
+      - Unlimited career support, 1:1 mentorship, and access to an optional Job Guarantee
     tutors:
       - name: Expert Instructor
-        role: Main Instructor
+        role: Lead Instructor
         image: https://randomuser.me/api/portraits/men/10.jpg
       - name: Rigo
-        role: AI Tutor
+        role: AI Learning Assistant
         image: /attached_assets/rigobot-logo_1764707022198.webp
-    tutors_label: "Your tutors:"
-    description: Become the full-stack developer companies can't wait to hire. Our 16-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $65K+ starting salaries.
+    tutors_label: "Your instructors:"
+    description: Build modern, production-ready web applications with AI and position yourself for the next generation of AI-fluent full stack development roles.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
       thumbnail: https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=450&fit=crop
-      alt: Full Stack Developer program introduction
+      alt: Full Stack Developer with AI program introduction at 4Geeks Academy
     signup_card:
-      title: Apply to the Full Stack Program
-      description: Start your journey to becoming a Full Stack Developer
+      title: Apply to the Full Stack Developer with AI Program
+      description: Take the next step toward a career in software development
       cta_button:
         text: Apply Now
         url: /en/apply
@@ -73,7 +73,7 @@ sections:
         - icon: IconCalendarBolt
           text: 12-Week Track
         - icon: code
-          text: Interactive Exercises
+          text: Interactive Coding Exercises
           count: 100+
         - icon: robot
           text: AI-Powered Feedback
