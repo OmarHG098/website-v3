@@ -957,8 +957,8 @@ export const careerProgramSchema = z.object({
   sections: z.array(sectionSchema),
 });
 
-export type CareerProgramMeta = z.infer<typeof careerProgramMetaSchema>;
-export type CareerProgram = z.infer<typeof careerProgramSchema>;
+export type CareerProgramMeta = z.output<typeof careerProgramMetaSchema>;
+export type CareerProgram = z.output<typeof careerProgramSchema>;
 
 // ============================================
 // Landing Page Schema
