@@ -22,50 +22,54 @@ function getTablerIcon(name: string) {
 
 function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="flex gap-4 h-full" data-testid="grid-tab-content">
+    <div className="flex flex-col md:flex-row gap-4 h-full" data-testid="grid-tab-content">
       <Card
         className="bg-card p-6 flex flex-col rounded-lg flex-1"
         data-testid="col-1-info"
       >
         {tab.col1_subtitle && (
           <h3
-            className="text-2xl font-bold text-foreground mb-3"
+            className="text-lg md:text-xl lg:text-2xl font-bold text-foreground mb-3"
             data-testid="text-col1-subtitle"
           >
             {tab.col1_subtitle}
           </h3>
         )}
-        {tab.col1_description && (
-          <p
-            className="text-sm lg:text-base text-muted-foreground leading-snug whitespace-pre-line"
-            data-testid="text-col1-description"
-          >
-            {tab.col1_description}
-          </p>
-        )}
-
-        {tab.col1_boxes && tab.col1_boxes.length > 0 && (
-          <div className="mt-auto pt-4">
-            <p className="font-semibold text-primary mb-2">
-              We'll help you create tailored job search materials
-            </p>
-            <div className="flex flex-wrap gap-2" data-testid="boxes-col1">
-              {tab.col1_boxes.map((box, i) => {
-                const IconComp = box.icon ? getTablerIcon(box.icon) : null;
-                return (
-                  <Card
-                    key={i}
-                    className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
-                    data-testid={`box-item-${i}`}
-                  >
-                    {IconComp && <IconComp className="w-4 h-4 text-primary" />}
-                    <span className="text-foreground">{box.text}</span>
-                  </Card>
-                );
-              })}
-            </div>
+        <div className="flex flex-col md:flex-row md:gap-4 flex-1">
+          <div className="flex-1">
+            {tab.col1_description && (
+              <p
+                className="text-xs md:text-sm lg:text-base text-muted-foreground leading-snug whitespace-pre-line"
+                data-testid="text-col1-description"
+              >
+                {tab.col1_description}
+              </p>
+            )}
           </div>
-        )}
+
+          {tab.col1_boxes && tab.col1_boxes.length > 0 && (
+            <div className="mt-auto pt-4 md:pt-0 flex-1">
+              <p className="font-semibold text-primary mb-2">
+                We'll help you create tailored job search materials
+              </p>
+              <div className="flex flex-wrap gap-2" data-testid="boxes-col1">
+                {tab.col1_boxes.map((box, i) => {
+                  const IconComp = box.icon ? getTablerIcon(box.icon) : null;
+                  return (
+                    <Card
+                      key={i}
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-sm"
+                      data-testid={`box-item-${i}`}
+                    >
+                      {IconComp && <IconComp className="w-4 h-4 text-primary" />}
+                      <span className="text-foreground">{box.text}</span>
+                    </Card>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </div>
       </Card>
 
       <Card
@@ -74,7 +78,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
       >
         {tab.col2_heading && (
           <p
-            className="text-2xl font-semibold text-primary mb-6 leading-snug text-foreground"
+            className="text-lg md:text-xl lg:text-2xl font-semibold text-primary mb-6 leading-snug text-foreground"
             data-testid="text-col2-heading"
           >
             {tab.col2_heading}
@@ -82,7 +86,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         )}
 
         {tab.col2_bullets && tab.col2_bullets.length > 0 && (
-          <div className="flex flex-col gap-4 " data-testid="bullets-col2">
+          <div className="flex flex-col md:grid md:grid-cols-2 gap-4" data-testid="bullets-col2">
             {tab.col2_bullets.map((bullet, i) => {
               const IconComp = bullet.icon ? getTablerIcon(bullet.icon) : null;
               return (
@@ -96,7 +100,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-base">{bullet.text}</span>
+                  <span className="text-xs md:text-sm lg:text-base">{bullet.text}</span>
                 </div>
               );
             })}
@@ -105,7 +109,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
       </Card>
 
       <div
-        className="relative overflow-hidden rounded-lg flex-[1.55]"
+        className="relative overflow-hidden rounded-lg md:flex-[1] lg:flex-[1.55] min-h-[200px] md:min-h-0"
         data-testid="col-3-image"
       >
         {tab.col3_image_id && (
@@ -129,7 +133,7 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
 function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
     <div
-      className="flex gap-4 h-full items-center"
+      className="flex flex-col lg:flex-row gap-4 h-full items-center"
       data-testid="grid-two-column-cards"
     >
       <Card
@@ -138,59 +142,98 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
       >
         {tab.title && (
           <h3
-            className="text-4xl me-[200px] font-bold text-foreground "
+            className="text-2xl md:text-3xl lg:text-4xl lg:me-[200px] font-bold text-foreground"
             data-testid="text-tab-title"
           >
             {tab.title}
           </h3>
         )}
-        <div className="flex items-end text-muted-foreground h-full">
-          <p>Once your profile is ready, visibility becomes the focus.</p>
-        </div>
-        <div className="flex items-end flex-1" style={{ marginTop: "0px" }}>
-          <div className="flex gap-3 flex-1 ">
-            <div className="flex flex-col flex-1 leading-snug">
-              {tab.left_text && (
-                <p
-                  className="text-base text-muted-foreground whitespace-pre-line"
-                  data-testid="text-left-content"
-                >
-                  {tab.left_text}
-                </p>
-              )}
 
-              {tab.left_stat && (
-                <div className="flex items-end h-full">
-                  <div className="mt-auto pt-4" data-testid="stat-left">
-                    <span className="text-5xl font-bold text-primary">
-                      {tab.left_stat.value}
-                    </span>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      {tab.left_stat.label}
-                    </p>
+        <div className="lg:hidden flex flex-col flex-1">
+          <p className="text-muted-foreground mt-2 whitespace-pre-line" data-testid="text-left-content-mobile">
+            {"Once your profile is ready, visibility becomes the focus."}{tab.left_text ? `\n${tab.left_text}` : ""}
+          </p>
+
+          {tab.left_image_id && (
+            <div
+              className="relative rounded-lg mt-3"
+              data-testid="img-left-container-mobile"
+            >
+              <UniversalImage
+                id={tab.left_image_id}
+                className="w-full h-auto rounded-lg mt-2"
+                style={{
+                  objectFit:
+                    (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
+                    "cover",
+                  objectPosition: tab.left_image_object_position || "center",
+                }}
+                data-testid="img-left-content-mobile"
+              />
+            </div>
+          )}
+
+          {tab.left_stat && (
+            <div className="mt-auto pt-4" data-testid="stat-left-mobile">
+              <span className="text-5xl font-bold text-primary">
+                {tab.left_stat.value}
+              </span>
+              <p className="text-sm text-muted-foreground mt-1">
+                {tab.left_stat.label}
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="hidden lg:flex flex-col flex-1">
+          <div className="flex items-end text-muted-foreground h-full">
+            <p>Once your profile is ready, visibility becomes the focus.</p>
+          </div>
+          <div className="flex items-end flex-1" style={{ marginTop: "0px" }}>
+            <div className="flex gap-3 flex-1">
+              <div className="flex flex-col flex-1 leading-snug">
+                {tab.left_text && (
+                  <p
+                    className="text-base text-muted-foreground whitespace-pre-line"
+                    data-testid="text-left-content"
+                  >
+                    {tab.left_text}
+                  </p>
+                )}
+
+                {tab.left_stat && (
+                  <div className="flex items-end h-full">
+                    <div className="mt-auto pt-4" data-testid="stat-left">
+                      <span className="text-5xl font-bold text-primary">
+                        {tab.left_stat.value}
+                      </span>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {tab.left_stat.label}
+                      </p>
+                    </div>
                   </div>
+                )}
+              </div>
+
+              {tab.left_image_id && (
+                <div
+                  className="relative rounded-lg flex-[1.2]"
+                  data-testid="img-left-container"
+                >
+                  <UniversalImage
+                    id={tab.left_image_id}
+                    className="w-full h-auto rounded-lg mt-2"
+                    style={{
+                      objectFit:
+                        (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
+                        "cover",
+                      objectPosition: tab.left_image_object_position || "center",
+                    }}
+                    data-testid="img-left-content"
+                  />
                 </div>
               )}
             </div>
-
-            {tab.left_image_id && (
-              <div
-                className="relative rounded-lg flex-[1.2]"
-                data-testid="img-left-container"
-              >
-                <UniversalImage
-                  id={tab.left_image_id}
-                  className="w-full h-auto rounded-lg mt-2"
-                  style={{
-                    objectFit:
-                      (tab.left_image_object_fit as React.CSSProperties["objectFit"]) ||
-                      "cover",
-                    objectPosition: tab.left_image_object_position || "center",
-                  }}
-                  data-testid="img-left-content"
-                />
-              </div>
-            )}
           </div>
         </div>
       </Card>
@@ -250,14 +293,14 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
 
 function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
   return (
-    <div className="flex gap-8 h-full" data-testid="grid-text-and-image">
+    <div className="flex flex-col lg:flex-row gap-8 h-full" data-testid="grid-text-and-image">
       <div
         className="flex flex-col justify-start flex-1"
         data-testid="col-text-content"
       >
         {tab.title && (
           <h3
-            className="text-3xl font-bold text-foreground mb-4"
+            className="text-2xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
             data-testid="text-tab-title"
           >
             {tab.title}
@@ -295,7 +338,7 @@ function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
       </div>
 
       <div
-        className="flex-[1.1] rounded-l-2xl border-l border-t border-b border-border flex items-center justify-center py-16 ps-16"
+        className="flex-[1.1] rounded-2xl lg:rounded-l-2xl lg:rounded-r-none border lg:border-r-0 border-border flex items-center justify-center px-8 pb-8 pt-0 lg:py-16 lg:ps-16 lg:pe-0 lg:px-0"
         style={{
           background:
             tab.right_panel_background ?? "hsl(var(--primary) / 0.15)",
@@ -414,13 +457,13 @@ function TextWithTestimonialsCarouselLayout({
 
   return (
     <div
-      className="flex gap-8 h-full"
+      className="flex flex-col lg:flex-row gap-8 h-full"
       data-testid="grid-text-with-testimonials"
     >
       <div className="flex-[1.2] min-w-0" data-testid="col-left-text">
         {tab.title && (
           <h3
-            className="text-3xl font-bold text-foreground mb-4"
+            className="text-2xl md:text-2xl lg:text-3xl font-bold text-foreground mb-4"
             data-testid="text-testimonials-title"
           >
             {tab.title}
@@ -428,7 +471,7 @@ function TextWithTestimonialsCarouselLayout({
         )}
         {tab.left_description && (
           <p
-            className="text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+            className="text-sm text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
             data-testid="text-testimonials-description"
           >
             {tab.left_description}
@@ -452,7 +495,7 @@ function TextWithTestimonialsCarouselLayout({
                       <IconComp className="w-4 h-4 text-primary" />
                     </Card>
                   )}
-                  <span className="text-foreground">{bullet.text}</span>
+                  <span className="text-sm text-foreground">{bullet.text}</span>
                 </div>
               );
             })}
@@ -486,7 +529,7 @@ function TextWithTestimonialsCarouselLayout({
               >
                 <Button
                   size="icon"
-                  variant="outline"
+                  variant="ghost"
                   onClick={goPrev}
                   data-testid="button-carousel-prev"
                 >
@@ -515,7 +558,7 @@ function TextWithTestimonialsCarouselLayout({
 
                 <Button
                   size="icon"
-                  variant="outline"
+                  variant="ghost"
                   onClick={goNext}
                   data-testid="button-carousel-next"
                 >
@@ -593,27 +636,51 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
             className="flex items-center justify-center mb-8 w-full"
             data-testid="tabs-selector"
           >
-            <div className="grid grid-cols-4 gap-3 border border-border bg-background rounded-lg w-full p-1">
-              {tabs.map((tab, i) => (
-                <button
-                  key={i}
-                  onClick={() => setActiveTab(i)}
-                  className={cn(
-                    "py-1 rounded-lg text-sm font-medium transition-colors duration-200 col-span-1 w-full",
-                    i === activeTab
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover-elevate",
-                  )}
-                  data-testid={`button-tab-${i}`}
-                >
-                  {tab.tab_label}
-                </button>
-              ))}
+            <div className="hidden md:flex w-full">
+              <div className="grid grid-cols-4 gap-3 border border-border bg-background rounded-lg w-full p-1">
+                {tabs.map((tab, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveTab(i)}
+                    className={cn(
+                      "py-1 rounded-lg text-sm font-medium transition-colors duration-200 col-span-1 w-full",
+                      i === activeTab
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover-elevate",
+                    )}
+                    data-testid={`button-tab-${i}`}
+                  >
+                    {tab.tab_label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex md:hidden items-center gap-2 w-full justify-center">
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setActiveTab((activeTab - 1 + tabs.length) % tabs.length)}
+                data-testid="button-tab-prev-mobile"
+              >
+                <IconChevronLeft className="w-4 h-4" />
+              </Button>
+              <span className="bg-primary text-primary-foreground rounded-lg px-4 py-1 text-sm font-medium">
+                {tabs[activeTab]?.tab_label}
+              </span>
+              <Button
+                size="icon"
+                variant="ghost"
+                onClick={() => setActiveTab((activeTab + 1) % tabs.length)}
+                data-testid="button-tab-next-mobile"
+              >
+                <IconChevronRight className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         )}
 
-        <div className="h-[480px] mx-12">
+        <div className="h-auto lg:h-[480px] mx-2 md:mx-6 lg:mx-12">
           <TabContent tab={tabs[activeTab]} />
         </div>
       </div>
