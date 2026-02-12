@@ -58,10 +58,10 @@ sections:
       thumbnail: https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=450&fit=crop
       alt: Full Stack Developer with AI program introduction at 4Geeks Academy
     signup_card:
-      title: Apply to the Full Stack Developer with AI Program
+      title: Get the Full Syllabus
       description: Request the full syllabus, program description, class schedule and everything else you need to know.
       cta_button:
-        text: Apply Now
+        text: Get the Curriculum
         url: /en/apply
         variant: primary
       login_link:
