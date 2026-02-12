@@ -58,19 +58,19 @@ sections:
     variant: stats-text
     title: Impact by the Numbers
     subtitle: $20M+ in scholarships and grants awarded
-    description: Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    description: 4Geeks Academy partners empower thousands of students worldwide with access to tech education, hands-on mentorship, and career opportunities that drive real outcomes.
     background: hsl(210 100% 50% / 0.05)
     items:
       - value: 84%
-        title: hiring rate within 6 months of graduation
+        title: Hiring rate within 6 months of graduation
       - value: 5K+
-        title: hiring partners
+        title: Giring partners
       - value: 6K+
-        title: students supported worldwide
-    paddingY:
-      desktop: none
+        title: Students supported worldwide
     marginY:
       desktop: none lg
+    paddingY:
+      desktop: none
   - type: two_column
     proportions:
       - 5
