@@ -1990,7 +1990,7 @@ export function SectionEditorPanel({
                   const arraySegments = segments.slice(0, -1);
                   
                   const getNestedLabel = (item: Record<string, unknown>) =>
-                    (item.title as string) || (item.label as string) || (item.name as string) || (item.text as string) || "";
+                    (item.tab_label as string) || (item.title as string) || (item.label as string) || (item.name as string) || (item.text as string) || "";
                   
                   type NestedItem = { parentPath: string[]; parentIndices: number[]; parentLabel: string; item: Record<string, unknown>; };
                   
@@ -2355,6 +2355,7 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =
+                            (item.tab_label as string) ||
                             (item.title as string) ||
                             (item.label as string) ||
                             (item.name as string) ||
@@ -2388,7 +2389,6 @@ export function SectionEditorPanel({
                 }
 
                 if (editorType === "color-picker") {
-                  // Use the variant from config, defaulting to "accent"
                   const colorType = (variant as ColorPickerVariant) || "accent";
 
                   return (
@@ -2401,6 +2401,7 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =
+                            (item.tab_label as string) ||
                             (item.title as string) ||
                             (item.label as string) ||
                             (item.name as string) ||

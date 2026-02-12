@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import { cn } from "@/lib/utils";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,20 +45,21 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
         <div className="flex flex-col md:gap-4 flex-1">
           <div className="flex-1">
             {tab.col1_description && (
-              <p
-                className="text-sm text-muted-foreground leading-snug whitespace-pre-line"
+              <div
+                className="text-sm text-muted-foreground leading-snug"
                 data-testid="text-col1-description"
-              >
-                {tab.col1_description}
-              </p>
+                dangerouslySetInnerHTML={{ __html: tab.col1_description }}
+              />
             )}
           </div>
 
           {tab.col1_boxes && tab.col1_boxes.length > 0 && (
             <div className="mt-auto pt-4 md:pt-0 flex-1">
-              <p className="font-semibold text-primary mb-2">
-                We'll help you create tailored job search materials
-              </p>
+              {tab.col1_tagline && (
+                <p className="font-semibold text-primary mb-2">
+                  {tab.col1_tagline}
+                </p>
+              )}
               <div className="flex flex-wrap gap-2" data-testid="boxes-col1">
                 {tab.col1_boxes.map((box, i) => {
                   const IconComp = box.icon ? getTablerIcon(box.icon) : null;
@@ -89,10 +90,19 @@ function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
       >
         {tab.col2_heading && (
           <p
-            className="text-lg md:text-xl lg:text-2xl font-semibold text-primary mb-6 leading-snug text-foreground"
+            className="text-lg md:text-xl lg:text-2xl font-semibold text-primary mb-2 leading-snug text-foreground"
             data-testid="text-col2-heading"
           >
             {tab.col2_heading}
+          </p>
+        )}
+
+        {tab.col2_description && (
+          <p
+            className="text-sm text-muted-foreground leading-relaxed mb-4"
+            data-testid="text-col2-description"
+          >
+            {tab.col2_description}
           </p>
         )}
 
@@ -289,7 +299,7 @@ function TwoColumnCardsLayout({ tab }: { tab: CareerSupportTab }) {
                 <Card
                   key={i}
                   className="flex items-center border border-muted-foreground/10 shadow-none bg-opacity-0 rounded-lg p-1"
-                  style={{ height: logo.logo_height || "40px" }}
+                  style={{ height: logo.logoHeight || "40px" }}
                   data-testid={`logo-right-${i}`}
                 >
                   <UniversalImage
@@ -326,12 +336,11 @@ function TextAndImageLayout({ tab }: { tab: CareerSupportTab }) {
           </h3>
         )}
         {tab.left_description && (
-          <p
-            className="text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+          <div
+            className="text-muted-foreground leading-relaxed mb-6"
             data-testid="text-left-description"
-          >
-            {tab.left_description}
-          </p>
+            dangerouslySetInnerHTML={{ __html: tab.left_description }}
+          />
         )}
         {tab.left_bullets && tab.left_bullets.length > 0 && (
           <div className="flex flex-col gap-3" data-testid="bullets-left">
@@ -388,9 +397,9 @@ function TestimonialSlide({
   testimonial: CareerSupportTestimonial;
 }) {
   return (
-    <div className="flex gap-4 h-full min-w-0" data-testid="testimonial-slide">
+    <div className="flex flex-col sm:flex-row gap-4 h-full min-w-0" data-testid="testimonial-slide">
       <div
-        className="flex-1 rounded-lg overflow-hidden"
+        className="sm:flex-1 rounded-lg overflow-hidden"
         data-testid="testimonial-image-col"
       >
         {testimonial.image_id && (
@@ -402,7 +411,7 @@ function TestimonialSlide({
                 (testimonial.image_object_fit as React.CSSProperties["objectFit"]) ??
                 "cover",
               objectPosition: testimonial.image_object_position ?? "center",
-              minHeight: "320px",
+              minHeight: "200px",
             }}
             data-testid="testimonial-image"
           />
@@ -410,7 +419,7 @@ function TestimonialSlide({
       </div>
 
       <div
-        className="flex-1 flex flex-col gap-4 p-5 bg-primary/5 rounded-lg"
+        className="sm:flex-1 flex flex-col gap-4 p-5 bg-primary/5 rounded-lg"
         data-testid="testimonial-info-col"
       >
         {testimonial.contributor_logos &&
@@ -420,9 +429,8 @@ function TestimonialSlide({
               data-testid="testimonial-logos"
             >
               {testimonial.contributor_logos.map((logo, i) => (
-                <Card className="p-1 bg-transparent shadow-none border-muted-foreground/10">
+                <Card key={i} className="p-1 bg-transparent shadow-none border-muted-foreground/10">
                   <UniversalImage
-                    key={i}
                     id={logo.image_id}
                     className="h-12 w-auto object-contain"
                     data-testid={`testimonial-logo-${i}`}
@@ -487,12 +495,11 @@ function TextWithTestimonialsCarouselLayout({
           </h3>
         )}
         {tab.left_description && (
-          <p
-            className="text-sm lg:text-base text-muted-foreground leading-relaxed whitespace-pre-line mb-6"
+          <div
+            className="text-sm lg:text-base text-muted-foreground leading-relaxed mb-6"
             data-testid="text-testimonials-description"
-          >
-            {tab.left_description}
-          </p>
+            dangerouslySetInnerHTML={{ __html: tab.left_description }}
+          />
         )}
         {tab.left_bullets && tab.left_bullets.length > 0 && (
           <div
@@ -621,6 +628,24 @@ function TabContent({ tab }: { tab: CareerSupportTab }) {
 export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
   const { tabs, heading, description } = data;
   const [activeTab, setActiveTab] = useState(0);
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) {
+        setActiveTab((prev) => (prev + 1) % tabs.length);
+      } else {
+        setActiveTab((prev) => (prev - 1 + tabs.length) % tabs.length);
+      }
+    }
+    touchStartX.current = null;
+  }, [tabs.length]);
 
   return (
     <section
@@ -705,9 +730,30 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
           </div>
         )}
 
-        <div className="h-auto lg:h-[480px] mx-2 md:mx-6 lg:mx-12">
+        <div
+          className="h-auto lg:h-[480px] mx-2 md:mx-6 lg:mx-12"
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
+        >
           <TabContent tab={tabs[activeTab]} />
         </div>
+
+        {tabs.length > 1 && (
+          <div className="flex md:hidden items-center justify-center gap-2 mt-4" data-testid="tab-tracking-dots">
+            {tabs.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => setActiveTab(i)}
+                className={cn(
+                  "w-2 h-2 rounded-full transition-colors",
+                  i === activeTab ? "bg-primary" : "bg-muted-foreground/40",
+                )}
+                data-testid={`tab-dot-${i}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

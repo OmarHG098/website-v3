@@ -22,7 +22,7 @@ export const careerSupportStatSchema = z.object({
 export const careerSupportLogoSchema = z.object({
   image_id: z.string(),
   alt: z.string().optional(),
-  logo_height: z.string().optional(),
+  logoHeight: z.string().optional(),
 });
 
 export const careerSupportTestimonialLogoSchema = z.object({
@@ -45,9 +45,11 @@ export const careerSupportTabSchema = z.object({
 
   col1_subtitle: z.string().optional(),
   col1_description: z.string().optional(),
+  col1_tagline: z.string().optional(),
   col1_boxes: z.array(careerSupportBoxSchema).optional(),
 
   col2_heading: z.string().optional(),
+  col2_description: z.string().optional(),
   col2_bullets: z.array(careerSupportBulletSchema).optional(),
 
   col3_image_id: z.string().optional(),
