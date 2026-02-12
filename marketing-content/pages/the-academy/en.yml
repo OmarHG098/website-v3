@@ -152,7 +152,7 @@ sections:
     title: Trusted by Hiring Teams
     description: |-
       4Geeks graduates are hired by leading tech companies across the U.S., Latin America, and Europe. Employers consistently highlight their technical depth, practical experience, and ability to contribute from day one.
-      'I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires went on to become a team leader.' — CodeNinjas
+      'I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires went on to become a team leader.' - CodeNinjas
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
