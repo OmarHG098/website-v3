@@ -25,6 +25,20 @@ export const careerSupportLogoSchema = z.object({
   logo_height: z.string().optional(),
 });
 
+export const careerSupportTestimonialLogoSchema = z.object({
+  image_id: z.string(),
+  alt: z.string().optional(),
+});
+
+export const careerSupportTestimonialSchema = z.object({
+  image_id: z.string(),
+  image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
+  image_object_position: z.string().optional(),
+  contributor_logos: z.array(careerSupportTestimonialLogoSchema).optional(),
+  description: z.string(),
+  achievement: z.string().optional(),
+});
+
 export const careerSupportTabSchema = z.object({
   tab_label: z.string(),
   layout: z.string().optional(),
@@ -55,6 +69,8 @@ export const careerSupportTabSchema = z.object({
   right_image_object_fit: z.enum(["cover", "contain", "fill", "none", "scale-down"]).optional(),
   right_image_object_position: z.string().optional(),
   right_panel_background: z.string().optional(),
+
+  testimonials: z.array(careerSupportTestimonialSchema).optional(),
 });
 
 export const careerSupportExplainSectionSchema = z.object({
@@ -70,5 +86,7 @@ export type CareerSupportBox = z.infer<typeof careerSupportBoxSchema>;
 export type CareerSupportBullet = z.infer<typeof careerSupportBulletSchema>;
 export type CareerSupportStat = z.infer<typeof careerSupportStatSchema>;
 export type CareerSupportLogo = z.infer<typeof careerSupportLogoSchema>;
+export type CareerSupportTestimonialLogo = z.infer<typeof careerSupportTestimonialLogoSchema>;
+export type CareerSupportTestimonial = z.infer<typeof careerSupportTestimonialSchema>;
 export type CareerSupportTab = z.infer<typeof careerSupportTabSchema>;
 export type CareerSupportExplainSection = z.infer<typeof careerSupportExplainSectionSchema>;

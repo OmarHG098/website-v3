@@ -9,4 +9,6 @@ export const fieldEditors: Record<string, EditorType> = {
   "tabs[].right_logos[].image_id": "image-picker:logo",
   "tabs[].left_bullets[].icon": "icon-picker",
   "tabs[].right_image_id": "image-with-style-picker",
+  "tabs[].testimonials[].image_id": "image-with-style-picker",
+  "tabs[].testimonials[].contributor_logos[].image_id": "image-picker:logo",
 };

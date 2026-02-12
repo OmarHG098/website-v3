@@ -1629,6 +1629,32 @@ export function SectionEditorPanel({
                                         const label = fieldKey.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
                                         const configuredField = fields.find(f => f.leafField === fieldKey);
 
+                                        if (configuredField?.editorType === "icon-picker") {
+                                          return (
+                                            <div key={fieldKey} className="space-y-1">
+                                              <Label className="text-xs text-muted-foreground">{label}</Label>
+                                              <button
+                                                type="button"
+                                                onClick={() => {
+                                                  setIconPickerTarget({
+                                                    arrayField: resolvedArrPath,
+                                                    index: nestedIdx,
+                                                    field: fieldKey,
+                                                    label: `${itemLabel} > ${label}`,
+                                                    currentIcon: currentValue,
+                                                  });
+                                                  setIconPickerOpen(true);
+                                                }}
+                                                className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                                                data-testid={`props-nested-icon-${fieldKey}-${nestedIdx}`}
+                                                title={`${label}: ${currentValue || "no icon"}`}
+                                              >
+                                                {renderIconByName(currentValue)}
+                                              </button>
+                                            </div>
+                                          );
+                                        }
+
                                         if (configuredField?.editorType === "image-picker") {
                                           const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
                                           return (

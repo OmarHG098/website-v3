@@ -3927,6 +3927,27 @@
       "focal_point": "center",
       "tags": ["photo", "staff", "avatar"],
       "usage_count": 0
+    },
+    "mailinh_tran": {
+      "src": "/attached_assets/MaiLinh2_1770856306817.webp",
+      "alt": "MaiLinh Tran",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "graduate"],
+      "usage_count": 0
+    },
+    "martin_coimbra": {
+      "src": "/attached_assets/jorge-martin-coimbra_1770856856628.webp",
+      "alt": "Martín Coimbra",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "graduate"],
+      "usage_count": 0
+    },
+    "melanie_galaretto": {
+      "src": "/attached_assets/MelamnieGalaretto2_1770857254721.webp",
+      "alt": "Melanie Galaretto",
+      "focal_point": "center",
+      "tags": ["photo", "testimonial", "graduate"],
+      "usage_count": 0
     }
   }
 }
