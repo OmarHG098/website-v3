@@ -71,14 +71,14 @@ sections:
         - icon: IconCalendar
           text: 20-Week Track
         - icon: IconCalendarBolt
-          text: 12-Week Track
+          text: 12-Week Accelerated Morning Track
         - icon: code
           text: Interactive Coding Exercises
           count: 100+
         - icon: robot
           text: AI-Powered Feedback
         - icon: calendar
-          text: Live Sessions Weekly
+          text: 1:7 teacher Student Ratio
         - icon: users
           text: 1:1 Mentorship
     paddingY:
