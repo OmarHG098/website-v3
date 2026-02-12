@@ -27,7 +27,7 @@ function getTablerIcon(name: string) {
 function ThreeColumnsLayout({ tab }: { tab: CareerSupportTab }) {
   return (
     <div
-      className="flex flex-col md:flex-row gap-4 h-full"
+      className="flex flex-col lg:flex-row gap-4 h-full"
       data-testid="grid-tab-content"
     >
       <Card
@@ -700,7 +700,7 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
               </div>
             </div>
 
-            <div className="flex md:hidden items-center gap-2 w-full justify-center">
+            <div className="flex md:hidden flex-col items-center gap-2 w-full justify-center">
               <div className="bg-primary w-full flex justify-between items-center rounded-lg py-1 px-1">
                 <Button
                   size="icon"
@@ -726,6 +726,20 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
                   <IconChevronRight className="w-4 h-4 text-primary-foreground" />
                 </Button>
               </div>
+              <div className="flex items-center justify-center gap-2" data-testid="tab-tracking-dots">
+                {tabs.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => setActiveTab(i)}
+                    className={cn(
+                      "w-2 h-2 rounded-full transition-colors",
+                      i === activeTab ? "bg-primary" : "bg-muted-foreground/40",
+                    )}
+                    data-testid={`tab-dot-${i}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         )}
@@ -737,23 +751,6 @@ export function CareerSupportExplain({ data }: CareerSupportExplainProps) {
         >
           <TabContent tab={tabs[activeTab]} />
         </div>
-
-        {tabs.length > 1 && (
-          <div className="flex md:hidden items-center justify-center gap-2 mt-4" data-testid="tab-tracking-dots">
-            {tabs.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => setActiveTab(i)}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-colors",
-                  i === activeTab ? "bg-primary" : "bg-muted-foreground/40",
-                )}
-                data-testid={`tab-dot-${i}`}
-              />
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );
