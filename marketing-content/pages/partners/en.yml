@@ -36,7 +36,7 @@ sections:
     version: "1.0"
     variant: default
     heading: Why Partner with 4Geeks?
-    description: Every collaboration is designed to drive measurable results for both organizations and communities. Our partnerships span across
+    description: Every collaboration is designed to drive measurable results for organizations and communities, creating opportunities, expanding access to tech education, and strengthening the future tech workforce.
     cards:
       - icon: Trophy
         title: Scholarships & Funding
@@ -64,7 +64,7 @@ sections:
       - value: 84%
         title: Hiring rate within 6 months of graduation
       - value: 5K+
-        title: Giring partners
+        title: Hiring partners
       - value: 6K+
         title: Students supported worldwide
     marginY:
