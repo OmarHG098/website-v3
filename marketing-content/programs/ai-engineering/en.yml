@@ -50,7 +50,7 @@ sections:
       alt: AI Engineering program introduction
     signup_card:
       title: Get the Full Syllabus
-      description: Access the full 10-milestone roadmap and Company Case methodology
+      description: Access the full 10-milestone roadmap and Company Case methodology.
       cta_button:
         text: Send me the Curriculum
         url: /en/apply
@@ -60,7 +60,7 @@ sections:
         url: /login
       features:
         - icon: calendar
-          text: 24-Week or 15-Week Intensive Program
+          text: 20-Week or 12-Week Accelerated Morning Program
         - icon: IconBriefcase
           text: Employment-First Curriculum
         - icon: IconRobot
