@@ -32,13 +32,13 @@ sections:
     primary_width: narrow
     primary:
       heading: Our Mission & Approach
-      description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
-      badge: Results-Backed Promise
+      description: "Since 2015, 4Geeks Academy has helped thousands of students transition into tech careers. Our model combines hands-on, project-based training with unlimited 1:1 mentorship, AI-powered learning tools, and structured career support. The goal is simple: give students the technical depth, practical experience, and job-search strategy needed to get hired — and keep growing."
+      badge: Results-Backed Model
     secondary:
       benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
+        - text: Industry-aligned, AI-integrated curriculum
+        - text: Unlimited personalized mentorship
+        - text: Lifetime career support
       image_id: what_is_4geeks
       image_object_fit: cover
       image_object_position: 60% 100%
