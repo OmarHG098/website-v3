@@ -1,4 +1,4 @@
-slug: ingenieria-de-inteligencia-artificial
+slug: ai-engineering
 title: Ingeniería de Inteligencia Artificial
 meta:
   page_title: Programa de Carrera Ingeniero de IA | 4Geeks
@@ -17,7 +17,6 @@ sections:
     version: "1.0"
     variant: course
     title: Ingeniería de IA
-    title_highlight: Ingeniería de IA
     subtitle: Aprende a diseñar, construir y desplegar sistemas de IA completos utilizados en producción real.
     students_enrolled:
       avatars:

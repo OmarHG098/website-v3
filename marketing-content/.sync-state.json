@@ -888,9 +888,11 @@
       "remoteSha": "67e71e61e0664f2b387b445fedfbf512d6bbefd424ded2b425c72f197fd0f6d0"
     },
     "marketing-content/programs/ai-engineering/es.yml": {
-      "sha": "36aa51e579da33be9b7d3f7ec0fe972a891f5da89248a6b357b92cdd7c8ca725",
-      "lastModified": 1770748361614.7393,
-      "remoteSha": "36aa51e579da33be9b7d3f7ec0fe972a891f5da89248a6b357b92cdd7c8ca725"
+      "sha": "7cf4990b5c3fc0761d5ef2297f2ca8a3948028aa5a82301630a48d9f457155c8",
+      "lastModified": 1770924365466.4265,
+      "remoteSha": "36aa51e579da33be9b7d3f7ec0fe972a891f5da89248a6b357b92cdd7c8ca725",
+      "author": "Lorena Gubaira",
+      "modifiedAt": "2026-02-12T19:26:05.468Z"
     },
     "marketing-content/programs/ai-for-professionals/_common.yml": {
       "sha": "cd6ef75b6e0719ae5bc0fa822a1c0a11edd73fb259fe6b8869143a37773448c2",
