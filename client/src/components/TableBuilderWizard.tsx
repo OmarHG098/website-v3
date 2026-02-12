@@ -34,9 +34,10 @@ export interface DynamicTableConfig {
 interface TableBuilderWizardProps {
   onComplete: (config: DynamicTableConfig) => void;
   onCancel?: () => void;
+  locale?: string;
 }
 
-type WizardStep = "url" | "select-array" | "consistency" | "columns-prompt" | "ai-processing" | "action" | "done";
+type WizardStep = "url" | "select-array" | "consistency" | "columns-prompt" | "ai-processing" | "review" | "action" | "done";
 
 interface StepState {
   url: string;
@@ -47,6 +48,7 @@ interface StepState {
   availableKeys: string[];
   columnsPrompt: string;
   tableConfig: TableConfig | null;
+  refinementPrompt: string;
   addAction: boolean;
   actionLabel: string;
   actionHref: string;
@@ -92,7 +94,7 @@ function checkConsistency(arr: Record<string, unknown>[]): { consistent: boolean
   };
 }
 
-export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardProps) {
+export function TableBuilderWizard({ onComplete, onCancel, locale }: TableBuilderWizardProps) {
   const [step, setStep] = useState<WizardStep>("url");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -106,6 +108,7 @@ export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardP
     availableKeys: [],
     columnsPrompt: "",
     tableConfig: null,
+    refinementPrompt: "",
     addAction: false,
     actionLabel: "View",
     actionHref: "",
@@ -219,15 +222,39 @@ export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardP
         sampleData: state.dataArray.slice(0, 5),
         availableKeys: state.availableKeys,
         userPrompt: state.columnsPrompt,
+        locale: locale || "en",
       });
       const config = await response.json();
-      updateState({ tableConfig: config });
-      setStep("action");
+      updateState({ tableConfig: config, refinementPrompt: "" });
+      setStep("review");
     } catch (err) {
       setError(err instanceof Error ? err.message : "AI failed to generate table configuration");
       setStep("columns-prompt");
     }
-  }, [state.columnsPrompt, state.dataArray, state.availableKeys, updateState]);
+  }, [state.columnsPrompt, state.dataArray, state.availableKeys, locale, updateState]);
+
+  const handleRefine = useCallback(async () => {
+    if (!state.refinementPrompt.trim() || !state.tableConfig) return;
+
+    setStep("ai-processing");
+    setError(null);
+
+    try {
+      const response = await apiRequest("POST", "/api/ai/refine-table-config", {
+        currentConfig: state.tableConfig,
+        sampleData: state.dataArray.slice(0, 5),
+        availableKeys: state.availableKeys,
+        userFeedback: state.refinementPrompt,
+        locale: locale || "en",
+      });
+      const config = await response.json();
+      updateState({ tableConfig: config, refinementPrompt: "" });
+      setStep("review");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "AI failed to refine table configuration");
+      setStep("review");
+    }
+  }, [state.refinementPrompt, state.tableConfig, state.dataArray, state.availableKeys, locale, updateState]);
 
   const handleFinish = useCallback(() => {
     if (!state.tableConfig) return;
@@ -440,6 +467,109 @@ export function TableBuilderWizard({ onComplete, onCancel }: TableBuilderWizardP
           </div>
         )}
 
+        {step === "review" && state.tableConfig && (
+          <div className="space-y-4">
+            <div>
+              <h3 className="text-lg font-semibold text-foreground mb-1" data-testid="text-review-title">
+                Review generated columns
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Check the columns below. If they look good, continue. Otherwise, describe what you want to change.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              {state.tableConfig.columns.map((col, i) => (
+                <div
+                  key={i}
+                  className="flex items-start gap-3 p-3 rounded-md border bg-muted/30"
+                  data-testid={`review-column-${col.key}`}
+                >
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="font-medium text-foreground text-sm">{col.label}</span>
+                      <Badge variant="secondary" className="text-xs">{col.type}</Badge>
+                    </div>
+                    <p className="text-xs text-muted-foreground mt-0.5 truncate">
+                      {col.template ? `Template: ${col.template}` : `Key: ${col.key}`}
+                    </p>
+                  </div>
+                  <span className="text-xs text-muted-foreground tabular-nums flex-shrink-0">
+                    {(() => {
+                      const sample = state.dataArray[0];
+                      if (!sample) return "-";
+                      if (col.template) {
+                        const val = col.template.replace(/\{([^}]+)\}/g, (_, k) => {
+                          const parts = k.trim().split(".");
+                          let cur: unknown = sample;
+                          for (const p of parts) {
+                            if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
+                            else return "";
+                          }
+                          if (typeof cur === "string" && /^\d{4}-\d{2}-\d{2}(T|\s)/.test(cur)) {
+                            try { return new Date(cur).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" }); } catch { /* */ }
+                          }
+                          return cur != null ? String(cur) : "";
+                        });
+                        return val || "-";
+                      }
+                      const parts = col.key.split(".");
+                      let cur: unknown = sample;
+                      for (const p of parts) {
+                        if (cur && typeof cur === "object") cur = (cur as Record<string, unknown>)[p];
+                        else return "-";
+                      }
+                      return cur != null ? String(cur).slice(0, 40) : "-";
+                    })()}
+                  </span>
+                </div>
+              ))}
+            </div>
+
+            <div className="space-y-2 pt-2 border-t">
+              <Label htmlFor="refinement-prompt" className="text-sm font-medium">
+                Want changes? Describe them here:
+              </Label>
+              <Textarea
+                id="refinement-prompt"
+                placeholder='e.g. "Change the date format to show only month and year", "Remove the duration column", "Rename Location to Campus"...'
+                value={state.refinementPrompt}
+                onChange={(e) => updateState({ refinementPrompt: e.target.value })}
+                className="min-h-[60px]"
+                data-testid="input-refinement-prompt"
+              />
+              <Button
+                variant="outline"
+                onClick={handleRefine}
+                disabled={!state.refinementPrompt.trim()}
+                data-testid="button-refine"
+              >
+                <IconLoader2 className="w-4 h-4 mr-1" />
+                Regenerate with changes
+              </Button>
+            </div>
+
+            {error && <ErrorMessage message={error} />}
+            <div className="flex justify-between">
+              <Button
+                variant="outline"
+                onClick={() => setStep("columns-prompt")}
+                data-testid="button-back-review"
+              >
+                <IconArrowLeft className="w-4 h-4 mr-1" />
+                Back
+              </Button>
+              <Button
+                onClick={() => setStep("action")}
+                data-testid="button-accept-columns"
+              >
+                <IconCheck className="w-4 h-4 mr-1" />
+                Looks good, continue
+              </Button>
+            </div>
+          </div>
+        )}
+
         {step === "action" && (
           <div className="space-y-4">
             <div>
@@ -541,6 +671,7 @@ function StepIndicator({ current }: { current: WizardStep }) {
     { key: ["url"], label: "Data source" },
     { key: ["select-array", "consistency"], label: "Validate" },
     { key: ["columns-prompt", "ai-processing"], label: "Columns" },
+    { key: ["review"], label: "Review" },
     { key: ["action", "done"], label: "Actions" },
   ];
 

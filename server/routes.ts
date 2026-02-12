@@ -3980,11 +3980,46 @@ sections: []
         return;
       }
 
-      const config = await generateTableFromPayload({ sampleData, availableKeys, userPrompt });
+      const locale = req.body.locale || "en";
+      const config = await generateTableFromPayload({ sampleData, availableKeys, userPrompt, locale });
       res.json(config);
     } catch (error: any) {
       console.error("Error generating table config:", error?.message || error);
       const message = error?.message || "Failed to generate table configuration";
+      res.status(500).json({ error: message });
+    }
+  });
+
+  app.post("/api/ai/refine-table-config", async (req, res) => {
+    try {
+      const { refineTableConfig } = await import("./ai/generateTableFromPayload");
+
+      const { currentConfig, sampleData, availableKeys, userFeedback, locale } = req.body;
+
+      if (!currentConfig || !currentConfig.columns) {
+        res.status(400).json({ error: "currentConfig with columns is required" });
+        return;
+      }
+      if (!sampleData || !Array.isArray(sampleData) || sampleData.length === 0) {
+        res.status(400).json({ error: "sampleData must be a non-empty array" });
+        return;
+      }
+      if (!userFeedback || typeof userFeedback !== "string") {
+        res.status(400).json({ error: "userFeedback must be a non-empty string" });
+        return;
+      }
+
+      const config = await refineTableConfig({
+        currentConfig,
+        sampleData,
+        availableKeys: availableKeys || [],
+        userFeedback,
+        locale: locale || "en",
+      });
+      res.json(config);
+    } catch (error: any) {
+      console.error("Error refining table config:", error?.message || error);
+      const message = error?.message || "Failed to refine table configuration";
       res.status(500).json({ error: message });
     }
   });

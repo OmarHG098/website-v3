@@ -16,6 +16,15 @@ export interface GenerateTableInput {
   sampleData: Record<string, unknown>[];
   availableKeys: string[];
   userPrompt: string;
+  locale?: string;
+}
+
+export interface RefineTableInput {
+  currentConfig: TableConfig;
+  sampleData: Record<string, unknown>[];
+  availableKeys: string[];
+  userFeedback: string;
+  locale?: string;
 }
 
 const SYSTEM_PROMPT = `You are a data table configuration assistant. Given a sample of data items and a user's description of what columns they want, produce a JSON configuration for a data table.
@@ -44,36 +53,14 @@ Rules:
 }
 Do not include any text outside the JSON object.`;
 
-export async function generateTableFromPayload(input: GenerateTableInput): Promise<TableConfig> {
-  const llm = getLLMService();
-
-  const samplePreview = JSON.stringify(input.sampleData.slice(0, 3), null, 2);
-
-  const userPrompt = `Available data keys: ${JSON.stringify(input.availableKeys)}
-
-Sample data (first 3 items):
-${samplePreview}
-
-User's request: "${input.userPrompt}"
-
-Generate the table column configuration as JSON based on the user's request.`;
-
-  const result = await llm.adaptContent(
-    SYSTEM_PROMPT,
-    userPrompt,
-    {
-      temperature: 0.3,
-      maxTokens: 1000,
-    }
-  );
-
-  let content = result.content.trim();
-  const fenceMatch = content.match(/```(?:json)?\s*([\s\S]*?)```/);
+function parseTableConfigResponse(content: string): TableConfig {
+  let cleaned = content.trim();
+  const fenceMatch = cleaned.match(/```(?:json)?\s*([\s\S]*?)```/);
   if (fenceMatch) {
-    content = fenceMatch[1].trim();
+    cleaned = fenceMatch[1].trim();
   }
 
-  const parsed = JSON.parse(content) as TableConfig;
+  const parsed = JSON.parse(cleaned) as TableConfig;
 
   if (!parsed.columns || !Array.isArray(parsed.columns) || parsed.columns.length === 0) {
     throw new Error("AI returned invalid table config: missing columns array");
@@ -86,4 +73,84 @@ Generate the table column configuration as JSON based on the user's request.`;
   }
 
   return parsed;
+}
+
+export async function generateTableFromPayload(input: GenerateTableInput): Promise<TableConfig> {
+  const llm = getLLMService();
+
+  const samplePreview = JSON.stringify(input.sampleData.slice(0, 3), null, 2);
+  const langNote = input.locale === "es"
+    ? "\nIMPORTANT: The page is in Spanish. Use Spanish for all column labels and the title."
+    : "\nIMPORTANT: The page is in English. Use English for all column labels and the title.";
+
+  const userPrompt = `Available data keys: ${JSON.stringify(input.availableKeys)}
+
+Sample data (first 3 items):
+${samplePreview}
+
+User's request: "${input.userPrompt}"
+${langNote}
+
+Generate the table column configuration as JSON based on the user's request. Pay close attention to any formatting instructions the user provides (date formats, combinations, etc).`;
+
+  const result = await llm.adaptContent(
+    SYSTEM_PROMPT,
+    userPrompt,
+    {
+      temperature: 0.3,
+      maxTokens: 1000,
+    }
+  );
+
+  return parseTableConfigResponse(result.content);
+}
+
+const REFINE_SYSTEM_PROMPT = `You are a data table configuration assistant. The user has an existing table configuration and wants to make changes to it. Apply their requested changes and return the updated configuration.
+
+Rules:
+- Start from the current configuration provided and modify it according to the user's feedback.
+- Available keys use dot notation for nested fields (e.g. "academy.name", "syllabus_version.duration_in_days").
+- Only use keys that exist in the available keys list provided.
+- Columns can have an optional "template" property with {dotted.path} placeholders to combine fields or add formatting.
+- When using a template, set the type to "text" since the result is a formatted string.
+- Return ONLY valid JSON with this exact structure:
+{
+  "columns": [
+    { "key": "field.path", "label": "Display Label", "type": "text|number|date|image|link|boolean", "template": "optional {field.path} template" }
+  ],
+  "title": "Optional Table Title"
+}
+Do not include any text outside the JSON object.`;
+
+export async function refineTableConfig(input: RefineTableInput): Promise<TableConfig> {
+  const llm = getLLMService();
+
+  const samplePreview = JSON.stringify(input.sampleData.slice(0, 3), null, 2);
+  const langNote = input.locale === "es"
+    ? "\nIMPORTANT: The page is in Spanish. Use Spanish for all column labels and the title."
+    : "\nIMPORTANT: The page is in English. Use English for all column labels and the title.";
+
+  const userPrompt = `Current table configuration:
+${JSON.stringify(input.currentConfig, null, 2)}
+
+Available data keys: ${JSON.stringify(input.availableKeys)}
+
+Sample data (first 3 items):
+${samplePreview}
+
+User's requested changes: "${input.userFeedback}"
+${langNote}
+
+Apply the user's requested changes to the current configuration and return the updated JSON.`;
+
+  const result = await llm.adaptContent(
+    REFINE_SYSTEM_PROMPT,
+    userPrompt,
+    {
+      temperature: 0.3,
+      maxTokens: 1000,
+    }
+  );
+
+  return parseTableConfigResponse(result.content);
 }

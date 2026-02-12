@@ -634,6 +634,7 @@ export default function ComponentPickerModal({
             <TableBuilderWizard
               onComplete={handleWizardComplete}
               onCancel={handleBack}
+              locale={locale || "en"}
             />
           </div>
         ) : (
