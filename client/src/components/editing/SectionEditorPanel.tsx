@@ -1158,6 +1158,94 @@ export function SectionEditorPanel({
                 }}
               />
             )}
+            {sectionType === "dynamic_table" && (
+              <>
+                <div className="space-y-2 border-t pt-3 mt-3">
+                  <Label className="text-xs font-medium">Max Rows</Label>
+                  <Input
+                    type="number"
+                    min={1}
+                    placeholder="Show all rows"
+                    value={parsedSection?.max_rows != null ? String(parsedSection.max_rows) : ""}
+                    onChange={(e) => {
+                      const val = e.target.value.trim();
+                      if (val === "") {
+                        updatePropertyWithValue("max_rows", undefined);
+                      } else {
+                        const n = parseInt(val, 10);
+                        if (!isNaN(n) && n > 0) updatePropertyWithValue("max_rows", n);
+                      }
+                    }}
+                    data-testid="input-max-rows"
+                  />
+                  <p className="text-xs text-muted-foreground">Limit visible rows. Users can expand to see all.</p>
+                </div>
+                <div className="space-y-3 border-t pt-3 mt-3">
+                  <div className="flex items-center justify-between">
+                    <Label className="text-xs font-medium">Region Filter</Label>
+                    <Switch
+                      checked={!!parsedSection?.region_filter}
+                      onCheckedChange={(checked) => {
+                        if (checked) {
+                          updatePropertyWithValue("region_filter", {
+                            key: "",
+                            mapping: {
+                              "usa-canada": [],
+                              "latam": [],
+                              "europe": [],
+                            },
+                          });
+                        } else {
+                          updatePropertyWithValue("region_filter", undefined);
+                        }
+                      }}
+                      data-testid="switch-region-filter"
+                    />
+                  </div>
+                  <p className="text-xs text-muted-foreground">Filter rows based on the visitor's detected region.</p>
+                  {!!parsedSection?.region_filter && (() => {
+                    const rf = parsedSection.region_filter as { key: string; mapping: Record<string, string[]> };
+                    const regionFields = (
+                      <div className="space-y-3 pl-1">
+                        <div className="space-y-1">
+                          <Label className="text-xs">Data Field (key path)</Label>
+                          <Input
+                            value={rf.key || ""}
+                            placeholder="e.g. academy.country_code"
+                            onChange={(e) => {
+                              updatePropertyWithValue("region_filter", { ...rf, key: e.target.value });
+                            }}
+                            data-testid="input-region-filter-key"
+                          />
+                          <p className="text-xs text-muted-foreground">Dot-notation path to the field in each row to match against.</p>
+                        </div>
+                        {(["usa-canada", "latam", "europe"] as const).map((region) => (
+                          <div key={region} className="space-y-1">
+                            <Label className="text-xs capitalize">{region}</Label>
+                            <Input
+                              value={(rf.mapping[region] || []).join(", ")}
+                              placeholder="e.g. US, CA"
+                              onChange={(e) => {
+                                const vals = e.target.value
+                                  .split(",")
+                                  .map((s) => s.trim())
+                                  .filter(Boolean);
+                                updatePropertyWithValue("region_filter", {
+                                  ...rf,
+                                  mapping: { ...rf.mapping, [region]: vals },
+                                });
+                              }}
+                              data-testid={`input-region-mapping-${region}`}
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    );
+                    return regionFields;
+                  })()}
+                </div>
+              </>
+            )}
             
             <ColorPicker
               value={currentBackground}

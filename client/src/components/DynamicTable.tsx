@@ -1,8 +1,14 @@
 import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { IconExternalLink, IconPhoto, IconCheck, IconX, IconArrowUp, IconArrowDown } from "@tabler/icons-react";
+import { IconExternalLink, IconPhoto, IconCheck, IconX, IconArrowUp, IconArrowDown, IconChevronDown } from "@tabler/icons-react";
 import { Button } from "@/components/ui/button";
+import { useLocation } from "@/contexts/SessionContext";
 import type { DynamicTableConfig } from "./TableBuilderWizard";
+
+interface RegionFilter {
+  key: string;
+  mapping: Record<string, string[]>;
+}
 
 interface DynamicTableSection {
   type: "dynamic_table";
@@ -21,6 +27,8 @@ interface DynamicTableSection {
     href: string;
   };
   background?: string;
+  region_filter?: RegionFilter;
+  max_rows?: number;
 }
 
 interface DynamicTableProps {
@@ -115,6 +123,10 @@ function CellValue({ value, type }: { value: unknown; type: string }) {
 export function DynamicTable({ data }: DynamicTableProps) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
+  const [expanded, setExpanded] = useState(false);
+  const location = useLocation();
+
+  const sessionRegion = location?.region || null;
 
   const { data: fetchedData, isLoading, error } = useQuery<unknown>({
     queryKey: ["dynamic-table", data.endpoint],
@@ -127,7 +139,7 @@ export function DynamicTable({ data }: DynamicTableProps) {
     retry: 2,
   });
 
-  const rows = useMemo<Record<string, unknown>[]>(() => {
+  const allRows = useMemo<Record<string, unknown>[]>(() => {
     if (!fetchedData) return [];
     let arr: unknown;
     if (data.data_path) {
@@ -141,9 +153,23 @@ export function DynamicTable({ data }: DynamicTableProps) {
     }
     if (!Array.isArray(arr)) return [];
 
-    let sorted = arr as Record<string, unknown>[];
+    let filtered = arr as Record<string, unknown>[];
+
+    if (data.region_filter && sessionRegion) {
+      const { key, mapping } = data.region_filter;
+      const allowedValues = mapping[sessionRegion];
+      if (allowedValues && allowedValues.length > 0) {
+        const lowerAllowed = allowedValues.map(v => v.toLowerCase());
+        filtered = filtered.filter(row => {
+          const val = getNestedValue(row, key);
+          if (val === null || val === undefined) return false;
+          return lowerAllowed.includes(String(val).toLowerCase());
+        });
+      }
+    }
+
     if (sortKey) {
-      sorted = [...sorted].sort((a, b) => {
+      filtered = [...filtered].sort((a, b) => {
         const aVal = getNestedValue(a, sortKey);
         const bVal = getNestedValue(b, sortKey);
         if (aVal == null && bVal == null) return 0;
@@ -156,8 +182,12 @@ export function DynamicTable({ data }: DynamicTableProps) {
         return sortDir === "asc" ? cmp : -cmp;
       });
     }
-    return sorted;
-  }, [fetchedData, data.data_path, sortKey, sortDir]);
+    return filtered;
+  }, [fetchedData, data.data_path, data.region_filter, sessionRegion, sortKey, sortDir]);
+
+  const maxRows = data.max_rows && data.max_rows > 0 ? data.max_rows : null;
+  const hasMore = maxRows !== null && allRows.length > maxRows;
+  const rows = (maxRows && !expanded) ? allRows.slice(0, maxRows) : allRows;
 
   const handleSort = (key: string) => {
     if (sortKey === key) {
@@ -296,9 +326,24 @@ export function DynamicTable({ data }: DynamicTableProps) {
           </table>
         </div>
 
-        <p className="text-xs text-muted-foreground mt-3">
-          {rows.length} {rows.length === 1 ? "row" : "rows"}
-        </p>
+        <div className="flex items-center justify-between mt-3">
+          <p className="text-xs text-muted-foreground" data-testid="text-row-count">
+            {maxRows && !expanded
+              ? `${rows.length} of ${allRows.length} rows`
+              : `${allRows.length} ${allRows.length === 1 ? "row" : "rows"}`}
+          </p>
+          {hasMore && (
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setExpanded(!expanded)}
+              data-testid="button-toggle-rows"
+            >
+              {expanded ? "Show less" : `Show all ${allRows.length}`}
+              <IconChevronDown className={`w-4 h-4 ml-1 transition-transform ${expanded ? "rotate-180" : ""}`} />
+            </Button>
+          )}
+        </div>
       </div>
     </section>
   );

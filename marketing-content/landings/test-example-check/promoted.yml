@@ -35,6 +35,28 @@ sections:
     endpoint: https://breathecode.herokuapp.com/v1/admissions/cohort/all?upcoming=true&never_ends=false&sort=kickoff_date&limit=50
     data_path: results
     title: Program Details
+    max_rows: 10
+    region_filter:
+      key: academy.country.code
+      mapping:
+        usa-canada:
+          - US
+          - CA
+        latam:
+          - CL
+          - VE
+          - CO
+          - MX
+          - AR
+          - UY
+          - CR
+          - EC
+        europe:
+          - ES
+          - IT
+          - FR
+          - DE
+          - PT
     columns:
       - key: kickoff_date
         label: Date
