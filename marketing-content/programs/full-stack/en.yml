@@ -142,32 +142,10 @@ sections:
     paddingY:
       desktop: none sm
     background: hsl(var(--secondary))
-  - type: features_grid
-    version: "1.0"
-    variant: stats-text
-    title: Does the Job Guarantee deliver results you can count on?
-    subtitle: Yes, and we've got the numbers to back it up
-    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
-    background: hsl(var(--secondary))
-    items:
-      - id: "1"
-        value: 84%
-        title: Job placement rate within 6 months
-      - id: "2"
-        value: 150%
-        title: Average salary increase after graduation
-      - id: "3"
-        value: $65K+
-        title: Average starting salary for graduates
-    marginY:
-      desktop: none md
-    paddingY:
-      desktop: none
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: What You'll Learn in the Full Stack Program
-    program_description: Master the complete web development stack from frontend to backend. Build production-ready applications using the most in-demand technologies that employers are looking for.
+    program_title: Full Stack with AI Program Overview
+    program_description: Learn to build modern, production-ready web applications by mastering frontend and backend development alongside AI. Work with APIs, databases, and intelligent tools to design, develop, and ship real-world software.
     tech_logos:
       - name: HTML5
         icon: html
