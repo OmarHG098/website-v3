@@ -10,41 +10,88 @@ import {
   type FaqItem,
 } from "@/lib/faqConstants";
 
+interface BankTestimonial {
+  student_name: string;
+  student_thumb?: string;
+  student_video?: string;
+  excerpt?: string;
+  full_text?: string;
+  content?: string;
+  short_content?: string;
+  related_features?: string[];
+  priority?: number;
+  rating?: number;
+}
+
 interface RelatedFeaturesPickerProps {
   value: string[];
   onChange: (value: string[]) => void;
   locale?: string;
+  context?: "faq" | "testimonials";
 }
 
-export function RelatedFeaturesPicker({ value, onChange, locale = "en" }: RelatedFeaturesPickerProps) {
+function filterTestimonialsByFeatures(
+  testimonials: BankTestimonial[],
+  features: string[]
+): BankTestimonial[] {
+  return testimonials.filter((t) => {
+    const tFeatures = t.related_features || [];
+    return features.some((f) => tFeatures.includes(f));
+  });
+}
+
+function isValidTestimonial(t: BankTestimonial): boolean {
+  const hasRating = t.rating != null && t.rating > 0;
+  const hasText = !!(t.excerpt || t.short_content || t.content || t.full_text);
+  return hasRating || hasText;
+}
+
+export function RelatedFeaturesPicker({ value, onChange, locale = "en", context = "faq" }: RelatedFeaturesPickerProps) {
   const selectedFeatures = value || [];
-  
+  const isTestimonials = context === "testimonials";
+
   const { data: faqsData } = useQuery<{ faqs: FaqItem[] }>({
     queryKey: ["/api/faqs", locale],
     staleTime: 5 * 60 * 1000,
+    enabled: !isTestimonials,
   });
-  
+
+  const { data: testimonialsData } = useQuery<{ testimonials: BankTestimonial[] }>({
+    queryKey: ["/api/testimonials", locale],
+    staleTime: 5 * 60 * 1000,
+    enabled: isTestimonials,
+  });
+
   const faqs = faqsData?.faqs ?? [];
-  
-  const faqCounts = useMemo(() => {
+  const testimonials = useMemo(() => {
+    return (testimonialsData?.testimonials ?? []).filter(isValidTestimonial);
+  }, [testimonialsData]);
+
+  const featureCounts = useMemo(() => {
     const counts: Record<string, number> = {};
-    
+
     for (const feature of AVAILABLE_RELATED_FEATURES) {
-      const filtered = filterFaqsByRelatedFeatures(faqs, {
-        relatedFeatures: [feature],
-      });
-      counts[feature] = filtered.length;
+      if (isTestimonials) {
+        counts[feature] = filterTestimonialsByFeatures(testimonials, [feature]).length;
+      } else {
+        counts[feature] = filterFaqsByRelatedFeatures(faqs, {
+          relatedFeatures: [feature],
+        }).length;
+      }
     }
-    
+
     return counts;
-  }, [faqs]);
-  
-  const totalFaqsForSelection = useMemo(() => {
+  }, [faqs, testimonials, isTestimonials]);
+
+  const totalForSelection = useMemo(() => {
     if (selectedFeatures.length === 0) return 0;
+    if (isTestimonials) {
+      return filterTestimonialsByFeatures(testimonials, selectedFeatures).length;
+    }
     return filterFaqsByRelatedFeatures(faqs, {
       relatedFeatures: selectedFeatures,
     }).length;
-  }, [selectedFeatures, faqs]);
+  }, [selectedFeatures, faqs, testimonials, isTestimonials]);
 
   const toggleFeature = (feature: RelatedFeature) => {
     if (selectedFeatures.includes(feature)) {
@@ -61,14 +108,17 @@ export function RelatedFeaturesPicker({ value, onChange, locale = "en" }: Relate
       .join(" ");
   };
 
+  const label = isTestimonials ? "Topics" : "FAQ Topics";
+  const itemLabel = isTestimonials ? "testimonials" : "FAQs";
+
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <Label className="text-sm font-medium">FAQ Topics</Label>
+        <Label className="text-sm font-medium">{label}</Label>
         <span className="text-xs text-muted-foreground">
           {selectedFeatures.length}/{MAX_RELATED_FEATURES} selected
-          {totalFaqsForSelection > 0 && (
-            <span className="ml-1 text-primary">({totalFaqsForSelection} FAQs)</span>
+          {totalForSelection > 0 && (
+            <span className="ml-1 text-primary">({totalForSelection} {itemLabel})</span>
           )}
         </span>
       </div>
@@ -76,8 +126,8 @@ export function RelatedFeaturesPicker({ value, onChange, locale = "en" }: Relate
         {AVAILABLE_RELATED_FEATURES.map((feature) => {
           const isSelected = selectedFeatures.includes(feature);
           const isDisabled = !isSelected && selectedFeatures.length >= MAX_RELATED_FEATURES;
-          const count = faqCounts[feature] || 0;
-          
+          const count = featureCounts[feature] || 0;
+
           return (
             <button
               key={feature}

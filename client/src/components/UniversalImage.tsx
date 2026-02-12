@@ -13,24 +13,26 @@ let registryPromise: Promise<ImageRegistryData> | null = null;
 async function loadRegistry(): Promise<ImageRegistryData> {
   if (registryCache) return registryCache;
   if (registryPromise) return registryPromise;
-  
+
   registryPromise = fetch("/api/image-registry")
-    .then(res => res.json())
-    .then(data => {
+    .then((res) => res.json())
+    .then((data) => {
       registryCache = data;
       return data;
     });
-  
+
   return registryPromise;
 }
 
 export function useImageRegistry() {
-  const [registry, setRegistry] = useState<ImageRegistryData | null>(registryCache);
+  const [registry, setRegistry] = useState<ImageRegistryData | null>(
+    registryCache,
+  );
   const [loading, setLoading] = useState(!registryCache);
 
   useEffect(() => {
     if (!registryCache) {
-      loadRegistry().then(data => {
+      loadRegistry().then((data) => {
         setRegistry(data);
         setLoading(false);
       });
@@ -75,6 +77,11 @@ export function UniversalImage({
   const [hasError, setHasError] = useState(false);
   const imgRef = useRef<HTMLImageElement>(null);
 
+  useEffect(() => {
+    setIsLoaded(false);
+    setHasError(false);
+  }, [id]);
+
   const handleLoad = () => {
     setIsLoaded(true);
     onLoad?.();
@@ -87,31 +94,32 @@ export function UniversalImage({
 
   if (registryLoading || !registry || !registry.images) {
     return (
-      <div 
+      <div
         className={`bg-muted animate-pulse ${className}`}
         data-testid={`img-skeleton-${id}`}
       />
     );
   }
 
+  if (!id || !id.trim()) {
+    return null;
+  }
+
   const imageEntry = registry.images[id];
-  const isDirectPath = !imageEntry && (id.startsWith("/") || id.startsWith("http://") || id.startsWith("https://") || id.startsWith("data:"));
+  const isDirectPath =
+    !imageEntry &&
+    (id.startsWith("/") ||
+      id.startsWith("http://") ||
+      id.startsWith("https://") ||
+      id.startsWith("data:"));
 
   if (!imageEntry && !isDirectPath) {
-    console.warn(`Image not found in registry: ${id}`);
-    return (
-      <div 
-        className={`bg-muted flex items-center justify-center text-muted-foreground text-sm ${className}`}
-        data-testid={`img-not-found-${id}`}
-      >
-        Image not found
-      </div>
-    );
+    return null;
   }
 
   const presetConfig = registry.presets[preset];
-  const aspectRatio = presetConfig?.aspect_ratio 
-    ? ASPECT_RATIOS[presetConfig.aspect_ratio] 
+  const aspectRatio = presetConfig?.aspect_ratio
+    ? ASPECT_RATIOS[presetConfig.aspect_ratio]
     : undefined;
 
   const finalAlt = altOverride || (imageEntry ? imageEntry.alt : id);
@@ -122,27 +130,21 @@ export function UniversalImage({
     : {};
 
   if (hasError) {
-    return (
-      <div 
-        className={`bg-muted flex items-center justify-center text-muted-foreground text-sm ${className}`}
-        style={containerStyle}
-        data-testid={`img-error-${id}`}
-      >
-        Failed to load
-      </div>
-    );
+    return null;
   }
 
-  const borderClasses = bordered ? "border-2 border-muted-foreground/40 rounded-lg" : "";
-  
+  const borderClasses = bordered
+    ? "border-2 border-muted-foreground/40 rounded-lg"
+    : "";
+
   const imageContent = (
-    <div 
-      className={`relative overflow-hidden ${borderClasses} ${useSolidCard ? '' : className}`}
+    <div
+      className={`relative overflow-hidden ${borderClasses} ${useSolidCard ? "" : className}`}
       style={containerStyle}
       data-testid={`img-container-${id}`}
     >
       {!isLoaded && (
-        <div 
+        <div
           className="absolute inset-0 bg-muted animate-pulse"
           data-testid={`img-loading-${id}`}
         />

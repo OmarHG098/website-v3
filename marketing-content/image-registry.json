@@ -3781,6 +3781,60 @@
       "tags": [],
       "usage_count": 0
     },
+    "refresh-miami-logo": {
+      "src": "/attached_assets/refresh-miami_1770833423710.png",
+      "alt": "Refresh Miami logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "the-miami-herald-logo": {
+      "src": "/attached_assets/the-miami-herald_1770833423711.png",
+      "alt": "The Miami Herald logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "nbc-logo": {
+      "src": "/attached_assets/nbc_1770833423713.png",
+      "alt": "NBC logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "newsweek-logo": {
+      "src": "/attached_assets/newsweek_1770833423714.png",
+      "alt": "Newsweek logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "global-miami-logo": {
+      "src": "/attached_assets/Global-Miami-Logo_1770833423716.webp",
+      "alt": "Global Miami logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "businesswire-logo": {
+      "src": "/attached_assets/businesswire_1770833423717.png",
+      "alt": "BusinessWire - A Berkshire Hathaway Company logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "cnn-logo": {
+      "src": "/attached_assets/cnn-logo_1770834336934.png",
+      "alt": "CNN Español logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
+      "usage_count": 0
+    },
+    "economista-logo": {
+      "src": "/attached_assets/economista_1770834336932.png",
+      "alt": "El Economista logo",
+      "focal_point": "center",
+      "tags": ["logo", "press"],
     "bid_logo": {
       "src": "/attached_assets/bid-logo.webp",
       "alt": "BID logo",

@@ -21,6 +21,12 @@ export const testimonialsGridItemSchema = z.object({
   }).optional(),
 });
 
+export const testimonialItemStyleSchema = z.object({
+  box_color: z.string().optional(),
+  name_color: z.string().optional(),
+  comment_color: z.string().optional(),
+});
+
 export const testimonialsGridSectionSchema = z.object({
   type: z.literal("testimonials_grid"),
   version: z.string().optional(),
@@ -35,7 +41,9 @@ export const testimonialsGridSectionSchema = z.object({
   default_star_color: z.string().optional(),
   default_linkedin_color: z.string().optional(),
   columns: z.number().optional(),
-  items: z.array(testimonialsGridItemSchema).optional(),
+  related_features: z.array(z.string()).optional(),
+  limit: z.number().optional(),
+  item_styles: z.record(z.string(), testimonialItemStyleSchema).optional(),
   background: z.string().optional(),
 });
 
