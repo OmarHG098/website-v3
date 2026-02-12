@@ -41,7 +41,7 @@ props:
       key:
         type: string
         required: true
-        description: The property key from each data item
+        description: "The property path from each data item, supports dot notation for nested fields (e.g., 'academy.name', 'syllabus_version.duration_in_days')"
       label:
         type: string
         required: true
@@ -50,6 +50,10 @@ props:
         type: string
         required: true
         description: "Column type: text, number, date, image, link, or boolean"
+      template:
+        type: string
+        required: false
+        description: "Optional template string to combine multiple fields. Use {dotted.path} placeholders (e.g., '{academy.name} ({academy.city.name})', '{kickoff_date} - {ending_date}'). When using a template, set type to 'text'."
   action:
     type: object
     required: false

@@ -12,6 +12,7 @@ interface TableColumnConfig {
   key: string;
   label: string;
   type: "text" | "number" | "date" | "image" | "link" | "boolean";
+  template?: string;
 }
 
 interface TableConfig {
@@ -62,9 +63,22 @@ function extractArrayProperties(data: unknown): string[] {
   return result;
 }
 
+function flattenKeys(obj: Record<string, unknown>, prefix = "", maxDepth = 3): string[] {
+  if (maxDepth <= 0) return [];
+  const keys: string[] = [];
+  for (const [key, value] of Object.entries(obj)) {
+    const path = prefix ? `${prefix}.${key}` : key;
+    keys.push(path);
+    if (value !== null && typeof value === "object" && !Array.isArray(value)) {
+      keys.push(...flattenKeys(value as Record<string, unknown>, path, maxDepth - 1));
+    }
+  }
+  return keys;
+}
+
 function getKeysFromArray(arr: Record<string, unknown>[]): string[] {
   if (arr.length === 0) return [];
-  return Object.keys(arr[0]);
+  return flattenKeys(arr[0]);
 }
 
 function checkConsistency(arr: Record<string, unknown>[]): { consistent: boolean; keys: string[] } {

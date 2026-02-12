@@ -4,6 +4,7 @@ export interface TableColumnConfig {
   key: string;
   label: string;
   type: "text" | "number" | "date" | "image" | "link" | "boolean";
+  template?: string;
 }
 
 export interface TableConfig {
@@ -20,16 +21,24 @@ export interface GenerateTableInput {
 const SYSTEM_PROMPT = `You are a data table configuration assistant. Given a sample of data items and a user's description of what columns they want, produce a JSON configuration for a data table.
 
 Rules:
+- Available keys use dot notation for nested fields (e.g. "academy.name", "syllabus_version.duration_in_days"). Use these exact paths as the "key" value.
 - Only use keys that exist in the available keys list provided.
-- Map the user's natural language descriptions to the correct data keys.
-- Infer the best column type based on the sample values: "text" for strings, "number" for numeric values, "date" for date-like strings, "image" for URLs ending in image extensions, "link" for other URLs, "boolean" for true/false values.
+- Map the user's natural language descriptions to the correct data keys by examining the sample data values.
+- Infer the best column type based on the sample values: "text" for strings, "number" for numeric values, "date" for ISO date strings, "image" for URLs ending in image extensions, "link" for other URLs, "boolean" for true/false values.
 - Use the user's desired labels for column headers. If the user doesn't specify labels, generate clean human-readable labels from the key names.
 - Preserve the order the user specifies.
-- If the user says something vague like "show all columns", include all available keys.
+- If the user says something vague like "show all columns", include the most meaningful top-level and nested keys (skip internal IDs, slugs, and redundant fields).
+- TEMPLATE SUPPORT: When a column should combine multiple fields or add formatting, use the "template" property with {dotted.path} placeholders. Examples:
+  - Combining date range: { "key": "kickoff_date", "template": "{kickoff_date} - {ending_date}", "label": "Date", "type": "text" }
+  - Combining location: { "key": "academy.name", "template": "{academy.name} ({academy.city.name})", "label": "Location", "type": "text" }
+  - Adding units: { "key": "syllabus_version.duration_in_days", "template": "{syllabus_version.duration_in_days} days ({syllabus_version.duration_in_hours}h)", "label": "Duration", "type": "text" }
+  When using a template, set the type to "text" since the result is a formatted string.
+  Only use template when combining multiple fields or adding formatting. For simple single-field columns, omit template.
+- When a date column uses a template (combining start + end dates), set type to "text" not "date", because the template produces a formatted string.
 - Return ONLY valid JSON with this exact structure:
 {
   "columns": [
-    { "key": "field_name", "label": "Display Label", "type": "text|number|date|image|link|boolean" }
+    { "key": "field.path", "label": "Display Label", "type": "text|number|date|image|link|boolean", "template": "optional {field.path} template" }
   ],
   "title": "Optional Table Title"
 }

@@ -12,6 +12,7 @@ interface DynamicTableSection {
     key: string;
     label: string;
     type: "text" | "number" | "date" | "image" | "link" | "boolean";
+    template?: string;
   }>;
   title?: string;
   subtitle?: string;
@@ -26,8 +27,39 @@ interface DynamicTableProps {
   data: DynamicTableSection;
 }
 
+function getNestedValue(obj: Record<string, unknown>, path: string): unknown {
+  const parts = path.split(".");
+  let current: unknown = obj;
+  for (const part of parts) {
+    if (current === null || current === undefined || typeof current !== "object") return undefined;
+    current = (current as Record<string, unknown>)[part];
+  }
+  return current;
+}
+
+function formatValue(val: unknown): string {
+  if (val === null || val === undefined) return "";
+  const str = String(val);
+  if (/^\d{4}-\d{2}-\d{2}(T|\s)/.test(str)) {
+    try {
+      return new Date(str).toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+    } catch { /* fall through */ }
+  }
+  return str;
+}
+
 function resolveTemplate(template: string, row: Record<string, unknown>): string {
-  return template.replace(/\{(\w+)\}/g, (_, key) => String(row[key] ?? ""));
+  return template.replace(/\{([^}]+)\}/g, (_, key) => {
+    const val = getNestedValue(row, key.trim());
+    return formatValue(val);
+  });
+}
+
+function getCellValue(row: Record<string, unknown>, col: { key: string; template?: string }): unknown {
+  if (col.template) {
+    return resolveTemplate(col.template, row);
+  }
+  return getNestedValue(row, col.key);
 }
 
 function CellValue({ value, type }: { value: unknown; type: string }) {
@@ -112,8 +144,8 @@ export function DynamicTable({ data }: DynamicTableProps) {
     let sorted = arr as Record<string, unknown>[];
     if (sortKey) {
       sorted = [...sorted].sort((a, b) => {
-        const aVal = a[sortKey];
-        const bVal = b[sortKey];
+        const aVal = getNestedValue(a, sortKey);
+        const bVal = getNestedValue(b, sortKey);
         if (aVal == null && bVal == null) return 0;
         if (aVal == null) return 1;
         if (bVal == null) return -1;
@@ -235,7 +267,7 @@ export function DynamicTable({ data }: DynamicTableProps) {
                   >
                     {data.columns.map((col) => (
                       <td key={col.key} className="px-4 py-3 text-foreground" data-testid={`cell-${col.key}-${idx}`}>
-                        <CellValue value={row[col.key]} type={col.type} />
+                        <CellValue value={getCellValue(row, col)} type={col.type} />
                       </td>
                     ))}
                     {data.action && (

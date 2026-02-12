@@ -4,6 +4,7 @@ export const dynamicTableColumnSchema = z.object({
   key: z.string(),
   label: z.string(),
   type: z.enum(["text", "number", "date", "image", "link", "boolean"]),
+  template: z.string().optional(),
 });
 
 export const dynamicTableActionSchema = z.object({
