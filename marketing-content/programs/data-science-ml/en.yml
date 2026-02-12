@@ -7,6 +7,8 @@ meta:
   change_frequency: weekly
   page_title: Data Science and Machine Learning Career Program | 4Geeks
   description: Learn data science and machine learning at your own pace with AI-powered tools, unlimited mentorship, and a global community. Master Python, TensorFlow, and predictive modeling.
+  redirects:
+    - /us/coding-bootcamps/datascience-machine-learning
 schema:
   include:
     - organization
@@ -14,7 +16,7 @@ schema:
     - courses:data-science-ml
 sections:
   - type: hero
-    version: "1.0"
+    version: '1.0'
     variant: course
     title: Data Science and Machine Learning
     title_highlight: Data Science
@@ -37,7 +39,7 @@ sections:
       - name: Rigo
         role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
-    tutors_label: "Your tutors:"
+    tutors_label: 'Your tutors:'
     description: Get job-ready for in-demand data science and machine learning roles through hands-on projects, unlimited mentorship, and career support that's built to get you hired.
     media:
       type: video
@@ -114,16 +116,16 @@ sections:
     paddingY:
       desktop: none
   - type: features_grid
-    version: "1.0"
+    version: '1.0'
     variant: stats-text
     title: Why Data Science now?
     subtitle: Data is the fuel for the AI revolution.
     description: As companies shift toward autonomous operations, the demand for experts who can turn raw information into predictive intelligence has never been higher.Data Science and Machine Learning are not just about analyzing the past—they’re building the systems that predict the future. Leveraging modern AI tools, today’s data professionals are delivering the insights that are transforming every industry. Master the skills that stay in demand, no matter how the tech landscape shifts.
     items:
-      - id: "1"
+      - id: '1'
         value: 36%
         title: projected growth rate the next decade
-      - id: "3"
+      - id: '3'
         value: $90K+
         title: Average starting salary for data scientists
     background: hsl(var(--background))
@@ -211,7 +213,7 @@ sections:
     features:
       - icon: Robot
         title: Progress faster with AI-powered tools
-        description: ""
+        description: ''
         show_rigobot_logo: true
         bullets:
           - text: Get instant feedback from Rigobot, our custom AI tutor
@@ -225,7 +227,7 @@ sections:
           variant: primary
       - icon: TrendingUp
         title: Thrive in tech with career support for the AI-Era
-        description: ""
+        description: ''
         show_rigobot_logo: true
         bullets:
           - text: Personalized 1:1 coaching
@@ -239,7 +241,7 @@ sections:
           variant: primary
       - icon: Headset
         title: Unlimited 1:1 mentorship and an active community
-        description: ""
+        description: ''
         show_rigobot_logo: true
         bullets:
           - text: Lifelong access to 1:1 mentorship sessions
@@ -255,12 +257,12 @@ sections:
       desktop: md none
   - type: certificate
     title: Career Outcomes
-    description: "Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:"
+    description: 'Earn an industry-recognized certificate from a Florida Department of Education accredited institution. Access high-paying roles:'
     benefits:
-      - text: "Data Scientist: $80K–$130K"
-      - text: "Machine Learning Engineer: $90K–$150K"
-      - text: "Data Analyst: $60K–$95K"
-      - text: "AI Engineer: $100K–$160K"
+      - text: 'Data Scientist: $80K–$130K'
+      - text: 'Machine Learning Engineer: $90K–$150K'
+      - text: 'Data Analyst: $60K–$95K'
+      - text: 'AI Engineer: $100K–$160K'
     card:
       title: Data Scientist
       subtitle: 4Geeks Academy Certificate
@@ -285,10 +287,10 @@ sections:
         label: Average salary increase
         description: Graduate ready to step into high-paying data science and machine learning positions, offering immediate growth and long-term stability.
         benefits:
-          - text: "Data Scientist: $80K–$130K"
-          - text: "Machine Learning Engineer: $90K–$150K"
-          - text: "Data Analyst: $60K–$95K"
-          - text: "AI Engineer: $100K–$160K"
+          - text: 'Data Scientist: $80K–$130K'
+          - text: 'Machine Learning Engineer: $90K–$150K'
+          - text: 'Data Analyst: $60K–$95K'
+          - text: 'AI Engineer: $100K–$160K'
       - value: 5,000+
         label: Hiring Partners
         description: Access our network of 5,000+ hiring partners actively seeking data science talent. Get exclusive job opportunities and priority referrals.
@@ -315,15 +317,15 @@ sections:
       - icon: Award
         title: Get hired within 9 months of graduation – or your money back
     columns: 3
-    icon_color: "#0097CD"
+    icon_color: '#0097CD'
     background: hsl(var(--secondary))
   - type: pricing
-    version: "1.0"
+    version: '1.0'
     variant: product
     title: Tuition & Financing Options
     subtitle: Investing in your career matters. We make it easier with multiple ways to fund your enrollment.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
+    discount_text: 'Full Payment Discount: Save 10% with upfront payment.'
+    financing_text: 'Credit-Based Financing: starting below'
     financing_amount: $299
     tech_icons:
       - python
@@ -388,7 +390,7 @@ sections:
     title: Your New Career Starts Here
     subtitle: Our programs deliver life-changing results. 1,200+ verified reviews prove it
     rating_summary:
-      average: "4.8"
+      average: '4.8'
       count: 1,294
     items:
       - name: Gabriel Salazar
@@ -432,7 +434,7 @@ sections:
     paddingY:
       desktop: md none
   - type: faq
-    version: "1.0"
+    version: '1.0'
     background: hsl(var(--muted))
     title: Frequently Asked Questions
     related_features:
@@ -446,7 +448,7 @@ sections:
     marginY:
       desktop: none
   - type: cta_banner
-    version: "1.0"
+    version: '1.0'
     title: Ready to Start Your Data Science Career?
     subtitle: Join thousands of graduates who have transformed their careers with 4Geeks.
     background: primary
@@ -460,7 +462,7 @@ sections:
     paddingY:
       desktop: md
   - type: footer
-    version: "1.0"
+    version: '1.0'
     copyright_text: 2024 4Geeks. All rights reserved.
     paddingY:
       desktop: none 10px
