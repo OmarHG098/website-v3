@@ -77,7 +77,7 @@ sections:
     reverse_on_mobile: true
     gap: "12"
     marginY:
-      desktop: none lg
+      desktop: none md
     paddingY:
       desktop: lg
   - type: course_selector
@@ -131,26 +131,8 @@ sections:
         cta_text: Discover program
         cta_url: /en/cybersecurity
         course_background: hsl(var(--color-pink))
-  - type: value_proof_panel
-    title: Recognized Globally for Excellence
-    subtitle: Trusted sources validate the impact of our programs and community.
-    evidence_items:
-      - title: Top 5 Coding Bootcamps Worldwide
-        source: Newsweek, Forbes, SwitchUp, Course Reportk
-      - title: Best Student Support & Best Value
-        source: Course Report, SwitchUp
-      - title: 35,000+ Graduates Across 20+ Countries
-        description: Join a global network of tech professionals achieving success.
-    media:
-      type: image
-      src: /images/students-learning.jpg
-      alt: Students collaborating in a classroom
-      aspect_ratio: "4:3"
-      style: rounded
-    background: muted
-    variant: default
     marginY:
-      desktop: none md
+      desktop: none sm
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
