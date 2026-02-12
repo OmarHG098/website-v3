@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "001bf92c02e968131efe59110563cdfec6f20899",
-  "lastSyncedAt": "2026-02-12T16:03:33.492Z",
+  "lastSyncedCommit": "40ba68118a86aa4e6888b3fe83e6333e1bdbc39e",
+  "lastSyncedAt": "2026-02-12T16:16:31.253Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -59,12 +59,12 @@
     },
     "marketing-content/landings/example-landing/experiments.yml": {
       "sha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5",
-      "lastModified": 1769638432341.0369,
+      "lastModified": 1770912562379.642,
       "remoteSha": "f6ed13b5eb4bf7af4459c2631e6e8a4bd1d2a9dd460a6aad1e8564b423fbb9e5"
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
-      "lastModified": 1770848589599.1216,
+      "lastModified": 1770912990884.2922,
       "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
