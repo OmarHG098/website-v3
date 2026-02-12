@@ -17,7 +17,6 @@ import { IoLogoVercel } from "react-icons/io5";
 import { Matplotlib } from "@/components/custom-icons";
 import { RichTextContent } from "@/components/ui/rich-text-content";
 import { useInternalNav } from "@/hooks/useInternalNav";
-import Marquee from "react-fast-marquee";
 
 interface SyllabusSectionProps {
   data: SyllabusSectionType;
@@ -500,29 +499,22 @@ function SyllabusProgramModulesVariant({ data }: { data: SyllabusProgramModules 
               
               {data.tech_logos && data.tech_logos.length > 0 && (
                 <TooltipProvider delayDuration={200} skipDelayDuration={0}>
-                  <div className="w-full overflow-hidden" data-testid="list-tech-logos">
-                    <Marquee
-                      speed={20}
-                      gradient={true}
-                      gradientWidth={30}
-                      pauseOnHover={true}
-                    >
-                      {data.tech_logos.map((logo, index) => (
-                        <Tooltip key={index}>
-                          <TooltipTrigger asChild>
-                            <div 
-                              className="group text-muted-foreground hover:text-primary transition-colors duration-brand cursor-pointer mx-3"
-                              data-testid={`icon-tech-${index}`}
-                            >
-                              {getTechIcon(logo.icon, "w-8 h-8")}
-                            </div>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <p>{logo.name}</p>
-                          </TooltipContent>
-                        </Tooltip>
-                      ))}
-                    </Marquee>
+                  <div className="flex flex-wrap gap-4" data-testid="list-tech-logos">
+                    {data.tech_logos.map((logo, index) => (
+                      <Tooltip key={index}>
+                        <TooltipTrigger asChild>
+                          <div 
+                            className="group text-muted-foreground hover:text-primary transition-colors duration-brand cursor-pointer"
+                            data-testid={`icon-tech-${index}`}
+                          >
+                            {getTechIcon(logo.icon, "w-8 h-8")}
+                          </div>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p>{logo.name}</p>
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
                   </div>
                 </TooltipProvider>
               )}

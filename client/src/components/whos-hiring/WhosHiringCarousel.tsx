@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 import Marquee from "react-fast-marquee";
-import { useTranslation } from "react-i18next";
 import type { WhosHiringSection as WhosHiringSectionType } from "@shared/schema";
 
 interface WhosHiringCarouselProps {
@@ -17,6 +16,12 @@ interface MosaicGroup {
   pattern: "stack" | "hero";
   items: LogoItem[];
 }
+
+const heroCardTexts = [
+  "Building the future of work together.",
+  "Transforming ideas into digital experiences.",
+  "Scaling solutions for modern businesses.",
+];
 
 const SMALL_CARD_HEIGHT_MOBILE = 85;
 const SMALL_CARD_HEIGHT_DESKTOP = 130;
@@ -94,9 +99,9 @@ function LogoCard({
   );
 }
 
-function MosaicGroupComponent({ group, textIndex, isMobile, heroCardTexts }: { group: MosaicGroup; textIndex: number; isMobile: boolean; heroCardTexts: string[] }) {
+function MosaicGroupComponent({ group, textIndex, isMobile }: { group: MosaicGroup; textIndex: number; isMobile: boolean }) {
   const { pattern, items } = group;
-  const heroText = heroCardTexts && heroCardTexts.length > 0 ? heroCardTexts[textIndex % heroCardTexts.length] : "";
+  const heroText = heroCardTexts[textIndex % heroCardTexts.length];
   const heroHeight = isMobile ? HERO_CARD_HEIGHT_MOBILE : HERO_CARD_HEIGHT_DESKTOP;
   const gap = isMobile ? GAP_MOBILE : GAP_DESKTOP;
 
@@ -129,25 +134,8 @@ function MosaicGroupComponent({ group, textIndex, isMobile, heroCardTexts }: { g
 export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const { i18n } = useTranslation();
 
   const logos = data.logos || [];
-
-  const isSpanish = i18n.language?.startsWith('es');
-
-  const heroCardTexts = data.hero_card_texts && data.hero_card_texts.length > 0
-    ? data.hero_card_texts
-    : isSpanish
-      ? [
-          "Construyendo juntos el futuro del trabajo.",
-          "Transformando ideas en experiencias digitales.",
-          "Escalando soluciones para negocios modernos.",
-        ]
-      : [
-          "Building the future of work together.",
-          "Transforming ideas into digital experiences.",
-          "Scaling solutions for modern businesses.",
-        ];
 
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -263,7 +251,6 @@ export function WhosHiringCarousel({ data }: WhosHiringCarouselProps) {
                 group={group}
                 textIndex={index}
                 isMobile={isMobile}
-                heroCardTexts={heroCardTexts}
               />
             </div>
           ))}
