@@ -1,72 +1,77 @@
 slug: cybersecurity
 title: Ciberseguridad
 meta:
-  page_title: "Bootcamp de Ciberseguridad | 4Geeks"
-  description: "Inicia una carrera bien remunerada en ciberseguridad. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes en ciberseguridad."
+  robots: index, follow
+  og_image: /images/programs/cybersecurity-og.jpg
+  priority: 0.9
+  change_frequency: weekly
+  page_title: Bootcamp de Ciberseguridad | 4Geeks
+  description: Inicia una carrera bien remunerada en ciberseguridad. Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA, diseñado por expertos líderes en ciberseguridad.
   redirects:
-    - "/bootcamp/ciberseguridad"
-    - "/programas/especialista-ciberseguridad"
-    - "/coding-bootcamp/ciberseguridad"
-
+    - /bootcamp/ciberseguridad
+    - /programas/especialista-ciberseguridad
+    - /coding-bootcamp/ciberseguridad
+schema:
+  include:
+    - organization
+    - website
+    - courses:cybersecurity
 sections:
   - type: hero
-    variant: course
     version: "1.0"
+    variant: course
     title: Conviértete en Especialista en Ciberseguridad
-    title_highlight: Ciberseguridad
-    subtitle: Inicia una carrera bien remunerada en uno de los campos más demandados de la tecnología.
+    title_highlight: Especialista en Ciberseguridad
+    subtitle: Defiende sistemas, responde a amenazas y lanza una carrera bien remunerada en ciberseguridad en 16 semanas.
     students_enrolled:
       avatars:
-        - https://randomuser.me/api/portraits/women/21.jpg
-        - https://randomuser.me/api/portraits/men/22.jpg
-        - https://randomuser.me/api/portraits/women/23.jpg
-        - https://randomuser.me/api/portraits/men/24.jpg
-      count: +800 estudiantes inscritos
+        - https://randomuser.me/api/portraits/women/1.jpg
+        - https://randomuser.me/api/portraits/men/2.jpg
+        - https://randomuser.me/api/portraits/women/3.jpg
+        - https://randomuser.me/api/portraits/men/4.jpg
+      count: +2,500 estudiantes inscritos
     bullet_points:
-      - Domina fundamentos de seguridad de redes y análisis de paquetes
-      - Aprende pruebas de penetración con Metasploit y Nmap
-      - Desarrolla habilidades de inteligencia de amenazas y OSINT
-      - Implementa el Marco de Ciberseguridad NIST
+      - Trabaja con amenazas cibernéticas reales y defensas de seguridad
+      - Domina los fundamentos de seguridad de redes y detección de amenazas
+      - Aprende pruebas de penetración con herramientas estándar de la industria
+      - Prepárate para las certificaciones EJPT y CEH
     tutors:
-      - name: Experto en Seguridad
-        role: Instructor Principal
-        image: https://randomuser.me/api/portraits/men/55.jpg
+      - name: Daniela Maisi
+        role: Instructora Principal
+        image: https://avatars.githubusercontent.com/u/16064310?v=4
       - name: Rigo
         role: Tutor de IA
         image: /attached_assets/rigobot-logo_1764707022198.webp
     tutors_label: "Tus tutores:"
-    description: Aprende a defender sistemas y responder a amenazas cibernéticas reales con un currículo práctico e integrado con IA—diseñado por expertos líderes y respaldado por una garantía de empleo.
+    description: Nuestro programa intensivo a tiempo parcial combina laboratorios prácticos y mentoría personalizada para prepararte para roles de seguridad de alto impacto en cualquier industria.
     media:
       type: video
-      src: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+      src: https://www.youtube.com/shorts/sSxJnelPJT8
       thumbnail: https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=450&fit=crop
-      alt: Introducción al programa de Ciberseguridad
+      alt: Introducción al programa de ciberseguridad
     signup_card:
-      title: Aplica al Programa de Ciberseguridad
-      description: Comienza tu camino en seguridad informática
+      title: Obtén el Programa Completo
+      description: Accede al currículo completo, horarios y todo lo que necesitas saber sobre el programa.
       cta_button:
-        text: Aplicar Ahora
-        url: /es/aplica
+        text: Envíame el Currículo
+        url: /es/apply
         variant: primary
       login_link:
         text: ¿Ya eres estudiante? Inicia sesión aquí.
         url: /login
       features:
-        - icon: book
-          text: Lecturas y videos
-          count: 60+
-        - icon: code
-          text: Laboratorios Prácticos
-          count: 80+
-        - icon: briefcase
-          text: Proyectos de Seguridad
-          count: "10"
-        - icon: robot
-          text: Retroalimentación con IA
         - icon: calendar
-          text: Clases en Vivo 3x/semana
-        - icon: users
-          text: Mentoría 1:1
+          text: Programa Intensivo de 16 Semanas
+        - icon: IconBriefcase
+          text: Currículo Orientado al Empleo
+        - icon: IconRobot
+          text: Aprendizaje y Feedback con IA
+        - icon: IconUsers
+          text: Ratio de 7:1 Estudiante-Instructor
+        - icon: IconUserCheck
+          text: Mentoría 1:1 Ilimitada
+        - icon: book
+          text: Portafolio de Ciberseguridad Real
     paddingY:
       desktop: md
     marginY:
@@ -112,365 +117,363 @@ sections:
     paddingY:
       desktop: none
     marginY:
-      desktop: md lg
+      desktop: none lg
   - type: features_grid
     version: "1.0"
     variant: stats-text
-    title: Los Especialistas en Ciberseguridad Tienen Alta Demanda
-    subtitle: Los números no mienten—la ciberseguridad es el futuro
-    description: Con millones de posiciones vacantes y un crecimiento laboral acelerado, nunca ha habido un mejor momento para entrar a este campo. Nuestro programa te prepara para un impacto inmediato.
+    title: La Demanda de Especialistas en Ciberseguridad Está en Auge
+    subtitle: Lanza una carrera en uno de los sectores tecnológicos de mayor crecimiento y más esenciales del mundo.
+    description: Con una brecha global significativa de talento e inversiones récord en defensa, la oportunidad para profesionales capacitados no tiene precedentes. Nuestro programa proporciona las habilidades técnicas y la experiencia práctica para acceder directamente a estos roles bien remunerados.
     background: bg-muted/30
     items:
       - id: "1"
-        value: 3.5M+
-        title: Posiciones de ciberseguridad vacantes globalmente
+        value: 4.8M
+        title: Puestos de ciberseguridad sin cubrir a nivel mundial
       - id: "2"
-        value: 35%
-        title: Crecimiento laboral proyectado hasta 2032
+        value: 41%
+        title: Crecimiento laboral proyectado, superando a la mayoría de los sectores
       - id: "3"
-        value: 16
-        title: Semanas para lanzar tu carrera en seguridad
+        value: $520B
+        title: Gasto global en ciberseguridad este año
   - type: syllabus
-    version: "1.0"
     variant: program-modules
-    program_title: "Lo Que Aprenderás en el Programa de Ciberseguridad"
-    program_description: "Domina el stack completo de ciberseguridad desde seguridad de redes hasta pruebas de penetración. Desarrolla habilidades defensivas y ofensivas del mundo real usando herramientas estándar de la industria que los empleadores buscan."
+    program_title: Descripción General del Programa de Ciberseguridad
+    program_description: Domina el stack completo de ciberseguridad desde seguridad de redes hasta pruebas de penetración. Desarrolla habilidades defensivas y ofensivas del mundo real usando las herramientas estándar de la industria que los empleadores buscan.
     tech_logos:
       - name: Linux
         icon: linux
       - name: Python
         icon: python
-      - name: Redes
+      - name: Networks
         icon: server
-      - name: Seguridad
+      - name: Security
         icon: shield
       - name: Terminal
         icon: terminal
       - name: Git
         icon: git
     module_cards:
-      - title: "Fundamentos y Seguridad de Redes"
-        duration: "Semanas 1-3"
+      - title: Fundamentos y Seguridad de Redes
+        duration: Semanas 1-3
         objectives:
-          - "Comprender los fundamentos de seguridad informática y el panorama de amenazas"
-          - "Aprender elementos esenciales de seguridad de redes y análisis de paquetes"
-          - "Usar Packet Tracer para simulación visual y rastreo de redes"
-        projects: "Construir arquitecturas de red seguras desde cero"
+          - Comprender los fundamentos de seguridad informática y el panorama de amenazas
+          - Aprender los elementos esenciales de seguridad de redes y análisis de paquetes
+          - Usar Packet Tracer para simulación visual y rastreo de redes
+        projects: Construir arquitecturas de red seguras desde cero
         orientation: vertical
         icon: IconNetwork
-      - title: "Linux y Administración de Servidores"
-        duration: "Semanas 4-6"
+      - title: Linux y Administración de Servidores
+        duration: Semanas 4-6
         objectives:
-          - "Dominar la línea de comandos de Linux y scripting de shell"
-          - "Configurar, asegurar y gestionar sistemas basados en Linux"
-          - "Implementar endurecimiento de servidores y controles de acceso"
-        projects: "Desplegar y asegurar servidores Linux listos para producción"
+          - Dominar la línea de comandos de Linux y scripting de shell
+          - Configurar, asegurar y gestionar sistemas basados en Linux
+          - Implementar endurecimiento de servidores y controles de acceso
+        projects: Desplegar y asegurar servidores Linux listos para producción
         orientation: vertical
         icon: IconTerminal2
-      - title: "Inteligencia Cibernética"
-        duration: "Semanas 7-9"
+      - title: Inteligencia Cibernética
+        duration: Semanas 7-9
         objectives:
-          - "Desarrollar habilidades de recopilación y análisis de inteligencia de amenazas"
-          - "Aprender técnicas OSINT para reconocimiento"
-          - "Identificar, rastrear y predecir amenazas cibernéticas"
-        projects: "Crear reportes completos de inteligencia de amenazas"
+          - Desarrollar habilidades de recopilación y análisis de inteligencia de amenazas
+          - Aprender técnicas OSINT para reconocimiento
+          - Identificar, rastrear y predecir amenazas cibernéticas
+        projects: Crear reportes completos de inteligencia de amenazas
         orientation: vertical
         icon: IconSearch
-      - title: "Pruebas de Penetración"
-        duration: "Semanas 10-12"
+      - title: Pruebas de Penetración
+        duration: Semanas 10-12
         objectives:
-          - "Practicar hacking ético alineado con la certificación EJPT"
-          - "Descubrir vulnerabilidades y simular escenarios de ataque"
-          - "Documentar hallazgos usando Metasploit y Nmap"
-        projects: "Realizar pruebas de penetración completas en entornos simulados"
+          - Practicar hacking ético alineado con la certificación EJPT
+          - Descubrir vulnerabilidades y simular escenarios de ataque
+          - Documentar hallazgos usando Metasploit y Nmap
+        projects: Realizar pruebas de penetración completas en entornos simulados
         orientation: vertical
         icon: IconShieldLock
-      - title: "Prevención de Pérdida de Datos (DLP)"
-        duration: "Semanas 13-14"
+      - title: Prevención de Pérdida de Datos (DLP)
+        duration: Semanas 13-14
         objectives:
-          - "Proteger información sensible y prevenir brechas"
-          - "Implementar estrategias y políticas DLP"
-          - "Proteger activos organizacionales de amenazas internas/externas"
-        projects: "Diseñar planes de implementación DLP empresarial"
+          - Proteger información sensible y prevenir brechas
+          - Implementar estrategias y políticas DLP
+          - Proteger activos organizacionales de amenazas internas/externas
+        projects: Diseñar planes de implementación DLP empresarial
         orientation: vertical
         icon: IconDatabase
-      - title: "Marco NIST"
-        duration: "Semanas 15-16"
+      - title: Marco NIST
+        duration: Semanas 15-16
         objectives:
-          - "Dominar el Marco de Ciberseguridad NIST"
-          - "Aplicar prácticas de cumplimiento y gestión de riesgos"
-          - "Prepararse para respuesta y recuperación de incidentes"
-        projects: "Crear reportes de evaluación de seguridad organizacional"
+          - Dominar el Marco de Ciberseguridad NIST
+          - Aplicar prácticas de cumplimiento y gestión de riesgos
+          - Prepararse para respuesta y recuperación de incidentes
+        projects: Crear reportes de evaluación de seguridad organizacional
         orientation: vertical
         icon: IconClipboardCheck
     paddingY:
       desktop: md
-    marginY:
-      desktop: md none
   - type: projects
-    title: "Aprende Defendiendo Sistemas Reales"
-    subtitle: "Obtén experiencia práctica con ejercicios que simulan escenarios reales de ciberseguridad. Construye un portafolio de proyectos de seguridad que demuestren tus capacidades defensivas y ofensivas."
+    title: Aprende Defendiendo Sistemas Reales
+    subtitle: Obtén experiencia práctica con ejercicios que simulan escenarios reales de ciberseguridad. Construye un portafolio de proyectos de seguridad que demuestren tus capacidades defensivas y ofensivas.
     items:
-      - title: "Evaluación de Vulnerabilidades de Red"
-        description: "Usa Nessus y Nmap para escanear redes, identificar vulnerabilidades y crear reportes de seguridad completos. Aprende a priorizar riesgos y recomendar estrategias de remediación para entornos empresariales."
-        image: "network-security"
-        tags: ["Nessus", "Nmap"]
-        duration: "8 HORAS"
-        date: "15/01/2025"
-        difficulty: "medium"
-      - title: "Laboratorio de Pruebas de Penetración"
-        description: "Realiza pruebas de penetración autorizadas en entornos simulados usando Metasploit. Explota vulnerabilidades, establece persistencia y documenta tus hallazgos siguiendo metodologías profesionales de pentesting."
-        image: "pentesting"
-        tags: ["Metasploit", "Pentesting"]
-        duration: "12 HORAS"
-        date: "01/02/2025"
-        difficulty: "hard"
-      - title: "Simulación de Respuesta a Incidentes"
-        description: "Analiza tráfico de red con Wireshark para detectar y responder a incidentes de seguridad. Crea reportes de incidentes, reconstrucciones de líneas de tiempo y planes de remediación basados en patrones de ataque reales."
-        image: "incident-response"
-        tags: ["Wireshark", "DFIR"]
-        duration: "10 HORAS"
-        date: "15/02/2025"
-        difficulty: "hard"
+      - title: Evaluación de Vulnerabilidades de Red
+        description: Usa Nessus y Nmap para escanear redes, identificar vulnerabilidades y crear reportes de seguridad completos. Aprende a priorizar riesgos y recomendar estrategias de remediación para entornos empresariales.
+        image: network-security
+        tags:
+          - Nessus
+          - Nmap
+        duration: 8 HOURS
+        date: 15/01/2025
+        difficulty: medium
+      - title: Laboratorio de Pruebas de Penetración
+        description: Realiza pruebas de penetración autorizadas en entornos simulados usando Metasploit. Explota vulnerabilidades, establece persistencia y documenta tus hallazgos siguiendo metodologías profesionales de pentesting.
+        image: pentesting
+        tags:
+          - Metasploit
+          - Pentesting
+        duration: 12 HOURS
+        date: 01/02/2025
+        difficulty: hard
+      - title: Simulación de Respuesta a Incidentes
+        description: Analiza tráfico de red con Wireshark para detectar y responder a incidentes de seguridad. Crea reportes de incidentes, reconstrucciones de líneas de tiempo y planes de remediación basados en patrones de ataque reales.
+        image: incident-response
+        tags:
+          - Wireshark
+          - DFIR
+        duration: 10 HOURS
+        date: 15/02/2025
+        difficulty: hard
     paddingY:
       desktop: md
   - type: ai_learning
-    version: "1.0"
     variant: feature-tabs
-    badge: "¿Por qué 4Geeks?"
-    title: "¿Por Qué Aprender con 4Geeks?"
-    description: "Avanza más rápido y mantente motivado con nuestras herramientas impulsadas por IA y método de enseñanza hiperpersonalizado."
+    badge: ¿Por qué 4Geeks?
+    title: Cómo aprenderás en 4Geeks
+    description: Avanza más rápido y mantente motivado con nuestras herramientas impulsadas por IA y método de enseñanza hiperpersonalizado.
     features:
       - icon: Robot
-        title: "Progresa más rápido con herramientas potenciadas por IA"
+        title: Progresa más rápido con herramientas potenciadas por IA
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: "Obtén retroalimentación instantánea de Rigobot, nuestro tutor de IA personalizado"
-          - text: "Da consejos ajustados a tu nivel de habilidad y progreso"
-          - text: "Ayuda con depuración y tareas de resolución de problemas"
-          - text: "Accede a cientos de ejercicios de seguridad interactivos en Learnpack"
+          - text: Obtén retroalimentación instantánea de Rigobot, nuestro tutor de IA personalizado
+          - text: Recibe consejos ajustados a tu nivel de habilidad y progreso
+          - text: Ayuda con depuración y tareas de resolución de problemas
+          - text: Accede a cientos de ejercicios interactivos de seguridad en Learnpack
         video_url: https://storage.googleapis.com/breathecode/videos/landing-pages/learnpack-demo.mp4
         cta:
           text: "¡Empieza a aprender ahora!"
-          url: "/es/aplica"
+          url: /es/apply
           variant: primary
       - icon: TrendingUp
-        title: "Prospera en tecnología con soporte de carrera para la Era de IA"
+        title: Prospera en tecnología con soporte de carrera para la Era de la IA
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: "Coaching personalizado 1:1"
-          - text: "Currículums y portafolios listos para IA"
-          - text: "Preparación de entrevistas y negociación salarial"
-          - text: "Acceso de por vida para apoyar tu crecimiento"
+          - text: Coaching personalizado 1:1
+          - text: Currículums y portafolios preparados para la IA
+          - text: Preparación de entrevistas y negociación salarial
+          - text: Acceso de por vida para apoyar tu crecimiento
         video_url: https://youtu.be/-2ZvlgDnltc
         cta:
           text: "¡Empieza a aprender ahora!"
-          url: "/es/aplica"
+          url: /es/apply
           variant: primary
       - icon: Headset
-        title: "Mentoría ilimitada 1:1 y una comunidad activa"
+        title: Mentoría ilimitada 1:1 y una comunidad activa
         description: ""
         show_rigobot_logo: true
         bullets:
-          - text: "Reserva sesiones 1-a-1 con mentores expertos a tu ritmo"
-          - text: "Aprende EN VIVO con instructores en sesiones de código y talleres"
-          - text: "Interactúa con compañeros a través de Slack, herramientas de feedback y check-ins semanales"
-          - text: "Accede a canales de Slack para soporte de seguridad, bolsas de trabajo y consejos de carrera"
+          - text: Acceso de por vida a sesiones de mentoría 1:1
+          - text: Ratio de 7:1 estudiante-profesor para orientación personalizada
+          - text: Colaboración entre compañeros a través de canales de Slack y check-ins semanales
+          - text: Canales dedicados de Slack para soporte técnico, bolsas de trabajo y consejos de carrera
         image_id: mentoring_zoom_call
         cta:
           text: "¡Empieza a aprender ahora!"
-          url: "/es/aplica"
+          url: /apply
           variant: primary
     paddingY:
       desktop: md
-    marginY:
-      desktop: md none
   - type: certificate
-    title: "Certificado y Certificaciones de la Industria"
+    title: Certificaciones de la Industria y Resultados Profesionales
     description: "Obtén un certificado reconocido por la industria de una institución acreditada por el Departamento de Educación de Florida. Nuestro programa te prepara para:"
     benefits:
-      - text: "EJPT (eLearnSecurity Junior Penetration Tester)"
-      - text: "Ruta hacia CEH (Certified Ethical Hacker)"
-      - text: "Fundamentos de CompTIA Security+"
-      - text: "Acceso de por vida a soporte de carrera"
+      - text: EJPT (eLearnSecurity Junior Penetration Tester)
+      - text: Ruta hacia CEH (Certified Ethical Hacker)
+      - text: Fundamentos de CompTIA Security+
+      - text: Acceso de por vida a soporte de carrera
     card:
-      title: "Especialista en Ciberseguridad"
-      subtitle: "Certificado de 4Geeks Academy"
-      program_name: "Especialista en Ciberseguridad"
+      title: Especialista en Ciberseguridad
+      subtitle: Certificado de 4Geeks Academy
+      program_name: Especialista en Ciberseguridad
     stats:
-      - value: "84%"
-        label: "Tasa de contratación"
-        description: "El 84% de nuestros graduados consiguen un trabajo en tecnología dentro de 6 meses. Nuestro equipo de servicios de carrera trabaja contigo hasta que seas contratado."
+      - value: 84%
+        label: Tasa de Contratación
+        description: Gradúate con las habilidades y certificaciones globales que las principales empresas buscan activamente en 2026.
         benefits:
-          - text: "Coaching de carrera dedicado desde el primer día"
-          - text: "Optimización de currículum y perfil de LinkedIn"
-          - text: "Entrevistas simuladas con profesionales de la industria"
-          - text: "Presentaciones directas a socios contratantes"
-      - value: "3-6 meses"
-        label: "Tiempo para ser contratado"
-        description: "La mayoría de los graduados aseguran su primer rol dentro de 3-6 meses de completar el programa. Proporcionamos soporte continuo hasta que consigas tu trabajo soñado."
+          - text: Preparación para el Examen CompTIA Security+
+          - text: Preparación para eJPT (Junior Penetration Tester)
+          - text: Ruta hacia CEH (Certified Ethical Hacker)
+          - text: Laboratorios reales con Nmap & Metasploit
+      - value: 3-6 meses
+        label: Tiempo para ser contratado
+        description: Consigue tu primer empleo en 3-6 meses tras graduarte. Con nuestro proceso estructurado de desarrollo profesional en 3 pasos, tus habilidades se convierten en ofertas de trabajo rápidamente.
         benefits:
-          - text: "Estrategia y planificación de búsqueda de empleo"
-          - text: "Coaching de negociación salarial"
-          - text: "Acceso de por vida a soporte de carrera"
-          - text: "Red de exalumnos con más de 10,000 profesionales"
-      - value: "$85K+"
-        label: "Salario inicial promedio"
-        description: "Los profesionales de ciberseguridad obtienen salarios premium debido a la alta demanda y habilidades especializadas. La inversión se paga sola."
+          - text: Optimiza tu currículum, portafolio y perfiles en línea para atraer reclutadores y superar filtros basados en IA
+          - text: Practica para entrevistas técnicas y conductuales
+          - text: Ejecuta una estrategia de búsqueda de empleo personalizada con acceso a redes de contratación relevantes
+      - value: $85K+
+        label: Salario inicial promedio
+        description: Una carrera en ciberseguridad no es solo un nuevo empleo, es una nueva trayectoria de vida. Con un aumento salarial promedio del 55%, nuestros graduados alcanzan un nivel de estabilidad y crecimiento que pocas industrias pueden ofrecer.
         benefits:
-          - text: "Analista de Seguridad: $70K–$95K"
-          - text: "Tester de Penetración: $80K–$110K"
-          - text: "Analista SOC: $65K–$90K"
-          - text: "Ingeniero de Seguridad: $90K–$130K"
-      - value: "5,000+"
-        label: "Socios Contratantes"
-        description: "Nuestra extensa red incluye empresas Fortune 500, agencias gubernamentales y startups innovadoras que buscan activamente talento en seguridad."
+          - text: "Analista de Ciberseguridad: $75K–$120K"
+          - text: "Penetration Tester: $90K–$150K"
+          - text: "Ingeniero de Seguridad: $100K–$165K"
+          - text: "Especialista en Respuesta a Incidentes: $85K–$140K"
+      - value: 5,000+
+        label: Socios Contratantes
+        description: Nuestra extensa red incluye empresas Fortune 500, agencias gubernamentales y startups innovadoras que buscan activamente talento en ciberseguridad.
         benefits:
-          - text: "Referidos directos a empresas socias"
-          - text: "Acceso exclusivo a bolsa de trabajo"
-          - text: "Eventos de networking con reclutadores"
-          - text: "Programa de referidos de exalumnos"
+          - text: Referidos directos a empresas socias
+          - text: Acceso exclusivo a bolsa de trabajo
+          - text: Eventos de networking con reclutadores
+          - text: Programa de referidos de exalumnos
+    certificate_position: right
+    useSolidCard: true
     paddingY:
       desktop: md
   - type: pricing
     version: "1.0"
     variant: product
-    title: "Obtén acceso a toda nuestra base de aprendizaje, cursos y servicios"
-    subtitle: "Domina habilidades de ciberseguridad con práctica ilimitada y guía de expertos."
-    monthly:
-      discount_badge: "35% OFF"
-      price: "38.99"
-      period: "mes"
-      original_price: "59.99"
-    yearly:
-      discount_badge: "35% OFF"
-      price: "311.99"
-      period: "año"
-      original_price: "479.99"
-      savings_badge: "Ahorra 3 meses"
+    title: Matrícula y Opciones de Financiación
+    subtitle: Invertir en tu carrera importa. Te lo facilitamos con múltiples formas de financiar tu inscripción.
+    discount_text: "Descuento por Pago Completo: Ahorra un 10% con el pago anticipado."
+    financing_text: "Financiación Basada en Crédito: desde"
+    financing_amount: $299
     tech_icons:
-      - linux
       - python
-      - terminal
-      - server
-      - shield
+      - tensorflow
+      - pandas
+      - numpy
+      - sql
       - git
-    features_title: "Accede a cientos de ejercicios, proyectos y tutoriales en las tecnologías de seguridad más demandadas"
+      - jupyter
+      - api
+    static_icons: true
+    features_title: Elige la opción que mejor se adapte a ti.
     features:
-      - icon: "certificate"
-        text: "Construye tu portafolio con cientos de proyectos de seguridad del mundo real."
-      - icon: "cloud"
-        text: "Miles de desafíos de programación en la nube (sin configuración necesaria)."
-      - text: "Nunca estarás atascado o solo de nuevo, nuestra IA te conoce, lee tu código y te da retroalimentación en vivo mientras programas."
-        icon: RigobotIconTiny
-      - icon: "certificate"
-        text: "Certificados de cursos"
-      - icon: "certificate"
-        text: "Obtén certificados de una escuela certificada de EE.UU. por el Departamento de Educación de Florida."
+      - icon: IconCheck
+        text: La matrícula estándar es de $9,999. Paga por adelantado y recibe un 10% de descuento, o distribuye los pagos sin intereses en 6 meses.
+      - icon: IconCheck
+        text: Financia tu matrícula a través de Climb, Fortify o Lumion con planes de 24, 36, 48 o 60 meses.
+      - icon: IconCheck
+        text: 2-3 becas basadas en mérito disponibles por cohorte para candidatos altamente cualificados.
+      - icon: IconCheck
+        text: Inscríbete con Garantía de Empleo para mayor confianza. Consigue empleo en 9 meses tras la graduación o te devolvemos tu dinero.
     cta:
-      text: "Obtener plan"
-      url: "/es/aplica"
-      variant: "primary"
+      text: Obtener más información
+      url: /es/apply
+      variant: primary
+    marginY:
+      desktop: none md
     paddingY:
-      desktop: md
+      desktop: lg md
   - type: whos_hiring
     version: "1.0"
     variant: carousel
-    title: "¿Quién Contrata a Nuestros Graduados?"
-    subtitle: "Nuestros exalumnos trabajan en las mejores empresas del mundo"
-    description: "Las mejores empresas contratan graduados de 4Geeks, con un 84% consiguiendo empleo dentro de los 6 meses de graduación gracias a sus habilidades y nuestro soporte de carrera personalizado."
+    title: ¿Quién Contrata a Nuestros Graduados?
+    subtitle: Nuestros exalumnos trabajan en las mejores empresas del mundo
+    description: Las mejores empresas contratan graduados de 4Geeks, con un 84% consiguiendo empleo dentro de los 6 meses tras la graduación gracias a sus habilidades y nuestro soporte de carrera personalizado.
     logos:
-      - src: "/attached_assets/microsoft_1764719829995.png"
-        alt: "Microsoft"
-      - src: "/attached_assets/google-developers_1764719904190.png"
-        alt: "Google Developers"
-      - src: "/attached_assets/meta-logo_1764719959855.png"
-        alt: "Meta"
-      - src: "/attached_assets/ebay_1764719967118.png"
-        alt: "eBay"
-      - src: "/attached_assets/telefonica_1764719987250.png"
-        alt: "Telefonica"
-      - src: "/attached_assets/uber_1764719999685.png"
-        alt: "Uber"
-      - src: "/attached_assets/kpmg-logo1_1764720019827.png"
-        alt: "KPMG"
-      - src: "/attached_assets/blackstone_1764720124773.png"
-        alt: "Blackstone"
+      - src: /attached_assets/microsoft_1764719829995.png
+        alt: Microsoft
+      - src: /attached_assets/google-developers_1764719904190.png
+        alt: Google Developers
+      - src: /attached_assets/meta-logo_1764719959855.png
+        alt: Meta
+      - src: /attached_assets/ebay_1764719967118.png
+        alt: eBay
+      - src: /attached_assets/telefonica_1764719987250.png
+        alt: Telefonica
+      - src: /attached_assets/uber_1764719999685.png
+        alt: Uber
+      - src: /attached_assets/kpmg-logo1_1764720019827.png
+        alt: KPMG
+      - src: /attached_assets/blackstone_1764720124773.png
+        alt: Blackstone
     paddingY:
       desktop: md
   - type: testimonials
-    title: "Tu Nueva Carrera Comienza Aquí"
-    subtitle: "Mira lo que nuestros graduados dicen sobre su experiencia"
+    title: Estudiantes Reales. Carreras Reales.
+    subtitle: Más de 4,000 graduados y 1,200 reseñas verificadas demuestran que nuestros programas generan resultados que cambian vidas.
     rating_summary:
       average: "4.5"
-      count: "1,294"
+      count: 1,294
     items:
-      - name: "Sarah Johnson"
-        role: "Ingeniera de Software"
-        company: "Google"
+      - name: Sarah Johnson
+        role: Ingeniera de Software
+        company: Google
         rating: 5
-        comment: "Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones del mundo real."
-        outcome: "+55% aumento salarial"
-      - name: "Michael Chen"
-        role: "Analista de Datos"
-        company: "Meta"
+        comment: Este curso transformó completamente mi carrera. Los instructores son increíblemente conocedores y el currículo está perfectamente estructurado para aplicaciones del mundo real.
+        outcome: +55% aumento salarial
+      - name: Michael Chen
+        role: Analista de Datos
+        company: Meta
         rating: 5
-        comment: "La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el soporte de carrera fueron invaluables."
-        outcome: "Contratado en 4 meses"
-      - name: "Emily Rodriguez"
-        role: "Analista de Seguridad"
-        company: "Amazon"
+        comment: La mejor inversión que he hecho. ¡Recibí una oferta de trabajo antes de terminar el programa! La mentoría y el soporte de carrera fueron invaluables.
+        outcome: Contratado en 4 meses
+      - name: Emily Rodriguez
+        role: Analista de Seguridad
+        company: Amazon
         rating: 5
-        comment: "Excelente contenido y gran apoyo de los mentores. Los laboratorios prácticos fueron desafiantes pero gratificantes, y ahora trabajo en seguridad empresarial."
-        outcome: "+100% aumento salarial"
-      - name: "David Kim"
-        role: "Tester de Penetración"
-        company: "Startup de Seguridad"
+        comment: Excelente contenido y gran apoyo de los mentores. Los laboratorios prácticos fueron desafiantes pero gratificantes, y ahora trabajo en seguridad empresarial.
+        outcome: +100% aumento salarial
+      - name: David Kim
+        role: Penetration Tester
+        company: Security Startup
         rating: 5
-        comment: "De soporte de TI a pruebas de penetración en 4 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia."
-        outcome: "Cambio de carrera exitoso"
-      - name: "Jessica Martinez"
-        role: "Analista SOC"
-        company: "Fortune 500"
+        comment: De soporte de TI a pruebas de penetración en 4 meses. El currículo estructurado y los proyectos prácticos hicieron toda la diferencia.
+        outcome: Cambio de carrera exitoso
+      - name: Jessica Martinez
+        role: Analista SOC
+        company: Fortune 500
         rating: 4
-        comment: "Gran curso con escenarios prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar."
-        outcome: "+45% aumento salarial"
-      - name: "Ryan Thompson"
-        role: "Ingeniero de Seguridad"
-        company: "Tech Startup"
+        comment: Gran curso con escenarios prácticos del mundo real. La comunidad es solidaria y los instructores siempre están disponibles para ayudar.
+        outcome: +45% aumento salarial
+      - name: Ryan Thompson
+        role: Ingeniero de Seguridad
+        company: Tech Startup
         rating: 5
-        comment: "La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación de carrera durante todo el programa."
-        outcome: "Primer trabajo en seguridad"
+        comment: La mejor experiencia de aprendizaje en línea que he tenido. Explicaciones claras, ejercicios prácticos y excelente orientación de carrera durante todo el programa.
+        outcome: Primer empleo en seguridad
     paddingY:
       desktop: md
   - type: faq
     version: "1.0"
-    background: hsl(var(--muted))
+    background: muted
     title: Preguntas Frecuentes
-    related_features: ["cybersecurity"]
+    related_features:
+      - cybersecurity
     cta:
       text: ¿Aún tienes preguntas?
       button_text: Habla con un Asesor
-      button_url: /contacto
+      button_url: /contact
     paddingY:
       desktop: md
-    marginY:
-      desktop: none
   - type: cta_banner
     version: "1.0"
-    title: "¿Listo para Defender el Mundo Digital?"
-    subtitle: "Únete a miles de graduados que han lanzado carreras exitosas en ciberseguridad con 4Geeks."
+    title: ¿Listo para Lanzar tu Carrera en Ciberseguridad?
+    subtitle: Únete a miles de graduados que cambiaron al mundo tech con 4Geeks.
+    background: primary
     buttons:
-      - text: "Empieza a Aprender Ahora"
-        url: "/es/aplica"
-        variant: "secondary"
-      - text: "Habla con un Asesor"
-        url: "/contacto"
-        variant: "outline"
+      - text: Aplicar Ahora
+        url: /es/apply
+        variant: secondary
+      - text: Habla con un Asesor
+        url: /contact
+        variant: outline
     paddingY:
       desktop: md
   - type: footer
     version: "1.0"
-    copyright_text: "2024 4Geeks. Todos los derechos reservados."
+    copyright_text: 2024 4Geeks. Todos los derechos reservados.
+    paddingY:
+      desktop: none 10px
