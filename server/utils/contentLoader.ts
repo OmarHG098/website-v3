@@ -234,8 +234,7 @@ export function getAvailableLocalesOrVariants(contentType: ContentType, slug: st
  * Load _common.yml data only (for getting locale from landings, etc.)
  */
 export function loadCommonData(contentType: ContentType, slug: string): Record<string, unknown> | null {
-  const resolvedDir = resolveSlugToDir(contentType, slug);
-  const commonPath = path.join(MARKETING_CONTENT_PATH, contentType, resolvedDir, "_common.yml");
+  const commonPath = path.join(MARKETING_CONTENT_PATH, contentType, slug, "_common.yml");
   
   if (!fs.existsSync(commonPath)) {
     return null;
