@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/santiago-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /santiago
+    - /campus/santiago
+    - /cl/santiago
 sections:
   - type: hero
     variant: singleColumn

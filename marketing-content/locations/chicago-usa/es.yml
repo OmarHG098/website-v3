@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/chicago-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /chicago
+    - /campus/chicago
+    - /en/chicago
 sections:
   - type: hero
     variant: singleColumn

@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/austin-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /austin
+    - /campus/austin
+    - /en/austin
 sections:
   - type: hero
     variant: singleColumn

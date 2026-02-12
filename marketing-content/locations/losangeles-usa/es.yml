@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/losangeles-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /los-angeles
+    - /losangeles
+    - /campus/los-angeles
+    - /en/los-angeles
 sections:
   - type: hero
     variant: singleColumn

@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/rome-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /rome
+    - /roma
+    - /campus/rome
+    - /it/rome
 sections:
   - type: hero
     variant: singleColumn

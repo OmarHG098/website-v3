@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/montevideo-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /montevideo
+    - /campus/montevideo
+    - /uy/montevideo
 sections:
   - type: hero
     variant: singleColumn

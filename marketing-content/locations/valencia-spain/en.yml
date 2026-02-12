@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/valencia-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /valencia
+    - /campus/valencia
+    - /es/valencia
 sections:
   - type: hero
     variant: singleColumn

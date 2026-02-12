@@ -7,6 +7,8 @@ meta:
   change_frequency: weekly
   page_title: online-platform | 4Geeks Academy
   description: online-platform - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /online-platform
 schema:
   include:
     - organization
@@ -100,6 +102,7 @@ sections:
       | [SwitchUp rating](https://www.switchup.org/bootcamps/4geeks-academy) | 4.9/5 |
       | Campuses | 7 (USA, Spain, Germany, LATAM, etc.) |
       | Platform used in universities | Yes (via Gitpod + LearnPack) |
+
 
       ## Why 4Geeks Feels Different
 

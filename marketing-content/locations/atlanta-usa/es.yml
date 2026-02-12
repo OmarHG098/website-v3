@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/atlanta-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /atlanta
+    - /campus/atlanta
+    - /en/atlanta
 sections:
   - type: hero
     variant: singleColumn

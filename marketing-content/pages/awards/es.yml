@@ -7,6 +7,9 @@ title: "Premios"
 meta:
   page_title: "Premios y Reconocimientos | 4Geeks Academy"
   description: "Descubre por qué 4Geeks Academy es un bootcamp de programación top. Conoce nuestros premios de Forbes, Newsweek, Course Report, SwitchUp y más."
+  redirects:
+    - "/es/premios"
+
 sections:
   - type: hero
     variant: simpleStacked

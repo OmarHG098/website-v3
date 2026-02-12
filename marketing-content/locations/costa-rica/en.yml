@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/costarica-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /costa-rica
+    - /costarica
+    - /san-jose
+    - /campus/costa-rica
 sections:
   - type: hero
     variant: singleColumn

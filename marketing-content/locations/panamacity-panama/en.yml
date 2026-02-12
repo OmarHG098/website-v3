@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/panamacity-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /panama-city
+    - /panamacity
+    - /panama
+    - /campus/panama
 sections:
   - type: hero
     variant: singleColumn

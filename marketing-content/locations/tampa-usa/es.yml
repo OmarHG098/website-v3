@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/tampa-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /tampa
+    - /campus/tampa
+    - /en/tampa
 sections:
   - type: hero
     variant: singleColumn

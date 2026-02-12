@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/caracas-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /caracas
+    - /campus/caracas
+    - /ve/caracas
 sections:
   - type: hero
     variant: singleColumn

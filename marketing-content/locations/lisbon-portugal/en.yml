@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/lisbon-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /lisbon
+    - /lisboa
+    - /campus/lisbon
+    - /pt/lisbon
 sections:
   - type: hero
     variant: singleColumn

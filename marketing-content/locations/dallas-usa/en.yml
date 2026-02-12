@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/dallas-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /dallas
+    - /campus/dallas
+    - /en/dallas
 sections:
   - type: hero
     variant: singleColumn

@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/bogota-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /bogota
+    - /campus/bogota
+    - /co/bogota
 sections:
   - type: hero
     variant: singleColumn

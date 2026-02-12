@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/toronto-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /toronto
+    - /campus/toronto
+    - /ca/toronto
 sections:
   - type: hero
     variant: singleColumn

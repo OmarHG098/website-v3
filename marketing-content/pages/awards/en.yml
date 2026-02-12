@@ -7,6 +7,9 @@ title: "Awards"
 meta:
   page_title: "Awards & Recognitions | 4Geeks Academy"
   description: "Discover why 4Geeks Academy is a top-rated coding bootcamp. See our awards from Forbes, Newsweek, Course Report, SwitchUp, and more."
+  redirects:
+    - "/awards"
+
 sections:
   - type: hero
     variant: simpleStacked

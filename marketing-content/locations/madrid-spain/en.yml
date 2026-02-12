@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/madrid-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /madrid
+    - /campus/madrid
+    - /es/madrid
 sections:
   - type: hero
     variant: singleColumn

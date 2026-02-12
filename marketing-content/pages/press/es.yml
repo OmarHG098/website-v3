@@ -7,6 +7,8 @@ meta:
   change_frequency: weekly
   page_title: press | 4Geeks Academy
   description: press - Aprende más sobre este tema en 4Geeks Academy.
+  redirects:
+    - /press
 schema:
   include:
     - organization

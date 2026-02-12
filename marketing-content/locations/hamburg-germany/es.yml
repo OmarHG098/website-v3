@@ -5,6 +5,10 @@ meta:
   og_image: /images/locations/hamburg-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /hamburg
+    - /campus/hamburg
+    - /de/hamburg
 sections:
   - type: hero
     variant: singleColumn

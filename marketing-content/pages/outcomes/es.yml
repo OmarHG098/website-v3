@@ -6,6 +6,9 @@ meta:
   page_title: "Informe de Resultados de 4Geeks Academy | Datos de Éxito Profesional"
   description: "Descubre los resultados profesionales de graduados de 4Geeks Academy. Ve tasas de empleo, aumentos salariales e historias de éxito de nuestros alumni."
   robots: "index, follow"
+  redirects:
+    - "/es/resultados"
+
 schema:
   include:
     - organization

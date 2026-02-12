@@ -5,6 +5,11 @@ meta:
   og_image: /images/locations/lapaz-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /la-paz
+    - /lapaz
+    - /campus/la-paz
+    - /bo/la-paz
 sections:
   - type: hero
     variant: singleColumn

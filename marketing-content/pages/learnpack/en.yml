@@ -7,6 +7,8 @@ meta:
   change_frequency: weekly
   page_title: learnpack | 4Geeks Academy
   description: learnpack - Learn more about this topic at 4Geeks Academy.
+  redirects:
+    - /learnpack
 schema:
   include:
     - organization
@@ -87,6 +89,7 @@ sections:
       - **Built-in analytics** showing learner progress, completion rates, and common blockers.
       - **Open-source library** with over 1,000 tutorials available to reuse or expand.
 
+
       ## Built for the AI Era
 
       Large Language Models like Grok, GPT-4o, and Claude 3 accelerate modern workflows. LearnPack embraces them by:
@@ -94,6 +97,7 @@ sections:
       - Embedding **Rigobot** for line-level coaching.
       - Allowing AI-generated starter code while requiring learners to pass unit tests.
       - Teaching a **human plus AI pair-programmer** mindset that companies already expect.
+
 
       ## Ready to Create or Learn?
 

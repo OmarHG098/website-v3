@@ -49,6 +49,10 @@ meta:
   og_image: /images/locations/miami-og.jpg
   priority: 0.8
   change_frequency: monthly
+  redirects:
+    - /miami
+    - /campus/miami
+    - /en/miami
 sections:
   - type: hero
     version: "1.0"
