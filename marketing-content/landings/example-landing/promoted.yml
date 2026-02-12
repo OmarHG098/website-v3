@@ -463,6 +463,7 @@ sections:
   - type: career_support_explain
     heading: GeekForce Career Support
     description: Our career support program is designed to help you land your first job in tech
+    background: hsl(var(--secondary))
     tabs:
       - tab_label: Job-Ready, Faster
         layout: three_columns
@@ -480,7 +481,7 @@ sections:
             text: Portfolio
           - icon: IconMail
             text: Cover letter
-        col2_heading: Get unlimited career coaching and AI job search tools throughout your program, plus alumni support.
+        col2_heading: Professional Placement & Coaching
         col2_bullets:
           - icon: IconRobot
             text: 24/7 feedback from RigoBot to audit your LinkedIn and resume
@@ -488,15 +489,13 @@ sections:
             text: 1-on-1 career coaching and strategy sessions
           - icon: IconMicrophone
             text: Mock interviews and technical interview prep
-        col3_image_id: student_asian
+        col3_image_id: 4geeks_member
         col3_object_fit: cover
         col3_object_position: center
       - tab_label: Real Hiring Access
         layout: two_column_cards
         title: Access the hidden job market.
-        left_text: |-
-          Once your profile is ready, visibility becomes the focus.
-          We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        left_text: We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
         left_image_id: career_team_women
         left_image_object_fit: cover
         left_image_object_position: center
@@ -512,6 +511,7 @@ sections:
             text: Networking and recruiter conversation coaching
         right_logos:
           - image_id: logo_google
+            logoHeight: 13px
             alt: Google
           - image_id: logo_meta
             alt: Meta
@@ -539,8 +539,6 @@ sections:
         right_image_id: geekforce_valentina_ancieta
         right_image_object_fit: cover
         right_image_object_position: center
-        alt: Valentina Ancieta
-        id: geekforce-valentina-ancieta
       - tab_label: Your Best-Fit Role
         layout: text_with_testimonials_carousel
         title: Turn your background into an advantage.
