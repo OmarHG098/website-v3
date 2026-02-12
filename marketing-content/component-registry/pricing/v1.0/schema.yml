@@ -70,10 +70,15 @@ props:
     type: array
     required: false
     items:
-      type:
+      icon:
         type: string
         required: true
-    description: List of technology icons to display
+        description: Icon key from the tech icon map (e.g. python, react, nodejs)
+      name:
+        type: string
+        required: true
+        description: Display name for tooltip (e.g. Python, React, Node.js)
+    description: List of technology icons to display. Supports both string format (legacy) and object format with icon and name.
   features_title:
     type: string
     required: false

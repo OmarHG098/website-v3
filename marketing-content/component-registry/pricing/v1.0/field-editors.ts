@@ -15,4 +15,5 @@ export type EditorType =
 
 export const fieldEditors: Record<string, EditorType> = {
   "features[].icon": "icon-picker",
+  "tech_icons[]": "icon-picker",
 };

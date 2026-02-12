@@ -18,6 +18,14 @@ export const pricingPlanSchema = z.object({
   savings_badge: z.string().optional(),
 });
 
+export const techIconItemSchema = z.union([
+  z.string(),
+  z.object({
+    icon: z.string(),
+    name: z.string(),
+  }),
+]);
+
 // Default variant - monthly/yearly pricing toggle
 export const pricingDefaultSchema = z.object({
   type: z.literal("pricing"),
@@ -27,7 +35,7 @@ export const pricingDefaultSchema = z.object({
   subtitle: z.string().optional(),
   monthly: pricingPlanSchema,
   yearly: pricingPlanSchema,
-  tech_icons: z.array(z.string()).optional(),
+  tech_icons: z.array(techIconItemSchema).optional(),
   static_icons: z.boolean().optional(),
   features_title: z.string().optional(),
   features: z.array(pricingFeatureSchema),
@@ -44,7 +52,7 @@ export const pricingProductSchema = z.object({
   discount_text: z.string().optional(),
   financing_text: z.string().optional(),
   financing_amount: z.string().optional(),
-  tech_icons: z.array(z.string()).optional(),
+  tech_icons: z.array(techIconItemSchema).optional(),
   static_icons: z.boolean().optional(),
   features_title: z.string().optional(),
   features: z.array(pricingFeatureSchema),
@@ -59,4 +67,5 @@ export const pricingSectionSchema = z.union([
 
 export type PricingFeature = z.infer<typeof pricingFeatureSchema>;
 export type PricingPlan = z.infer<typeof pricingPlanSchema>;
+export type TechIconItem = z.infer<typeof techIconItemSchema>;
 export type PricingSection = z.infer<typeof pricingSectionSchema>;

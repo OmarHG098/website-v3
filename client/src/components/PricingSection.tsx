@@ -2,6 +2,7 @@ import { useState, type ComponentType } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider } from "@/components/ui/tooltip";
 import {
   IconFlame,
   IconCertificate,
@@ -41,6 +42,13 @@ import Matplotlib from "@/components/custom-icons/Matplotlib";
 import Marquee from "react-fast-marquee";
 import { getIcon } from "@/lib/icons";
 import { useInternalNav } from "@/hooks/useInternalNav";
+
+function normalizeTechIcon(item: string | { icon: string; name: string }): { icon: string; name: string } {
+  if (typeof item === 'string') {
+    return { icon: item, name: item };
+  }
+  return item;
+}
 
 interface PricingSectionProps {
   data: PricingSectionType;
@@ -205,18 +213,26 @@ export function PricingSection({ data }: PricingSectionProps) {
 
               {data.tech_icons && data.tech_icons.length > 0 && (
                 <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
+                  <TooltipProvider>
                   {data.static_icons ? (
                     <div className="flex flex-wrap gap-2">
-                      {data.tech_icons.map((iconName, index) => {
-                        const IconComponent = techIconMap[iconName.toLowerCase()];
+                      {data.tech_icons.map((item, index) => {
+                        const { icon: iconKey, name: iconName } = normalizeTechIcon(item);
+                        const IconComponent = techIconMap[iconKey.toLowerCase()];
                         return IconComponent ? (
-                          <div
-                            key={index}
-                            className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                            data-testid={`icon-tech-${index}`}
-                          >
-                            <IconComponent className="w-5 h-5" />
-                          </div>
+                          <Tooltip key={index}>
+                            <TooltipTrigger asChild>
+                              <div
+                                className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                                data-testid={`icon-tech-${index}`}
+                              >
+                                <IconComponent className="w-5 h-5" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{iconName}</p>
+                            </TooltipContent>
+                          </Tooltip>
                         ) : null;
                       })}
                     </div>
@@ -227,20 +243,28 @@ export function PricingSection({ data }: PricingSectionProps) {
                       gradientWidth={50}
                       pauseOnHover={true}
                     >
-                      {data.tech_icons.map((iconName, index) => {
-                        const IconComponent = techIconMap[iconName.toLowerCase()];
+                      {data.tech_icons.map((item, index) => {
+                        const { icon: iconKey, name: iconName } = normalizeTechIcon(item);
+                        const IconComponent = techIconMap[iconKey.toLowerCase()];
                         return IconComponent ? (
-                          <div
-                            key={index}
-                            className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                            data-testid={`icon-tech-${index}`}
-                          >
-                            <IconComponent className="w-5 h-5" />
-                          </div>
+                          <Tooltip key={index}>
+                            <TooltipTrigger asChild>
+                              <div
+                                className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                                data-testid={`icon-tech-${index}`}
+                              >
+                                <IconComponent className="w-5 h-5" />
+                              </div>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <p>{iconName}</p>
+                            </TooltipContent>
+                          </Tooltip>
                         ) : null;
                       })}
                     </Marquee>
                   )}
+                  </TooltipProvider>
                 </div>
               )}
 
@@ -417,18 +441,26 @@ export function PricingSection({ data }: PricingSectionProps) {
 
             {data.tech_icons && data.tech_icons.length > 0 && (
               <div className="w-full max-w-full overflow-hidden" data-testid="tech-icons">
+                <TooltipProvider>
                 {data.static_icons ? (
                   <div className="flex flex-wrap gap-2">
-                    {data.tech_icons.map((iconName, index) => {
-                      const IconComponent = techIconMap[iconName.toLowerCase()];
+                    {data.tech_icons.map((item, index) => {
+                      const { icon: iconKey, name: iconName } = normalizeTechIcon(item);
+                      const IconComponent = techIconMap[iconKey.toLowerCase()];
                       return IconComponent ? (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                          data-testid={`icon-tech-${index}`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                        </div>
+                        <Tooltip key={index}>
+                          <TooltipTrigger asChild>
+                            <div
+                              className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                              data-testid={`icon-tech-${index}`}
+                            >
+                              <IconComponent className="w-5 h-5" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{iconName}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       ) : null;
                     })}
                   </div>
@@ -439,20 +471,28 @@ export function PricingSection({ data }: PricingSectionProps) {
                     gradientWidth={50}
                     pauseOnHover={true}
                   >
-                    {data.tech_icons.map((iconName, index) => {
-                      const IconComponent = techIconMap[iconName.toLowerCase()];
+                    {data.tech_icons.map((item, index) => {
+                      const { icon: iconKey, name: iconName } = normalizeTechIcon(item);
+                      const IconComponent = techIconMap[iconKey.toLowerCase()];
                       return IconComponent ? (
-                        <div
-                          key={index}
-                          className="flex items-center justify-center px-3 py-2 text-muted-foreground"
-                          data-testid={`icon-tech-${index}`}
-                        >
-                          <IconComponent className="w-5 h-5" />
-                        </div>
+                        <Tooltip key={index}>
+                          <TooltipTrigger asChild>
+                            <div
+                              className="flex items-center justify-center px-3 py-2 text-muted-foreground"
+                              data-testid={`icon-tech-${index}`}
+                            >
+                              <IconComponent className="w-5 h-5" />
+                            </div>
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            <p>{iconName}</p>
+                          </TooltipContent>
+                        </Tooltip>
                       ) : null;
                     })}
                   </Marquee>
                 )}
+                </TooltipProvider>
               </div>
             )}
 

@@ -49,3 +49,9 @@ props:
         description: Company name for accessibility
         example: Microsoft
     description: "List of company logos (recommended: 8-12 for smooth carousel)"
+  hero_card_texts:
+    type: array
+    required: false
+    items:
+      type: string
+    description: "Optional overlay text shown on hero cards in the carousel. If not provided, hardcoded EN/ES defaults are used."

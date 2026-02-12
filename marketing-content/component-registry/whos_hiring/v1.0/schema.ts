@@ -12,6 +12,7 @@ export const whosHiringSectionSchema = z.object({
   subtitle: z.string().optional(),
   description: z.string().optional(),
   logos: z.array(logoItemSchema),
+  hero_card_texts: z.array(z.string()).optional(),
 });
 
 export type WhosHiringSection = z.infer<typeof whosHiringSectionSchema>;
