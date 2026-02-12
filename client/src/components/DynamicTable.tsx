@@ -155,7 +155,7 @@ export function DynamicTable({ data }: DynamicTableProps) {
 
     let filtered = arr as Record<string, unknown>[];
 
-    if (data.region_filter && sessionRegion) {
+    if (data.region_filter && data.region_filter.key && sessionRegion) {
       const { key, mapping } = data.region_filter;
       const allowedValues = mapping[sessionRegion];
       if (allowedValues && allowedValues.length > 0) {
