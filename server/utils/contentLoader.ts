@@ -46,65 +46,6 @@ const MARKETING_CONTENT_PATH = path.join(process.cwd(), "marketing-content");
 
 export type ContentType = "programs" | "pages" | "locations" | "landings";
 
-const slugToDirCache: Map<string, Map<string, string>> = new Map();
-
-function buildSlugToDirMap(contentType: ContentType): Map<string, string> {
-  const cached = slugToDirCache.get(contentType);
-  if (cached) return cached;
-
-  const map = new Map<string, string>();
-  const contentDir = path.join(MARKETING_CONTENT_PATH, contentType);
-
-  if (!fs.existsSync(contentDir)) {
-    slugToDirCache.set(contentType, map);
-    return map;
-  }
-
-  try {
-    const entries = fs.readdirSync(contentDir, { withFileTypes: true });
-    for (const entry of entries) {
-      if (!entry.isDirectory()) continue;
-      const dirName = entry.name;
-      map.set(dirName, dirName);
-
-      const dirPath = path.join(contentDir, dirName);
-      const files = fs.readdirSync(dirPath);
-      for (const file of files) {
-        if (!file.endsWith(".yml") || file.startsWith("_") || file === "experiments.yml") continue;
-        try {
-          const filePath = path.join(dirPath, file);
-          const content = fs.readFileSync(filePath, "utf8");
-          const data = yaml.load(content) as Record<string, unknown>;
-          if (data && typeof data.slug === "string" && data.slug !== dirName) {
-            map.set(data.slug, dirName);
-          }
-        } catch {}
-      }
-    }
-  } catch (error) {
-    console.error(`Error building slug map for ${contentType}:`, error);
-  }
-
-  slugToDirCache.set(contentType, map);
-  return map;
-}
-
-export function resolveSlugToDir(contentType: ContentType, slug: string): string {
-  const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, slug);
-  if (fs.existsSync(contentDir)) return slug;
-
-  const map = buildSlugToDirMap(contentType);
-  return map.get(slug) || slug;
-}
-
-export function invalidateSlugCache(contentType?: ContentType): void {
-  if (contentType) {
-    slugToDirCache.delete(contentType);
-  } else {
-    slugToDirCache.clear();
-  }
-}
-
 export interface LoadContentOptions<T> {
   contentType: ContentType;
   slug: string;
@@ -131,8 +72,7 @@ export function loadContent<T>(options: LoadContentOptions<T>): LoadContentResul
   const { contentType, slug, schema, localeOrVariant, requireCommon = false } = options;
 
   try {
-    const resolvedDir = resolveSlugToDir(contentType, slug);
-    const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, resolvedDir);
+    const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, slug);
     const commonPath = path.join(contentDir, "_common.yml");
     const contentPath = path.join(contentDir, `${localeOrVariant}.yml`);
 
@@ -186,7 +126,7 @@ export function loadContent<T>(options: LoadContentOptions<T>): LoadContentResul
  */
 export function listContentSlugs(contentType: ContentType): string[] {
   const contentDir = path.join(MARKETING_CONTENT_PATH, contentType);
-  
+
   if (!fs.existsSync(contentDir)) {
     return [];
   }
@@ -207,9 +147,8 @@ export function listContentSlugs(contentType: ContentType): string[] {
  * Returns filenames without .yml extension, excluding _common.yml and experiments.yml
  */
 export function getAvailableLocalesOrVariants(contentType: ContentType, slug: string): string[] {
-  const resolvedDir = resolveSlugToDir(contentType, slug);
-  const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, resolvedDir);
-  
+  const contentDir = path.join(MARKETING_CONTENT_PATH, contentType, slug);
+
   if (!fs.existsSync(contentDir)) {
     return [];
   }
@@ -235,7 +174,7 @@ export function getAvailableLocalesOrVariants(contentType: ContentType, slug: st
  */
 export function loadCommonData(contentType: ContentType, slug: string): Record<string, unknown> | null {
   const commonPath = path.join(MARKETING_CONTENT_PATH, contentType, slug, "_common.yml");
-  
+
   if (!fs.existsSync(commonPath)) {
     return null;
   }
