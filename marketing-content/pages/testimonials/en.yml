@@ -17,9 +17,9 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: What Our Graduates Say. From Bootcamp to Career
-    subtitle: At 4Geeks Academy, students don’t just learn tech skills, they transform their lives. These success stories from our global community highlight how graduates went from bootcamp to career, proving that with the right support, tech is for everyone.
-    badge: Student Testimonials & Success Stories
+    title: Real Reviews from 4Geeks Academy Graduates
+    subtitle: Our graduates share how they built in-demand skills, gained confidence, and launched new careers in tech with the support of the 4Geeks community.
+    badge: Student Testimonials & Career Outcomes
     trust_bar:
       rating: 4.8/5
       rating_count: 2,500+
