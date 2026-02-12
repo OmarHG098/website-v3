@@ -75,9 +75,9 @@ sections:
       - value: "8"
         label: Campuses
       - value: ~84%
-        label: Hired
+        label: Hiring Rate
       - value: "4.9"
-        label: Rating
+        label: Avg Rating
     marginY:
       desktop: md sm
     paddingY:
@@ -149,8 +149,10 @@ sections:
       desktop: lg none
   - type: whos_hiring
     variant: carousel
-    title: Trusted by the world's most innovative companies
-    description: "Top companies hire 4Geeks graduates, with 84% landing jobs within 6 months of graduation thanks to their skills and our personalized career support. Our grads don’t just get hired—they launch successful careers and consistently earn recognition for their technical expertise and professionalism: I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires ended up becoming a team leader.' - CodeNinjas."
+    title: Where Our Graduates Work
+    description: |-
+      4Geeks graduates are hired by leading tech companies across the U.S., Latin America, and Europe. Employers consistently highlight their technical depth, practical experience, and ability to contribute from day one.
+      'I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires went on to become a team leader.' — CodeNinjas
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
