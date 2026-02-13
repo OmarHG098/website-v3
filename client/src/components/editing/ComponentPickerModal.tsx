@@ -62,6 +62,7 @@ import { getDebugToken } from "@/hooks/useDebugAuth";
 import { useToast } from "@/hooks/use-toast";
 import { emitContentUpdated } from "@/lib/contentEvents";
 import { RelatedFeaturesPicker } from "./RelatedFeaturesPicker";
+import { TableBuilderWizard, type DynamicTableConfig } from "@/components/TableBuilderWizard";
 
 interface ComponentPickerModalProps {
   isOpen: boolean;
@@ -139,6 +140,7 @@ const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   human_and_ai_duo: IconUsers,
   community_support: IconUsers,
   article: IconBook,
+  dynamic_table: IconTable,
 };
 
 const variantLabels: Record<string, string> = {
@@ -191,7 +193,7 @@ export default function ComponentPickerModal({
   variant,
   version,
 }: ComponentPickerModalProps) {
-  const [step, setStep] = useState<"select" | "configure">("select");
+  const [step, setStep] = useState<"select" | "configure" | "wizard">("select");
   const [selectedComponent, setSelectedComponent] = useState<ComponentInfo | null>(null);
   const [versions, setVersions] = useState<string[]>([]);
   const [selectedVersion, setSelectedVersion] = useState<string>("");
@@ -294,7 +296,11 @@ export default function ComponentPickerModal({
 
   const handleSelectComponent = useCallback((component: ComponentInfo) => {
     setSelectedComponent(component);
-    setStep("configure");
+    if (component.type === "dynamic_table") {
+      setStep("wizard");
+    } else {
+      setStep("configure");
+    }
     setVersions([]);
     setExamples([]);
     setSelectedVersion("");
@@ -312,6 +318,71 @@ export default function ComponentPickerModal({
     setSelectedRelatedFeatures([]);
     setComponentSearch("");
   }, []);
+
+  const handleWizardComplete = useCallback(async (config: DynamicTableConfig) => {
+    if (!contentType || !slug || !locale) return;
+
+    setIsAdding(true);
+    try {
+      const sectionToAdd = {
+        type: "dynamic_table",
+        version: "1.0",
+        endpoint: config.endpoint,
+        ...(config.data_path ? { data_path: config.data_path } : {}),
+        ...(config.title ? { title: config.title } : {}),
+        columns: config.columns,
+        ...(config.action ? { action: config.action } : {}),
+      };
+
+      const token = getDebugToken();
+      const response = await fetch("/api/content/edit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { "Authorization": `Token ${token}` } : {}),
+        },
+        body: JSON.stringify({
+          contentType,
+          slug,
+          locale,
+          variant,
+          version,
+          operations: [{
+            action: "add_item",
+            path: "sections",
+            item: sectionToAdd,
+            index: insertIndex,
+          }],
+        }),
+      });
+
+      if (response.ok) {
+        onClose();
+        emitContentUpdated({ contentType: contentType!, slug: slug!, locale: locale! });
+        toast({
+          title: "Dynamic table added",
+          description: config.title || "Table section inserted successfully",
+        });
+      } else {
+        const errorData = await response.json().catch(() => ({ error: "Unknown error" }));
+        console.error("Failed to add dynamic table:", errorData);
+        toast({
+          title: "Failed to add table",
+          description: errorData.error || "Unknown error occurred",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Error adding dynamic table:", error);
+      toast({
+        title: "Error",
+        description: "Failed to add the table section",
+        variant: "destructive",
+      });
+    } finally {
+      setIsAdding(false);
+    }
+  }, [contentType, slug, locale, variant, version, insertIndex, onClose, toast]);
 
   const handleAddSection = useCallback(async () => {
     if (!selectedExampleData || !selectedComponent || !contentType || !slug || !locale) {
@@ -502,10 +573,10 @@ export default function ComponentPickerModal({
       <DialogContent className="max-w-4xl h-[80vh] flex flex-col p-0">
         <DialogHeader className="p-4 border-b flex-shrink-0">
           <DialogTitle>
-            {step === "select" ? "Choose a Component" : `Configure ${selectedComponent?.label}`}
+            {step === "select" ? "Choose a Component" : step === "wizard" ? "Dynamic Table Builder" : `Configure ${selectedComponent?.label}`}
           </DialogTitle>
           <DialogDescription className="sr-only">
-            {step === "select" ? "Select a component type to add to the page" : "Configure the component version and example"}
+            {step === "select" ? "Select a component type to add to the page" : step === "wizard" ? "Build a dynamic table step by step" : "Configure the component version and example"}
           </DialogDescription>
         </DialogHeader>
         
@@ -557,6 +628,14 @@ export default function ComponentPickerModal({
                 </div>
               )}
             </ScrollArea>
+          </div>
+        ) : step === "wizard" ? (
+          <div className="flex-1 flex flex-col overflow-auto p-4">
+            <TableBuilderWizard
+              onComplete={handleWizardComplete}
+              onCancel={handleBack}
+              locale={locale || "en"}
+            />
           </div>
         ) : (
           <div className="flex-1 flex flex-col overflow-hidden">

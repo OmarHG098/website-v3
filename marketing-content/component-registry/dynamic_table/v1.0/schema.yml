@@ -1,0 +1,92 @@
+name: DynamicTable
+version: "1.0"
+component: DynamicTable
+file: client/src/components/DynamicTable.tsx
+description: >-
+  A table component that fetches data from an external API endpoint and renders it
+  with sortable columns, typed cell rendering (text, number, date, image, link, boolean),
+  optional row action buttons with templated URLs, session-based region filtering,
+  and configurable max row limits with expand/collapse.
+
+when_to_use: >
+  Use when you need to display tabular data fetched live from an external API endpoint.
+  Supports nested data paths, column sorting, action buttons per row, region-based
+  filtering using the user's session location, and limiting visible rows.
+  Best for displaying lists of students, courses, events, or any structured API data.
+
+props:
+  endpoint:
+    type: string
+    required: true
+    description: The full URL of the API endpoint that returns the data (e.g., "https://api.example.com/items")
+  data_path:
+    type: string
+    required: false
+    description: If the array is nested inside the response object, specify the property name (e.g., "results")
+  title:
+    type: string
+    required: false
+    description: Main heading displayed above the table
+  subtitle:
+    type: string
+    required: false
+    description: Supporting text below the title
+  background:
+    type: string
+    required: false
+    description: Background color or gradient for the section
+  columns:
+    type: array
+    required: true
+    description: Array of column definitions
+    items:
+      key:
+        type: string
+        required: true
+        description: "The property path from each data item, supports dot notation for nested fields (e.g., 'academy.name', 'syllabus_version.duration_in_days')"
+      label:
+        type: string
+        required: true
+        description: Display label for the column header
+      type:
+        type: string
+        required: true
+        description: "Column type: text, number, date, image, link, or boolean"
+      template:
+        type: string
+        required: false
+        description: "Optional template string to combine multiple fields. Use {dotted.path} placeholders (e.g., '{academy.name} ({academy.city.name})', '{kickoff_date} - {ending_date}'). When using a template, set type to 'text'."
+  action:
+    type: object
+    required: false
+    description: Optional action button for each row
+    properties:
+      label:
+        type: string
+        required: true
+        description: Button text (e.g., "View", "Edit")
+      href:
+        type: string
+        required: true
+        description: "URL template with {columnName} placeholders (e.g., 'https://example.com/item/{id}')"
+  region_filter:
+    type: object
+    required: false
+    description: "Filter rows based on the user's session region (usa-canada, latam, europe, online). Matches a data field against allowed values per region."
+    properties:
+      key:
+        type: string
+        required: true
+        description: "Dot-notation path to the field in each row to match against (e.g., 'academy.country_code', 'region')"
+      mapping:
+        type: object
+        required: true
+        description: "Maps each session region to an array of allowed values. Rows whose key field matches any value in the array are shown. Regions: usa-canada, latam, europe, online."
+        example:
+          usa-canada: ["US", "CA"]
+          latam: ["CL", "VE", "CO", "MX", "AR", "UY", "CR", "EC"]
+          europe: ["ES", "IT", "FR", "DE", "PT"]
+  max_rows:
+    type: number
+    required: false
+    description: "Maximum number of rows to display initially. When set, a 'Show all' button appears to expand the full list. Leave empty to show all rows."

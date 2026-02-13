@@ -4339,6 +4339,69 @@ sections: []
     }
   });
 
+  app.post("/api/ai/generate-table-from-payload", async (req, res) => {
+    try {
+      const { generateTableFromPayload } = await import("./ai/generateTableFromPayload");
+
+      const { sampleData, availableKeys, userPrompt } = req.body;
+
+      if (!sampleData || !Array.isArray(sampleData) || sampleData.length === 0) {
+        res.status(400).json({ error: "sampleData must be a non-empty array" });
+        return;
+      }
+      if (!availableKeys || !Array.isArray(availableKeys) || availableKeys.length === 0) {
+        res.status(400).json({ error: "availableKeys must be a non-empty array" });
+        return;
+      }
+      if (!userPrompt || typeof userPrompt !== "string") {
+        res.status(400).json({ error: "userPrompt must be a non-empty string" });
+        return;
+      }
+
+      const locale = req.body.locale || "en";
+      const config = await generateTableFromPayload({ sampleData, availableKeys, userPrompt, locale });
+      res.json(config);
+    } catch (error: any) {
+      console.error("Error generating table config:", error?.message || error);
+      const message = error?.message || "Failed to generate table configuration";
+      res.status(500).json({ error: message });
+    }
+  });
+
+  app.post("/api/ai/refine-table-config", async (req, res) => {
+    try {
+      const { refineTableConfig } = await import("./ai/generateTableFromPayload");
+
+      const { currentConfig, sampleData, availableKeys, userFeedback, locale } = req.body;
+
+      if (!currentConfig || !currentConfig.columns) {
+        res.status(400).json({ error: "currentConfig with columns is required" });
+        return;
+      }
+      if (!sampleData || !Array.isArray(sampleData) || sampleData.length === 0) {
+        res.status(400).json({ error: "sampleData must be a non-empty array" });
+        return;
+      }
+      if (!userFeedback || typeof userFeedback !== "string") {
+        res.status(400).json({ error: "userFeedback must be a non-empty string" });
+        return;
+      }
+
+      const config = await refineTableConfig({
+        currentConfig,
+        sampleData,
+        availableKeys: availableKeys || [],
+        userFeedback,
+        locale: locale || "en",
+      });
+      res.json(config);
+    } catch (error: any) {
+      console.error("Error refining table config:", error?.message || error);
+      const message = error?.message || "Failed to refine table configuration";
+      res.status(500).json({ error: message });
+    }
+  });
+
   // ============================================
   // Centralized FAQs API
   // ============================================
@@ -4483,13 +4546,29 @@ sections: []
 
   app.use((req, res, next) => {
     const url = req.originalUrl || req.url;
-    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || /\.\w+$/.test(url)) {
+    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || url.startsWith("/marketing-content/") || /\.\w+$/.test(url)) {
       return next();
     }
 
     const schemaHtml = generateSsrSchemaHtml(url);
     if (!schemaHtml) {
       return next();
+    }
+
+    const isProduction = process.env.NODE_ENV === "production";
+    if (isProduction) {
+      const distPath = path.resolve(import.meta.dirname, "public");
+      const indexPath = path.resolve(distPath, "index.html");
+      try {
+        let html = fs.readFileSync(indexPath, "utf-8");
+        if (html.includes("</head>")) {
+          html = html.replace("</head>", `${schemaHtml}\n</head>`);
+        }
+        res.status(200).set({ "Content-Type": "text/html" }).send(html);
+        return;
+      } catch {
+        return next();
+      }
     }
 
     const originalEnd = res.end.bind(res);
