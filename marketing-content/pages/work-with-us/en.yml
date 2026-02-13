@@ -27,25 +27,25 @@ sections:
     description: Join a global coding academy recognized for quality, impact, and innovation. At 4Geeks, you won't just work. You'll help thousands of students worldwide launch tech careers in coding, data, AI, and cybersecurity.
     marquee:
       items:
-        - id: switchup-2025
-          alt: SwitchUp - Best Coding Bootcamps 2025
-          logo: /attached_assets/switchup_1765590146414.webp
+        - id: logo-ebay
+          alt: eBay logo
+          logo: /attached_assets/ebay_1764719967118.png
           logoHeight: h-8 md:h-12
-        - id: course-report-2024
-          alt: Course Report - Best Coding Bootcamp 2024
-          logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
+        - id: logo-microsoft
+          alt: Microsoft logo
+          logo: /attached_assets/microsoft_1764719829995.png
           logoHeight: h-8 md:h-12
-        - id: newsweek
-          alt: Newsweek
-          logo: /attached_assets/newsweek_1764709608255.webp
+        - id: logo-uber
+          alt: Uber logo
+          logo: /attached_assets/uber_1764719999685.png
           logoHeight: h-8 md:h-12
-        - id: forbes
-          alt: Forbes - Top Coding Bootcamp
-          logo: /attached_assets/forbes-logo-award_1764709625651.webp
+        - id: logo-telefonica
+          alt: Telefonica logo
+          logo: /attached_assets/telefonica_1764719987250.png
           logoHeight: h-8 md:h-12
-        - id: fortune
-          alt: Fortune - Best Education Company
-          logo: /attached_assets/fortune-logo_1764709618095.webp
+        - id: logo-evernote
+          alt: Evernote logo
+          logo: /attached_assets/evernote_1764719981901.png
           logoHeight: h-8 md:h-12
       speed: 40
       gradient: true
@@ -77,64 +77,18 @@ sections:
     reverse_on_mobile: true
     gap: "12"
     marginY:
-      desktop: none lg
+      desktop: none md
     paddingY:
       desktop: lg
   - type: course_selector
     version: "1.0"
-    heading: Explore Our Programs
-    subheading: Choose the career path that's right for you
+    variant: default
+    heading: Programs Covered by the Job Guarantee
+    subheading: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
     courses:
-      - name: AI Automation
-        duration: 4 months part-time
-        label: Updated in 2025
-        title: AI Automation
-        badges:
-          - icon: Bolt
-            text: AI tools for business operations
-        tags:
-          - icon: Plus
-            text: Python for Automation
-        description: Connect AI tools to enterprise platforms and business data. Optimize existing solutions or build new ones. Eliminate resource bottlenecks. Become indispensable in any organization.
-        price: $328
-        original_price: $442
-        price_info: with 4Geeks Installments
-        cta_text: Discover program
-        cta_url: /en/ai-automation
-        course_background: primary
-      - name: AI and Machine Learning
-        duration: 9 months part-time
-        label: Updated in 2025
-        title: AI and Machine Learning
-        badges:
-          - icon: Brain
-            text: LLMs & Generative AI training
-        description: Build systems that learn from data and improve over time without being explicitly programmed. Design, train, and deploy machine learning models to solve real-world problems.
-        price: $439
-        original_price: $588
-        price_info: with 4Geeks Installments
-        cta_text: Discover program
-        cta_url: /en/ai-machine-learning
-        course_background: accent
-      - name: BI Analytics
-        duration: 4 months part-time
-        label: Updated in 2025
-        title: Business Intelligence Analytics
-        badges:
-          - icon: Bolt
-            text: AI for faster data workflows
-        tags:
-          - icon: Plus
-            text: Python for BIA
-        description: Turn raw data into clear, helpful insights that guide important business decisions. Help companies understand what's working, what's not, and where to go next.
-        price: $328
-        original_price: $442
-        price_info: with 4Geeks Installments
-        cta_text: Discover program
-        cta_url: /en/bi-analytics
-        course_background: secondary
       - name: Full Stack Development
         duration: 9 months part-time
+        label: Updated in 2025
         title: Full Stack Software Development
         badges:
           - icon: Code
@@ -145,31 +99,40 @@ sections:
         description: Master modern web development from frontend to backend. Build production-ready applications using industry-standard tools and frameworks.
         price: $439
         original_price: $588
+        price_info: with 4Geeks Installments
         cta_text: Discover program
         cta_url: /en/full-stack
-        course_background: muted
+        course_background: primary
+      - name: AI and Machine Learning
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: Data Science and Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs & Generative AI training
+        description: Work with real datasets to analyze data, build predictive models, and apply machine learning techniques used by modern data teams.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/ai-machine-learning
+        course_background: accent
+      - name: Cybersecurity
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: Cybersecurity
+        badges:
+          - icon: Code
+            text: Threat detection & system protection
+        description: Develop the skills to identify threats, secure systems, and support security operations aligned with industry standards.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/cybersecurity
+        course_background: hsl(var(--color-pink))
     marginY:
-      desktop: none lg
-  - type: value_proof_panel
-    title: Recognized Globally for Excellence
-    subtitle: Trusted sources validate the impact of our programs and community.
-    evidence_items:
-      - title: Top 5 Coding Bootcamps Worldwide
-        source: Newsweek, Forbes, SwitchUp, Course Reportk
-      - title: Best Student Support & Best Value
-        source: Course Report, SwitchUp
-      - title: 35,000+ Graduates Across 20+ Countries
-        description: Join a global network of tech professionals achieving success.
-    media:
-      type: image
-      src: /images/students-learning.jpg
-      alt: Students collaborating in a classroom
-      aspect_ratio: "4:3"
-      style: rounded
-    background: muted
-    variant: default
-    marginY:
-      desktop: none md
+      desktop: none sm
   - type: faq
     version: v1.0
     title: Frequently Asked Questions

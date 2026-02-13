@@ -17,7 +17,7 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: See What Our Students Built
+    title: See What Our Students Build
     subtitle: Explore final projects from 4Geeks Academy graduates. Real apps and solutions that showcase the skills, creativity, and career-ready talent of our bootcamp alumni.
     badge: Career Program
     cta_buttons:
@@ -30,7 +30,7 @@ sections:
         variant: outline
         icon: Book
     trust_bar:
-      rating: 4.8/5
+      rating: 4.9/5
       rating_count: 2,500+
       trusted_text: Trusted by 10,000+ students
     award_badges:

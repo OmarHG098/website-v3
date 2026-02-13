@@ -27,37 +27,37 @@ sections:
     description: Get unlimited 1:1 career support tailored to your goals, background, and experience for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
     marquee:
       items:
-        - id: switchup-2025
-          alt: SwitchUp - Best Coding Bootcamps 2025
-          logo: /attached_assets/switchup_1765590146414.webp
+        - id: logo-google-developers
+          alt: Google Developers logo
+          logo: /attached_assets/google-developers_1764719904190.png
           logoHeight: 48px
-        - id: course-report-2024
-          alt: Course Report - Best Coding Bootcamp 2024
-          logo: /attached_assets/course-report_1765590146414.webp
+        - id: logo-uber
+          alt: Uber logo
+          logo: /attached_assets/uber_1764719999685.png
           logoHeight: 48px
-        - id: tech-hub
-          alt: South Florida Tech Hub
-          logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        - id: logo-telefonica
+          alt: Telefonica logo
+          logo: /attached_assets/telefonica_1764719987250.png
           logoHeight: 48px
-        - id: ebootcamp
-          alt: eBootcamp Top
-          logo: /attached_assets/ebootcamp-top_1765549056325.png
+        - id: logo-twilio
+          alt: Twilio logo
+          logo: /attached_assets/twilio_1764719992371.png
           logoHeight: 48px
-        - id: premios-tecnologia
-          alt: Premios Tecnologia Siglo XXI
-          logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        - id: logo-evernote
+          alt: Evernote logo
+          logo: /attached_assets/evernote_1764719981901.png
           logoHeight: 48px
         - id: newsweek
           alt: Newsweek
           logo: /attached_assets/newsweek_1764709608255.webp
           logoHeight: 48px
-        - id: reviews-coursereport
-          alt: 4.9 on Course Report Reviews
-          logo: /attached_assets/reviews_1765549549051.png
+        - id: logo-microsoft
+          alt: Microsoft logo
+          logo: /attached_assets/microsoft_1764719829995.png
           logoHeight: 48px
-        - id: excelencia-educativa
-          alt: Excelencia Educativa - Institutional Quality
-          logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        - id: logo-ebay
+          alt: eBay logo
+          logo: /attached_assets/ebay_1764719967118.png
           logoHeight: 48px
       speed: 40
       gradient: true
@@ -69,7 +69,7 @@ sections:
       desktop: none
   - type: bullet_tabs_showcase
     version: "1.0"
-    heading: Unlimited Career Support— Built for an AI-Driven Job Market
+    heading: Unlimited Career Support. Built for an AI-Driven Job Market
     subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career.
     tabs:
       - label: Personalized Guidance

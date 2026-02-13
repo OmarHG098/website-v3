@@ -1,11 +1,11 @@
-slug: geekpal-support
+slug: geekpal
 template: default
-title: GeekPAL Support
+title: Apoyo de GeekPAL
 meta:
   robots: index, follow
   priority: 0.9
   change_frequency: weekly
-  page_title: GeekPAL Support | 4Geeks Academy
+  page_title: Apoyo de GeekPAL | 4Geeks Academy
   description: Obtén mentoría ilimitada 1:1 en programación y orientación impulsada por IA de Rigobot 24/7. Nunca programes solo, recibe feedback instantáneo y únete a una comunidad global de desarrolladores.
   redirects:
     - /es/geekpal

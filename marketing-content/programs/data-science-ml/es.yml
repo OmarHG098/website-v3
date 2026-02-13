@@ -275,7 +275,7 @@ sections:
         description: Gradúate con las habilidades, credenciales y perfil profesional que los empleadores buscan activamente.
         benefits:
           - text: Certificado reconocido por el Departamento de Educación de Florida
-          - text: Proyectos de datos reales enfocados en análisis, insights y toma de decisiones
+          - text: Proyectos de datos enfocados en análisis, insights y decisiones
           - text: Experiencia práctica construyendo y evaluando modelos predictivos de machine learning
           - text: Perfil profesional optimizado y estrategia de búsqueda de empleo
       - value: 3-6 meses
