@@ -28,40 +28,40 @@ sections:
   - type: hero
     version: "1.0"
     variant: course
-    title: Full Stack Development with AI Program
-    title_highlight: Full Stack Developer with AI
-    subtitle: Train for high-demand software development roles with an AI-powered full stack curriculum, personalized mentorship, and proven career outcomes.
+    title: Become a Full Stack Developer
+    title_highlight: Full Stack Developer
+    subtitle: Launch your web development career in 16 weeks with $65K+ starting salaries.
     students_enrolled:
       avatars:
         - https://randomuser.me/api/portraits/women/1.jpg
         - https://randomuser.me/api/portraits/men/2.jpg
         - https://randomuser.me/api/portraits/women/3.jpg
         - https://randomuser.me/api/portraits/men/4.jpg
-      count: 1,000+ students enrolled across LATAM and the U.S.
+      count: +1,000 students enrolled
     bullet_points:
-      - Master modern frontend development with HTML, CSS, JavaScript, and React
-      - Build scalable backend systems with Python, APIs, and database architecture
-      - Integrate AI tools and workflows into real-world web applications
-      - Unlimited career support, 1:1 mentorship, and access to an optional Job Guarantee
+      - Master HTML, CSS, JavaScript, and React for modern frontends
+      - Build scalable backend APIs with Python and Flask
+      - Learn database design, authentication, and deployment
+      - Work on real-world projects with industry best practices
     tutors:
       - name: Expert Instructor
-        role: Lead Instructor
+        role: Main Instructor
         image: https://randomuser.me/api/portraits/men/10.jpg
       - name: Rigo
-        role: AI Learning Assistant
+        role: AI Tutor
         image: /attached_assets/rigobot-logo_1764707022198.webp
-    tutors_label: "Your instructors:"
-    description: Build modern, production-ready web applications with AI and position yourself for the next generation of AI-fluent full stack development roles.
+    tutors_label: "Your tutors:"
+    description: Become the full-stack developer companies can't wait to hire. Our 16-week intensive program combines hands-on projects with personalized mentorship to prepare you for roles with $65K+ starting salaries.
     media:
       type: video
       src: https://www.youtube.com/shorts/sSxJnelPJT8
       thumbnail: https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=450&fit=crop
-      alt: Full Stack Developer with AI program introduction at 4Geeks Academy
+      alt: Full Stack Developer program introduction
     signup_card:
-      title: Get the Full Syllabus
-      description: Request the full syllabus, program description, class schedule and everything else you need to know.
+      title: Apply to the Full Stack Program
+      description: Start your journey to becoming a Full Stack Developer
       cta_button:
-        text: Get the Curriculum
+        text: Apply Now
         url: /en/apply
         variant: primary
       login_link:
@@ -71,14 +71,14 @@ sections:
         - icon: IconCalendar
           text: 20-Week Track
         - icon: IconCalendarBolt
-          text: 12-Week Accelerated Morning Track
+          text: 12-Week Track
         - icon: code
-          text: Interactive Coding Exercises
+          text: Interactive Exercises
           count: 100+
         - icon: robot
           text: AI-Powered Feedback
         - icon: calendar
-          text: 1:7 teacher Student Ratio
+          text: Live Sessions Weekly
         - icon: users
           text: 1:1 Mentorship
     paddingY:
@@ -128,24 +128,32 @@ sections:
       desktop: none md
     marginY:
       desktop: none md
-  - type: why_learn_ai
-    variant: laptop-edge
-    title: Enroll with a Job Guarantee for Extra Confidence
-    subtitle: Back your career outcome with a stronger commitment
-    description: Our optional Job Guarantee reflects our confidence in your career outcome. If you don’t secure a qualifying role within 9 months of graduation, you’ll receive a full tuition refund.
-    cta:
-      text: Get More Info
-      url: /job-guarantee
-      variant: primary
-    marginY:
-      desktop: md
-    paddingY:
-      desktop: none sm
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Does the Job Guarantee deliver results you can count on?
+    subtitle: Yes, and we've got the numbers to back it up
+    description: These stats reflect our full graduate community and demonstrate the proven impact of our programs across the board. Our commitment to your success is backed by real outcomes, not just promises.
     background: hsl(var(--secondary))
+    items:
+      - id: "1"
+        value: 84%
+        title: Job placement rate within 6 months
+      - id: "2"
+        value: 150%
+        title: Average salary increase after graduation
+      - id: "3"
+        value: $65K+
+        title: Average starting salary for graduates
+    marginY:
+      desktop: none md
+    paddingY:
+      desktop: none
   - type: syllabus
+    version: "1.0"
     variant: program-modules
-    program_title: Full Stack with AI Program Overview
-    program_description: Learn to build modern, production-ready web applications by mastering frontend and backend development alongside AI. Work with APIs, databases, and intelligent tools to design, develop, and ship real-world software.
+    program_title: What You'll Learn in the Full Stack Program
+    program_description: Master the complete web development stack from frontend to backend. Build production-ready applications using the most in-demand technologies that employers are looking for.
     tech_logos:
       - name: HTML5
         icon: html
@@ -218,7 +226,7 @@ sections:
       desktop: md
   - type: projects
     title: Learn by Building Real-Life Projects
-    subtitle: Build production-ready full stack applications that mirror real software engineering roles and industry workflows.
+    subtitle: "The tasks you'll tackle will closely resemble those encountered in a real-world tech position. Here's a glimpse of what you'll be working on:"
     items:
       - title: Build a StarWars REST API
         description: The StarWars Blog API will let you practice building a REST API using lightweight API frameworks like Express (for node) or Flask (for python) using SQLAlchemy ORM and Python language, while building a fun blog. Ideal for juniors looking to practice API development in python.
@@ -226,8 +234,8 @@ sections:
         tags:
           - REST
         duration: 8 HOURS
-        difficulty: easy
         date: 15/11/2022
+        difficulty: easy
       - title: Authentication System with JWT
         description: Create a complete authentication system with JWT tokens, React frontend, and Python backend. Learn security best practices and session management patterns used in production applications.
         image: authentication
@@ -235,8 +243,8 @@ sections:
           - Security
           - JWT
         duration: 6 HOURS
-        difficulty: medium
         date: 20/01/2023
+        difficulty: medium
       - title: Full-Stack Final Project
         description: Design and build your own full-stack application from scratch. Demonstrate your skills with React, Flask, SQLAlchemy, and third-party API integrations. This capstone project showcases everything you've learned.
         image: final-project
@@ -244,8 +252,8 @@ sections:
           - Full-Stack
           - Capstone
         duration: 40 HOURS
-        difficulty: hard
         date: 01/03/2023
+        difficulty: hard
     paddingY:
       desktop: md sm
   - type: ai_learning
@@ -318,8 +326,8 @@ sections:
         description: Graduate with the skills, credentials, and professional profile employers are actively hiring for.
         benefits:
           - text: Certificate recognized by the Florida Department of Education
-          - text: Career focused portfolio
-          - text: Demonstrated experience with AI workflows
+          - text: End-to-end AI-engineered company in your portfolio
+          - text: Demonstrated experience with agents, workflows, and AI systems
           - text: Optimized professional profile and job-search strategy
       - value: 3-6 months
         label: Time to get hired
@@ -330,12 +338,12 @@ sections:
           - text: Execute a personalized job-search strategy with access to relevant hiring networks
       - value: 55%
         label: Average Salary Increase
-        description: Stand out with full stack and AI skills companies are actively seeking, enabling significant salary growth as you enter the field.
+        description: Master the AI skills that companies are struggling to find talent for. As businesses shift toward automation, you'll be ready to step into high-priority roles that offer immediate growth and long-term stability.
         benefits:
-          - text: "Full Stack Engineer: $95K–$150K+"
-          - text: "AI-fluent Software Developer: $100K–$150K"
-          - text: "Web Applications Engineer: $95K–$140K"
-          - text: "Backend Services Developer: $100K–$150K"
+          - text: "AI Software Engineer: $115K–$165K"
+          - text: "Full-Stack AI Engineer: $125K–$185K"
+          - text: "Agentic Systems Engineer: $140K–$210K"
+          - text: "Workflow Automation Engineer: $95K–$145K"
       - value: 5,000+
         label: Hiring partners
         description: Access our network of 5,000+ hiring partners actively seeking AI talent. Get exclusive job opportunities and priority referrals.
@@ -360,7 +368,7 @@ sections:
     subtitle: Investing in your career matters. We make it easier with multiple ways to fund your enrollment.
     discount_text: "Full Payment Discount: Save 10% with upfront payment."
     financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
+    financing_amount: $349
     tech_icons:
       - openai
       - python
@@ -373,7 +381,7 @@ sections:
     features_title: Choose the option that fits you best.
     features:
       - icon: IconCheck
-        text: Standard tuition is $10,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
+        text: Standard tuition is $14,999. Pay upfront and receive a 10% discount, or spread payments interest-free over 6 months.
       - icon: IconCheck
         text: Finance your tuition through Climb, Fortify, or Lumion with 24, 36, 48, or 60-month plans.
       - icon: IconCheck
@@ -385,10 +393,10 @@ sections:
       text: Get more info
       url: /signup
       variant: primary
-    marginY:
-      desktop: none md
     paddingY:
       desktop: md
+    marginY:
+      desktop: none md
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Innovators
