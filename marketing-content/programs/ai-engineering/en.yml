@@ -60,7 +60,7 @@ sections:
         url: /login
       features:
         - icon: calendar
-          text: 20-Week or 12-Week Accelerated Morning Program
+          text: 24-Week or 12-Week Accelerated Morning Program
         - icon: IconBriefcase
           text: Employment-First Curriculum
         - icon: IconRobot
