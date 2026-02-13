@@ -1,12 +1,12 @@
 slug: financials
 template: default
-title: financials
+title: Financials
 meta:
   robots: index, follow
   priority: 0.8
   change_frequency: weekly
-  page_title: financials | 4Geeks Academy
-  description: financials - Learn more about this topic at 4Geeks Academy.
+  page_title: Financials | 4Geeks Academy
+  description: Financials - Learn more about this topic at 4Geeks Academy.
   redirects:
     - /financials
 schema:

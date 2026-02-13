@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "32d87bba82d5eafc6644632c24f4e57625cd5e3d",
-  "lastSyncedAt": "2026-02-13T03:09:49.106Z",
+  "lastSyncedCommit": "e48d9254b7b17cc83c780cff234409f73cec3eec",
+  "lastSyncedAt": "2026-02-13T05:25:23.296Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -64,8 +64,10 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
-      "lastModified": 1770942331841.6453,
-      "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3"
+      "lastModified": 1770953161382.731,
+      "remoteSha": "a6fe696812cc5ae044a227ca6b47ce2f2ca519a6ccbedcca28b84ace79d24ae3",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-13T03:26:01.385Z"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
       "sha": "628ed61062d92cfb87ae61befdf82fc152bf2418e5c3ec7e97a09604fa2a694c",
@@ -388,9 +390,9 @@
       "remoteSha": "bc5b8ffeff8a62de3623506755721de2e4671ea30f87ca303573e93aab4d11cb"
     },
     "marketing-content/locations/miami-usa/es.yml": {
-      "sha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5",
-      "lastModified": 1770608611486.2898,
-      "remoteSha": "96dd1635aa4bef7eb6178a2410f8f76b2e49c91e2f648f644a3ba0ff4b1581b5"
+      "sha": "0df3cd0c635a971456be2d01d1b730d7ec01b800da56461f265e61acba7f2f7c",
+      "lastModified": 1770953786891.0806,
+      "remoteSha": "0df3cd0c635a971456be2d01d1b730d7ec01b800da56461f265e61acba7f2f7c"
     },
     "marketing-content/locations/milan-italy/_common.yml": {
       "sha": "67178b4ba5b10ebb2a9757dbe51a6c589928430eb8d6e1416066eb5c0872de0a",
@@ -608,9 +610,9 @@
       "remoteSha": "d9f80e4ca4198ea9a04e51c83198e691718b73c40b41ce4e2251580c26edfa61"
     },
     "marketing-content/pages/awards/es.yml": {
-      "sha": "1df86d25c1566b75f14180ba4bf798b1d3307eba581bf3c7c66ea5c44c5ef852",
-      "lastModified": 1770608612293.2893,
-      "remoteSha": "1df86d25c1566b75f14180ba4bf798b1d3307eba581bf3c7c66ea5c44c5ef852"
+      "sha": "5f527db109d8462527bc8f064e5ef9735b86d262ba2c54c05319688e20a92f06",
+      "lastModified": 1770960234498.4167,
+      "remoteSha": "5f527db109d8462527bc8f064e5ef9735b86d262ba2c54c05319688e20a92f06"
     },
     "marketing-content/pages/component-test/en.yml": {
       "sha": "43da30205446f5559b85f0dfa463fb37736d85eecc5e92faec839e4b48df73ed",
@@ -638,9 +640,9 @@
       "remoteSha": "d57a0996fd5dd5b8acae95acb9edca712e7a0d869ddb37c4d218ff0daf256e24"
     },
     "marketing-content/pages/financials/es.yml": {
-      "sha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec",
-      "lastModified": 1770608612639.6494,
-      "remoteSha": "a5cb138cec054b9aa775733a6d4b9535a776abbff6375e35342bc79a240d53ec"
+      "sha": "90e3ed132dcb727e8205aa2ce30a149d4649081f20949a77f892ab81572c5b7f",
+      "lastModified": 1770955564477.238,
+      "remoteSha": "90e3ed132dcb727e8205aa2ce30a149d4649081f20949a77f892ab81572c5b7f"
     },
     "marketing-content/pages/geekforce-career-support/_common.yml": {
       "sha": "f83717a3761082e14bc2fa7336df1d5341ddfcf85b859175d43d4aa681bfd5f1",
@@ -653,9 +655,9 @@
       "remoteSha": "1ab530037d8f64894af86976650f5b3625aaac9f6a63b2ed40e16fbe7cfee041"
     },
     "marketing-content/pages/geekforce-career-support/es.yml": {
-      "sha": "7f3012cde2441fd6a3e4f1547e89bc28d9819d19f7df5425bdca3e712f95abdb",
-      "lastModified": 1770949383011.661,
-      "remoteSha": "7f3012cde2441fd6a3e4f1547e89bc28d9819d19f7df5425bdca3e712f95abdb"
+      "sha": "57d190fa0c8deede5c2a6420f6c779c40d00456097230911fce9c589cf9b2165",
+      "lastModified": 1770960111133.5444,
+      "remoteSha": "57d190fa0c8deede5c2a6420f6c779c40d00456097230911fce9c589cf9b2165"
     },
     "marketing-content/pages/geekpal-support/_common.yml": {
       "sha": "3ff41db8903de9d581594871cfe522ec04d23dd35e79601d14c3f351b152728b",
@@ -668,9 +670,9 @@
       "remoteSha": "63ffdf158900471064c3bc2be241d1a48218bc48a96c4a167e3ce03bb465d154"
     },
     "marketing-content/pages/geekpal-support/es.yml": {
-      "sha": "6cb582f87949b5a9366f0fb3e3baf562c4a02504b101b3eb3fa44f99c2bdec79",
-      "lastModified": 1770948030155.0654,
-      "remoteSha": "6cb582f87949b5a9366f0fb3e3baf562c4a02504b101b3eb3fa44f99c2bdec79"
+      "sha": "63ffdf158900471064c3bc2be241d1a48218bc48a96c4a167e3ce03bb465d154",
+      "lastModified": 1770960094655.5615,
+      "remoteSha": "63ffdf158900471064c3bc2be241d1a48218bc48a96c4a167e3ce03bb465d154"
     },
     "marketing-content/pages/geeks-vs-others/_common.yml": {
       "sha": "01b5737c54f3292a9888eb87f28f3d27f354df2964afdca51c32f08ca1c0244e",
@@ -683,9 +685,11 @@
       "remoteSha": "254ea6277ad0590295d92308704e3ff0723bf85fcd29fe664dd9e0ba13fd7daf"
     },
     "marketing-content/pages/geeks-vs-others/es.yml": {
-      "sha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4",
-      "lastModified": 1770608612406.289,
-      "remoteSha": "fcc88869c3701eaa2eb00fe38628fcfc37597316d0be0660e42d5a8040fb93a4"
+      "sha": "2bb84287954701dd892b1325c90ed4aba114839ba99867b5e7bed249a8f9db74",
+      "lastModified": 1770960193451.4592,
+      "remoteSha": "2bb84287954701dd892b1325c90ed4aba114839ba99867b5e7bed249a8f9db74",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-13T05:23:13.453Z"
     },
     "marketing-content/pages/graduates-and-projects/_common.yml": {
       "sha": "231e28830319ac57829ca5baf24a597983c8d9051c660ec69200c49ebb91e1db",
@@ -698,9 +702,9 @@
       "remoteSha": "fd58194062359e53557a9ab03ad2d9986c7f7d6b8a7c7b4909ababa78bfaf7b2"
     },
     "marketing-content/pages/graduates-and-projects/es.yml": {
-      "sha": "cc12e3d32ecd569f6fe71d4558f81316ef96dc090a1338128601114c6c953d1f",
-      "lastModified": 1770608612459.6143,
-      "remoteSha": "cc12e3d32ecd569f6fe71d4558f81316ef96dc090a1338128601114c6c953d1f"
+      "sha": "14804649b74bf67500288557d6ec2538287e567cfcdf5e8e5d72d393f45d4c09",
+      "lastModified": 1770960041192.617,
+      "remoteSha": "14804649b74bf67500288557d6ec2538287e567cfcdf5e8e5d72d393f45d4c09"
     },
     "marketing-content/pages/home/_common.yml": {
       "sha": "88601db170bf65f72f2bc60e33f56c143af26aa7673572825762c7e039cdb62a",
@@ -724,13 +728,15 @@
     },
     "marketing-content/pages/job-guarantee/en.yml": {
       "sha": "7442e4239af90c0a2f1d64785916cf4255a9def976bdc6348b31d93b226b3e99",
-      "lastModified": 1770947915895.1838,
-      "remoteSha": "7442e4239af90c0a2f1d64785916cf4255a9def976bdc6348b31d93b226b3e99"
+      "lastModified": 1770960137479.517,
+      "remoteSha": "7442e4239af90c0a2f1d64785916cf4255a9def976bdc6348b31d93b226b3e99",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-13T05:22:17.480Z"
     },
     "marketing-content/pages/job-guarantee/es.yml": {
-      "sha": "940f3f9e0cb1e5ac327a143080f2b8709d3929a474a2a2a9ecda8fe41b264c79",
-      "lastModified": 1770950205536.8079,
-      "remoteSha": "940f3f9e0cb1e5ac327a143080f2b8709d3929a474a2a2a9ecda8fe41b264c79"
+      "sha": "710ed28e002a9565031f00ad44ef592b1a5a81d155121dbbaa7b7113e484892a",
+      "lastModified": 1770960158681.495,
+      "remoteSha": "710ed28e002a9565031f00ad44ef592b1a5a81d155121dbbaa7b7113e484892a"
     },
     "marketing-content/pages/learnpack/_common.yml": {
       "sha": "778eef3f08f84524d7626354bba0bd9cd7c4ed1b11086584a79cdd39e235087f",
@@ -778,14 +784,14 @@
       "remoteSha": "839d55feee674c47e723d6c49efbbf8fd2a6ebc71b114cec51f03b4590b44bc3"
     },
     "marketing-content/pages/partners/en.yml": {
-      "sha": "57166a3ea6cc669a349fa6357ee50783d463cd4b2a66f17a18937aadeb3f8957",
-      "lastModified": 1770947916286.1833,
-      "remoteSha": "57166a3ea6cc669a349fa6357ee50783d463cd4b2a66f17a18937aadeb3f8957"
+      "sha": "626631bf6600937a6790840ccc5124672a4fc3fc7040ae383a9b5f7a808bce46",
+      "lastModified": 1770958012418.7202,
+      "remoteSha": "626631bf6600937a6790840ccc5124672a4fc3fc7040ae383a9b5f7a808bce46"
     },
     "marketing-content/pages/partners/es.yml": {
-      "sha": "e587e5bfa7255f669598d1d92a3e8df3436490ada1a3e02ef30405ff7d05eaa1",
-      "lastModified": 1770846049641.967,
-      "remoteSha": "e587e5bfa7255f669598d1d92a3e8df3436490ada1a3e02ef30405ff7d05eaa1"
+      "sha": "77744d4e037db626fbcdf2c4b3f5ba42671e1ce15c82d90cbf18829e804675cc",
+      "lastModified": 1770960270548.3794,
+      "remoteSha": "77744d4e037db626fbcdf2c4b3f5ba42671e1ce15c82d90cbf18829e804675cc"
     },
     "marketing-content/pages/press/_common.yml": {
       "sha": "71146055f552a0ec6146f489370c57af1a204e0a8198e3dd8265b35ef6fa2f2e",
@@ -863,9 +869,11 @@
       "remoteSha": "a2d5cdbb4bd827575c9289d43391418d925b2496f186b3c2e0ead851a0c9972c"
     },
     "marketing-content/pages/the-academy/es.yml": {
-      "sha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91",
-      "lastModified": 1770608612719.653,
-      "remoteSha": "3f432255d631aa297744982660023692710316699c1fb4b9aea9f230e021dc91"
+      "sha": "9608673c6f53e749ca5f3e744aec08278ba8892f831e571df253af4683ee1c0b",
+      "lastModified": 1770960251525.399,
+      "remoteSha": "9608673c6f53e749ca5f3e744aec08278ba8892f831e571df253af4683ee1c0b",
+      "author": "Alejandro Mauricio Jimenez Morales",
+      "modifiedAt": "2026-02-13T05:24:11.527Z"
     },
     "marketing-content/pages/work-with-us/_common.yml": {
       "sha": "18a3d79d3b9d7788fb4293f531507cf1b22e0365609c2e9a96726b3c80f18a9d",
