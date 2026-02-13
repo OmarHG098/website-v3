@@ -188,7 +188,7 @@ sections:
     description: For an additional $2,000, you can add our Job Guarantee. If you don’t land a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
     cta:
       text: Get More Info
-      url: /job-guarantee
+      url: en/job-guarantee
       variant: primary
     marginY:
       desktop: md
