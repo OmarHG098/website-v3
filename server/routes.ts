@@ -4546,13 +4546,29 @@ sections: []
 
   app.use((req, res, next) => {
     const url = req.originalUrl || req.url;
-    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || /\.\w+$/.test(url)) {
+    if (url.startsWith("/api/") || url.startsWith("/attached_assets/") || url.startsWith("/marketing-content/") || /\.\w+$/.test(url)) {
       return next();
     }
 
     const schemaHtml = generateSsrSchemaHtml(url);
     if (!schemaHtml) {
       return next();
+    }
+
+    const isProduction = process.env.NODE_ENV === "production";
+    if (isProduction) {
+      const distPath = path.resolve(import.meta.dirname, "public");
+      const indexPath = path.resolve(distPath, "index.html");
+      try {
+        let html = fs.readFileSync(indexPath, "utf-8");
+        if (html.includes("</head>")) {
+          html = html.replace("</head>", `${schemaHtml}\n</head>`);
+        }
+        res.status(200).set({ "Content-Type": "text/html" }).send(html);
+        return;
+      } catch {
+        return next();
+      }
     }
 
     const originalEnd = res.end.bind(res);

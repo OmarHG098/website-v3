@@ -203,6 +203,28 @@ courses:
         name: "Ciencia de Datos y Machine Learning"
         description: "Aprende análisis de datos, machine learning e IA con Python. Domina pandas, scikit-learn, TensorFlow y construye proyectos reales."
 
+  ai-engineering:
+    type: "Course"
+    name: "AI Engineering"
+    description: "Master AI engineering with hands-on projects building production-ready AI applications. Learn RAG systems, multi-agent orchestration, prompt engineering, and real-time AI deployment using Python, LangChain, and modern AI frameworks."
+    provider: "@organization"
+    educational_level: "Intermediate to Advanced"
+    time_required: "PT400H"
+    teaches:
+      - "Python"
+      - "LangChain"
+      - "RAG Systems"
+      - "Multi-Agent Orchestration"
+      - "Prompt Engineering"
+      - "Vector Databases"
+      - "AI APIs"
+      - "LLM Fine-tuning"
+      - "Real-time AI Applications"
+    locales:
+      es:
+        name: "Ingeniería de IA"
+        description: "Domina la ingeniería de IA con proyectos prácticos construyendo aplicaciones de IA listas para producción. Aprende sistemas RAG, orquestación multi-agente, ingeniería de prompts y despliegue de IA en tiempo real usando Python, LangChain y frameworks modernos de IA."
+
 # ItemList schema for course catalogs
 item_lists:
   career-programs:
@@ -215,6 +237,8 @@ item_lists:
         position: 1
       - ref: "courses:data-science"
         position: 2
+      - ref: "courses:ai-engineering"
+        position: 3
     locales:
       es:
         name: "Programas de Carrera"
