@@ -16,45 +16,12 @@ schema:
 sections:
   - type: hero
     version: "1.0"
-    variant: productShowcase
-    title: Welcome to the AI era
-    subtitle: Job Opportunities
-    brand_mark:
-      prefix: Careers at
-      highlight: 4Geeks
-      suffix: ":"
-      color: chart-1
-    description: Join a global coding academy recognized for quality, impact, and innovation. At 4Geeks, you won't just work. You'll help thousands of students worldwide launch tech careers in coding, data, AI, and cybersecurity.
-    marquee:
-      items:
-        - id: logo-ebay
-          alt: eBay logo
-          logo: /attached_assets/ebay_1764719967118.png
-          logoHeight: h-8 md:h-12
-        - id: logo-microsoft
-          alt: Microsoft logo
-          logo: /attached_assets/microsoft_1764719829995.png
-          logoHeight: h-8 md:h-12
-        - id: logo-uber
-          alt: Uber logo
-          logo: /attached_assets/uber_1764719999685.png
-          logoHeight: h-8 md:h-12
-        - id: logo-telefonica
-          alt: Telefonica logo
-          logo: /attached_assets/telefonica_1764719987250.png
-          logoHeight: h-8 md:h-12
-        - id: logo-evernote
-          alt: Evernote logo
-          logo: /attached_assets/evernote_1764719981901.png
-          logoHeight: h-8 md:h-12
-      speed: 40
-      gradient: true
-      gradientWidth: 50
-    video:
-      url: https://www.youtube.com/watch?v=-2ZvlgDnltc
-      ratio: "2:2"
-    paddingY:
-      desktop: none md
+    variant: singleColumn
+    title: Careers at 4Geeks
+    subtitle: Join a global coding academy recognized for quality, impact, and innovation. At 4Geeks, you won't just have a great job. You'll help thousands of students worldwide launch tech careers in AI engineering, data science, and cybersecurity.
+    badge: Job Opportunities
+    image_id: academy_header_coding
+    image_full_width: false
   - type: two_column
     proportions:
       - 5
@@ -67,7 +34,6 @@ sections:
       justify: center
     right:
       heading: Why Work at 4Geeks
-      description: We provide comprehensive support for your learning journey from day one to career success.
       bullets:
         - text: Remote-first, flexible roles across the U.S., Europe, and LATAM.
         - text: Make a measurable impact on tech education and the future workforce.
