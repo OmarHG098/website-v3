@@ -1,144 +1,213 @@
-slug: "trabajo-garantizado"
-template: "default"
-title: "Trabajo Garantizado"
-
+slug: trabajo-garantizado
+template: default
+title: Trabajo Garantizado
 meta:
+  robots: index, follow
+  priority: 0.9
+  change_frequency: weekly
   page_title: Trabajo Garantizado | 4Geeks Academy
-  description: Entra a tech con nuestra Garantía de Empleo. Consigue trabajo en 9 meses después de graduarte, o te devolvemos tu matrícula.
-  robots: "index, follow"
+  description: Ingresa al mundo tech con nuestra Garantía de Empleo. Consigue trabajo en 9 meses después de graduarte o te devolvemos el 100% de tu matrícula.
   redirects:
     - /es/trabajo-garantizado
-
+context:
+  when_to_use: Para visitantes escépticos sobre los resultados de bootcamps o que necesitan seguridad sobre su inversión en carrera.
+  target_audience: Cambiadores de carrera aversos al riesgo que necesitan garantías fuertes antes de comprometerse con una inversión educativa.
+  goals:
+    - Construir confianza con términos transparentes de la garantía
+    - Abordar escepticismo sobre la efectividad de los bootcamps
+    - Destacar tasas de éxito y alianzas con empleadores
+    - Hacer que el compromiso financiero se sienta seguro
+schema:
+  include:
+    - organization
+    - website
 sections:
   - type: hero
     version: "1.0"
     variant: simpleTwoColumn
-    title: Entra a Tech con Nuestra Garantía de Empleo
-    subtitle: Tu éxito es nuestra misión. Consigue trabajo en 9 meses después de graduarte, o te devolvemos tu matrícula. Aplican condiciones.
+    title: Ingresa al mundo tech con nuestra Garantía de Empleo
+    subtitle: "&nbsp;Diseñada para darte confianza extra al invertir en tu carrera. Consigue empleo en 9 meses después de graduarte o te devolvemos el 100% de tu matrícula.&nbsp;<div bis_skin_checked=\"1\"><a href=\"https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf\"><span style=\"font-size: 1rem;\"><span><span style=\"font-size: 0.875rem;\"><span>*Condiciones aplican.</span></span></span></span></a></div>"
     image:
       src: /attached_assets/generated_images/Students_collaborating_workspace_d1560810.webp
-      alt: Estudiantes colaborando en espacio de trabajo tech
+      alt: Estudiantes colaborando en un espacio de trabajo tech
     cta_buttons:
-      - text: Aplica ahora
-        url: "#apply"
+      - text: Aplicar ahora
+        url: /apply
         variant: primary
       - text: Descargar Detalles
         url: "#syllabus"
         variant: outline
-  - type: features_grid
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
+    paddingY:
+      desktop: lg none
+    marginY:
+      desktop: none md
+  - type: graduates_stats
+    version: v1.0
+    variant: fullBleed
+    heading: Resultados que respaldan nuestra Garantía de Empleo
+    subheading: "Estos números reflejan graduados reales y contrataciones reales. Nuestra Garantía de Empleo se basa en un solo resultado: lanzar exitosamente tu carrera en tech."
+    stats:
+      - value: "84"
+        unit: "%"
+        label: Tasa de colocación laboral
+      - value: 3-6
+        unit: meses
+        label: Tiempo promedio para conseguir empleo
+      - value: 55%
+        label: Aumento salarial después de graduarte
+    collage_images:
+      - image_id: graduates_team_1
+        col_span: 4
+        row_span: 2
+        col_start: 6
+        row_start: 1
+      - image_id: graduates_team_2
+        col_span: 3
+        row_span: 2
+        col_start: 10
+        row_start: 1
+      - image_id: graduates_coding
+        col_span: 5
+        row_span: 2
+        col_start: 4
+        row_start: 3
+      - image_id: graduates_friends
+        col_span: 4
+        row_span: 2
+        col_start: 9
+        row_start: 3
+    featured_images:
+      - image_id: graduates_celebration
+        col_span: 5
+        row_span: 2
+        col_start: 1
+        row_start: 1
+      - image_id: graduates_workspace
+        col_span: 3
+        row_span: 2
+        col_start: 1
+        row_start: 3
+    background: bg-muted/30
+    image_bordered: true
+    paddingY:
+      desktop: none
+  - type: course_selector
     version: "1.0"
-    variant: highlight
-    title: ¿La Garantía de Empleo entrega resultados confiables?
-    subtitle: Sí, y tenemos los números para probarlo. Estas estadísticas reflejan toda nuestra comunidad de graduados y demuestran el impacto probado de nuestros programas. No solo te enseñamos a programar, te ayudamos a construir una carrera de la que estés orgulloso.
-    columns: 3
-    items:
-      - icon: Briefcase
-        icon_color: "#0097CD"
-        value: 84%
-        title: Tasa de colocación laboral
-      - icon: Graduation
-        icon_color: "#0097CD"
-        value: 3-6 meses
-        title: Tiempo promedio para conseguir empleo
-      - icon: GrowthChart
-        icon_color: "#0097CD"
-        value: 55%
-        title: Aumento salarial después de graduarte
-  - type: two_column
-    version: "1.0"
-    proportions:
-      - 8
-      - 4
-    background: bg-primary/5
-    left:
-      heading: ¿Quién es Elegible?
-      sub_heading: "Calificas para la Garantía de Empleo si:"
-      bullets:
-        - text: Tienes autorización de trabajo en EE.UU.
-        - text: Pasas nuestro test de lógica
-        - text: Completas todo el trabajo del curso y proyectos
-        - text: Sigues la guía de nuestro equipo de carrera
-      description: "*Aplican condiciones según tu país o estado de EE.UU."
-      button:
-        text: Aplicar
-        url: "#apply"
-        variant: primary
-      font_size: lg
-    right:
-      image: /attached_assets/reservation-es_1764814854635.webp
-      image_alt: Mujer trabajando en laptop
-      image_max_width: 420px
-  - type: features_grid
-    version: "1.0"
-    variant: detailed
-    title: Nuestra Garantía de Empleo Está Disponible para Nuestros Programas Top
-    subtitle: Elige tu camino profesional. Domina las habilidades y consigue empleo.
-    columns: 3
-    collapsible_mobile: true
-    items:
-      - id: fullstack
-        category: Full Stack
-        title: Desarrollo Full Stack con IA
-        description: Conviértete en un ingeniero de software fluido en IA usando Python, React y herramientas de Vibe Coding como Cursor. Domina habilidades de vanguardia y lanza una carrera a prueba de futuro.
-        icon: CodeWindow
-        link_url: "#"
-        link_text: Leer Más
-      - id: datascience
-        category: Con Python
-        title: Data Science y Machine Learning con IA
-        description: Aprende Python para recolectar y gestionar datos. Crea modelos y resuelve problemas usando Machine Learning, Deep Learning e IA.
-        icon: Monitor
-        link_url: "#"
-        link_text: Leer Más
-      - id: cybersecurity
-        category: Para Windows y Linux
+    variant: default
+    heading: Programas cubiertos por la Garantía de Empleo
+    subheading: La Garantía de Empleo aplica a programas selectos de 4Geeks diseñados para resultados de contratación directa.
+    courses:
+      - name: Full Stack Development
+        duration: 9 meses part-time
+        label: Actualizado en 2025
+        title: Desarrollo Full Stack de Software
+        badges:
+          - icon: Code
+            text: React, Node.js & Python
+        tags:
+          - icon: Plus
+            text: Desarrollo de APIs
+        description: Domina el desarrollo web moderno desde frontend hasta backend. Construye aplicaciones listas para producción usando herramientas y frameworks estándar de la industria.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/full-stack
+        course_background: primary
+      - name: AI and Machine Learning
+        duration: 9 meses part-time
+        label: Actualizado en 2025
+        title: Data Science y Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs y entrenamiento en IA Generativa
+        description: Trabaja con datasets reales para analizar datos, construir modelos predictivos y aplicar técnicas de machine learning usadas por equipos de datos modernos.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/ai-machine-learning
+        course_background: accent
+      - name: Cybersecurity
+        duration: 9 meses part-time
+        label: Actualizado en 2025
         title: Ciberseguridad
-        description: Conviértete en especialista en ciberseguridad con competencia en IA, equipado para identificar, gestionar y mitigar vulnerabilidades en cumplimiento con ISO y otros estándares.
-        icon: Security
-        link_url: "#"
-        link_text: Leer Más
+        badges:
+          - icon: Code
+            text: Detección de amenazas y protección de sistemas
+        description: Desarrolla habilidades para identificar amenazas, asegurar sistemas y apoyar operaciones de seguridad alineadas con estándares de la industria.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/cybersecurity
+        course_background: hsl(var(--color-pink))
+  - type: features_quad
+    version: "1.0"
+    variant: laptopEdge
+    heading: ¿Quién es elegible?
+    description: "Calificas para la Garantía de Empleo si:"
+    cards:
+      - icon: IconBriefcaseFilled
+        title: Tienes autorización para trabajar en EE.UU.
+      - icon: IconCircleDashedCheck
+        title: Completas toda la coursework y proyectos
+      - icon: IconBrain
+        title: Apruebas nuestra prueba de lógica
+      - icon: IconArrowGuideFilled
+        title: Sigues nuestro proceso de desarrollo profesional
+    background: hsl(var(--muted))
+    marginY:
+      desktop: none md
+    paddingY:
+      desktop: none
   - type: numbered_steps
     version: "1.0"
-    title: Cómo Funciona el Reembolso
-    description: "Lo hicimos simple: si completas todos los pasos requeridos y no consigues un trabajo calificado en 9 meses después de graduarte, te reembolsamos el 100% de tu matrícula."
+    variant: bubbleText
+    title: Cómo funciona el reembolso
+    description: "Lo hemos hecho simple: si completas todos los pasos requeridos y no consigues un empleo calificado en 9 meses después de graduarte, te devolvemos el 100% de tu matrícula."
     description_link:
-      text: Aplican Condiciones.
+      text: Condiciones aplican.
       url: https://storage.googleapis.com/4geeks-academy-website/PDF%20and%20Docs/job-guarantee-en.pdf
     steps:
-      - text: No fuiste contratado en un rol calificado en 9 meses después de graduarte.
-        icon: BriefcaseOff
-      - text: Nuestro equipo verifica que cumpliste todos los requisitos de la Garantía de Empleo.
-        icon: ClipboardCheck
-      - text: Recibe el reembolso completo en 30 días.
-        icon: CashBanknote
-  - type: two_column
+      - icon: Optimization
+        text: Notifícanos que no fuiste contratado en ningún rol calificado dentro de los 9 meses posteriores a la graduación.
+        title: Notificación
+      - icon: Interview
+        text: Nuestro equipo verifica exhaustivamente que cumpliste todos los requisitos de la Garantía de Empleo.
+        title: Verificación
+      - icon: JobSearch
+        text: Recibirás tu reembolso completo dentro de los 30 días siguientes a la aprobación de tu solicitud.
+        title: Reembolso completo
+  - type: features_grid
     version: "1.0"
-    proportions:
-      - 5
-      - 7
+    variant: cardHeader
+    heading: Por qué funciona nuestra Garantía de Empleo
+    description: La Garantía de Empleo se basa en resultados reales y un modelo enfocado en la contratación. Nuestros programas, metodología de enseñanza y soporte profesional están diseñados según cómo realmente se consigue empleo en el mercado tech actual. A lo largo de los años, hemos ayudado a más de 3,500 graduados a lanzar sus carreras en tech en distintos roles e industrias.
+    image: /attached_assets/comunity-support_1765908983485.png
+    image_alt: Soporte comunitario de 4Geeks Academy
     background: bg-primary/5
-    alignment: center
-    gap: "12"
-    reverse_on_mobile: true
-    left:
-      image: /attached_assets/hombre-joven-con-laptop_1764691956393.webp
-      image_alt: Graduado feliz con laptop mostrando el logo de 4Geeks Academy
-      justify: start
-    right:
-      heading: Por Qué Tenemos la Confianza de Ofrecer Garantía de Empleo
-      description: Nuestro objetivo es más que enseñar habilidades - estamos aquí para lanzar carreras tech exitosas. Con un currículo alineado a la industria, metodología práctica de enseñanza y apoyo profesional personalizado, tenemos un historial probado.
-      font_size: base
-      bullets_visible: 2
-      bullets:
-        - text: La efectividad de nuestro programa está respaldada por fuertes tasas de colocación
-        - text: La industria tech sigue creciendo con alta demanda de talento
-        - text: Creemos en nuestro enfoque de enseñanza y en tu compromiso de triunfar
-      bullet_icon: Check
-      button:
-        text: Aplicar
-        url: "#apply"
-        variant: primary
+    cards:
+      - icon: BriefcaseFilled
+        text: Resultados consistentes de contratación en toda nuestra comunidad de graduados
+      - icon: BrandStackshare
+        text: Fuerte y sostenida demanda de profesionales tech calificados
+      - icon: ChalkboardTeacher
+        text: Entrenamiento estructurado combinado con soporte continuo y práctico para tu carrera
   - type: faq
     version: "1.0"
-    title: Preguntas Frecuentes sobre la Garantía de Empleo
-    related_features: ["job-guarantee"]
+    title: Preguntas frecuentes sobre la Garantía de Empleo
+    related_features:
+      - job-guarantee
+    paddingY:
+      desktop: none
+    marginY:
+      desktop: lg none
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. Todos los derechos reservados.
+    paddingY:
+      desktop: md 10px
+    marginY:
+      desktop: none
