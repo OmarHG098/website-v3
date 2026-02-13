@@ -2,6 +2,7 @@ import { useState } from "react";
 import type { NumberedStepsBubbleTextSection } from "@shared/schema";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconChevronDown } from "@tabler/icons-react";
+import { RichTextArea } from "@/components/editing/RichTextArea"
 
 interface StepNumberProps {
   index: number;
@@ -74,6 +75,7 @@ export function NumberedStepsBubbleText({ data }: NumberedStepsBubbleTextProps) 
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto text-center mb-3">
             {data.description}
           </p>
+          
           {data.description_link && (
             <a className="text-primary hover:underline text-base mt-2" href={data.description_link?.url} target="_blank" rel="noopener noreferrer">
               {data.description_link?.text}

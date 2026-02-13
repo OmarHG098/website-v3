@@ -48,20 +48,41 @@ export const pageSlugMappings: SlugMapping[] = [
   { en: "career-programs", es: "programas-de-carrera", folder: "career-programs" },
 ];
 
-export function getSlugForLocale(folder: string, locale: string): string {
-  const mapping = pageSlugMappings.find(m => m.folder === folder);
+export const programSlugMappings: SlugMapping[] = [
+];
+
+export const locationSlugMappings: SlugMapping[] = [
+];
+
+const mappingsByContentType: Record<ContentType, SlugMapping[]> = {
+  page: pageSlugMappings,
+  program: programSlugMappings,
+  location: locationSlugMappings,
+};
+
+function getMappings(contentType?: ContentType): SlugMapping[] {
+  if (contentType) {
+    return mappingsByContentType[contentType] || [];
+  }
+  return pageSlugMappings;
+}
+
+export function getSlugForLocale(folder: string, locale: string, contentType?: ContentType): string {
+  const mappings = getMappings(contentType);
+  const mapping = mappings.find(m => m.folder === folder);
   if (!mapping) return folder;
   return locale === "es" ? mapping.es : mapping.en;
 }
 
-export function getFolderFromSlug(slug: string, locale: string): string {
-  const mapping = pageSlugMappings.find(m => 
+export function getFolderFromSlug(slug: string, locale: string, contentType?: ContentType): string {
+  const mappings = getMappings(contentType);
+  const mapping = mappings.find(m => 
     locale === "es" ? m.es === slug : m.en === slug
   );
   return mapping?.folder || slug;
 }
 
-export function getTranslatedSlug(currentSlug: string, fromLocale: string, toLocale: string): string {
-  const folder = getFolderFromSlug(currentSlug, fromLocale);
-  return getSlugForLocale(folder, toLocale);
+export function getTranslatedSlug(currentSlug: string, fromLocale: string, toLocale: string, contentType?: ContentType): string {
+  const folder = getFolderFromSlug(currentSlug, fromLocale, contentType);
+  return getSlugForLocale(folder, toLocale, contentType);
 }

@@ -63,13 +63,15 @@ function parseRoute(url: string): ParsedRoute | null {
   match = cleanUrl.match(/^\/(en|es)\/career-programs\/(.+?)$/);
   if (!match) match = cleanUrl.match(/^\/(es)\/programas-de-carrera\/(.+?)$/);
   if (match) {
-    return { contentType: "programs", slug: match[2], locale: match[1] };
+    const folder = getFolderFromSlug(match[2], match[1], 'program');
+    return { contentType: "programs", slug: folder, locale: match[1] };
   }
 
   match = cleanUrl.match(/^\/(en|es)\/location\/(.+?)$/);
   if (!match) match = cleanUrl.match(/^\/(es)\/ubicacion\/(.+?)$/);
   if (match) {
-    return { contentType: "locations", slug: match[2], locale: match[1] };
+    const folder = getFolderFromSlug(match[2], match[1], 'location');
+    return { contentType: "locations", slug: folder, locale: match[1] };
   }
 
   match = cleanUrl.match(/^\/(en|es)\/landing\/(.+?)$/);
@@ -81,7 +83,7 @@ function parseRoute(url: string): ParsedRoute | null {
   if (match) {
     const locale = match[1];
     const slug = match[2];
-    const folder = getFolderFromSlug(slug, locale);
+    const folder = getFolderFromSlug(slug, locale, 'page');
     return { contentType: "pages", slug: folder, locale };
   }
 

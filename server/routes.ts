@@ -527,8 +527,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/career-programs/:slug", (req, res) => {
-    const { slug } = req.params;
+    const { slug: rawSlug } = req.params;
     const locale = normalizeLocale(req.query.locale as string);
+    const slug = getFolderFromSlug(rawSlug, locale, 'program');
     const forceVariant = req.query.force_variant as string | undefined;
     const forceVersion = req.query.force_version
       ? parseInt(req.query.force_version as string, 10)
@@ -797,8 +798,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const { slug } = req.params;
     const locale = normalizeLocale(req.query.locale as string);
 
-    // Resolve translated slug to folder name
-    const folder = getFolderFromSlug(slug, locale);
+    const folder = getFolderFromSlug(slug, locale, 'page');
 
     const page = loadTemplatePage(folder, locale);
 
@@ -927,13 +927,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pageEn = url.match(/^\/en\/([^/]+)/);
       const pageEs = url.match(/^\/es\/([^/]+)/);
 
-      if (programEn) { contentType = "programs"; slug = programEn[1]; }
-      else if (programEs) { contentType = "programs"; slug = programEs[1]; }
-      else if (locationEn) { contentType = "locations"; slug = locationEn[1]; }
-      else if (locationEs) { contentType = "locations"; slug = locationEs[1]; }
+      if (programEn) { contentType = "programs"; slug = getFolderFromSlug(programEn[1], 'en', 'program'); }
+      else if (programEs) { contentType = "programs"; slug = getFolderFromSlug(programEs[1], 'es', 'program'); }
+      else if (locationEn) { contentType = "locations"; slug = getFolderFromSlug(locationEn[1], 'en', 'location'); }
+      else if (locationEs) { contentType = "locations"; slug = getFolderFromSlug(locationEs[1], 'es', 'location'); }
       else if (landingMatch) { contentType = "landings"; slug = landingMatch[1]; }
-      else if (pageEn) { contentType = "pages"; slug = pageEn[1]; }
-      else if (pageEs) { contentType = "pages"; slug = pageEs[1]; }
+      else if (pageEn) { contentType = "pages"; slug = getFolderFromSlug(pageEn[1], 'en', 'page'); }
+      else if (pageEs) { contentType = "pages"; slug = getFolderFromSlug(pageEs[1], 'es', 'page'); }
 
       if (!contentType || !slug) {
         res.status(400).json({ error: "Could not determine content type from URL" });
@@ -1024,19 +1024,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       if (programEnMatch) {
         contentType = "programs";
-        slug = programEnMatch[1];
+        slug = getFolderFromSlug(programEnMatch[1], 'en', 'program');
         locale = "en";
       } else if (programEsMatch) {
         contentType = "programs";
-        slug = programEsMatch[1];
+        slug = getFolderFromSlug(programEsMatch[1], 'es', 'program');
         locale = "es";
       } else if (programStrippedMatch) {
         contentType = "programs";
-        slug = programStrippedMatch[1];
+        slug = getFolderFromSlug(programStrippedMatch[1], 'en', 'program');
         locale = "en";
       } else if (programStrippedEsMatch) {
         contentType = "programs";
-        slug = programStrippedEsMatch[1];
+        slug = getFolderFromSlug(programStrippedEsMatch[1], 'es', 'program');
         locale = "es";
       } else if (landingMatch) {
         contentType = "landings";
@@ -1044,33 +1044,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
         locale = "en";
       } else if (locationEnMatch) {
         contentType = "locations";
-        slug = locationEnMatch[1];
+        slug = getFolderFromSlug(locationEnMatch[1], 'en', 'location');
         locale = "en";
       } else if (locationEsMatch) {
         contentType = "locations";
-        slug = locationEsMatch[1];
+        slug = getFolderFromSlug(locationEsMatch[1], 'es', 'location');
         locale = "es";
       } else if (locationStrippedMatch) {
         contentType = "locations";
-        slug = locationStrippedMatch[1];
+        slug = getFolderFromSlug(locationStrippedMatch[1], 'en', 'location');
         locale = "en";
       } else if (locationStrippedEsMatch) {
         contentType = "locations";
-        slug = locationStrippedEsMatch[1];
+        slug = getFolderFromSlug(locationStrippedEsMatch[1], 'es', 'location');
         locale = "es";
       } else if (pageEnMatch) {
         contentType = "pages";
-        slug = pageEnMatch[1];
+        slug = getFolderFromSlug(pageEnMatch[1], 'en', 'page');
         locale = "en";
       } else if (pageEsMatch) {
         contentType = "pages";
-        slug = pageEsMatch[1];
+        slug = getFolderFromSlug(pageEsMatch[1], 'es', 'page');
         locale = "es";
       } else if (!destUrl.startsWith("/en/") && !destUrl.startsWith("/es/") && !destUrl.startsWith("/landing/")) {
         const pageStrippedMatch = destUrl.match(/^\/([^/]+)/);
         if (pageStrippedMatch) {
           contentType = "pages";
-          slug = pageStrippedMatch[1];
+          slug = getFolderFromSlug(pageStrippedMatch[1], 'en', 'page');
           locale = "en";
         }
       }
@@ -3211,7 +3211,8 @@ sections: []
         return;
       }
 
-      const resolvedSlug = type === 'page' ? getFolderFromSlug(slug, 'en') : slug;
+      const contentTypeMap: Record<string, 'page' | 'program' | 'location'> = { page: 'page', program: 'program', location: 'location' };
+      const resolvedSlug = getFolderFromSlug(slug, 'en', contentTypeMap[type]);
 
       const folderPath = path.join(process.cwd(), 'marketing-content', folderMap[type], resolvedSlug);
 
