@@ -218,3 +218,6 @@ sections:
         name: Ariana Sánchez
         role: Culture & Talent Leader
         linkedin_url: https://www.linkedin.com/in/ariana-sánchez-7720aa78/
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.
