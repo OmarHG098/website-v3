@@ -55,6 +55,14 @@ sections:
       ratio: "2:2"
     paddingY:
       desktop: none md
+  - type: hero
+    version: "1.0"
+    variant: singleColumn
+    title: Careers at 4Geeks
+    subtitle: Join a global coding academy recognized for quality, impact, and innovation. At 4Geeks, you won't just have a great job. You'll help thousands of students worldwide launch tech careers in AI engineering, data science, and cybersecurity.
+    badge: Job Opportunities
+    image_id: academy_header_coding
+    image_full_width: false
   - type: two_column
     proportions:
       - 5
@@ -67,7 +75,6 @@ sections:
       justify: center
     right:
       heading: Why Work at 4Geeks
-      description: We provide comprehensive support for your learning journey from day one to career success.
       bullets:
         - text: Remote-first, flexible roles across the U.S., Europe, and LATAM.
         - text: Make a measurable impact on tech education and the future workforce.
