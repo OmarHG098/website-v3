@@ -329,7 +329,7 @@ function LazySection({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<SectionSkeleton />}>{children}</Suspense>;
 }
 
-export function renderSection(section: Section, index: number, landingLocations?: string[]): React.ReactNode {
+export function renderSection(section: Section, index: number, landingLocations?: string[], programSlug?: string): React.ReactNode {
   const sectionType = (section as { type: string }).type;
   
   switch (sectionType) {
@@ -564,7 +564,7 @@ export function SectionRenderer({ sections, contentType, slug, locale, programSl
       return <LazySection key={index}><LeadForm data={section as Parameters<typeof LeadForm>[0]["data"]} programContext={programSlug} landingLocations={landingLocations} /></LazySection>;
     }
     
-    return renderSection(section, index, landingLocations);
+    return renderSection(section, index, landingLocations, programSlug);
   }, [programSlug, landingLocations]);
   
   const handleMoveUp = useCallback(async (index: number) => {
