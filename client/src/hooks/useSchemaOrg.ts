@@ -57,8 +57,12 @@ export function useSchemaOrg(schemaRef?: SchemaReference): void {
     }
     scriptRefs.current = [];
 
-    // Add new scripts
     if (schemas && schemas.length > 0) {
+      const hasSsrSchemas = document.querySelector('head script[type="application/ld+json"][data-ssr="true"]') !== null;
+      if (hasSsrSchemas) {
+        return;
+      }
+
       for (const schema of schemas) {
         const script = document.createElement("script");
         script.type = "application/ld+json";
