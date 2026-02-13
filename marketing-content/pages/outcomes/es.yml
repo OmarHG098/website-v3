@@ -21,9 +21,9 @@ sections:
     image:
       src: /attached_assets/outcomes_1765562850573.png
       alt: Gráfico de crecimiento de resultados de estudiantes
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
     marginY:
       desktop: none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
     paddingY:
       desktop: lg none
   - type: vertical_bars_cards
