@@ -2,6 +2,9 @@ slug: alianzas
 template: default
 title: Aliados de 4Geeks Academy
 meta:
+  robots: index, follow
+  priority: 0.8
+  change_frequency: weekly
   page_title: Aliados de 4Geeks Academy | 4Geeks Academy
   description: socios - Aprende más sobre este tema en 4Geeks Academy.
   redirects:
