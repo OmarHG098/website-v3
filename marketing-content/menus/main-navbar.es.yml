@@ -74,7 +74,7 @@ navbar:
               - label: Egresados y Proyectos
                 href: /en/graduates-and-projects
               - label: Testimonios
-                href: /testimonials
+                href: /en/testimonials
               - label: Talento
                 href: https://www.notion.so/4geeksacademy/4Geeks-Talent-Hub-USA-ef91aba17f9c4964bf7972396d190bdf
     - label: LA ACADEMIA
@@ -95,7 +95,7 @@ navbar:
           - label: Quiénes somos
             href: /en/the-academy
           - label: Prensa
-            href: /press
+            href: /en/press
           - label: Blog
             href: /blog
     - label: CAMPUS

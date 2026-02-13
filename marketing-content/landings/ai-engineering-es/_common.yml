@@ -1,16 +1,25 @@
-# Common properties for AI Engineering Landing (Spanish)
-slug: "ai-engineering-es"
-title: "Programa de Ingeniería de IA"
-locale: "es"
-
+slug: ai-engineering-es
+title: Programa de Ingeniería de IA
+locale: es
 meta:
-  robots: "index, follow"
-  og_image: "/images/programs/ai-engineering-og.jpg"
+  robots: index, follow
+  og_image: /images/programs/ai-engineering-og.jpg
   priority: 0.9
-  change_frequency: "weekly"
-
+  change_frequency: weekly
 schema:
   include:
-    - "organization"
-    - "website"
-    - "courses:ai-engineering"
+    - organization
+    - website
+    - courses:ai-engineering
+locations:
+  - caracas-venezuela
+  - buenosaires-argentina
+  - costa-rica
+  - lapaz-bolivia
+  - lima-peru
+  - mexicocity-mexico
+  - montevideo-uruguay
+  - panamacity-panama
+  - quito-ecuador
+  - santiago-chile
+  - bogota-colombia

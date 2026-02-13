@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect, useCallback } from "react";
 import { cn } from "@/lib/utils";
 import { UniversalImage } from "@/components/UniversalImage";
 import { IconChevronLeft, IconChevronRight, IconBrandLinkedin } from "@tabler/icons-react";
@@ -10,6 +10,28 @@ interface ProfilesCarouselProps {
 }
 
 const PROFILES_PER_PAGE = 4;
+
+function useItemsPerPage(isRound: boolean) {
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+
+  useEffect(() => {
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 640) {
+        setItemsPerPage(isRound ? 1 : 2);
+      } else if (w < 1024) {
+        setItemsPerPage(3);
+      } else {
+        setItemsPerPage(4);
+      }
+    };
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, [isRound]);
+
+  return itemsPerPage;
+}
 
 function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: boolean }) {
   const imageElement = profile.image_id ? (
@@ -40,11 +62,11 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
         >
           {imageElement}
         </div>
-        <h3 className="text-lg font-semibold text-foreground text-center" data-testid="text-profile-name">
+        <h3 className="text-base md:text-lg font-semibold text-foreground text-center" data-testid="text-profile-name">
           {profile.name}
         </h3>
         {profile.role && (
-          <p className="text-center text-foreground mt-1 leading-tight" data-testid="text-profile-role">
+          <p className="text-center text-sm md:text-base text-foreground mt-1 leading-tight" data-testid="text-profile-role">
             {profile.role}
           </p>
         )}
@@ -74,17 +96,17 @@ function ProfileCardItem({ profile, isRound }: { profile: ProfileCard; isRound: 
       data-testid={`profile-card-${profile.name.toLowerCase().replace(/\s+/g, "-")}`}
     >
       <div
-        className="mb-4 overflow-hidden flex items-center justify-center w-full h-[250px] rounded-lg bg-muted"
+        className="mb-4 overflow-hidden flex items-center justify-center w-full h-[180px] md:h-[220px] lg:h-[250px] rounded-lg bg-muted"
         data-testid="profile-image-container"
       >
         {imageElement}
       </div>
 
-      <h3 className="text-xl font-semibold text-foreground" data-testid="text-profile-name">
+      <h3 className="text-lg md:text-xl font-semibold text-foreground" data-testid="text-profile-name">
         {profile.name}
       </h3>
       {profile.role && (
-        <p className="text-foreground mt-0.5" data-testid="text-profile-role">
+        <p className="text-sm md:text-base text-foreground mt-0.5" data-testid="text-profile-role">
           {profile.role}
         </p>
       )}
@@ -114,16 +136,23 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
   const { profiles, heading, description } = data;
   const isRound = data.image_round === true;
   const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = useItemsPerPage(isRound);
 
-  const totalPages = useMemo(() => Math.ceil(profiles.length / PROFILES_PER_PAGE), [profiles.length]);
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [itemsPerPage]);
+
+  const totalPages = useMemo(() => Math.ceil(profiles.length / itemsPerPage), [profiles.length, itemsPerPage]);
 
   const pages = useMemo(() => {
     const result: ProfileCard[][] = [];
-    for (let i = 0; i < profiles.length; i += PROFILES_PER_PAGE) {
-      result.push(profiles.slice(i, i + PROFILES_PER_PAGE));
+    for (let i = 0; i < profiles.length; i += itemsPerPage) {
+      result.push(profiles.slice(i, i + itemsPerPage));
     }
     return result;
-  }, [profiles]);
+  }, [profiles, itemsPerPage]);
+
+  const gridColsClass = itemsPerPage === 1 ? 'grid-cols-1' : itemsPerPage === 2 ? 'grid-cols-2' : itemsPerPage === 3 ? 'grid-cols-3' : 'grid-cols-4';
 
   const goTo = (page: number) => {
     if (page >= 0 && page < totalPages) setCurrentPage(page);
@@ -189,11 +218,11 @@ export function ProfilesCarousel({ data }: ProfilesCarouselProps) {
               {pages.map((page, pageIndex) => (
                 <div
                   key={pageIndex}
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 md:gap-6 w-full flex-shrink-0"
+                  className={`grid ${gridColsClass} gap-4 md:gap-6 w-full flex-shrink-0`}
                 >
                   {page.map((profile, i) => (
                     <ProfileCardItem
-                      key={pageIndex * PROFILES_PER_PAGE + i}
+                      key={pageIndex * itemsPerPage + i}
                       profile={profile}
                       isRound={isRound}
                     />

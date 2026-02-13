@@ -27,37 +27,37 @@ sections:
     description: Get unlimited 1:1 career support tailored to your goals, background, and experience for life. From resumes and interviews to navigating AI-driven hiring, we help you succeed in today’s tech job market.
     marquee:
       items:
-        - id: switchup-2025
-          alt: SwitchUp - Best Coding Bootcamps 2025
-          logo: /attached_assets/switchup_1765590146414.webp
+        - id: logo-google-developers
+          alt: Google Developers logo
+          logo: /attached_assets/google-developers_1764719904190.png
           logoHeight: 48px
-        - id: course-report-2024
-          alt: Course Report - Best Coding Bootcamp 2024
-          logo: /attached_assets/course-report_1765590146414.webp
+        - id: logo-uber
+          alt: Uber logo
+          logo: /attached_assets/uber_1764719999685.png
           logoHeight: 48px
-        - id: tech-hub
-          alt: South Florida Tech Hub
-          logo: /attached_assets/south-florida-tech-hub_1765548979070.jpeg
+        - id: logo-telefonica
+          alt: Telefonica logo
+          logo: /attached_assets/telefonica_1764719987250.png
           logoHeight: 48px
-        - id: ebootcamp
-          alt: eBootcamp Top
-          logo: /attached_assets/ebootcamp-top_1765549056325.png
+        - id: logo-twilio
+          alt: Twilio logo
+          logo: /attached_assets/twilio_1764719992371.png
           logoHeight: 48px
-        - id: premios-tecnologia
-          alt: Premios Tecnologia Siglo XXI
-          logo: /attached_assets/premios_tecnologia_sigloxxi_1765549146476.png
+        - id: logo-evernote
+          alt: Evernote logo
+          logo: /attached_assets/evernote_1764719981901.png
           logoHeight: 48px
         - id: newsweek
           alt: Newsweek
           logo: /attached_assets/newsweek_1764709608255.webp
           logoHeight: 48px
-        - id: reviews-coursereport
-          alt: 4.9 on Course Report Reviews
-          logo: /attached_assets/reviews_1765549549051.png
+        - id: logo-microsoft
+          alt: Microsoft logo
+          logo: /attached_assets/microsoft_1764719829995.png
           logoHeight: 48px
-        - id: excelencia-educativa
-          alt: Excelencia Educativa - Institutional Quality
-          logo: /attached_assets/exelencia-educativa-es_1765549347699.png
+        - id: logo-ebay
+          alt: eBay logo
+          logo: /attached_assets/ebay_1764719967118.png
           logoHeight: 48px
       speed: 40
       gradient: true
@@ -67,23 +67,125 @@ sections:
       ratio: "2:2"
     paddingY:
       desktop: none
-  - type: bullet_tabs_showcase
-    version: "1.0"
-    heading: Unlimited Career Support— Built for an AI-Driven Job Market
-    subheading: Geekforce is built into every 4Geeks program to make sure you don’t just learn tech, but launch a successful career.
-    tabs:
-      - label: Personalized Guidance
-        description: Personalized career guidance aligned with your goals, background, and target roles
-        image_id: geekforce_rigobot_ai
-      - label: Unlimited Mentorship
-        description: Expert support to navigate AI-driven hiring processes and a changing job market
-        image_id: placeholder_career_guidance
-      - label: Proven Strategies
-        description: Continued mentorship to stay relevant as your career and tech roles evolve
-        image_id: geekforce_linkedin_profile
-    image_position: right
     marginY:
-      desktop: xl none
+      desktop: none sm
+  - type: career_support_explain
+    version: v1.0
+    heading: GeekForce Career Support
+    description: Our career support program is designed to help you land your first job in tech
+    background: hsl(var(--secondary))
+    tabs:
+      - tab_label: Job-Ready, Faster
+        layout: three_columns
+        col1_subtitle: Build a recruiter-ready profile, smarter.
+        col1_description: |-
+          Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.
+          We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        col1_tagline: We'll help you create tailored job search materials
+        col1_boxes:
+          - icon: IconBrandLinkedin
+            text: LinkedIn
+          - icon: IconFileText
+            text: Resume
+          - icon: IconBriefcase
+            text: Portfolio
+          - icon: IconMail
+            text: Cover letter
+        col2_heading: Professional Placement & Coaching
+        col2_bullets:
+          - icon: IconRobot
+            text: 24/7 feedback from RigoBot to audit your LinkedIn and resume
+          - icon: IconUsers
+            text: 1-on-1 career coaching and strategy sessions
+          - icon: IconMicrophone
+            text: Mock interviews and technical interview prep
+        col3_image_id: 4geeks_member
+        col3_object_fit: cover
+        col3_object_position: center
+      - tab_label: Real Hiring Access
+        layout: two_column_cards
+        title: Access the hidden job market.
+        left_text: We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        left_image_id: career_team_women
+        left_image_object_fit: cover
+        left_image_object_position: center
+        left_stat:
+          value: 250+
+          label: companies in 4Geeks employer network
+        right_bullets:
+          - icon: IconUserPlus
+            text: Direct referrals to hiring partners
+          - icon: IconTargetArrow
+            text: Curated job matches based on your profile
+          - icon: IconMessageChatbot
+            text: Networking and recruiter conversation coaching
+        right_logos:
+          - image_id: logo_google
+            alt: Google
+          - image_id: logo_meta
+            alt: Meta
+          - image_id: logo_microsoft
+            alt: Microsoft
+          - image_id: logo_uber
+            alt: Uber
+          - image_id: logo_ebay
+            alt: eBay
+          - image_id: logo_kpmg
+            alt: KPMG
+      - tab_label: Proof That Converts
+        layout: text_and_image
+        title: Projects that demonstrate real skill.
+        left_description: |-
+          Visibility gets attention. Proof closes the gap.
+          Graduate with a portfolio that shows what you can actually build. From hands-on projects to a capstone that solves real business problems, your work becomes clear evidence of your ability.
+        left_bullets:
+          - icon: IconBriefcase
+            text: Industry-aligned, real-world projects
+          - icon: IconPresentation
+            text: A showcase-ready capstone project
+          - icon: IconBrandGithub
+            text: GitHub optimization and professional code review
+        right_image_id: geekforce_valentina_ancieta
+        right_image_object_fit: cover
+        right_image_object_position: center
+      - tab_label: Your Best-Fit Role
+        layout: text_with_testimonials_carousel
+        title: Turn your background into an advantage.
+        left_description: |-
+          Once offers are on the table, we help you choose and negotiate with confidence.
+          Your previous experience matters. We map transferable skills, focus your job search on the right roles, and support you through salary negotiation and long-term growth.
+        left_bullets:
+          - icon: IconTransfer
+            text: Transferable skills mapping
+          - icon: IconMap
+            text: Personalized career roadmap
+          - icon: IconCoin
+            text: Salary negotiation coaching
+          - icon: IconUsers
+            text: Ongoing alumni career support
+        testimonials:
+          - image_id: mailinh_tran
+            image_object_fit: cover
+            image_object_position: center
+            contributor_logos:
+              - image_id: clark_university
+            description: MaiLinh Tran is an entrepreneur with a passion for technology, now focusing on the dev side of her endeavor.
+            achievement: She has launched her startup, is capable of hiring new tech talent, and coordinates a dev team!
+          - image_id: martin_coimbra
+            image_object_fit: cover
+            image_object_position: center top
+            contributor_logos:
+              - image_id: logo_utec
+            description: Martín joined the first program we launched together with UTEC and IDB. He landed a better-paying job, a career he is passionate about, and a whole new professional life.
+            achievement: He achieved a 100% salary increase.
+          - image_id: melanie_galaretto
+            image_object_fit: cover
+            image_object_position: center
+            contributor_logos:
+              - image_id: logo_utec
+              - image_id: bid_logo
+            description: Melanie is a young professional who dreamed of achieving the life she now has. She is a resourceful and committed software developer working at a software company in her home country.
+            achievement: She achieved a 100% salary increase.
   - type: numbered_steps
     version: "1.0"
     variant: bubbleText
@@ -133,6 +235,8 @@ sections:
     padding_right: "6"
     paddingY:
       desktop: md lg
+    marginY:
+      desktop: none sm
   - type: whos_hiring
     variant: carousel
     title: Trusted by Leading Companies
@@ -164,7 +268,7 @@ sections:
       - src: /attached_assets/google-developers_1764719904190.png
         alt: Google Developers
     paddingY:
-      desktop: md none
+      desktop: sm none
   - type: graduates_stats
     heading: Career Placement
     subheading: We turn your education into employment. See the real-world impact of our coaching.

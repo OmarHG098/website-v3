@@ -5,6 +5,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "@/components/ui/carousel";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 function parseLogoHeight(value?: string): number | undefined {
   if (!value) return undefined;
@@ -38,6 +39,7 @@ export function AwardBadges({
   className = "",
   showBorder = false,
 }: AwardBadgesProps) {
+  const handleLinkClick = useInternalNav();
   if (!items || items.length === 0) return null;
 
   const SimpleCard = ({ item, index }: { item: AwardBadgeItem; index: number }) => (
@@ -96,6 +98,7 @@ export function AwardBadges({
         <a
           href={item.link}
           className="text-sm text-primary font-medium hover:underline"
+          onClick={handleLinkClick}
           data-testid={`link-${item.id}`}
         >
           {item.linkText || "Learn more"}

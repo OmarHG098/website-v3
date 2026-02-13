@@ -1,7 +1,8 @@
 import { useState, useEffect, lazy, Suspense, useMemo, useCallback, useRef } from "react";
 import { subscribeToContentUpdates } from "@/lib/contentEvents";
 import { useTranslation } from "react-i18next";
-import { useLocation, Link } from "wouter";
+import { useLocation } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { useSession } from "@/contexts/SessionContext";
 import { buildContentUrl, getFolderFromSlug, type ContentType } from "@shared/slugMappings";
 import {
@@ -60,6 +61,7 @@ import {
   IconDotsVertical,
   IconDownload,
   IconPhoto,
+  IconBrowserPlus,
 } from "@tabler/icons-react";
 import { useEditModeOptional } from "@/contexts/EditModeContext";
 import { useSyncOptional } from "@/contexts/SyncContext";
@@ -294,7 +296,7 @@ const getPersistedMenuView = (): MenuView => {
   return "main";
 };
 
-interface MenuItem {
+interface MenuFileItem {
   name: string;
   file: string;
 }
@@ -314,7 +316,7 @@ function MenusView() {
   const [expandedMenu, setExpandedMenu] = useState<string | null>(null);
   const [, navigate] = useLocation();
   
-  const { data: menusData, isLoading } = useQuery<{ menus: MenuItem[] }>({
+  const { data: menusData, isLoading } = useQuery<{ menus: MenuFileItem[] }>({
     queryKey: ["/api/menus"],
   });
   
@@ -440,7 +442,89 @@ function EditModeToggle() {
   );
 }
 
+interface MenuItemProps {
+  icon: typeof IconComponents;
+  label: string;
+  onClick?: () => void;
+  href?: string;
+  testId: string;
+  rightContent?: React.ReactNode;
+  indicator?: "chevron" | "arrow" | "none";
+  disabled?: boolean;
+  className?: string;
+}
+
+function MenuItem({ icon: Icon, label, onClick, href, testId, rightContent, indicator = "none", disabled, className }: MenuItemProps) {
+  const hasRightSide = rightContent || indicator !== "none";
+  const baseClass = disabled
+    ? "flex items-center justify-between w-full px-3 py-2 rounded-md text-sm text-muted-foreground cursor-default"
+    : "flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate";
+  const combinedClass = className ? `${baseClass} ${className}` : baseClass;
+
+  const content = (
+    <>
+      <div className="flex items-center gap-3">
+        <Icon className="h-4 w-4 text-muted-foreground" />
+        <span>{label}</span>
+      </div>
+      {hasRightSide && (
+        <div className="flex items-center gap-1.5">
+          {rightContent}
+          {indicator === "chevron" && <IconChevronRight className="h-4 w-4 text-muted-foreground" />}
+          {indicator === "arrow" && <IconArrowRight className="h-4 w-4 text-muted-foreground" />}
+        </div>
+      )}
+    </>
+  );
+
+  if (disabled) {
+    return <div className={combinedClass} data-testid={testId}>{content}</div>;
+  }
+  if (href) {
+    return <a href={href} className={combinedClass} data-testid={testId}>{content}</a>;
+  }
+  if (onClick) {
+    return <button onClick={onClick} className={combinedClass} data-testid={testId}>{content}</button>;
+  }
+  return <div className={combinedClass} data-testid={testId}>{content}</div>;
+}
+
+interface ExpandableMenuItemProps {
+  icon: typeof IconComponents;
+  label: string;
+  expanded: boolean;
+  onToggle: () => void;
+  testId: string;
+  actions?: React.ReactNode;
+  children: React.ReactNode;
+}
+
+function ExpandableMenuItem({ icon: Icon, label, expanded, onToggle, testId, actions, children }: ExpandableMenuItemProps) {
+  return (
+    <div className="space-y-0.5">
+      <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
+        <button
+          onClick={onToggle}
+          className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
+          data-testid={testId}
+        >
+          <Icon className="h-4 w-4 text-muted-foreground" />
+          <span>{label}</span>
+          <IconChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${expanded ? "rotate-90" : ""}`} />
+        </button>
+        {actions}
+      </div>
+      {expanded && (
+        <div className="ml-2 pl-1 space-y-0.5 rounded-md py-1" style={{ backgroundColor: "hsl(var(--muted-foreground) / 0.1)" }}>
+          {children}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function DebugBubble() {
+  const handleLinkClick = useInternalNav();
   // Check if we should hide the debug bubble (via URL param or in preview-frame route)
   const shouldHide = typeof window !== "undefined" && (
     new URLSearchParams(window.location.search).get("hide_debug") === "true" ||
@@ -594,6 +678,7 @@ export function DebugBubble() {
   // Initialize menu view from sessionStorage (persisted across refreshes)
   const [menuView, setMenuViewState] = useState<MenuView>(getPersistedMenuView);
   const [sitemapExpanded, setSitemapExpanded] = useState(false);
+  const [componentsExpanded, setComponentsExpanded] = useState(false);
 
   // Wrapper to persist menu view changes to sessionStorage
   const setMenuView = (view: MenuView) => {
@@ -1886,17 +1971,16 @@ export function DebugBubble() {
               {menuView === "main" ? (
               <>
               <div className="p-2 space-y-1">
-                <div className="space-y-0.5">
-                  <div className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm">
-                    <button
-                      onClick={() => setSitemapExpanded(!sitemapExpanded)}
-                      className="flex items-center gap-3 flex-1 hover-elevate rounded-md -ml-1 pl-1 py-0.5"
-                      data-testid="button-sitemap-toggle"
-                    >
-                      <IconMap className="h-4 w-4 text-muted-foreground" />
-                      <span>Sitemap</span>
-                      <IconChevronRight className={`h-3.5 w-3.5 text-muted-foreground transition-transform ${sitemapExpanded ? "rotate-90" : ""}`} />
-                    </button>
+                <ExpandableMenuItem
+                  icon={IconMap}
+                  label="Sitemap"
+                  expanded={sitemapExpanded}
+                  onToggle={() => {
+                    setSitemapExpanded(!sitemapExpanded);
+                    if (!sitemapExpanded) setComponentsExpanded(false);
+                  }}
+                  testId="button-sitemap-toggle"
+                  actions={
                     <button
                       onClick={clearSitemapCache}
                       disabled={cacheClearStatus === "loading"}
@@ -1912,102 +1996,83 @@ export function DebugBubble() {
                         <IconRefresh className="h-3.5 w-3.5" />
                       )}
                     </button>
-                  </div>
-                  {sitemapExpanded && (
-                    <div className="pl-2 space-y-0.5">
-                      <button
-                        onClick={() => setMenuView("sitemap")}
-                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                        data-testid="button-sitemap-all-urls"
-                      >
-                        <div className="flex items-center gap-3">
-                          <IconMap className="h-4 w-4 text-muted-foreground" />
-                          <span>All URLs</span>
-                        </div>
-                        <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                      </button>
-                      <a
-                        href="/private/redirects"
-                        className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                        data-testid="link-redirects-page"
-                      >
-                        <div className="flex items-center gap-3">
-                          <IconRoute className="h-4 w-4 text-muted-foreground" />
-                          <span>Redirects</span>
-                        </div>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>
-                          <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                        </div>
-                      </a>
-                    </div>
-                  )}
-                </div>
-                
-                <button
-                  onClick={() => setMenuView("components")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-components-menu"
+                  }
                 >
-                  <div className="flex items-center gap-3">
-                    <IconComponents className="h-4 w-4 text-muted-foreground" />
-                    <span>Components</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
+                  <MenuItem
+                    icon={IconMap}
+                    label="All URLs"
+                    onClick={() => setMenuView("sitemap")}
+                    indicator="chevron"
+                    testId="button-sitemap-all-urls"
+                  />
+                  <MenuItem
+                    icon={IconRoute}
+                    label="Redirects"
+                    href="/private/redirects"
+                    indicator="arrow"
+                    testId="link-redirects-page"
+                    rightContent={<span className="text-xs text-muted-foreground">{redirectsList.length || '...'}</span>}
+                  />
+                </ExpandableMenuItem>
                 
-                <button
-                  onClick={() => setMenuView("menus")}
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="button-menus-menu"
+                <ExpandableMenuItem
+                  icon={IconComponents}
+                  label="Components"
+                  expanded={componentsExpanded}
+                  onToggle={() => {
+                    setComponentsExpanded(!componentsExpanded);
+                    if (!componentsExpanded) setSitemapExpanded(false);
+                  }}
+                  testId="button-components-toggle"
                 >
-                  <div className="flex items-center gap-3">
-                    <IconMenu2 className="h-4 w-4 text-muted-foreground" />
-                    <span>Menus</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </button>
+                  <MenuItem
+                    icon={IconComponents}
+                    label="Component Gallery"
+                    onClick={() => setMenuView("components")}
+                    indicator="chevron"
+                    testId="button-gallery-registry"
+                  />
+                  <MenuItem
+                    icon={IconMenu2}
+                    label="Menus"
+                    onClick={() => setMenuView("menus")}
+                    indicator="chevron"
+                    testId="button-menus-menu"
+                  />
+                  <MenuItem
+                    icon={IconBrowserPlus}
+                    label="Modals"
+                    disabled
+                    testId="placeholder-modals-menu"
+                    rightContent={<span className="text-xs text-muted-foreground">Soon</span>}
+                  />
+                </ExpandableMenuItem>
                 
-                <a
+                <MenuItem
+                  icon={IconPhoto}
+                  label="Media Gallery"
                   href="/private/media-gallery"
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="link-media-gallery"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconPhoto className="h-4 w-4 text-muted-foreground" />
-                    <span>Media Gallery</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </a>
+                  indicator="arrow"
+                  testId="link-media-gallery"
+                />
 
-                <a
+                <MenuItem
+                  icon={IconStethoscope}
+                  label="Diagnostics"
                   href="/private/diagnostics"
-                  className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                  data-testid="link-diagnostics"
-                >
-                  <div className="flex items-center gap-3">
-                    <IconStethoscope className="h-4 w-4 text-muted-foreground" />
-                    <span>Diagnostics</span>
-                  </div>
-                  <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                </a>
+                  indicator="arrow"
+                  testId="link-diagnostics"
+                />
                 
-                {/* Experiments menu item - only shown on content pages */}
                 {contentInfo.type && contentInfo.slug && (
-                  <button
+                  <MenuItem
+                    icon={IconFlask}
+                    label="Experiments"
                     onClick={() => setMenuView("experiments")}
-                    className="flex items-center justify-between w-full px-3 py-2 rounded-md text-sm hover-elevate"
-                    data-testid="button-experiments-menu"
-                  >
-                    <div className="flex items-center gap-3">
-                      <IconFlask className="h-4 w-4 text-muted-foreground" />
-                      <span>Experiments</span>
-                    </div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-xs text-muted-foreground">{contentInfo.label}</span>
-                      <IconChevronRight className="h-4 w-4 text-muted-foreground" />
-                    </div>
-                  </button>
+                    indicator="chevron"
+                    testId="button-experiments-menu"
+                    rightContent={<span className="text-xs text-muted-foreground">{contentInfo.label}</span>}
+                  />
                 )}
                 
                 {/* GitHub sync status */}
@@ -2206,7 +2271,7 @@ export function DebugBubble() {
                       </div>
                     ) : (
                       <div>
-                        <h3 className="font-semibold text-sm">Components</h3>
+                        <h3 className="font-semibold text-sm">Gallery Registry</h3>
                         <p className="text-xs text-muted-foreground">{filteredComponents.length} components</p>
                       </div>
                     )}
@@ -2325,9 +2390,10 @@ export function DebugBubble() {
                       const totalExposures = Object.values(experiment.stats || {}).reduce((a, b) => a + b, 0);
                       
                       return (
-                        <Link
+                        <a
                           key={experiment.slug}
                           href={`/private/${contentInfo.type}/${contentInfo.slug}/experiment/${experiment.slug}`}
+                          onClick={handleLinkClick}
                           className="flex flex-col w-full px-3 py-2.5 rounded-md text-sm hover-elevate cursor-pointer text-left"
                           data-testid={`button-experiment-${experiment.slug}`}
                         >
@@ -2351,7 +2417,7 @@ export function DebugBubble() {
                               <span>max {experiment.max_visitors}</span>
                             )}
                           </div>
-                        </Link>
+                        </a>
                       );
                     })
                   )}
@@ -3141,7 +3207,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Pull Conflict Modal */}
       <Dialog open={pullConflictModalOpen} onOpenChange={setPullConflictModalOpen}>
         <DialogContent className="sm:max-w-md">
@@ -3214,7 +3279,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Per-file Download Confirmation Modal */}
       <Dialog open={confirmPullFile !== null} onOpenChange={(open) => !open && setConfirmPullFile(null)}>
         <DialogContent className="sm:max-w-md">
@@ -3282,7 +3346,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-      
       {/* Delete Page Confirmation Modal */}
       <Dialog open={deletePageModalOpen} onOpenChange={(open) => {
         setDeletePageModalOpen(open);
@@ -3333,7 +3396,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       {/* Create Content Modal */}
       <Dialog open={createContentModalOpen} onOpenChange={(open) => {
         setCreateContentModalOpen(open);
@@ -3899,7 +3961,6 @@ export function DebugBubble() {
           </DialogFooter>
         </DialogContent>
       </Dialog>
-
       {/* SEO Editor Modal */}
       <Dialog open={seoModalOpen} onOpenChange={setSeoModalOpen}>
         <DialogContent className="sm:max-w-2xl max-h-[85vh] overflow-y-auto overflow-x-hidden">

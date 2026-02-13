@@ -402,7 +402,7 @@ export function renderSection(section: Section, index: number, landingLocations?
     case "pricing":
       return <LazySection key={index}><PricingSection data={section as Parameters<typeof PricingSection>[0]["data"]} /></LazySection>;
     case "faq":
-      return <LazySection key={index}><FAQSection data={section as Parameters<typeof FAQSection>[0]["data"]} /></LazySection>;
+      return <LazySection key={index}><FAQSection data={section as Parameters<typeof FAQSection>[0]["data"]} programSlug={programSlug} /></LazySection>;
     case "testimonials":
       return <LazySection key={index}><TestimonialsSection data={section as Parameters<typeof TestimonialsSection>[0]["data"]} /></LazySection>;
     case "whos_hiring":

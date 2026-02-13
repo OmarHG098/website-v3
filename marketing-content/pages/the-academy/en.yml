@@ -17,9 +17,9 @@ sections:
   - type: hero
     version: "1.0"
     variant: singleColumn
-    title: Empowering Talent for the AI Era
-    subtitle: 4Geeks Academy is a global tech academy with 8 campuses across the U.S., Latin America, and Europe, training the next generation of tech professionals in AI-powered Full-Stack Development, Data Science & ML, and Cybersecurity.
-    badge: Bootcamps that launch careers
+    title: Building Careers in the AI Era
+    subtitle: 4Geeks Academy is an international coding bootcamp with 8 campuses across the U.S., Latin America, and Europe. We train students in AI Engineering, Data Science & Machine Learning, and Cybersecurity — with a clear path to getting hired.
+    badge: 10+ years launching tech careers
     image_id: academy_header_coding
     image_full_width: false
     marginY:
@@ -32,13 +32,13 @@ sections:
     primary_width: narrow
     primary:
       heading: Our Mission & Approach
-      description: "Since 2015, 4Geeks Academy has been on a mission to expand access to tech careers. We train students to thrive in the AI-driven workforce through Full-Stack Development with AI, Data Science & ML, and Cybersecurity bootcamps. Tech careers transform lives, and our approach makes them accessible: hyperpersonalized, human-centered learning that combines hands-on training, 1:1 mentorship, community, and AI tools, giving students the guidance, skills, and confidence to launch lasting tech careers."
-      badge: Results-Backed Promise
+      description: "Since 2015, 4Geeks Academy has helped thousands of students transition into tech careers. Our model combines hands-on, project-based training with unlimited 1:1 mentorship, AI-powered learning tools, and structured career support. The goal is simple: give students the technical depth, practical experience, and job-search strategy needed to get hired — and keep growing."
+      badge: Results-Backed Model
     secondary:
       benefits:
-        - text: Our curriculum is industry-aligned and AI-ready
-        - text: Our mentorship is unlimited and personalized
-        - text: Our career support never expires
+        - text: Industry-aligned, AI-integrated curriculum
+        - text: Unlimited personalized mentorship
+        - text: Lifetime career support
       image_id: what_is_4geeks
       image_object_fit: cover
       image_object_position: 60% 100%
@@ -75,11 +75,11 @@ sections:
       - value: "8"
         label: Campuses
       - value: ~84%
-        label: Hired
+        label: Hiring Rate
       - value: "4.9"
-        label: Rating
+        label: Avg Rating
     marginY:
-      desktop: md sm
+      desktop: lg
     paddingY:
       desktop: none sm
   - type: two_column
@@ -149,8 +149,10 @@ sections:
       desktop: lg none
   - type: whos_hiring
     variant: carousel
-    title: Trusted by the world's most innovative companies
-    description: "Top companies hire 4Geeks graduates, with 84% landing jobs within 6 months of graduation thanks to their skills and our personalized career support. Our grads don’t just get hired—they launch successful careers and consistently earn recognition for their technical expertise and professionalism: I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires ended up becoming a team leader.' - CodeNinjas."
+    title: Trusted by Hiring Teams
+    description: |-
+      4Geeks graduates are hired by leading tech companies across the U.S., Latin America, and Europe. Employers consistently highlight their technical depth, practical experience, and ability to contribute from day one.
+      'I’m continually impressed by the depth of knowledge possessed by 4Geeks students. One of my hires went on to become a team leader.' - CodeNinjas
     logos:
       - src: /attached_assets/microsoft_1764719829995.png
         alt: Microsoft
@@ -178,3 +180,44 @@ sections:
         alt: Jooble
     marginY:
       desktop: lg none
+  - type: profiles_carousel
+    version: v1.0
+    heading: Meet the Geeks
+    description: Our team is dedicated, highly skilled, and always ready to support you on your journey into tech. They provide all the guidance and encouragement you need to launch a successful new career.
+    image_round: false
+    profiles:
+      - image_id: alejandro_sanchez
+        name: Alejandro Sánchez
+        role: Co-Founder & Technology Director
+        linkedin_url: https://www.linkedin.com/in/alesanchezr/
+      - image_id: marcelo_ricigliano
+        name: Marcelo Ricigliano
+        role: Co-founder & CEO
+        linkedin_url: https://www.linkedin.com/in/marcelo-ricigliano-32440379/
+      - image_id: alissalandra
+        name: Alissa Landra
+        role: Campus & Growth Manager USA
+        linkedin_url: https://www.linkedin.com/in/alissalandra/
+      - image_id: victor_gomez
+        name: Victor Manuel Gómez Pérez
+        role: Regional Manager Europe
+        linkedin_url: https://www.linkedin.com/in/victormgomezp/
+      - image_id: pablo_bullor
+        name: Pablo Bullor
+        role: Program Manager LATAM
+        linkedin_url: https://www.linkedin.com/in/pablobullor/
+      - image_id: laura
+        name: Laura Magallanes
+        role: Program Manager USA
+        linkedin_url: https://www.linkedin.com/in/laura-magallanes-dev/
+      - image_id: valentina_ancieta
+        name: Valentina Ancieta
+        role: Workforce Development Manager USA & LATAM
+        linkedin_url: https://www.linkedin.com/in/valentinaancieta/
+      - image_id: ariana_sanchez
+        name: Ariana Sánchez
+        role: Culture & Talent Leader
+        linkedin_url: https://www.linkedin.com/in/ariana-sánchez-7720aa78/
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. All rights reserved.

@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { IconArrowRight, IconCode, IconLoader2 } from "@tabler/icons-react";
 import { useTranslation } from "react-i18next";
-import { Link } from "wouter";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 type ProgramsListSectionData = z.infer<typeof programsListSectionSchema>;
 
@@ -19,6 +19,7 @@ interface Program {
 }
 
 export function ProgramsListSection({ data }: ProgramsListSectionProps) {
+  const handleLinkClick = useInternalNav();
   const { i18n } = useTranslation();
   const locale = i18n.language;
   const locationFilter = data.filter_by_location;
@@ -87,7 +88,7 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
                   >
                     {program.title}
                   </h3>
-                  <Link href={programUrl(program.slug)}>
+                  <a href={programUrl(program.slug)} onClick={handleLinkClick}>
                     <Button 
                       variant="outline" 
                       className="w-full"
@@ -96,7 +97,7 @@ export function ProgramsListSection({ data }: ProgramsListSectionProps) {
                       {locale === "es" ? "Ver Programa" : "Learn More"}
                       <IconArrowRight className="w-4 h-4 ml-2" />
                     </Button>
-                  </Link>
+                  </a>
                 </CardContent>
               </Card>
             ))}

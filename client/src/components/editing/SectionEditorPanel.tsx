@@ -1080,24 +1080,11 @@ export function SectionEditorPanel({
             )}
             {/* FAQ related features picker */}
             {sectionType === "faq" && (
-              <>
-                <div 
-                  className="p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-lg flex items-start gap-2"
-                  data-testid="alert-faq-edit-warning"
-                >
-                  <IconAlertTriangle className="h-4 w-4 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-amber-800 dark:text-amber-200">
-                    {locale === "es" 
-                      ? "Los cambios a las FAQs afectarán todas las páginas del sitio que muestran estas preguntas."
-                      : "Changes to FAQs here will affect all pages across the site that display these questions."}
-                  </p>
-                </div>
-                <RelatedFeaturesPicker
-                  value={(parsedSection?.related_features as string[]) || []}
-                  onChange={(value) => updateArrayProperty("related_features", value)}
-                  locale={locale}
-                />
-              </>
+              <RelatedFeaturesPicker
+                value={(parsedSection?.related_features as string[]) || []}
+                onChange={(value) => updateArrayProperty("related_features", value)}
+                locale={locale}
+              />
             )}
             {/* Testimonials Grid related features picker */}
             {sectionType === "testimonials_grid" && (
@@ -1391,7 +1378,9 @@ export function SectionEditorPanel({
                       if (onPreviewChange) onPreviewChange(parsed as Section);
                     } catch (e) { console.error("Error updating nested field:", e); }
                   } else {
-                    updateArrayItemField(arrPath, idx, fieldName, value);
+                    if (typeof value === "string" || typeof value === "number") {
+                      updateArrayItemField(arrPath, idx, fieldName, value);
+                    }
                   }
                 };
 
@@ -1778,6 +1767,32 @@ export function SectionEditorPanel({
                                         const label = fieldKey.replace(/_/g, " ").replace(/\b\w/g, c => c.toUpperCase());
                                         const configuredField = fields.find(f => f.leafField === fieldKey);
 
+                                        if (configuredField?.editorType === "icon-picker") {
+                                          return (
+                                            <div key={fieldKey} className="space-y-1">
+                                              <Label className="text-xs text-muted-foreground">{label}</Label>
+                                              <button
+                                                type="button"
+                                                onClick={() => {
+                                                  setIconPickerTarget({
+                                                    arrayField: resolvedArrPath,
+                                                    index: nestedIdx,
+                                                    field: fieldKey,
+                                                    label: `${itemLabel} > ${label}`,
+                                                    currentIcon: currentValue,
+                                                  });
+                                                  setIconPickerOpen(true);
+                                                }}
+                                                className="flex items-center justify-center w-10 h-10 rounded border bg-muted/30 hover:bg-muted transition-colors"
+                                                data-testid={`props-nested-icon-${fieldKey}-${nestedIdx}`}
+                                                title={`${label}: ${currentValue || "no icon"}`}
+                                              >
+                                                {renderIconByName(currentValue)}
+                                              </button>
+                                            </div>
+                                          );
+                                        }
+
                                         if (configuredField?.editorType === "image-picker") {
                                           const displaySrc = imageRegistry?.images?.[currentValue]?.src || currentValue;
                                           return (
@@ -2113,7 +2128,7 @@ export function SectionEditorPanel({
                   const arraySegments = segments.slice(0, -1);
                   
                   const getNestedLabel = (item: Record<string, unknown>) =>
-                    (item.title as string) || (item.label as string) || (item.name as string) || (item.text as string) || "";
+                    (item.tab_label as string) || (item.title as string) || (item.label as string) || (item.name as string) || (item.text as string) || "";
                   
                   type NestedItem = { parentPath: string[]; parentIndices: number[]; parentLabel: string; item: Record<string, unknown>; };
                   
@@ -2478,6 +2493,7 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =
+                            (item.tab_label as string) ||
                             (item.title as string) ||
                             (item.label as string) ||
                             (item.name as string) ||
@@ -2511,7 +2527,6 @@ export function SectionEditorPanel({
                 }
 
                 if (editorType === "color-picker") {
-                  // Use the variant from config, defaulting to "accent"
                   const colorType = (variant as ColorPickerVariant) || "accent";
 
                   return (
@@ -2524,6 +2539,7 @@ export function SectionEditorPanel({
                           const currentValue =
                             (item[itemField] as string) || "";
                           const itemLabel =
+                            (item.tab_label as string) ||
                             (item.title as string) ||
                             (item.label as string) ||
                             (item.name as string) ||

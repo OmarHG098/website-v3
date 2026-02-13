@@ -66,7 +66,7 @@ export interface ContentFile {
 
 export interface RedirectEntry {
   from: string;
-  to: string;
+  to: string | Record<string, string>;
   source: ContentFile;
 }
 

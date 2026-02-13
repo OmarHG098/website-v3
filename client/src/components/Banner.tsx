@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { BannerSection as BannerSectionType } from "@shared/schema";
 import { Button } from "@/components/ui/button";
+import { useInternalNav } from "@/hooks/useInternalNav";
 
 import rigo_avatar_1763181725290 from "@assets/rigo-avatar_1763181725290.png";
 
@@ -21,6 +22,7 @@ interface BannerProps {
 export function Banner({ data }: BannerProps) {
   const { logo, avatars, title, description, cta, background = "gradient" } = data;
   const [isExpanded, setIsExpanded] = useState(false);
+  const handleLinkClick = useInternalNav();
 
   const getBackgroundStyle = () => {
     switch (background) {
@@ -169,7 +171,7 @@ export function Banner({ data }: BannerProps) {
               className={cta.variant === "outline" && isGradient ? "border-white text-white hover:bg-white/10" : ""}
               data-testid="button-banner-cta"
             >
-              <a href={cta.url}>{cta.text}</a>
+              <a href={cta.url} onClick={handleLinkClick}>{cta.text}</a>
             </Button>
           )}
         </div>

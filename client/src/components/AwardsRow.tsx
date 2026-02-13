@@ -1,5 +1,5 @@
-import { Link } from "wouter";
 import { IconArrowRight } from "@tabler/icons-react";
+import { useInternalNav } from "@/hooks/useInternalNav";
 import { AwardBadges, type AwardBadgeItem } from "@/components/AwardBadges";
 
 import forbesLogo from "@assets/forbes-logo-award_1764709625651.webp";
@@ -41,6 +41,7 @@ const defaultBadges: AwardBadgeData[] = [
 ];
 
 export default function AwardsRow({ data }: AwardsRowProps) {
+  const handleLinkClick = useInternalNav();
   const badges = data.badges && data.badges.length > 0 ? data.badges : defaultBadges;
   
   const awardItems: AwardBadgeItem[] = badges.map((badge, index) => ({
@@ -80,14 +81,15 @@ export default function AwardsRow({ data }: AwardsRowProps) {
 
         {data.link_url && (
           <div className="text-center mt-8">
-            <Link 
+            <a 
               href={data.link_url}
               className="inline-flex items-center gap-2 text-primary font-medium hover:underline"
+              onClick={handleLinkClick}
               data-testid="link-awards-see-more"
             >
               {data.link_text || "See more"}
               <IconArrowRight className="w-4 h-4" />
-            </Link>
+            </a>
           </div>
         )}
       </div>

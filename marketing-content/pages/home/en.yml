@@ -90,6 +90,8 @@ sections:
     rounded: true
     paddingY:
       desktop: md none
+    marginY:
+      desktop: none lg
   - type: two_column_accordion_card
     variant: image_background
     version: "1.0"
@@ -108,40 +110,137 @@ sections:
     reverse: true
     marginY:
       desktop: none lg
-  - type: features_grid
-    version: "1.0"
-    variant: highlight
-    title: Key Features
-    subtitle: Discover what makes us different
-    items:
-      - icon: Star
-        value: 6000+
-        title: Graduates
+  - type: two_column
+    variant: benefitCards
+    stacked_header: true
+    background: hsl(var(--muted))
+    right:
+      image: /images/hyperpersonalized-learning-video.jpg
+      image_alt: Video thumbnail explaining hyperpersonalized learning at 4Geeks
+    title: Welcome to Hyperpersonalized Learning
+    subtitle: "Progress like never before. Education has been one-size-fits-all for too long. At 4Geeks, we built a better way to learn: one that adapts to you."
+    benefit_items:
+      - icon: Sparkles
+        title: AI Tutor that adapts to you
+        description: Our custom-built AI Tutor, Rigobot, tracks your activity and identifies your strengths, struggles, and gaps to deliver real-time feedback that helps you learn faster.
       - icon: Users
-        value: 84%
-        title: hired
-      - icon: Award
-        value: 4.90★
-        title: Average Rating
-    columns: 3
-    icon_color: "#0097CD"
-    background: hsl(210 100% 50% / 0.05)
+        title: Unlimited 1:1 mentor support
+        description: Get live human help whenever you need it so you never get stuck or lose momentum.
+      - icon: Briefcase
+        title: 1:1 career coaching
+        description: Work individually with career coaches to build your confidence and strategy, and stand out in interviews and on AI-filtered platforms like ATS and LinkedIn.
+      - icon: AcademicCap
+        title: 1:7 teacher-student ratio
+        description: In live classes, small groups mean real attention, faster answers, and learning that stays on track.
+  - type: course_selector
+    version: "1.0"
+    variant: default
+    heading: Programs Covered by the Job Guarantee
+    subheading: The Job Guarantee applies to select 4Geeks programs designed for direct hiring outcomes.
+    courses:
+      - name: Full Stack Development
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: Full Stack Software Development
+        badges:
+          - icon: Code
+            text: React, Node.js & Python
+        tags:
+          - icon: Plus
+            text: API Development
+        description: Master modern web development from frontend to backend. Build production-ready applications using industry-standard tools and frameworks.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/full-stack
+        course_background: primary
+      - name: AI and Machine Learning
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: Data Science and Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs & Generative AI training
+        description: Work with real datasets to analyze data, build predictive models, and apply machine learning techniques used by modern data teams.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/ai-machine-learning
+        course_background: accent
+      - name: Cybersecurity
+        duration: 9 months part-time
+        label: Updated in 2025
+        title: Cybersecurity
+        badges:
+          - icon: Code
+            text: Threat detection & system protection
+        description: Develop the skills to identify threats, secure systems, and support security operations aligned with industry standards.
+        price: $439
+        original_price: $588
+        price_info: with 4Geeks Installments
+        cta_text: Discover program
+        cta_url: /en/cybersecurity
+        course_background: hsl(var(--color-pink))
     marginY:
-      desktop: none lg
+      desktop: none md
+    paddingY:
+      desktop: none sm
+  - type: geeks_vs_others_comparison
+    version: "1.0"
+    title: Launching Successful Tech Careers in the AI Era
+    subtitle: "Helping students build lasting tech careers is our mission. From an industry-aligned, future-proof syllabus to a lifelong support system, here's how we outperform the competition:"
+    columns:
+      - name: Feature
+      - name: 4Geeks Academy
+        highlight: true
+      - name: Industry Average / Competitors
+    rows:
+      - feature: Career Support
+        values:
+          - Personalized support for a lifetime
+          - Limited, ending with 1st job
+      - feature: "Teacher: Student Ratio"
+        values:
+          - "1:7"
+          - 1:10+
+      - feature: AI-Powered Feedback
+        values:
+          - Personalized to your progress
+          - Generic or non-existent
+      - feature: 1-on-1 Mentoring
+        values:
+          - Unlimited and for a lifetime
+          - Limited sessions
+      - feature: Curriculum
+        values:
+          - Continuously updated to match industry needs
+          - Slow to adapt
+      - feature: "% Hiring Rate"
+        values:
+          - ~84% within 6 months
+          - Often Unknown
+      - feature: Community
+        values:
+          - Strong local & global network
+          - Depends on school
+      - feature: Class Format
+        values:
+          - Online, in-person
+          - Usually only one format
+      - feature: Previous Knowledge
+        values:
+          - None
+          - Entry tests or prior coding experience
+    background: hsl(210 100% 50% / 0.05)
+    paddingY:
+      desktop: lg
   - type: features_quad
     version: "1.0"
     variant: default
     heading: Progress Like Never Before
     description: Get the skills, support, and job placement assistance you need to launch your career in AI engineering.
-    images:
-      - image_id: student-1
-        alt: Student 1
-      - image_id: student-2
-        alt: Student 2
-      - image_id: student-3
-        alt: Student 3
-      - image_id: student-4
-        alt: Student 4
     cards:
       - icon: Rigobot
         title: Our custom-built AI
@@ -152,7 +251,7 @@ sections:
       - icon: Clock
         title: Career coaches work with you individually
         description: to build your confidence and strategy—helping you stand out on paper, in interviews, and on AI-filtered platforms like ATS systems and LinkedIn.
-      - icon: Users
+      - icon: IconChalkboardTeacher
         title: 1:7 teacher-student ratio in live classes
         description: means you get real attention, so your questions get answered, and your learning stays on track.
     footer_description: Join thousands of graduates who have launched successful tech careers.
@@ -165,112 +264,126 @@ sections:
     title: What Our Students Say
     description: See how our graduates transformed their careers with personalized learning and career support.
     paddingY:
-      desktop: md none
+      desktop: none
     marginY:
       desktop: none
-  - type: features_grid
-    version: "1.0"
-    variant: detailed
-    title: Build your future in tech
-    subtitle: Choose your program. Master the skills. Get hired.
-    items:
-      - id: fullstack
-        category: Full Stack
-        title: Full Stack Development with AI
-        description: Become an AI-fluent software engineer using Python, React and in-demand Vibe Coding tools like Cursor. Master cutting-edge skills and launch a future-proof career.
-        link_url: /programs/full-stack
-        link_text: Read More
-      - id: datascience
-        category: With Python
-        title: Data Science and Machine Learning with AI
-        description: Learn Python to collect and manage data. Create models and solve problems using Machine Learning, Deep Learning, and AI.
-        link_url: /programs/data-science
-        link_text: Read More
-      - id: cybersecurity
-        category: For Windows & Linux
-        title: Cybersecurity
-        description: Become an AI-proficient cybersecurity specialist, equipped to identify, manage, and mitigate system vulnerabilities in compliance with ISO and other standards.
-        link_url: /programs/cybersecurity
-        link_text: Read More
-    columns: 3
-    collapsible_mobile: true
-    background: hsl(var(--secondary))
-    marginY:
-      desktop: none lg
-    paddingY:
-      desktop: md lg
-  - type: pricing
-    version: "1.0"
-    variant: product
-    title: Finance Your Investment
-    subtitle: We offer multiple ways to fund your enrollment. Choose the option that works best for you.
-    discount_text: "Full Payment Discount: Save 10% with upfront payment."
-    financing_text: "Credit-Based Financing: starting below"
-    financing_amount: $299
-    tech_icons:
-      - html
-      - css
-      - javascript
-      - react
-      - python
-      - nodejs
-      - git
-      - bootstrap
-      - api
-      - settings
-    features_title: Access hundreds of exercises, projects tutorials and courses
-    features:
-      - icon: certificate
-        text: Build your portfolio with hundreds of real-world projects.
-      - icon: cloud
-        text: Thousands of cloud-based coding challenges (no setup needed).
-      - text: AI-powered feedback as you code.
-        icon: RigobotIconTiny
-      - icon: certificate
-        text: Course certificates
-      - icon: certificate
-        text: Earn certificates from a USA certified school.
-    cta:
-      text: Apply Now
-      url: /apply
-      variant: primary
-    marginY:
-      desktop: lg md
-    paddingY:
-      desktop: none md
-  - type: whos_hiring
+  - type: career_support_explain
     version: v1.0
-    variant: carousel
-    pretitle: Customer Stories
-    title: Trusted by the world's most innovative companies
-    subtitle: See how 4Geeks empowers graduates of all backgrounds to accelerate their career growth.
-    logos:
-      - src: /attached_assets/microsoft_1764719829995.png
-        alt: Microsoft
-      - src: /attached_assets/google-developers_1764719904190.png
-        alt: Google Developers
-      - src: /attached_assets/boats_1764719939123.jpg
-        alt: Boats Group
-      - src: /attached_assets/meta-logo_1764719959855.png
-        alt: Meta
-      - src: /attached_assets/ebay_1764719967118.png
-        alt: eBay
-      - src: /attached_assets/natgeo_1764719975443.png
-        alt: National Geographic
-      - src: /attached_assets/evernote_1764719981901.png
-        alt: Evernote
-      - src: /attached_assets/telefonica_1764719987250.png
-        alt: Telefonica
-      - src: /attached_assets/twilio_1764719992371.png
-        alt: Twilio
-      - src: /attached_assets/uber_1764719999685.png
-        alt: Uber
-      - src: /attached_assets/Neo9_1764720006347.png
-        alt: Neo9
-      - src: /attached_assets/jooble_1764720010702.png
-        alt: Jooble
-    paddingY:
-      desktop: md
+    heading: Finance your future
+    description: Our career support program is designed to help you land your first job in tech
+    background: hsl(var(--muted))
+    tabs:
+      - tab_label: Job-Ready, Faster
+        layout: three_columns
+        col1_subtitle: Build a recruiter-ready profile, smarter.
+        col1_description: |-
+          Prepare for real hiring processes using a combination of AI tools and 1-on-1 coaching.
+          We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        col1_tagline: We'll help you create tailored job search materials
+        col1_boxes:
+          - icon: IconBrandLinkedin
+            text: LinkedIn
+          - icon: IconFileText
+            text: Resume
+          - icon: IconBriefcase
+            text: Portfolio
+          - icon: IconMail
+            text: Cover letter
+        col2_heading: Professional Placement & Coaching
+        col2_bullets:
+          - icon: IconRobot
+            text: 24/7 feedback from RigoBot to audit your LinkedIn and resume
+          - icon: IconUsers
+            text: 1-on-1 career coaching and strategy sessions
+          - icon: IconMicrophone
+            text: Mock interviews and technical interview prep
+        col3_image_id: 4geeks_member
+        col3_object_fit: cover
+        col3_object_position: center
+      - tab_label: Real Hiring Access
+        layout: two_column_cards
+        title: Access the hidden job market.
+        left_text: We connect you directly with hiring partners and decision-makers. Your profile is shared with companies actively recruiting 4Geeks graduates, supported by a targeted networking strategy.
+        left_image_id: career_team_women
+        left_image_object_fit: cover
+        left_image_object_position: center
+        left_stat:
+          value: 250+
+          label: companies in 4Geeks employer network
+        right_bullets:
+          - icon: IconUserPlus
+            text: Direct referrals to hiring partners
+          - icon: IconTargetArrow
+            text: Curated job matches based on your profile
+          - icon: IconMessageChatbot
+            text: Networking and recruiter conversation coaching
+        right_logos:
+          - image_id: logo_google
+            alt: Google
+          - image_id: logo_meta
+            alt: Meta
+          - image_id: logo_microsoft
+            alt: Microsoft
+          - image_id: logo_uber
+            alt: Uber
+          - image_id: logo_ebay
+            alt: eBay
+          - image_id: logo_kpmg
+            alt: KPMG
+      - tab_label: Proof That Converts
+        layout: text_and_image
+        title: Projects that demonstrate real skill.
+        left_description: |-
+          Visibility gets attention. Proof closes the gap.
+          Graduate with a portfolio that shows what you can actually build. From hands-on projects to a capstone that solves real business problems, your work becomes clear evidence of your ability.
+        left_bullets:
+          - icon: IconBriefcase
+            text: Industry-aligned, real-world projects
+          - icon: IconPresentation
+            text: A showcase-ready capstone project
+          - icon: IconBrandGithub
+            text: GitHub optimization and professional code review
+        right_image_id: geekforce_valentina_ancieta
+        right_image_object_fit: cover
+        right_image_object_position: center
+      - tab_label: Your Best-Fit Role
+        layout: text_with_testimonials_carousel
+        title: Turn your background into an advantage.
+        left_description: |-
+          Once offers are on the table, we help you choose and negotiate with confidence.
+          Your previous experience matters. We map transferable skills, focus your job search on the right roles, and support you through salary negotiation and long-term growth.
+        left_bullets:
+          - icon: IconTransfer
+            text: Transferable skills mapping
+          - icon: IconMap
+            text: Personalized career roadmap
+          - icon: IconCoin
+            text: Salary negotiation coaching
+          - icon: IconUsers
+            text: Ongoing alumni career support
+        testimonials:
+          - image_id: mailinh_tran
+            image_object_fit: cover
+            image_object_position: center
+            contributor_logos:
+              - image_id: clark_university
+            description: MaiLinh Tran is an entrepreneur with a passion for technology, now focusing on the dev side of her endeavor.
+            achievement: She has launched her startup, is capable of hiring new tech talent, and coordinates a dev team!
+          - image_id: martin_coimbra
+            image_object_fit: cover
+            image_object_position: center top
+            contributor_logos:
+              - image_id: logo_utec
+            description: Martín joined the first program we launched together with UTEC and IDB. He landed a better-paying job, a career he is passionate about, and a whole new professional life.
+            achievement: He achieved a 100% salary increase.
+          - image_id: melanie_galaretto
+            image_object_fit: cover
+            image_object_position: center
+            contributor_logos:
+              - image_id: logo_utec
+              - image_id: bid_logo
+            description: Melanie is a young professional who dreamed of achieving the life she now has. She is a resourceful and committed software developer working at a software company in her home country.
+            achievement: She achieved a 100% salary increase.
   - type: faq
     version: v1.0
     title: Frequently Asked Questions
@@ -280,6 +393,8 @@ sections:
       - certification
     paddingY:
       desktop: md none
+    marginY:
+      desktop: none md
   - type: footer
     version: v1.0
     copyright_text: 2024 4Geeks Academy. All rights reserved.
