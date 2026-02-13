@@ -80,6 +80,8 @@ sections:
         description: We offer financing plans ranging from 1 to 5 years, depending on your credit profile, with monthly payments starting below $349. Terms and approval are based on eligibility.
       - title: Scholarships
         description: Partial scholarships are available for qualified applicants through select programs and partner organizations. Availability and award amounts vary.
+    expand_label: More info
+    collapse_label: Hide info
     marginY:
       desktop: none lg
     paddingY:
