@@ -1,6 +1,6 @@
 {
-  "lastSyncedCommit": "ef0a4375d526c2233b6f503a2d4b13cff056e0cb",
-  "lastSyncedAt": "2026-02-13T14:24:10.825Z",
+  "lastSyncedCommit": "9e22befec2353b6175eae2441c0769cdf008a865",
+  "lastSyncedAt": "2026-02-13T14:30:49.200Z",
   "files": {
     "marketing-content/brand-context.yml": {
       "sha": "93b786256fece2f4411ebb81bb41cb15800887da71f9bb963662fb223daff620",
@@ -64,7 +64,7 @@
     },
     "marketing-content/landings/example-landing/promoted.yml": {
       "sha": "1ad042bbd7c6182909bb2074d9b6f253694620ac64f92f029e7f6f2d1ba94c0a",
-      "lastModified": 1770991275533.0862,
+      "lastModified": 1770993048822.6902,
       "remoteSha": "1ad042bbd7c6182909bb2074d9b6f253694620ac64f92f029e7f6f2d1ba94c0a"
     },
     "marketing-content/landings/test-example-check/_common.yml": {
@@ -74,7 +74,7 @@
     },
     "marketing-content/landings/test-example-check/promoted.yml": {
       "sha": "766ba901bc8d2fe8289fc38b6b1509ba67c57cdb473175779703ef5b098ac4d8",
-      "lastModified": 1770992650485.365,
+      "lastModified": 1770846049638.4768,
       "remoteSha": "766ba901bc8d2fe8289fc38b6b1509ba67c57cdb473175779703ef5b098ac4d8"
     },
     "marketing-content/locations/atlanta-usa/_common.yml": {
