@@ -1,9 +1,255 @@
-slug: financials
+slug: financiaciones
 template: default
-title: financials
+title: Financiaciones
 meta:
-  page_title: financials | 4Geeks Academy
-  description: financials - Aprende más sobre este tema en 4Geeks Academy.
+  robots: index, follow
+  priority: 0.8
+  change_frequency: weekly
+  page_title: Financiaciones | 4Geeks Academy
+  description: Financiaciones - Aprende más sobre este tema en 4Geeks Academy.
   redirects:
     - /financials
-sections: []
+schema:
+  include:
+    - organization
+    - website
+sections:
+  - type: hero
+    version: "1.0"
+    variant: productShowcase
+    title: En Tech, A Tu Manera
+    subtitle: Opciones de pago flexibles diseñadas para un crecimiento profesional real.
+    brand_mark:
+      prefix: Financia Tu
+      highlight: Futuro
+      color: chart-1
+    description: Ofrecemos planes de pago flexibles, opciones de financiamiento y becas para que puedas enfocarte en lanzar tu carrera tech sin preocuparte por las finanzas.
+    bullets:
+      - text: Planes de pago mensual estructurados
+      - text: Opciones de financiamiento competitivas
+      - text: Oportunidades de becas para candidatos calificados
+    video:
+      url: https://www.youtube.com/shorts/hvMLx6jX0EY?feature=share
+      ratio: "3:4"
+      muted: true
+      loop: true
+    form: {}
+    trust_bar:
+      rating: "4.5"
+      review_count: Basado en más de 5149 reseñas
+      review_logos:
+        - name: Google
+          logo: /attached_assets/google_1765590146414.webp
+        - name: Course Report
+          logo: /attached_assets/course-report_1765590146414.webp
+        - name: SwitchUp
+          logo: /attached_assets/switchup_1765590146414.webp
+    paddingY:
+      desktop: none
+    marginY:
+      desktop: none
+  - type: features_grid
+    version: "1.0"
+    variant: stats-text
+    title: Resultados Profesionales Probados
+    subtitle: Altas tasas de contratación. Crecimiento salarial real.
+    description: Reconocido por Forbes como uno de los mejores bootcamps online, incluyendo mención por ser ideal para estudiantes con presupuesto limitado, 4Geeks combina matrícula accesible con resultados profesionales probados que te ayudan a lanzar tu carrera tech con confianza.
+    background: hsl(var(--sidebar-background))
+    items:
+      - value: 84%
+        title: Tasa de colocación laboral
+      - value: 55%
+        title: Aumento salarial después de graduarte
+      - value: 3-6 meses
+        title: Tiempo promedio para conseguir empleo
+    marginY:
+      desktop: none lg
+    paddingY:
+      desktop: none
+  - type: syllabus
+    title: Financia Tu Carrera Tech
+    subtitle: Explora caminos de financiamiento flexibles, desde ahorros upfront hasta planes basados en ingresos, y elige la opción que mejor se adapte a ti.
+    modules:
+      - title: Pago Anticipado y Ahorra 10%
+        description: Paga la matrícula completa antes de que comience el programa y recibe un 10% de descuento.
+      - title: Cuotas sin Intereses a 6 Meses
+        description: Distribuye tu matrícula en 6 meses sin intereses. Paga el costo estándar de matrícula en cuotas mensuales estructuradas.
+      - title: Pagos Basados en Ingresos
+        description: ¿Prefieres pagar después de conseguir empleo? A través de nuestro socio Edly, comienzas a pagar una vez que ganes al menos $35,000 al año. Los pagos mensuales se ajustan a tus ingresos y se pausan durante periodos de desempleo o subempleo. Se aceptan cosigners.
+      - title: Préstamos y Planes de Pago Extendidos
+        description: Ofrecemos planes de financiamiento de 1 a 5 años, según tu perfil crediticio, con pagos mensuales desde menos de $349. Los términos y aprobación dependen de tu elegibilidad.
+      - title: Becas
+        description: Becas parciales disponibles para solicitantes calificados a través de programas selectos y organizaciones aliadas. La disponibilidad y montos varían.
+    marginY:
+      desktop: none lg
+    paddingY:
+      desktop: md lg
+    background: hsl(210 100% 50% / 0.05)
+  - type: comparison_table
+    version: "1.0"
+    title: Compara Tus Opciones de Financiamiento de un Vistazo
+    subtitle: Entiende los beneficios clave y requisitos de cada camino para elegir con confianza.
+    columns:
+      - name: Opción
+        highlight: true
+      - name: Pago Completo
+        highlight: true
+      - name: Planes Mensuales
+        highlight: true
+      - name: Préstamos
+        highlight: true
+      - name: Plan Basado en Ingresos
+        highlight: true
+    rows:
+      - feature: Descuento en Matrícula
+        values:
+          - 10% de descuento
+          - "No"
+          - "No"
+          - "No"
+      - feature: Revisión de Crédito Requerida
+        values:
+          - "No"
+          - Baja barrera
+          - "Sí"
+          - "Sí"
+      - feature: Diferimiento de Pago Después de Graduarte
+        values:
+          - "No"
+          - "No"
+          - "Sí"
+          - "Sí"
+      - feature: Paga Solo Después de Conseguir Empleo
+        values:
+          - "No"
+          - "No"
+          - "No"
+          - "Sí"
+    background: hsl(var(--background))
+    marginY:
+      desktop: lg md
+    paddingY:
+      desktop: md
+  - type: course_selector
+    version: "1.0"
+    variant: default
+    heading: Programas Cubiertos por la Garantía de Empleo
+    subheading: La Garantía de Empleo aplica a programas selectos de 4Geeks diseñados para resultados de contratación directa.
+    courses:
+      - name: Full Stack Development
+        duration: 9 meses part-time
+        label: Actualizado en 2025
+        title: Desarrollo Full Stack de Software
+        badges:
+          - icon: Code
+            text: React, Node.js & Python
+        tags:
+          - icon: Plus
+            text: Desarrollo de APIs
+        description: Domina el desarrollo web moderno desde frontend hasta backend. Construye aplicaciones listas para producción usando herramientas y frameworks estándar de la industria.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/full-stack
+        course_background: primary
+      - name: AI and Machine Learning
+        duration: 9 meses part-time
+        label: Actualizado en 2025
+        title: Data Science y Machine Learning
+        badges:
+          - icon: Brain
+            text: LLMs y entrenamiento en IA Generativa
+        description: Trabaja con datasets reales para analizar datos, construir modelos predictivos y aplicar técnicas de machine learning usadas por equipos de datos modernos.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/ai-machine-learning
+        course_background: accent
+      - name: Cybersecurity
+        duration: 9 meses part-time
+        label: Actualizado en 2025
+        title: Ciberseguridad
+        badges:
+          - icon: Code
+            text: Detección de amenazas y protección de sistemas
+        description: Desarrolla habilidades para identificar amenazas, asegurar sistemas y apoyar operaciones de seguridad alineadas con estándares de la industria.
+        price: $439
+        original_price: $588
+        price_info: con pagos a plazos de 4Geeks
+        cta_text: Descubre el programa
+        cta_url: /es/cybersecurity
+        course_background: hsl(var(--color-pink))
+  - type: why_learn_ai
+    variant: laptop-edge
+    title: Garantía de Empleo Opcional para Mayor Confianza
+    subtitle: Respaldar tu resultado profesional con un compromiso más fuerte
+    description: Por un adicional de $2,000, puedes agregar nuestra Garantía de Empleo. Si no consigues un empleo calificado en 9 meses después de graduarte, recibirás reembolso completo de la matrícula. La Garantía de Empleo también puede financiarse.
+    cta:
+      text: Más Información
+      url: /es/trabajo-garantizado
+      variant: primary
+    marginY:
+      desktop: md
+    paddingY:
+      desktop: none sm
+  - type: testimonials
+    version: v1.0
+    title: Lo que Dicen Nuestros Estudiantes
+    subtitle: Historias reales de graduados que transformaron sus carreras
+    rating_summary:
+      average: "4.9"
+      count: 2,847
+    items:
+      - name: Maria Rodriguez
+        role: Ingeniera de Software
+        company: Google
+        rating: 5
+        comment: Este programa cambió mi vida. Pasé de cero experiencia en código a conseguir mi trabajo soñado en 6 meses.
+        outcome: Contratada en 4 meses
+      - name: James Chen
+        role: Desarrollador Full Stack
+        company: Spotify
+        rating: 5
+        comment: La mentoría fue increíble. Tener acceso ilimitado a desarrolladores senior marcó toda la diferencia.
+        outcome: Aumento salarial 3x
+      - name: Sarah Williams
+        role: Desarrolladora Frontend
+        company: Meta
+        rating: 5
+        comment: Las herramientas de aprendizaje impulsadas por IA me ayudaron a entender conceptos complejos más rápido que cualquier otro curso que haya probado.
+        outcome: Cambio de carrera a los 35
+      - name: Carlos Mendez
+        role: Ingeniero Backend
+        company: Amazon
+        rating: 4
+        comment: Los proyectos prácticos y escenarios del mundo real me prepararon mejor que mi carrera en ciencias de la computación.
+        outcome: Trabajo remoto conseguido
+      - name: Emily Thompson
+        role: Ingeniera DevOps
+        company: Netflix
+        rating: 5
+        comment: El equipo de soporte profesional me ayudó a negociar un salario 50% más alto de lo que esperaba.
+        outcome: Aumento salarial del 50%
+      - name: David Kim
+        role: Tech Lead
+        company: Uber
+        rating: 5
+        comment: Empecé como principiante total, ahora lidero un equipo de desarrolladores. Eternamente agradecido.
+        outcome: Promovido en 1 año
+  - type: faq
+    version: v1.0
+    title: Preguntas Frecuentes
+    related_features:
+      - price
+      - certification
+    marginY:
+      desktop: lg none
+    paddingY:
+      desktop: none md
+  - type: footer
+    version: v1.0
+    copyright_text: 2024 4Geeks Academy. Todos los derechos reservados.
+    paddingY:
+      desktop: none md

@@ -1,6 +1,11 @@
 slug: ai-engineering-spain
 title: Programa de Ingeniería de IA (España)
 locale: es
+locations:
+  - madrid-spain
+  - barcelona-spain
+  - malaga-spain
+  - valencia-spain
 meta:
   robots: index, follow
   og_image: /images/programs/ai-engineering-og.jpg
@@ -69,7 +74,7 @@ sections:
       - text: Accede a mentorías 1:1 ilimitadas y a una comunidad profesional de por vida.
       - text: Fórmate en grupos reducidos, con acompañamiento continuo incluso después de graduarte.
     video:
-      url: https://www.youtube.com/shorts/suTjV59QtHI
+      url: https://youtube.com/shorts/AMqLRJbNZ9I?si=LdQnvspydHMd9ckN
       ratio: "9:16"
       muted: true
     paddingY:
