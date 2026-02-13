@@ -4,6 +4,7 @@ import { Label } from "@/components/ui/label";
 import { useQuery } from "@tanstack/react-query";
 import {
   AVAILABLE_RELATED_FEATURES,
+  MAX_FAQ_SECTION_TOPICS,
   MAX_RELATED_FEATURES,
   filterFaqsByRelatedFeatures,
   type RelatedFeature,
@@ -49,6 +50,7 @@ function isValidTestimonial(t: BankTestimonial): boolean {
 export function RelatedFeaturesPicker({ value, onChange, locale = "en", context = "faq" }: RelatedFeaturesPickerProps) {
   const selectedFeatures = value || [];
   const isTestimonials = context === "testimonials";
+  const maxSelection = context === "faq" ? MAX_FAQ_SECTION_TOPICS : MAX_RELATED_FEATURES;
 
   const { data: faqsData } = useQuery<{ faqs: FaqItem[] }>({
     queryKey: ["/api/faqs", locale],
@@ -96,7 +98,7 @@ export function RelatedFeaturesPicker({ value, onChange, locale = "en", context 
   const toggleFeature = (feature: RelatedFeature) => {
     if (selectedFeatures.includes(feature)) {
       onChange(selectedFeatures.filter(f => f !== feature));
-    } else if (selectedFeatures.length < MAX_RELATED_FEATURES) {
+    } else if (selectedFeatures.length < maxSelection) {
       onChange([...selectedFeatures, feature]);
     }
   };
@@ -116,7 +118,7 @@ export function RelatedFeaturesPicker({ value, onChange, locale = "en", context 
       <div className="flex items-center justify-between">
         <Label className="text-sm font-medium">{label}</Label>
         <span className="text-xs text-muted-foreground">
-          {selectedFeatures.length}/{MAX_RELATED_FEATURES} selected
+          {selectedFeatures.length}/{maxSelection} selected
           {totalForSelection > 0 && (
             <span className="ml-1 text-primary">({totalForSelection} {itemLabel})</span>
           )}
@@ -125,7 +127,7 @@ export function RelatedFeaturesPicker({ value, onChange, locale = "en", context 
       <div className="flex flex-wrap gap-2 max-h-48 overflow-y-auto p-1">
         {AVAILABLE_RELATED_FEATURES.map((feature) => {
           const isSelected = selectedFeatures.includes(feature);
-          const isDisabled = !isSelected && selectedFeatures.length >= MAX_RELATED_FEATURES;
+          const isDisabled = !isSelected && selectedFeatures.length >= maxSelection;
           const count = featureCounts[feature] || 0;
 
           return (

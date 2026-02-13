@@ -6,8 +6,8 @@ meta:
   og_image: /images/programs/ai-engineering-og.jpg
   priority: 0.9
   change_frequency: weekly
-  page_title: Conviértete en Ingeniero de IA en 20 Semanas | 4Geeks Academy
-  description: Lanza tu carrera en IA con entrenamiento práctico, mentoría 1:1 ilimitada y garantía de empleo. Comienza a ganar $95K-$135K como Ingeniero de IA.
+  page_title: Conviértete en Ingeniero de IA en 24 Semanas | 4Geeks Academy
+  description: Aprende a desarrollar, integrar y desplegar soluciones de IA en 24 semanas con mentoría 1:1 ilimitada y una comunidad profesional que acompaña tu crecimiento profesional.
   redirects:
     - /ingeniero-ia
 schema:
@@ -15,6 +15,18 @@ schema:
     - organization
     - website
     - courses:ai-engineering
+locations:
+  - caracas-venezuela
+  - buenosaires-argentina
+  - costa-rica
+  - lapaz-bolivia
+  - lima-peru
+  - mexicocity-mexico
+  - montevideo-uruguay
+  - panamacity-panama
+  - quito-ecuador
+  - santiago-chile
+  - bogota-colombia
 sections:
   - type: hero
     version: "1.0"
@@ -22,7 +34,7 @@ sections:
     title: Construye sistemas reales, listos para producción.
     brand_mark:
       prefix: Conviértete en
-      highlight: Ingeniero IA
+      highlight: Ingeniero de IA
       color: primary
     description: Aprende a desarrollar, integrar y desplegar soluciones de IA en 24 semanas con mentoría 1:1 ilimitada y una comunidad profesional que acompaña tu crecimiento profesional.
     form:
@@ -35,7 +47,7 @@ sections:
         email:
           visible: true
           required: true
-          placeholder: Email
+          placeholder: Correo Electrónico
         first_name:
           visible: true
           required: true
@@ -47,6 +59,7 @@ sections:
         phone:
           visible: true
           required: true
+          default_country: VE
         program:
           visible: false
           default: ai-engineering
@@ -67,35 +80,9 @@ sections:
       variant: outline
       icon: Download
     video:
-      url: https://www.youtube.com/shorts/sSxJnelPJT8
+      url: https://youtube.com/shorts/-SpU1PWNBF4?si=Hf6pIB-aSDUHFgj2
       ratio: "9:16"
       muted: true
-    paddingY:
-      mobile: md none
-      desktop: lg none
-    marginY:
-      mobile: none
-      desktop: none
-    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.1), transparent)
-    showOn: mobile
-  - type: hero
-    version: "1.0"
-    variant: productShowcase
-    title: Construye sistemas reales, listos para producción.
-    brand_mark:
-      prefix: Conviértete en
-      highlight: Ingeniero IA
-      color: primary
-    description: 24 semanas para desarrollar, integrar y desplegar soluciones de IA.
-    bullets:
-      - text: Accede a mentorías 1:1 ilimitada y a una comunidad profesional activa.
-      - text: Aprende habilidades en ingeniería de IA alineadas al mercado actual.
-      - text: Grupos reducidos y acompañamiento continuo, incluso después de graduarte.
-    video:
-      url: https://www.youtube.com/shorts/sSxJnelPJT8
-      ratio: "9:16"
-      muted: true
-      loop: false
     paddingY:
       mobile: md none
       desktop: lg none
@@ -118,20 +105,25 @@ sections:
         email:
           visible: true
           required: true
+          placeholder: Correo Electrónico
         first_name:
           visible: true
           required: true
+          placeholder: Nombre
         last_name:
           visible: true
           required: false
+          placeholder: Apellido
         phone:
           visible: true
           required: false
+          default_country: VE
         program:
           visible: false
           default: ai-engineering
       success:
         message: ¡Gracias! Nos pondremos en contacto en 24 horas.
+    showOn: mobile
   - type: awards_marquee
     version: "1.0"
     speed: 40
@@ -216,7 +208,7 @@ sections:
         title: Salario anual promedio para ingenieros de IA
     marginY:
       mobile: md none
-      desktop: md none
+      desktop: none
     paddingY:
       mobile: none md
       desktop: none md
@@ -374,7 +366,7 @@ sections:
         alt: Course Report Badge 2025
         logo: /attached_assets/Course-Report-Badge-2025_1764709632231.webp
         logoHeight: h-16
-        description: Reconocida como una de las mejores escuelas tecnológicas a nivel mundial
+        description: Reconocida como una de las mejores academias tecnológicas a nivel mundial
         link: https://www.coursereport.com
         linkText: Leer reviews
       - id: logo-premios-excelencia-educativa
@@ -386,11 +378,11 @@ sections:
         alt: SwitchUp Best Bootcamps 2025
         logo: /attached_assets/switchup-best-bootcamps-2025_1770392145139.png
         logoHeight: h-16
-        description: La escuela tecnológica mejor valorada, en base a reseñas verificadas de alumnos
+        description: La academia tecnológica mejor valorada, en base a reseñas verificadas de alumnos
         link: https://www.switchup.org
         linkText: Leer reviews
     paddingY:
-      desktop: md none
+      desktop: none
   - type: ai_learning
     badge: ¿Por qué 4Geeks?
     title: ¿Por qué aprender ingeniería de IA con 4Geeks?
@@ -460,27 +452,26 @@ sections:
           - text: Perfil profesional y estrategia de búsqueda optimizados
       - value: 3-6 meses
         label: Tiempo para conseguir empleo
-        description: La mayoría de los graduados consiguen su primer rol en 3–6 meses. Con nuestro proceso de desarrollo de carrera en 3 pasos, las habilidades técnicas se convierten en ofertas rápido.
+        description: La mayoría de los graduados consiguen su primer rol en 3–6 meses gracias a nuestro proceso de desarrollo profesional.
         benefits:
-          - text: Optimiza tu currículum, portafolio y perfiles para atraer reclutadores y pasar filtros de IA
-          - text: Prepárate con entrevistas técnicas y de comportamiento con problemas reales
-          - text: Ejecuta una estrategia de búsqueda personalizada con acceso a redes de contratación
+          - text: Optimiza tu currículum, portafolio y perfil profesional para atraer recruiters y superar filtros automatizados
+          - text: Prepárate para entrevistas técnicas y de competencias con casos reales
+          - text: Aplica una estrategia de búsqueda personalizada con acceso a redes de empresas contratantes
       - value: 55%
         label: Aumento salarial promedio
         description: Nuestros graduados ven un aumento salarial promedio del 55% al pasar a roles de ingeniería de IA. La inversión se paga sola.
         benefits:
-          - text: "Ingeniero de software IA: $25K–45K"
-          - text: "Ingeniero full-stack (IA): $20K–$40K"
-          - text: "Ingeniero de agentes: $25K–$50K"
-          - text: "Ingeniero de automatización de flujos: $15K–$40K"
+          - text: "Ingeniero de software IA: $20K–30K"
+          - text: "Ingeniero full-stack (IA): $25K–$40K"
+          - text: "Ingeniero de  de IA: $25K–$50K"
+          - text: "Ingeniero de automatización de flujos (RAG, APIs, vector DBs): $25K–$60K"
       - value: 5,000+
-        label: Socios de contratación
-        description: Accede a nuestra red de más de 5,000 socios que buscan talento en IA. Obtén ofertas exclusivas y referidos prioritarios.
+        label: Empresas que contratan nuestro talento
+        description: Accede a nuestra red de más de 5.000 empresas que buscan talento. Recibe ofertas exclusivas y procesos de selección prioritarios.
         benefits:
           - text: Acceso exclusivo a bolsa de empleo
-          - text: Referidos prioritarios a empresas socias
-          - text: Eventos de networking con responsables de contratación
-          - text: Empresas como Google, Meta, Amazon y startups
+          - text: Recomendaciones directas a empresas colaboradoras
+          - text: Eventos de networking con recruiters y responsables de selección
     certificate_position: right
     useSolidCard: true
     marginY:
@@ -512,7 +503,7 @@ sections:
     image_position: right
     marginY:
       mobile: xl lg
-      desktop: xl lg
+      desktop: lg
     paddingY:
       mobile: none
       desktop: none
@@ -581,15 +572,13 @@ sections:
     variant: verticalCards
     title: Nuestro proceso de admisión
     description: "Trabajamos con un proceso de admisión selectivo. La postulación no garantiza la inscripción: evaluamos cada aplicación para asegurar compromiso y alineación con el programa.."
-    description_link:
-      text: Conditions Apply.
-      url: /terms
+    description_link: null
     steps:
       - icon: ClipboardList
         title: Aplicación al programa
         bullets:
           - Completas el formulario inicial para iniciar tu postulación.
-          - Te contactaremos por WhatsApp para conversar y analizar tu perfil, experiencia y objetivos profesionales.
+          - Serás contactado por WhatsApp para conversar y analizar tu perfil, experiencia y objetivos profesionales.
       - icon: UserCheck
         title: Evaluación del perfil
         bullets:
@@ -632,6 +621,7 @@ sections:
         phone:
           visible: true
           required: true
+          default_country: VE
           placeholder: Teléfono
         program:
           visible: false
@@ -643,8 +633,9 @@ sections:
         marketing: true
         marketing_text: Acepto recibir información sobre cursos y promociones
       show_terms: true
-      button_className: bg-white text-primary hover:bg-white/90 border-white
-      terms_className: text-white/80
+      button_className: bg-primary border-white
+    form_background: hsl(var(--card))
+    terms_color: hsl(var(--primary))
     marginY:
       mobile: md none
       desktop: md none

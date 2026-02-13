@@ -1,20 +1,16 @@
-# Centralized FAQ Data - English
-# Priority: 1 = Most Important, 2 = Medium, 3 = Least Important
-# All FAQs must have at least 1 related_feature
-# Updated: 2026-02-12
-
 faqs:
 - question: Do I get a job after completing the program?
-  answer: |
-    At 4Geeks Academy, we are dedicated to preparing you for the job market and supporting you in your job search after completing the program. While we cannot guarantee a job, we provide unlimited and lifelong technical and career support, including assistance with resume building, interview preparation, and access to our network of associated employers.
+  answer: 'At 4Geeks Academy, we are dedicated to preparing you for the job market and supporting you in your job search after completing the program. While we cannot guarantee a job, we provide unlimited and lifelong technical and career support, including assistance with resume building, interview preparation, and access to our network of associated employers.
+
     Additionally, according to our statistics, 84% of graduates in the US who complete the stages and requirements secure employment with an average salary over $50k per year. To understand more about our job support and the steps we take to help you succeed, visit our Job Guarantee page and learn about our comprehensive GeekForce Career Support program.
+
+    '
   locations:
   - all
   related_features:
   - career-support
   - job-guarantee
-  - outcomes
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 1
 - question: Does the Job Guarantee refund the full tuition if I don't get hired?
   answer: Yes. If you qualify for the Job Guarantee and don't receive a qualifying job offer within the job search window, you'll receive a full tuition refund.
@@ -25,11 +21,15 @@ faqs:
   last_updated: '2026-01-16'
   priority: 1
 - question: GeekForce or GeekPal, which one to choose?
-  answer: |
-    GeekForce and GeekPal are both valuable mentorship programs offered by 4Geeks Academy, and choosing between them depends on your current needs.
-    GeekPal is ideal if you're looking for technical coaching, such as code debugging, problem-solving, and interview preparation. It's perfect for honing your technical skills and getting hands-on guidance.
-    GeekForce, on the other hand, is focused on career coaching, including soft skills development, career advice, and resume building. This is a great choice if you're looking to enhance your employability and professional development.
+  answer: 'GeekForce and GeekPal are both valuable mentorship programs offered by 4Geeks Academy, and choosing between them depends on your current needs.
+
+    GeekPal is ideal if you''re looking for technical coaching, such as code debugging, problem-solving, and interview preparation. It''s perfect for honing your technical skills and getting hands-on guidance.
+
+    GeekForce, on the other hand, is focused on career coaching, including soft skills development, career advice, and resume building. This is a great choice if you''re looking to enhance your employability and professional development.
+
     Remember, both services are unlimited and for life, so you can always switch or use both as your needs evolve throughout your career.
+
+    '
   locations:
   - all
   related_features:
@@ -43,8 +43,7 @@ faqs:
   - all
   related_features:
   - job-guarantee
-  - outcomes
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 1
 - question: Is the certificate recognized by employers?
   answer: Yes! Our certificate is recognized by employers worldwide. We're licensed by the Florida Department of Education and have been featured by Forbes, Newsweek, and Course Report as one of the top coding bootcamps.
@@ -56,12 +55,17 @@ faqs:
   last_updated: '2026-01-16'
   priority: 1
 - question: Why 4Geeks Academy?
-  answer: |
-    We offer several advantages that make us stand out from other coding bootcamps:
+  answer: 'We offer several advantages that make us stand out from other coding bootcamps:
+
     - Unlimited mentorship: For life.
+
     - Coding-centric approach: We focus exclusively on coding.
-    - Lifetime career support: We're to help you throughout your career.
+
+    - Lifetime career support: We''re to help you throughout your career.
+
     You can compare us to other bootcamps by visiting our Geeks Vs Others page.
+
+    '
   locations:
   - all
   related_features:
@@ -70,10 +74,13 @@ faqs:
   last_updated: '2026-01-16'
   priority: 1
 - question: Can I pay after I get a job?
-  answer: |
-    At 4Geeks Academy in Latin America, we offer payment options such as Deferred Tuition plans, allowing you to pay after securing employment.
-    These models are designed to support your learning journey, enabling you to focus on education before repaying once you're employed. However, terms and conditions vary based on your chosen program and location.
+  answer: 'At 4Geeks Academy in Latin America, we offer payment options such as Deferred Tuition plans, allowing you to pay after securing employment.
+
+    These models are designed to support your learning journey, enabling you to focus on education before repaying once you''re employed. However, terms and conditions vary based on your chosen program and location.
+
     For further details and eligibility criteria, please discuss these options with our admissions team.
+
+    '
   locations:
   - bogota-colombia
   - buenosaires-argentina
@@ -85,20 +92,17 @@ faqs:
   - panamacity-panama
   - quito-ecuador
   related_features:
-  - career-support
   - price
-  - content-and-syllabus
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do I need any technical background?
   answer: No previous experience is required. This course is designed for professionals from all backgrounds who want to leverage AI in their work. We start with the fundamentals and build from there.
   locations:
   - all
   related_features:
-  - applied-ai
   - content-and-syllabus
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Do I need expensive equipment?
   answer: No! All exercises and projects run in the cloud. We provide access to cloud-based development environments, so you can learn with just a laptop and internet connection.
   locations:
@@ -106,8 +110,8 @@ faqs:
   related_features:
   - online-platform
   - learnpack
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do I need expensive hardware for AI development?
   answer: No! All exercises and projects run in the cloud. We provide access to cloud-based development environments and AI APIs, so you can learn with just a laptop and internet connection.
   locations:
@@ -115,17 +119,16 @@ faqs:
   related_features:
   - ai-engineering
   - online-platform
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do I need prior cybersecurity experience?
   answer: No prior experience is required. Our bootcamp starts with the fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced concepts like penetration testing and incident response.
   locations:
   - all
   related_features:
   - cybersecurity
-  - content-and-syllabus
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Do I need prior experience with data or coding?
   answer: No prior experience is required. Our bootcamp starts with Python fundamentals and teaches you everything from scratch. We focus on building a strong foundation before moving to advanced machine learning concepts.
   locations:
@@ -133,46 +136,48 @@ faqs:
   related_features:
   - data-science
   - content-and-syllabus
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Do I need to have my own laptop in Dallas?
   answer: Yes, having your own laptop is essential for classes at our Dallas campus. While we don't mandate a specific operating system for most programs, it’s recommended to have a laptop with Windows, macOS, or Linux. For our Cybersecurity program, it’s highly recommended to use Windows or Linux to ensure compatibility with course tools such as VirtualBox and Packet Tracer. Classes and exercises are accessed through the cloud, so you can work from anywhere in Dallas.
   locations:
   - dallas-usa
   related_features:
-  - content-and-syllabus
   - cybersecurity
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do I need to have my own laptop in Miami?
   answer: Yes, having your own laptop is essential for classes at our Miami campus. While we don't mandate a specific operating system for most programs, it’s recommended to have a laptop with Windows, macOS, or Linux. For our Cybersecurity program, it’s highly recommended to use Windows or Linux to ensure compatibility with course tools such as VirtualBox and Packet Tracer. Classes and exercises are accessed through the cloud, so you can work from anywhere in Miami.
   locations:
   - miami-usa
   related_features:
-  - content-and-syllabus
   - cybersecurity
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do I need to have previous experience in programming to join the bootcamp?
-  answer: |
-    No, previous programming experience is not required to join our bootcamp. All you need is the desire to learn. We believe that everyone has the potential to code, and we'll help you discover it! If you can already open your browser and check Facebook, you're off to a great start!
+  answer: 'No, previous programming experience is not required to join our bootcamp. All you need is the desire to learn. We believe that everyone has the potential to code, and we''ll help you discover it! If you can already open your browser and check Facebook, you''re off to a great start!
+
 
     Ready to begin your coding journey? Check out our available bootcamps:
 
+
     Read about our Online Coding Bootcamp for flexible learning options.
+
 
     Learn more about our Data Science Bootcamp to dive into data science.
 
+
     Explore our comprehensive Coding Bootcamp that covers everything from the ground up.
 
+
     We also have a lot of free content on our website 4geeks.com to help you get started.
+
+    '
   locations:
   - all
   related_features:
-  - content-and-syllabus
   - data-science
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Do I need to have work authorization to qualify?
   answer: Yes, you must have valid U.S. work authorization to be eligible for the Job Guarantee.
@@ -188,339 +193,271 @@ faqs:
   - atlanta-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Austin need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Austin students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - austin-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Barcelona need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Barcelona students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - barcelona-spain
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Berlin need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Berlin students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - berlin-germany
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Bogotá need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Bogotá students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - bogota-colombia
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Buenos Aires need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Buenos Aires students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - buenosaires-argentina
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Caracas need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Caracas students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - caracas-venezuela
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Chicago need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Chicago students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - chicago-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Costa Rica need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Costa Rica students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - costa-rica
   related_features:
   - price
-  - content-and-syllabus
   - cybersecurity
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Dallas need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Dallas students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - dallas-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Dublin need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Dublin students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - dublin-ireland
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Hamburg need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Hamburg students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - hamburg-germany
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Houston need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Houston students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - houston-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in La Paz need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many La Paz students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - lapaz-bolivia
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Lima need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Lima students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - lima-peru
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Lisbon need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Lisbon students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - lisbon-portugal
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Los Angeles need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Los Angeles students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - losangeles-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Madrid need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Madrid students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - madrid-spain
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Malaga need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Malaga students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - malaga-spain
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Mexico City need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Mexico City students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - mexicocity-mexico
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Miami need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Miami students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - miami-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Milan need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Milan students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - milan-italy
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Montevideo need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Montevideo students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - montevideo-uruguay
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Munich need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Munich students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - munich-germany
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in New York need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many New York students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - newyork-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Orlando need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Orlando students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - orlando-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Panama City need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Panama City students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - panamacity-panama
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Quito need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Quito students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - quito-ecuador
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Rome need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Rome students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - rome-italy
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Santiago need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Santiago students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - santiago-chile
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Tampa need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Tampa students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - tampa-usa
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Toronto need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Toronto students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - toronto-canada
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in Valencia need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many Valencia students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
   locations:
   - valencia-spain
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: Do students in the Rest of Europe need prior experience to join 4Geeks Academy?
   answer: Not at all! Our curriculum is designed to take you from 0 to specialist. We start with the basics, so having no prior tech experience is completely fine. Many European students begin without any previous knowledge. To prepare, you can explore our Coding Bootcamp Blog and beginner-friendly guides like Learn JavaScript. For those interested in other areas, check out our Data Science and Machine Learning Bootcamp and Cybersecurity Bootcamp.
-  locations:
-  - all
+  locations: []
   related_features:
   - content-and-syllabus
-  - cybersecurity
-  - data-science
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Atlanta offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As an Atlanta student, you'll enjoy unlimited lifetime mentorship, including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Atlanta’s tech community through local tech meetups and events.
@@ -528,9 +465,7 @@ faqs:
   - atlanta-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Austin offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As an Austin student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Austin’s tech community through local tech meetups and events.
@@ -538,9 +473,7 @@ faqs:
   - austin-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Barcelona offer mentorship and networking opportunities?
   answer: Yes, our Barcelona campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Barcelona’s vibrant tech community and potential employers.
@@ -549,8 +482,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Berlin offer mentorship and networking opportunities?
   answer: Yes, our Berlin campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Berlin’s vibrant tech community and potential employers.
@@ -559,8 +491,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Bogotá offer mentorship and networking opportunities?
   answer: Yes, our Bogotá campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Bogotá’s vibrant tech community and potential employers.
@@ -569,8 +500,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Buenos Aires offer mentorship and networking opportunities?
   answer: Yes, our Buenos Aires campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Buenos Aires’ vibrant tech community and potential employers.
@@ -579,8 +509,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Caracas offer mentorship and networking opportunities?
   answer: Yes, our Caracas campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce Ascent program. We also organize local tech meetups, hackathons, and networking events to connect you with Caracas’ vibrant tech community and potential employers.
@@ -589,8 +518,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Chicago offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Chicago student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Chicago’s tech community through local tech meetups and events.
@@ -598,19 +526,16 @@ faqs:
   - chicago-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Costa Rica offer mentorship and networking opportunities?
   answer: Yes, our Costa Rica campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Costa Rica’s vibrant tech community and potential employers.
   locations:
   - costa-rica
   related_features:
-  - mentors-and-teachers
   - career-support
   - price
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Dallas offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Dallas student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Dallas’s tech community through events.
@@ -618,9 +543,7 @@ faqs:
   - dallas-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Dublin offer mentorship and networking opportunities?
   answer: Yes, our Dublin campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Dublin’s vibrant tech community and potential employers.
@@ -629,8 +552,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Hamburg offer mentorship and networking opportunities?
   answer: Yes, our Hamburg campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Hamburg’s vibrant tech community and potential employers.
@@ -639,8 +561,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Houston offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Houston student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Houston’s tech community through local tech meetups and events.
@@ -648,9 +569,7 @@ faqs:
   - houston-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in La Paz offer mentorship and networking opportunities?
   answer: Yes, our La Paz campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with La Paz’s vibrant tech community and potential employers.
@@ -659,8 +578,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Lima offer mentorship and networking opportunities?
   answer: Yes, our Lima campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Lima’s vibrant tech community and potential employers.
@@ -669,8 +587,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Lisbon offer mentorship and networking opportunities?
   answer: Yes, our Lisbon campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Lisbon’s vibrant tech community and potential employers.
@@ -679,8 +596,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Los Angeles offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Los Angeles student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Los Angeles’s tech community through local tech meetups and events.
@@ -688,9 +604,7 @@ faqs:
   - losangeles-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Madrid offer mentorship and networking opportunities?
   answer: Yes, our Madrid campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Madrid’s vibrant tech community and potential employers.
@@ -699,8 +613,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Malaga offer mentorship and networking opportunities?
   answer: Yes, our Malaga campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Malaga’s vibrant tech community and potential employers.
@@ -709,8 +622,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Mexico City offer mentorship and networking opportunities?
   answer: Yes, our Mexico City campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Mexico City’s vibrant tech community and potential employers.
@@ -719,8 +631,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Miami offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Miami student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Miami’s tech community through events like eMerge Americas and Refresh Miami.
@@ -728,9 +639,7 @@ faqs:
   - miami-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Milan offer mentorship and networking opportunities?
   answer: Yes, our Milan campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Milan’s vibrant tech community and potential employers.
@@ -739,8 +648,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Montevideo offer mentorship and networking opportunities?
   answer: Yes, our Montevideo campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Montevideo’s vibrant tech community and potential employers.
@@ -749,8 +657,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Munich offer mentorship and networking opportunities?
   answer: Yes, our Munich campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Munich’s vibrant tech community and potential employers.
@@ -759,8 +666,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in New York offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a New York student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to New York’s tech community through local tech meetups and events.
@@ -768,9 +674,7 @@ faqs:
   - newyork-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Orlando offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As an Orlando student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Orlando’s tech community through local tech meetups and events.
@@ -778,9 +682,7 @@ faqs:
   - orlando-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Panama City offer mentorship and networking opportunities?
   answer: Yes, our Panama City campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Panama City’s vibrant tech community and potential employers.
@@ -789,8 +691,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Quito offer mentorship and networking opportunities?
   answer: Yes, our Quito campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Quito’s vibrant tech community and potential employers.
@@ -799,8 +700,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Rome offer mentorship and networking opportunities?
   answer: Yes, our Rome campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Rome’s vibrant tech community and potential employers.
@@ -809,8 +709,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Santiago offer mentorship and networking opportunities?
   answer: Yes, our Santiago campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Santiago’s vibrant tech community and potential employers.
@@ -819,8 +718,7 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Tampa offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Tampa student, you'll enjoy unlimited lifetime mentorship - including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Tampa’s tech community through local tech meetups and events.
@@ -828,9 +726,7 @@ faqs:
   - tampa-usa
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Toronto offer mentorship and networking opportunities?
   answer: Yes, absolutely! Mentorship is at the core of what we do. As a Toronto student, you'll enjoy unlimited lifetime mentorship, including 1-on-1 sessions, group sessions, access to a Slack community with 5,000+ developers worldwide, and participation in technical and behavioral workshops. You’ll also have access to Rigobot, the AI Tutor, our 24/7 AI-powered coding mentor, guiding you through exercises line-by-line. Plus, we’ll connect you to Toronto’s tech community through local tech meetups and events.
@@ -838,9 +734,7 @@ faqs:
   - toronto-canada
   related_features:
   - mentors-and-teachers
-  - full-stack
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in Valencia offer mentorship and networking opportunities?
   answer: Yes, our Valencia campus offers robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize local tech meetups, hackathons, and networking events to connect you with Valencia’s vibrant tech community and potential employers.
@@ -849,37 +743,37 @@ faqs:
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy in the Rest of Europe offer mentorship and networking opportunities?
   answer: Yes, our programs in the Rest of Europe offer robust mentorship and networking opportunities. Students receive one-on-one guidance from experienced instructors and industry professionals through our GeekForce program. We also organize regional tech meetups, hackathons, and networking events to connect you with local tech communities and potential employers.
-  locations:
-  - all
+  locations: []
   related_features:
   - mentors-and-teachers
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Does 4Geeks Academy offer professional support?
-  answer: |
-    Yes! At 4Geeks Academy, we offer professional support to help you achieve your career goals. Our unlimited professional support plan is part of our GeekForce program. You will have unlimited access to individual and group professional sessions where we will equip you with all the tools necessary to get a job. This includes optimizing your resume, LinkedIn and GitHub profiles, connecting you with events and our hiring network, and preparing you for technical and behavioral interviews, among other services. Learn more about our GeekForce and career support program.
+  answer: 'Yes! At 4Geeks Academy, we offer professional support to help you achieve your career goals. Our unlimited professional support plan is part of our GeekForce program. You will have unlimited access to individual and group professional sessions where we will equip you with all the tools necessary to get a job. This includes optimizing your resume, LinkedIn and GitHub profiles, connecting you with events and our hiring network, and preparing you for technical and behavioral interviews, among other services. Learn more about our GeekForce and career support program.
+
 
     Additionally, upon paying for the bootcamp, you will also have access to a more basic professional support mentorship plan, which includes our GeekPal program. For more details, visit the GeekPal program.
+
+    '
   locations:
   - all
   related_features:
   - mentors-and-teachers
   - career-support
-  - price
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: Extended Payment Plan? How does it work? And what does it mean?
-  answer: |
-    Our extended payment plan allows you to spread your tuition payments over a period of up to 2 years, enabling you to pay gradually during and after the course. To enroll, a $500 deposit is required upfront, and the remaining balance is divided equally over the agreed-upon number of months, with no interest charged.
+  answer: 'Our extended payment plan allows you to spread your tuition payments over a period of up to 2 years, enabling you to pay gradually during and after the course. To enroll, a $500 deposit is required upfront, and the remaining balance is divided equally over the agreed-upon number of months, with no interest charged.
+
 
     For more details about our plans, visit our Financials page.
+
+    '
   locations:
   - atlanta-usa
   - austin-usa
@@ -892,98 +786,71 @@ faqs:
   - tampa-usa
   related_features:
   - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: How are the live classes structured?
   answer: Classes are held twice a week online with a maximum of 12 students per cohort. This ensures personalized attention and the ability to get your questions answered in real-time.
   locations:
   - all
   related_features:
-  - applied-ai
   - mentors-and-teachers
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Atlanta?
   answer: To apply to our Atlanta campus, fill out the application. After submission, you’ll receive detailed information about Atlanta programs and schedules. Our admissions team will follow up to assist with Atlanta-specific questions on tuition, format, or campus orientation.
   locations:
   - atlanta-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Austin?
   answer: To apply to our Austin campus, fill out the application. After submission, you’ll receive detailed information about Austin programs and schedules. Our admissions team will follow up to assist with Austin-specific questions on tuition, format, or campus orientation.
   locations:
   - austin-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Barcelona?
   answer: To apply to our Barcelona campus, fill out the application. After submission, you’ll receive detailed information about Barcelona programs and schedules. Our admissions team will follow up to assist with Barcelona-specific questions on tuition, format, or campus orientation.
   locations:
   - barcelona-spain
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Berlin?
   answer: To apply to our Berlin campus, fill out the application. After submission, you’ll receive detailed information about Berlin programs and schedules. Our admissions team will follow up to assist with Berlin-specific questions on tuition, format, or campus orientation.
   locations:
   - berlin-germany
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Bogotá?
   answer: To apply to our Bogotá campus, fill out the application. After submission, you’ll receive detailed information about Bogotá programs and schedules. Our admissions team will follow up to assist with Bogotá-specific questions on tuition, format, or campus orientation.
   locations:
   - bogota-colombia
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Buenos Aires?
   answer: To apply to our Buenos Aires campus, fill out the application. After submission, you’ll receive detailed information about Buenos Aires programs and schedules. Our admissions team will follow up to assist with Buenos Aires-specific questions on tuition, format, or campus orientation.
   locations:
   - buenosaires-argentina
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Caracas?
   answer: To apply to our Caracas campus, fill out the application. After submission, you’ll receive detailed information about Caracas programs and schedules. Our admissions team will follow up to assist with Caracas-specific questions on tuition, format, or campus orientation.
   locations:
   - caracas-venezuela
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Chicago?
   answer: To apply to our Chicago campus, fill out the application. After submission, you’ll receive detailed information about Chicago programs and schedules. Our admissions team will follow up to assist with Chicago-specific questions on tuition, format, or campus orientation.
   locations:
   - chicago-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Costa Rica?
   answer: To apply to our Costa Rica campus, fill out the application. After submission, you’ll receive detailed information about Costa Rica programs and schedules. Our admissions team will follow up to assist with Costa Rica-specific questions on tuition, format, or campus orientation.
@@ -991,259 +858,181 @@ faqs:
   - costa-rica
   related_features:
   - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Dallas?
   answer: To apply to our Dallas campus, simply click the application link and complete a brief form. Once submitted, you'll receive detailed information about the Dallas programs you’re interested in. Our local admissions team will also reach out by email to assist you and answer any Dallas-specific questions you might have about schedules, tuition, or campus visits.
   locations:
   - dallas-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Dublin?
   answer: To apply to our Dublin campus, fill out the application. After submission, you’ll receive detailed information about Dublin programs and schedules. Our admissions team will follow up to assist with Dublin-specific questions on tuition, format, or campus orientation.
   locations:
   - dublin-ireland
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Hamburg?
   answer: To apply to our Hamburg campus, fill out the application. After submission, you’ll receive detailed information about Hamburg programs and schedules. Our admissions team will follow up to assist with Hamburg-specific questions on tuition, format, or campus orientation.
   locations:
   - hamburg-germany
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Houston?
   answer: To apply to our Houston campus, fill out the application. After submission, you’ll receive detailed information about Houston programs and schedules. Our admissions team will follow up to assist with Houston-specific questions on tuition, format, or campus orientation.
   locations:
   - houston-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in La Paz?
   answer: To apply to our La Paz campus, fill out the application. After submission, you’ll receive detailed information about La Paz programs and schedules. Our admissions team will follow up to assist with La Paz-specific questions on tuition, format, or campus orientation.
   locations:
   - lapaz-bolivia
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Lima?
   answer: To apply to our Lima campus, fill out the application. After submission, you’ll receive detailed information about Lima programs and schedules. Our admissions team will follow up to assist with Lima-specific questions on tuition, format, or campus orientation.
   locations:
   - lima-peru
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Lisbon?
   answer: To apply to our Lisbon campus, fill out the application. After submission, you’ll receive detailed information about Lisbon programs and schedules. Our admissions team will follow up to assist with Lisbon-specific questions on tuition, format, or campus orientation.
   locations:
   - lisbon-portugal
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Los Angeles?
   answer: To apply to our Los Angeles campus, fill out the application. After submission, you’ll receive detailed information about Los Angeles programs and schedules. Our admissions team will follow up to assist with Los Angeles-specific questions on tuition, format, or campus orientation.
   locations:
   - losangeles-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Madrid?
   answer: To apply to our Madrid campus, fill out the application. After submission, you’ll receive detailed information about Madrid programs and schedules. Our admissions team will follow up to assist with Madrid-specific questions on tuition, format, or campus orientation.
   locations:
   - madrid-spain
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Malaga?
   answer: To apply to our Malaga campus, fill out the application. After submission, you’ll receive detailed information about Malaga programs and schedules. Our admissions team will follow up to assist with Malaga-specific questions on tuition, format, or campus orientation.
   locations:
   - malaga-spain
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Mexico City?
   answer: To apply to our Mexico City campus, fill out the application. After submission, you’ll receive detailed information about Mexico City programs and schedules. Our admissions team will follow up to assist with Mexico City-specific questions on tuition, format, or campus orientation.
   locations:
   - mexicocity-mexico
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Miami?
   answer: To apply to our Miami campus, simply click the application link and complete a brief form. Once submitted, you'll receive detailed information about the Miami programs you’re interested in. Our local admissions team will also reach out by email to assist you and answer any Miami-specific questions you might have about schedules, tuition, or campus visits.
   locations:
   - miami-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Milan?
   answer: To apply to our Milan campus, fill out the application. After submission, you’ll receive detailed information about Milan programs and schedules. Our admissions team will follow up to assist with Milan-specific questions on tuition, format, or campus orientation.
   locations:
   - milan-italy
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Montevideo?
   answer: To apply to our Montevideo campus, fill out the application. After submission, you’ll receive detailed information about Montevideo programs and schedules. Our admissions team will follow up to assist with Montevideo-specific questions on tuition, format, or campus orientation.
   locations:
   - montevideo-uruguay
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Munich?
   answer: To apply to our Munich campus, fill out the application. After submission, you’ll receive detailed information about Munich programs and schedules. Our admissions team will follow up to assist with Munich-specific questions on tuition, format, or campus orientation.
   locations:
   - munich-germany
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in New York?
   answer: To apply to our New York campus, fill out the application. After submission, you’ll receive detailed information about New York programs and schedules. Our admissions team will follow up to assist with New York-specific questions on tuition, format, or campus orientation.
   locations:
   - newyork-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Orlando?
   answer: To apply to our Orlando campus, fill out the application. After submission, you’ll receive detailed information about Orlando programs and schedules. Our admissions team will follow up to assist with Orlando-specific questions on tuition, format, or campus orientation.
   locations:
   - orlando-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Panama City?
   answer: To apply to our Panama City campus, fill out the application. After submission, you’ll receive detailed information about Panama City programs and schedules. Our admissions team will follow up to assist with Panama City-specific questions on tuition, format, or campus orientation.
   locations:
   - panamacity-panama
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Quito?
   answer: To apply to our Quito campus, fill out the application. After submission, you’ll receive detailed information about Quito programs and schedules. Our admissions team will follow up to assist with Quito-specific questions on tuition, format, or campus orientation.
   locations:
   - quito-ecuador
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Rome?
   answer: To apply to our Rome campus, fill out the application. After submission, you’ll receive detailed information about Rome programs and schedules. Our admissions team will follow up to assist with Rome-specific questions on tuition, format, or campus orientation.
   locations:
   - rome-italy
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Santiago?
   answer: To apply to our Santiago campus, fill out the application. After submission, you’ll receive detailed information about Santiago programs and schedules. Our admissions team will follow up to assist with Santiago-specific questions on tuition, format, or campus orientation.
   locations:
   - santiago-chile
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Tampa?
   answer: To apply to our Tampa campus, fill out the application. After submission, you’ll receive detailed information about Tampa programs and schedules. Our admissions team will follow up to assist with Tampa-specific questions on tuition, format, or campus orientation.
   locations:
   - tampa-usa
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Toronto?
   answer: To apply to our Toronto campus, fill out the application. After submission, you’ll receive detailed information about Toronto programs and schedules. Our admissions team will follow up to assist with Toronto-specific questions on tuition, format, or campus orientation.
   locations:
   - toronto-canada
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in Valencia?
   answer: To apply to our Valencia campus, fill out the application. After submission, you’ll receive detailed information about Valencia programs and schedules. Our admissions team will follow up to assist with Valencia-specific questions on tuition, format, or campus orientation.
   locations:
   - valencia-spain
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I apply to 4Geeks Academy in the Rest of Europe?
   answer: To apply to our programs in the Rest of Europe, fill out the application. After submission, you’ll receive detailed information about programs and schedules available in your region. Our admissions team will follow up to assist with region-specific questions on tuition, format, or program details.
-  locations:
-  - all
-  related_features:
-  - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  locations: []
+  related_features: []
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Atlanta?
   answer: At the Atlanta campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Atlanta admissions team to discuss local payment partners or financing opportunities.
@@ -1251,9 +1040,8 @@ faqs:
   - atlanta-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Austin?
   answer: At the Austin campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Austin admissions team to discuss local payment partners or financing opportunities.
@@ -1261,9 +1049,8 @@ faqs:
   - austin-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Barcelona?
   answer: At the Barcelona campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Barcelona admissions team to discuss local payment partners or financing opportunities.
@@ -1271,9 +1058,8 @@ faqs:
   - barcelona-spain
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Berlin?
   answer: At the Berlin campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Berlin admissions team to discuss local payment partners or financing opportunities.
@@ -1281,9 +1067,8 @@ faqs:
   - berlin-germany
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Bogotá?
   answer: At the Bogotá campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Bogotá admissions team to discuss local payment partners or financing opportunities.
@@ -1291,9 +1076,8 @@ faqs:
   - bogota-colombia
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Buenos Aires?
   answer: At the Buenos Aires campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Buenos Aires admissions team to discuss local payment partners or financing opportunities.
@@ -1301,9 +1085,8 @@ faqs:
   - buenosaires-argentina
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Caracas?
   answer: At the Caracas campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Caracas admissions team to discuss local payment partners or financing opportunities.
@@ -1311,9 +1094,8 @@ faqs:
   - caracas-venezuela
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Chicago?
   answer: At the Chicago campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Chicago admissions team to discuss local payment partners or financing opportunities.
@@ -1321,9 +1103,8 @@ faqs:
   - chicago-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Costa Rica?
   answer: At the Costa Rica campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Costa Rica admissions team to discuss local payment partners or financing opportunities.
@@ -1331,9 +1112,8 @@ faqs:
   - costa-rica
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Dallas?
   answer: 'In the United States, including our Dallas campus, we offer multiple payment options: loans with payments starting as low as $120/month, extended payment plans, and scholarships based on your background. You can also explore Dallas-based financing partners and local scholarship opportunities. For more information, visit our Financials page or speak with our Dallas admissions team.'
@@ -1341,9 +1121,8 @@ faqs:
   - dallas-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Dublin?
   answer: At the Dublin campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Dublin admissions team to discuss local payment partners or financing opportunities.
@@ -1351,9 +1130,8 @@ faqs:
   - dublin-ireland
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Hamburg?
   answer: At the Hamburg campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Hamburg admissions team to discuss local payment partners or financing opportunities.
@@ -1361,9 +1139,8 @@ faqs:
   - hamburg-germany
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Houston?
   answer: At the Houston campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Houston admissions team to discuss local payment partners or financing opportunities.
@@ -1371,9 +1148,8 @@ faqs:
   - houston-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in La Paz?
   answer: At the La Paz campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our La Paz admissions team to discuss local payment partners or financing opportunities.
@@ -1381,9 +1157,8 @@ faqs:
   - lapaz-bolivia
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Lima?
   answer: At the Lima campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Lima admissions team to discuss local payment partners or financing opportunities.
@@ -1391,9 +1166,8 @@ faqs:
   - lima-peru
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Lisbon?
   answer: At the Lisbon campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Lisbon admissions team to discuss local payment partners or financing opportunities.
@@ -1401,9 +1175,8 @@ faqs:
   - lisbon-portugal
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Los Angeles?
   answer: At the Los Angeles campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Los Angeles admissions team to discuss local payment partners or financing opportunities.
@@ -1411,9 +1184,8 @@ faqs:
   - losangeles-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Madrid?
   answer: At the Madrid campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Madrid admissions team to discuss local payment partners or financing opportunities.
@@ -1421,9 +1193,8 @@ faqs:
   - madrid-spain
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Malaga?
   answer: At the Malaga campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Malaga admissions team to discuss local payment partners or financing opportunities.
@@ -1431,9 +1202,8 @@ faqs:
   - malaga-spain
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Mexico City?
   answer: At the Mexico City campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Mexico City admissions team to discuss local payment partners or financing opportunities.
@@ -1441,9 +1211,8 @@ faqs:
   - mexicocity-mexico
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Miami?
   answer: 'In the United States, including our Miami campus, we offer multiple payment options: loans with payments starting as low as $120/month, extended payment plans, and scholarships based on your background. You can also explore Miami-based financing partners and local scholarship opportunities. For more information, visit our Financials page or speak with our Miami admissions team.'
@@ -1451,9 +1220,8 @@ faqs:
   - miami-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Milan?
   answer: At the Milan campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Milan admissions team to discuss local payment partners or financing opportunities.
@@ -1461,9 +1229,8 @@ faqs:
   - milan-italy
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Montevideo?
   answer: At the Montevideo campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Montevideo admissions team to discuss local payment partners or financing opportunities.
@@ -1471,9 +1238,8 @@ faqs:
   - montevideo-uruguay
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Munich?
   answer: At the Munich campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Munich admissions team to discuss local payment partners or financing opportunities.
@@ -1481,9 +1247,8 @@ faqs:
   - munich-germany
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in New York?
   answer: At the New York campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our New York admissions team to discuss local payment partners or financing opportunities.
@@ -1491,9 +1256,8 @@ faqs:
   - newyork-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Orlando?
   answer: At the Orlando campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Orlando admissions team to discuss local payment partners or financing opportunities.
@@ -1501,9 +1265,8 @@ faqs:
   - orlando-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Panama City?
   answer: At the Panama City campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Panama City admissions team to discuss local payment partners or financing opportunities.
@@ -1511,9 +1274,8 @@ faqs:
   - panamacity-panama
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Quito?
   answer: At the Quito campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Quito admissions team to discuss local payment partners or financing opportunities.
@@ -1521,9 +1283,8 @@ faqs:
   - quito-ecuador
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Rome?
   answer: At the Rome campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Rome admissions team to discuss local payment partners or financing opportunities.
@@ -1531,9 +1292,8 @@ faqs:
   - rome-italy
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Santiago?
   answer: At the Santiago campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Santiago admissions team to discuss local payment partners or financing opportunities.
@@ -1541,9 +1301,8 @@ faqs:
   - santiago-chile
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Tampa?
   answer: At the Tampa campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Tampa admissions team to discuss local payment partners or financing opportunities.
@@ -1551,9 +1310,8 @@ faqs:
   - tampa-usa
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Toronto?
   answer: At the Toronto campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Toronto admissions team to discuss local payment partners or financing opportunities.
@@ -1561,9 +1319,8 @@ faqs:
   - toronto-canada
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in Valencia?
   answer: At the Valencia campus, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our Valencia admissions team to discuss local payment partners or financing opportunities.
@@ -1571,19 +1328,16 @@ faqs:
   - valencia-spain
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I pay for my tuition in the Rest of Europe?
   answer: For our programs in the Rest of Europe, tuition payment options include loans, extended payment plans, and scholarships tailored to your profile. You can reach out to our admissions team to discuss regional payment partners or financing opportunities.
-  locations:
-  - all
+  locations: []
   related_features:
   - price
-  - job-guarantee
   - scholarships
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How do I stay motivated learning on my own?
   answer: You're never truly alone! Our AI tools provide instant feedback, you have access to mentorship sessions, and our active community of learners is always available for support and collaboration. Many students find this combination keeps them more engaged than traditional classes.
@@ -1591,9 +1345,8 @@ faqs:
   - all
   related_features:
   - data-science
-  - mentors-and-teachers
   - rigobot
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Atlanta work?
   answer: Career support for Atlanta students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Atlanta tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1601,8 +1354,7 @@ faqs:
   - atlanta-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Austin work?
   answer: Career support for Austin students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Austin tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1610,8 +1362,7 @@ faqs:
   - austin-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Barcelona work?
   answer: Career support for Barcelona students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Barcelona tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1619,8 +1370,7 @@ faqs:
   - barcelona-spain
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Berlin work?
   answer: Career support for Berlin students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Berlin tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1628,8 +1378,7 @@ faqs:
   - berlin-germany
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Bogotá work?
   answer: Career support for Bogotá students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Bogotá tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1637,8 +1386,7 @@ faqs:
   - bogota-colombia
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Buenos Aires work?
   answer: Career support for Buenos Aires students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Buenos Aires tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1646,9 +1394,7 @@ faqs:
   - buenosaires-argentina
   related_features:
   - career-support
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Caracas work?
   answer: Career support for Caracas students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Caracas tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1656,8 +1402,7 @@ faqs:
   - caracas-venezuela
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Chicago work?
   answer: Career support for Chicago students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Chicago tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1665,8 +1410,7 @@ faqs:
   - chicago-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Costa Rica work?
   answer: Career support for Costa Rica students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Costa Rica tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1675,8 +1419,7 @@ faqs:
   related_features:
   - career-support
   - price
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Dallas work?
   answer: Career support for Dallas students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Houston tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1684,8 +1427,7 @@ faqs:
   - dallas-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Dublin work?
   answer: Career support for Dublin students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Dublin tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1693,8 +1435,7 @@ faqs:
   - dublin-ireland
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Hamburg work?
   answer: Career support for Hamburg students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Hamburg tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1702,8 +1443,7 @@ faqs:
   - hamburg-germany
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Houston work?
   answer: Career support for Houston students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Houston tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1711,8 +1451,7 @@ faqs:
   - houston-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in La Paz work?
   answer: Career support for La Paz students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the La Paz tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1720,8 +1459,7 @@ faqs:
   - lapaz-bolivia
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Lima work?
   answer: Career support for Lima students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Lima tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1729,8 +1467,7 @@ faqs:
   - lima-peru
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Lisbon work?
   answer: Career support for Lisbon students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Lisbon tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1738,8 +1475,7 @@ faqs:
   - lisbon-portugal
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Los Angeles work?
   answer: Career support for Los Angeles students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Los Angeles tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1747,8 +1483,7 @@ faqs:
   - losangeles-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Madrid work?
   answer: Career support for Madrid students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Madrid tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1756,8 +1491,7 @@ faqs:
   - madrid-spain
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Malaga work?
   answer: Career support for Malaga students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Malaga tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1765,8 +1499,7 @@ faqs:
   - malaga-spain
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Mexico City work?
   answer: Career support for Mexico City students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Mexico City tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1774,8 +1507,7 @@ faqs:
   - mexicocity-mexico
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Miami work?
   answer: At 4Geeks Academy in Miami, career support is part of our GeekForce program, which offers unlimited lifetime career coaching. We connect you with companies in the Miami tech scene, local recruiters, and startup incubators like The LAB Miami and Refresh Miami. You’ll get help with resume and LinkedIn optimization, interview prep, and networking opportunities through South Florida’s top tech events.
@@ -1783,8 +1515,7 @@ faqs:
   - miami-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Milan work?
   answer: Career support for Milan students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Milan tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1792,8 +1523,7 @@ faqs:
   - milan-italy
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Montevideo work?
   answer: Career support for Montevideo students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Montevideo tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1801,8 +1531,7 @@ faqs:
   - montevideo-uruguay
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Munich work?
   answer: Career support for Munich students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Munich tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1810,8 +1539,7 @@ faqs:
   - munich-germany
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in New York work?
   answer: Career support for New York students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the New York tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1819,8 +1547,7 @@ faqs:
   - newyork-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Orlando work?
   answer: Career support for Orlando students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Orlando tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1828,8 +1555,7 @@ faqs:
   - orlando-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Panama City work?
   answer: Career support for Panama City students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Panama City tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1837,8 +1563,7 @@ faqs:
   - panamacity-panama
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Quito work?
   answer: Career support for Quito students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Quito tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1846,8 +1571,7 @@ faqs:
   - quito-ecuador
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Rome work?
   answer: Career support for Rome students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Rome tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1855,8 +1579,7 @@ faqs:
   - rome-italy
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Santiago work?
   answer: Career support for Santiago students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Santiago tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1864,8 +1587,7 @@ faqs:
   - santiago-chile
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Tampa work?
   answer: Career support for Tampa students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Tampa tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1873,8 +1595,7 @@ faqs:
   - tampa-usa
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Toronto work?
   answer: Career support for Toronto students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Toronto tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1882,8 +1603,7 @@ faqs:
   - toronto-canada
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in Valencia work?
   answer: Career support for Valencia students is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to the Valencia tech ecosystem. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
@@ -1891,17 +1611,14 @@ faqs:
   - valencia-spain
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How does career support in the Rest of Europe work?
   answer: Career support for students in the Rest of Europe is part of our GeekForce program. You’ll get unlimited lifetime career coaching, including resume and LinkedIn optimization, job search strategies, and connections to regional tech ecosystems. We tap into local tech communities, meetups, startups, and hiring partners to support your job search.
-  locations:
-  - all
+  locations: []
   related_features:
   - career-support
-  - content-and-syllabus
-  last_updated: '2026-02-11'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How long do I have to look for a job before the refund is issued?
   answer: You'll have up to 9 months after graduating to secure qualifying employment. If you meet all requirements and are still not hired within that time, you can apply for a full refund.
@@ -1909,16 +1626,15 @@ faqs:
   - all
   related_features:
   - job-guarantee
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: How long does it take to complete the Data Science program?
   answer: The self-paced program can be completed in as little as 16 weeks with dedicated study. However, you have lifetime access to all materials and can learn at your own pace-whether that's 30 minutes a day or intensive weekend sessions.
   locations:
   - all
   related_features:
   - data-science
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How long does the AI Engineering program take?
   answer: The AI Engineering program is designed to be completed in 20 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
@@ -1926,8 +1642,7 @@ faqs:
   - all
   related_features:
   - ai-engineering
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How long does the Full Stack program take?
   answer: The Full Stack program is designed to be completed in 16 weeks. However, as a self-paced program, you can accelerate or take more time based on your schedule and learning pace.
@@ -1935,8 +1650,7 @@ faqs:
   - all
   related_features:
   - full-stack
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How long is the cybersecurity program?
   answer: The program is 16 weeks with 3 live online classes per week. Class sizes are kept small (max 15 people) to ensure personalized attention and hands-on guidance.
@@ -1944,13 +1658,14 @@ faqs:
   - all
   related_features:
   - cybersecurity
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: How many hours do I need to have available?
-  answer: |
-    In order to excel in your chosen field, whether it's software development, data science, or cybersecurity, dedication is crucial across all our programs. For instance, in our Part-Time program, classes are scheduled for 3 hours a day, 3 times a week, requiring approximately 20-24 hours of study per week.
+  answer: 'In order to excel in your chosen field, whether it''s software development, data science, or cybersecurity, dedication is crucial across all our programs. For instance, in our Part-Time program, classes are scheduled for 3 hours a day, 3 times a week, requiring approximately 20-24 hours of study per week.
+
     Alternatively, our Full-Time program entails 8-hour classes each day, with an additional recommended study time of around 48 hours per week. Regardless of the specific program you choose, commitment to study and practice is essential for success.
+
+    '
   locations:
   - all
   related_features:
@@ -1963,57 +1678,34 @@ faqs:
   - all
   related_features:
   - certification
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Is the Job Guarantee available for all courses?
   answer: No - it is currently only available for select bootcamps, including the Full Stack Development program. Please check your program's eligibility.
   locations:
   - all
   related_features:
   - job-guarantee
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Is there a minimum salary for jobs that count?
   answer: There is no set salary threshold, but the job must be aligned with the skills taught in the program and be a legitimate entry-level tech role.
   locations:
   - all
   related_features:
   - job-guarantee
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: What are the class schedules at 4Geeks Academy in Miami?
-  answer: |
-    At 4Geeks Academy in Miami, we offer flexible class schedules to fit your needs:
-    Part-Time Schedule:
-
-     Monday, Wednesday, and Friday: 6:30 PM - 9:30 PM.
-     Alternative Option: Tuesday and Thursday 6:30 PM - 9:30 PM and Saturday 9:00 AM - 12:00 PM.
-
-    Full-Time Schedule:
-
-     Monday to Friday: 9:00 AM - 6:00 PM.
-
-    These schedules are designed to accommodate your availability, whether you prefer evening classes or are looking to commit to a full-time program during the day. To read more about our coding bootcamp in Miami, visit our blog post: Coding Bootcamp in Miami.
+  answer: "At 4Geeks Academy in Miami, we offer flexible class schedules to fit your needs:\nPart-Time Schedule:\n\n Monday, Wednesday, and Friday: 6:30 PM - 9:30 PM.\n Alternative Option: Tuesday and Thursday 6:30 PM - 9:30 PM and Saturday 9:00 AM - 12:00 PM.\n\nFull-Time Schedule:\n\n Monday to Friday: 9:00 AM - 6:00 PM.\n\nThese schedules are designed to accommodate your availability, whether you prefer evening classes or are looking to commit to a full-time program during the day. To read more about our coding bootcamp in Miami, visit our blog post: Coding Bootcamp in Miami.\n"
   locations:
   - miami-usa
   related_features:
   - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What are the class schedules at 4Geeks Academy?
-  answer: |
-    At 4Geeks Academy, we offer flexible class schedules to fit your needs:
-    Part-Time Schedule:
-
-     Monday, Wednesday, and Friday: 6:30 PM - 9:30 PM.
-     Alternative Option: Tuesday and Thursday 6:30 PM - 9:30 PM and Saturday 9:00 AM - 12:00 PM.
-
-    Full-Time Schedule:
-
-     Monday to Friday: 9:00 AM - 6:00 PM.
-
-    These schedules are designed to accommodate your availability, whether you prefer evening classes or are looking to commit to a full-time program during the day.
+  answer: "At 4Geeks Academy, we offer flexible class schedules to fit your needs:\nPart-Time Schedule:\n\n Monday, Wednesday, and Friday: 6:30 PM - 9:30 PM.\n Alternative Option: Tuesday and Thursday 6:30 PM - 9:30 PM and Saturday 9:00 AM - 12:00 PM.\n\nFull-Time Schedule:\n\n Monday to Friday: 9:00 AM - 6:00 PM.\n\nThese schedules are designed to accommodate your availability, whether you prefer evening classes or are looking to commit to a full-time program during the day.\n"
   locations:
   - atlanta-usa
   - austin-usa
@@ -2025,46 +1717,45 @@ faqs:
   - tampa-usa
   related_features:
   - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What are the class schedules in Berlin?
-  answer: |
-    - Part-time:
-     Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturdays from 10:00 AM to 1:00 PM.
-    - Full-time:
-     Monday to Friday from 9:00 AM to 6:00 PM.
-    To learn more about our coding bootcamp in Berlin, check out our related blog post: Coding Bootcamp in Berlin.
+  answer: "- Part-time:\n Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturdays from 10:00 AM to 1:00 PM.\n- Full-time:\n Monday to Friday from 9:00 AM to 6:00 PM.\nTo learn more about our coding bootcamp in Berlin, check out our related blog post: Coding Bootcamp in Berlin.\n"
   locations:
   - berlin-germany
   - hamburg-germany
   - munich-germany
   related_features:
   - content-and-syllabus
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What are the class schedules?
-  answer: |
-    The schedules vary depending on the location.
+  answer: 'The schedules vary depending on the location.
+
     Part-time:
+
     1. Spain: Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturdays from 10:00 AM to 1:00 PM.
+
     2. Chile and the United States: Monday, Wednesday, and Friday from 6:30 PM to 9:30 PM or Tuesday and Thursday from 6:30 PM to 9:30 PM and Saturday from 9:00 AM to 12:00 PM.
+
     3. LATAM: Monday, Wednesday and Friday from 4:00 PM to 6:00 PM.
+
     Full-time: Monday to Friday from 9:00 AM to 6:00 PM.
+
+    '
   locations:
   - all
   related_features:
   - content-and-syllabus
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What cybersecurity tools will I learn to use?
   answer: You'll gain hands-on experience with industry-standard tools including Nessus, Nmap, Wireshark, Metasploit, and more. These are the same tools used by security professionals at top companies worldwide.
   locations:
   - all
   related_features:
   - cybersecurity
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What do I need to do to qualify for the Job Guarantee?
   answer: 'You must: Complete 100% of coursework and projects, attend sessions consistently, follow the steps our career services team advises, actively apply to jobs and document your search, and hold valid U.S. work authorization.'
@@ -2072,64 +1763,66 @@ faqs:
   - all
   related_features:
   - job-guarantee
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: What is the difference between a Full-Stack program and other programs that are more junior such as Website Developer?
-  answer: |
-    In the case of Website Developer, the curriculum includes: HTML, CSS, PHP, JavaScript, WordPress, API and more.
+  answer: 'In the case of Website Developer, the curriculum includes: HTML, CSS, PHP, JavaScript, WordPress, API and more.
+
     Now, the Full Stack Software Development program is designed in four stages: Prework + Learn to code + Create websites + Create web applications.
+
     It lasts 16 weeks and includes more than 300 hours of learning.
+
     The technology stack are: JavaScript, React, Python, Flask, API, AJAX, JWT, HTML, CSS, and more.
+
     We will guide you and help you find a job after the course through our Placement Program.
+
     You will have lifetime access to our learning platform Breatheco.de
+
     You will be able to create and build websites, but you will get the skills and tools to tackle more challenging projects like: data analytics, machine learning and augmented reality, to name a few.
+
+    '
   locations:
   - all
   related_features:
   - full-stack
   - content-and-syllabus
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What is the extended payment plan at the Dallas campus?
   answer: Our extended payment plan allows Dallas students to spread tuition payments over up to 2 years, paying gradually during and after the course. A $500 deposit is required upfront, and the remaining balance is split into equal monthly payments - with no interest charged. For more details, visit our Financials page or speak directly with our Dallas admissions team.
   locations:
   - dallas-usa
   related_features:
   - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What is the extended payment plan at the Miami campus?
   answer: Our extended payment plan allows Miami students to spread tuition payments over up to 2 years, paying gradually during and after the course. A $500 deposit is required upfront, and the remaining balance is split into equal monthly payments - with no interest charged. For more details, visit our Financials page or speak directly with our Miami admissions team.
   locations:
   - miami-usa
   related_features:
   - price
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-02-11'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 3
 - question: What is your admission process?
-  answer: |
-    Our admission process begins with an email from one of our student counselors once you initiate the application. We'll assist you through each step. Upon receiving our email, simply reply to schedule a call at your convenience. Following the call, you'll be invited to an online or in-person interview.
-    Additionally, you're welcome to visit our campus to meet the team and explore our facilities. This is an opportunity to share your motivations for pursuing a career in development.
+  answer: 'Our admission process begins with an email from one of our student counselors once you initiate the application. We''ll assist you through each step. Upon receiving our email, simply reply to schedule a call at your convenience. Following the call, you''ll be invited to an online or in-person interview.
+
+    Additionally, you''re welcome to visit our campus to meet the team and explore our facilities. This is an opportunity to share your motivations for pursuing a career in development.
+
+    '
   locations:
   - all
   related_features:
   - career-support
-  - content-and-syllabus
-  - applied-ai
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: What kind of projects will I build in AI Engineering?
   answer: You'll build production-ready AI applications including RAG systems, multi-agent orchestrators, real-time AI applications, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
   locations:
   - all
   related_features:
   - ai-engineering
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What kind of projects will I build in Full Stack?
   answer: You'll build production-ready applications including REST APIs, authentication systems, React frontends, and a full capstone project. All projects use real-world technologies and patterns used by top companies.
@@ -2137,18 +1830,15 @@ faqs:
   - all
   related_features:
   - full-stack
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What kind of support is available?
   answer: You'll have access to unlimited 1:1 mentorship sessions, our AI tutor Rigobot, the AI Tutor for instant feedback, and a supportive community of fellow professionals learning alongside you.
   locations:
   - all
   related_features:
-  - applied-ai
-  - mentors-and-teachers
   - rigobot
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What kinds of jobs count toward the Job Guarantee?
   answer: Full-time or contract positions in tech (such as software development, QA, or related roles) qualify. Remote jobs and freelance positions may be eligible depending on terms.
@@ -2156,16 +1846,15 @@ faqs:
   - all
   related_features:
   - job-guarantee
-  last_updated: '2026-01-16'
-  priority: 2
+  last_updated: '2026-02-12'
+  priority: 1
 - question: What prerequisites do I need for AI Engineering?
   answer: Basic programming knowledge is recommended but not required. Our program starts with foundational concepts and builds up to advanced AI engineering. If you're new to coding, we have preparatory materials to help you get started.
   locations:
   - all
   related_features:
   - ai-engineering
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What prerequisites do I need for Full Stack Development?
   answer: No prior coding experience is required. Our program starts with the fundamentals and builds up to advanced full-stack development. We teach you everything from HTML basics to building complete web applications.
@@ -2173,8 +1862,7 @@ faqs:
   - all
   related_features:
   - full-stack
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What tools and technologies will I learn in Data Science?
   answer: You'll master Python, Jupyter Notebooks, Pandas, NumPy, Matplotlib, Seaborn, SQL, Scikit-learn, TensorFlow, Keras, and Flask. These are the industry-standard tools used by data scientists and ML engineers worldwide.
@@ -2182,8 +1870,7 @@ faqs:
   - all
   related_features:
   - data-science
-  - content-and-syllabus
-  last_updated: '2026-01-16'
+  last_updated: '2026-02-12'
   priority: 2
 - question: What tools will I learn to use?
   answer: You'll get hands-on experience with generative models like ChatGPT, Gemini, and Claude, as well as modern image and video tools like Midjourney and DALL-E. You'll also learn no-code automation tools like Zapier.
@@ -2199,18 +1886,23 @@ faqs:
   locations:
   - all
   related_features:
-  - job-guarantee
-  - outcomes
-  last_updated: '2026-01-16'
-  priority: 2
+  - career-support
+  last_updated: '2026-02-12'
+  priority: 1
 - question: Why "Full-time?" and how does it work?
-  answer: |
-    Our Full-Time program is perfect for those looking to rapidly advance their careers. This intensive program covers the most wanted and highest paid technologies, focusing on Python and JavaScript, the top programming languages of 2024. You'll start coding in web development languages, learn algorithm scripting, build apps with front-end libraries, and use APIs to consume data.
-    The program culminates in the presentation of your final project, preparing you for further web development experiences. Along the way, you'll reshape your mind to embrace new logical, developmental, and researching skills.
+  answer: 'Our Full-Time program is perfect for those looking to rapidly advance their careers. This intensive program covers the most wanted and highest paid technologies, focusing on Python and JavaScript, the top programming languages of 2024. You''ll start coding in web development languages, learn algorithm scripting, build apps with front-end libraries, and use APIs to consume data.
+
+    The program culminates in the presentation of your final project, preparing you for further web development experiences. Along the way, you''ll reshape your mind to embrace new logical, developmental, and researching skills.
+
     Duration: 10 weeks
+
     Classes: 4 classes weekly
+
     Requisites: No previous coding skills or advanced math required
+
     Language: Choose between English and Spanish for the syllabus and content; live classes are taught in the language of your campus.
+
+    '
   locations:
   - all
   related_features:
@@ -2219,17 +1911,21 @@ faqs:
   last_updated: '2026-01-16'
   priority: 2
 - question: Why "Part-time?" and how does it work?
-  answer: |
-    We believe that the future of education is "part-time." Our approach is a blended education that leverages two proven formats: part-time training and flipped classroom. This methodology combines the following four pillars:
+  answer: 'We believe that the future of education is "part-time." Our approach is a blended education that leverages two proven formats: part-time training and flipped classroom. This methodology combines the following four pillars:
+
     Flipped Classroom: The theory is taught through videos, animation, images, and infographics. Class time is used to discuss, create and build projects, and to be mentored in solving practical exercises.
+
     Personalized Mentoring: Each student has the opportunity to have private conversations with a lead mentor on a regular basis.
+
     Mentor-Student Ratio 1:7 (on average): A close and personalized environment allows our academy to adapt to the particular pace of each student.
+
     Talent Tree: The curriculum charts 44 skills in which students earn points for each skill learned in a playful way.
+
+    '
   locations:
   - all
   related_features:
   - content-and-syllabus
-  - mentors-and-teachers
   last_updated: '2026-01-16'
   priority: 2
 - question: Will this prepare me for certifications?
@@ -2298,8 +1994,6 @@ faqs:
   - all
   related_features:
   - ai-engineering
-  - career-support
-  - outcomes
   last_updated: '2026-02-12'
   priority: 2
 - question: Do you help students prepare for industry certifications?
@@ -2309,7 +2003,6 @@ faqs:
   related_features:
   - certification
   - mentors-and-teachers
-  - content-and-syllabus
   last_updated: '2026-02-12'
   priority: 2
 - question: Will I receive a certificate of completion, and what does it include?
@@ -2320,7 +2013,7 @@ faqs:
   - certification
   - outcomes
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 1
 - question: What is LearnPack and how is it used during the bootcamp?
   answer: LearnPack is our interactive learning platform where you complete lessons, quizzes, and auto-graded exercises. It guides your daily practice, tracks your progress, and keeps your work organized so mentors can help you faster.
   locations:
@@ -2328,9 +2021,8 @@ faqs:
   related_features:
   - learnpack
   - online-platform
-  - content-and-syllabus
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: Do I keep access to LearnPack after I graduate?
   answer: Yes. You keep access to your course materials and practice content, so you can review concepts, rebuild projects, and keep improving your skills after graduation.
   locations:
@@ -2339,7 +2031,7 @@ faqs:
   - learnpack
   - online-platform
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: Can I learn with LearnPack from any device or operating system?
   answer: Yes. LearnPack runs in the browser and works on Windows, macOS, and Linux. Because most work is cloud-based, you only need a reliable internet connection and a laptop.
   locations:
@@ -2348,7 +2040,7 @@ faqs:
   - learnpack
   - online-platform
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: How do auto-graded exercises work in LearnPack?
   answer: Exercises are checked automatically against test cases, so you get immediate feedback on whether your solution works. If you get stuck, you can ask a mentor or Rigobot, the AI Tutor to help you understand the error and fix it step by step.
   locations:
@@ -2356,16 +2048,14 @@ faqs:
   related_features:
   - learnpack
   - online-platform
-  - rigobot
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: Do I need to install software to access the online platform?
   answer: In most cases, no. You can access lessons and exercises in the browser, and many projects run in cloud environments. If a specific tool is required for your program, we provide clear setup steps and mentor support.
   locations:
   - all
   related_features:
   - online-platform
-  - content-and-syllabus
   - mentors-and-teachers
   last_updated: '2026-02-12'
   priority: 2
@@ -2386,33 +2076,28 @@ faqs:
   - online-platform
   - content-and-syllabus
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: Where can I see outcomes and graduate results for my location?
   answer: You can review our outcomes and graduate results on the Outcomes page, including placement metrics and other performance indicators when available. Outcomes vary by location and market conditions, so use them as a benchmark and ask admissions for the most relevant context.
   locations:
   - all
   related_features:
   - outcomes
-  - career-support
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: What is Rigobot, the AI Tutor, and how does it help me learn?
   answer: Rigobot, the AI Tutor is available 24/7 to help you understand lessons, debug code, and move through exercises with less friction. It does not replace human mentors, it complements them by giving you instant feedback between sessions.
   locations:
   - all
   related_features:
   - rigobot
-  - mentors-and-teachers
-  - online-platform
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3
 - question: Can I use Rigobot, the AI Tutor during projects and capstones?
   answer: Yes. You can use Rigobot, the AI Tutor to clarify requirements, debug issues, and improve your code quality while you build projects. You will also receive guidance from mentors to ensure you are learning the underlying concepts and following best practices.
   locations:
   - all
   related_features:
   - rigobot
-  - content-and-syllabus
-  - mentors-and-teachers
   last_updated: '2026-02-12'
-  priority: 2
+  priority: 3

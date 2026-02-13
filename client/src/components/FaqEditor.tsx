@@ -70,7 +70,7 @@ const AVAILABLE_LOCATIONS = [
   "valencia-spain",
 ] as const;
 
-const MAX_FEATURES = 3;
+const MAX_FEATURES = 2;
 
 type RelatedFeature = typeof AVAILABLE_FEATURES[number];
 

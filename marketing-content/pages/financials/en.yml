@@ -23,7 +23,7 @@ sections:
       prefix: Finance Your
       highlight: Future
       color: chart-1
-    description: We offer flexible payment plans, financing options, and scholarships so you can focus on launching your tech career without worrying about finances.
+    description: We offer affordable payment plans, financing options, and scholarships so you can focus on launching your tech career without worrying about finances.
     bullets:
       - text: Structured monthly payment plans
       - text: Competitive financing options
@@ -45,16 +45,16 @@ sections:
         - name: SwitchUp
           logo: /attached_assets/switchup_1765590146414.webp
     paddingY:
-      desktop: none lg
+      desktop: none
     marginY:
-      desktop: none md
+      desktop: none
   - type: features_grid
     version: "1.0"
     variant: stats-text
     title: Proven Career Outcomes
     subtitle: Strong hiring results. Real salary growth.
     description: Recognized by Forbes as a Best Online Bootcamp, including recognition for students on a budget, 4Geeks combines accessible tuition with proven career outcomes that help you launch your tech career with confidence.
-    background: hsl(var(--secondary))
+    background: hsl(var(--sidebar-background))
     items:
       - value: 84%
         title: Job placement rate
@@ -63,9 +63,9 @@ sections:
       - value: 3-6 Months
         title: Average time to get hired
     marginY:
-      desktop: lg
-    paddingY:
       desktop: none lg
+    paddingY:
+      desktop: none
   - type: syllabus
     title: Fund Your Tech Career
     subtitle: Explore flexible financing paths, from upfront savings to income-based plans, and choose the option that works for you.
@@ -80,6 +80,8 @@ sections:
         description: We offer financing plans ranging from 1 to 5 years, depending on your credit profile, with monthly payments starting below $349. Terms and approval are based on eligibility.
       - title: Scholarships
         description: Partial scholarships are available for qualified applicants through select programs and partner organizations. Availability and award amounts vary.
+    expand_label: More info
+    collapse_label: Hide info
     marginY:
       desktop: none lg
     paddingY:
@@ -87,7 +89,7 @@ sections:
     background: hsl(210 100% 50% / 0.05)
   - type: comparison_table
     version: "1.0"
-    title: Compare Your Financing Options at a Glance
+    title: Your Financing Options at a Glance
     subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
@@ -129,12 +131,12 @@ sections:
     marginY:
       desktop: lg md
     paddingY:
-      desktop: md lg
+      desktop: md
   - type: course_selector
     version: "1.0"
     variant: solid
     heading: Program Tuition
-    subheading: Tuition, payment plans, and financing options for every program
+    subheading: See tuition and funding options for each program
     courses:
       - name: AI Engineering
         icon: Brain
@@ -183,7 +185,7 @@ sections:
         price_info: or less depending on your plan
         cta_text: Discover program
         cta_url: /en/cybersecurity
-        course_background: hsl(var(--destructive))
+        course_background: secondary
     marginY:
       desktop: lg
     paddingY:
@@ -195,7 +197,7 @@ sections:
     description: For an additional $2,000, you can add our Job Guarantee. If you don’t land a qualifying job within 9 months of graduation, you’ll receive a full tuition refund. The Job Guarantee can also be financed.
     cta:
       text: Get More Info
-      url: /job-guarantee
+      url: en/job-guarantee
       variant: primary
     marginY:
       desktop: md

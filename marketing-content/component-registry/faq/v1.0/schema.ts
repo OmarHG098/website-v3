@@ -30,19 +30,38 @@ export const faqItemSchema = z.object({
   locations: z.array(z.string()).optional().default(["all"]),
   related_features: z.array(relatedFeaturesEnum).optional().default([]),
   priority: z.number().int().optional().default(0),
-});
+}).refine(
+  (data) => {
+    const tagCount = data.related_features?.length || 0;
+    return tagCount <= 2;
+  },
+  {
+    message: "FAQs should have at most 2 tags (1 tag preferred, 2 only in extraordinary cases). 3+ tags are not allowed.",
+    path: ["related_features"],
+  }
+);
 
-export const faqSectionSchema = z.object({
-  type: z.literal("faq"),
-  title: z.string(),
-  items: z.array(faqItemSchema).optional(),
-  related_features: z.array(relatedFeaturesEnum).optional(),
-  cta: z.object({
-    text: z.string(),
-    button_text: z.string(),
-    button_url: z.string(),
-  }).optional(),
-});
+export const faqSectionSchema = z
+  .object({
+    type: z.literal("faq"),
+    title: z.string(),
+    items: z.array(faqItemSchema).optional(),
+    related_features: z.array(relatedFeaturesEnum).optional(),
+    cta: z
+      .object({
+        text: z.string(),
+        button_text: z.string(),
+        button_url: z.string(),
+      })
+      .optional(),
+  })
+  .refine(
+    (data) => (data.related_features?.length ?? 0) <= 3,
+    {
+      message: "FAQ section may have at most 3 topics selected.",
+      path: ["related_features"],
+    }
+  );
 
 export const centralizedFaqsSchema = z.object({
   faqs: z.array(faqItemSchema),
