@@ -89,7 +89,7 @@ sections:
     background: hsl(210 100% 50% / 0.05)
   - type: comparison_table
     version: "1.0"
-    title: Compare Your Financing Options at a Glance
+    title: Your Financing Options at a Glance
     subtitle: Understand the key benefits and requirements of each path so you can choose with confidence.
     columns:
       - name: Option
