@@ -1,7 +1,7 @@
+
 import fs from "fs";
 import path from "path";
 import yaml from "js-yaml";
-import { invalidateSlugCache } from "./utils/contentLoader";
 
 export interface ContentEntry {
   slug: string;
@@ -500,7 +500,6 @@ class ContentIndex {
   }
 
   refresh(): void {
-    invalidateSlugCache();
     this.scan();
   }
 
