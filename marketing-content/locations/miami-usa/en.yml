@@ -71,6 +71,7 @@ sections:
       desktop: none lg
     paddingY:
       desktop: md none
+    background: linear-gradient(to bottom, hsl(210 100% 50% / 0.05), transparent)
   - type: awards_marquee
     version: v1.0
     speed: 40
