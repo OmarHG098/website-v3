@@ -202,16 +202,14 @@ export function generateSsrSchemaHtml(url: string): string {
       const schemas = getMergedSchemas(schemaRef, route.locale);
       for (const schema of schemas) {
         scripts.push(
-          `<script type="application/ld+json">${JSON.stringify(schema)}</script>`
+          `<script type="application/ld+json" data-ssr="true">${JSON.stringify(schema)}</script>`
         );
       }
     }
 
     const sections = pageData.sections as Array<Record<string, unknown>> | undefined;
     if (sections) {
-      // Extract location slug if we're on a location page
       const locationSlug = route.contentType === "locations" ? route.slug : undefined;
-      // Extract program slug if we're on a program page
       const programSlug = route.contentType === "programs" ? route.slug : undefined;
       
       for (const section of sections) {
@@ -219,7 +217,7 @@ export function generateSsrSchemaHtml(url: string): string {
           const faqItems = resolveFaqItems(section as unknown as FaqSection, route.locale, locationSlug, programSlug);
           if (faqItems.length > 0) {
             scripts.push(
-              `<script type="application/ld+json">${JSON.stringify(buildFaqPageSchema(faqItems))}</script>`
+              `<script type="application/ld+json" data-ssr="true">${JSON.stringify(buildFaqPageSchema(faqItems))}</script>`
             );
           }
         }
