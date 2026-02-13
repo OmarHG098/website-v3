@@ -14,7 +14,7 @@ sections:
     version: "1.0"
     variant: simpleTwoColumn
     title: Real Career Outcomes, Backed by Data
-    subtitle: We measure success by real results. Our graduates get hired in AI engineering, data science, and cybersecurity—and the outcomes are backed by verified data.
+    subtitle: We measure success by real results. Our graduates get hired in AI engineering, data science, and cybersecurity, the outcomes are backed by verified data.
     badge: 4Geeks Academy Outcomes Report
     image:
       src: /attached_assets/outcomes_1765562850573.png
@@ -27,7 +27,7 @@ sections:
   - type: vertical_bars_cards
     version: "1.0"
     title: Hiring Results, Year After Year
-    subtitle: How our graduates perform in the job market—based on verified outcomes from recent cohorts.
+    subtitle: How our graduates perform in the job market-based on verified outcomes from recent cohorts.
     metrics:
       - title: Job Placement Rate
         unit: Graduates hired within 6 months
@@ -201,14 +201,14 @@ sections:
     description: Strong outcomes come from how we teach, support, and place students into tech roles.
     bullets:
       - heading: GeekFORCE Lifelong Career Support
-        text: Unlimited 1:1 career mentorship, interview prep, and resume and portfolio coaching — designed around today’s AI-driven hiring processes.
+        text: Unlimited 1:1 career mentorship, interview prep, and resume and portfolio coaching, designed around today’s AI-driven hiring processes.
       - heading: GeekPAL Lifelong Technical Mentorship
         text: Unlimited access to human mentors who help students keep progressing and build real-world confidence.
       - heading: AI-Powered Learning & Feedback
         text: 24/7 personalized feedback that helps students learn faster and more effectively.
       - heading: Global Hiring Partner Network
         text: Hundreds of companies worldwide that actively recruit 4Geeks graduates.
-    footer: Support built for long-term careers — not just first jobs.
+    footer: Support built for long-term careers, not just first jobs.
     image: https://4geeksacademy.com/static/197e7cf794b47d7a7f53770a4b55186f/56f2e/marceloricigliano.webp
     image_alt: Student working on AI project
     reverse: true
